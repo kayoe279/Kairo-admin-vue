@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-primary-active: #2d8cf0;
+}
+
+@theme inline {
+  --font-poppins: var(--font-poppins);
+  --font-comfortaa: var(--font-comfortaa);
+  --font-white-angelica: var(--font-white-angelica);
+  --font-gloria-hallelujah: var(--font-gloria-hallelujah);
+
+  --color-active: var(--color-primary-active);
+}
+
+@theme {
+  --color-primary: #2d8cf0;
+  --color-success: #009688;
+  --color-warning: #fb9300;
+  --color-error: #ff3d68;
+  --color-gray-300: #f5f7f9;
+
+  --text-8: 0.5rem;
+  --text-9: 0.5625rem;
+  --text-10: 0.625rem;
+  --text-11: 0.6875rem;
+  --text-13: 0.8125rem;
+  --text-15: 0.9375rem;
+  --text-17: 1.0625rem;
+  --text-22: 1.375rem;
+  --text-26: 1.625rem;
+  --text-27: 1.6875rem;
+  --text-28: 1.75rem;
+  --text-28--line-height: 2.25rem;
+  --text-32: 2rem;
+  --text-32--line-height: 2.25rem;
+  --text-40: 2.5rem;
+  --text-40--line-height: 3.1rem;
+  --text-48: 3rem;
+  --text-48--line-height: 1.243;
+
+  --tracking-tightest: 0.01px;
+  --tracking-sm: 0.02px;
+  --tracking-lg: 0.38px;
+
+  ----shadow-xs: 2px 0 8px 0 rgb(29 35 41 / 5%);
+  --tracking-max: 1.75px;
+
+  --scale-120: 1.2;
+
+  --animate-blink: blink 1.4s both infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  @keyframes blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
