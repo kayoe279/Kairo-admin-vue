@@ -246,7 +246,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       columnsList,
-      darkTheme: designStore.darkTheme,
+      darkTheme: designStore.theme === "dark",
       onChange,
       onCheckAll,
       onSelection,

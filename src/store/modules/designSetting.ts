@@ -1,33 +1,61 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import designSetting from "@/settings/designSetting";
+import designSetting, { DesignSettingProps } from "@/settings/designSetting";
 import { store } from "@/store";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useDesignSettingStore = defineStore(
   StoreEnum.design,
   () => {
-    const darkTheme = ref(designSetting.darkTheme);
-    const appTheme = ref(designSetting.appTheme);
+    const theme = ref(designSetting.theme);
+    const themeColor = ref(designSetting.themeColor);
     const appThemeList = ref(designSetting.appThemeList);
 
+    const darkNav = ref(designSetting.darkNav);
+    const grayMode = ref(designSetting.grayMode);
+
+    const inverted = computed(() => {
+      return theme.value === "dark";
+    });
+
+    // 设置 app 颜色主题变量
     const setAppThemeVariable = (value?: string) => {
       document.documentElement.style.setProperty(
-        "--color-primary-active",
-        value || appTheme.value || ""
+        "--primary-foreground",
+        value || themeColor.value || ""
       );
     };
 
-    const setAppTheme = (value: string) => {
-      appTheme.value = value;
+    // 设置 app 颜色主题
+    const setThemeColor = (value: string) => {
+      themeColor.value = value;
       setAppThemeVariable(value);
     };
 
+    // 设置主题 暗黑模式
+    const setTheme = (value: DesignSettingProps["theme"]) => {
+      theme.value = value;
+    };
+
+    // 设置 侧边栏, 顶栏, 灰色模式
+    const setMode = (type: "darkNav" | "grayMode", value: boolean) => {
+      if (type === "darkNav") {
+        darkNav.value = value;
+      } else if (type === "grayMode") {
+        grayMode.value = value;
+      }
+    };
+
     return {
-      darkTheme,
-      appTheme,
+      theme,
+      themeColor,
       appThemeList,
-      setAppTheme,
+      darkNav,
+      grayMode,
+      inverted,
+      setMode,
+      setTheme,
+      setThemeColor,
       setAppThemeVariable
     };
   },

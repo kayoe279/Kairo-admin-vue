@@ -1,7 +1,7 @@
 import { useTimeoutFn } from "@/hooks/core/useTimeout";
 import { useBreakpoint } from "@/hooks/event/useBreakpoint";
 import { useEventListener } from "@/hooks/event/useEventListener";
-import echarts from "@/lib/lib/echarts";
+import echarts from "@/lib/echarts";
 import { useDesignSettingStore } from "@/store/modules/designSetting";
 import { tryOnUnmounted } from "@vueuse/core";
 import { useDebounceFn } from "@vueuse/core";
@@ -16,7 +16,7 @@ export function useECharts(
   const designStore = useDesignSettingStore();
 
   const getDarkTheme = computed(() => {
-    const sysTheme: string = designStore.darkTheme ? "dark" : "light";
+    const sysTheme = designStore.theme;
     return theme === "default" ? sysTheme : theme;
   });
 

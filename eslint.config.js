@@ -66,7 +66,8 @@ export default defineConfigWithVueTs(
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/no-duplicate-enum-values": "off",
-      "prefer-rest-params": "off"
+      "prefer-rest-params": "off",
+      "@typescript-eslint/no-unused-vars": "warn"
     }
   }
 );

@@ -72,7 +72,7 @@ import { getMenuList } from "@/api/system/menu";
 import type { ListDate } from "@/api/system/menu";
 import { getRoleList } from "@/api/system/role";
 import { BasicTable, TableAction } from "@/components/Table";
-import { getTreeAll } from "@/lib";
+import { getTreeAll } from "@/lib/utils";
 import { PlusOutlined } from "@vicons/antd";
 import { useMessage } from "naive-ui";
 import { h, onMounted, reactive, ref, unref } from "vue";

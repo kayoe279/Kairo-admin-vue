@@ -129,7 +129,7 @@
 import CreateDrawer from "./CreateDrawer.vue";
 import { getMenuList } from "@/api/system/menu";
 import type { ListDate } from "@/api/system/menu";
-import { getTreeItem } from "@/lib";
+import { getTreeItem } from "@/lib/utils";
 import { AlignLeftOutlined, DownOutlined, FormOutlined, SearchOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { computed, onMounted, reactive, ref, unref } from "vue";

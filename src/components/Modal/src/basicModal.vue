@@ -24,8 +24,8 @@
 import { basicProps } from "./props";
 import type { ModalMethods, ModalProps } from "./type";
 import type { FormProps } from "@/components/Form";
-import { deepMerge } from "@/lib";
 import startDrag from "@/lib/Drag";
+import { deepMerge } from "@/lib/utils";
 import { computed, getCurrentInstance, nextTick, ref, unref, useAttrs } from "vue";
 
 const attrs = useAttrs();

@@ -1,9 +1,13 @@
 import { isObject } from "./is/index";
 import { PageEnum } from "@/lib/enums/pageEnum";
+import { type ClassValue, clsx } from "clsx";
 import { cloneDeep } from "lodash-es";
 import { NIcon, NTag } from "naive-ui";
+import { MenuMixedOption } from "naive-ui/es/menu/src/interface";
+import { twMerge } from "tailwind-merge";
 import { h, unref } from "vue";
 import type { App, Component, Plugin } from "vue";
+import type { RouteRecordRaw } from "vue-router";
 
 /**
  * render 图标
@@ -55,19 +59,19 @@ export function renderNew(type = "warning", text = "New", color: object = newTag
 /**
  * 递归组装菜单格式
  */
-export function generatorMenu(routerMap: Array<any>) {
+export function generatorMenu(routerMap: Array<RouteRecordRaw>) {
   return filterRouter(routerMap).map((item) => {
     const isRoot = isRootRouter(item);
-    const info = isRoot ? item.children[0] : item;
+    const info = isRoot ? (item.children || [])[0] : item;
     const currentMenu = {
       ...info,
       ...info.meta,
       label: info.meta?.title,
       key: info.name,
       icon: isRoot ? item.meta?.icon : info.meta?.icon
-    };
+    } as MenuMixedOption;
     // 是否有子菜单，并递归处理
-    if (info.children && info.children.length > 0) {
+    if (info?.children && info?.children.length > 0) {
       // Recursion
       currentMenu.children = generatorMenu(info.children);
     }
@@ -78,21 +82,25 @@ export function generatorMenu(routerMap: Array<any>) {
 /**
  * 混合菜单
  * */
-export function generatorMenuMix(routerMap: Array<any>, routerName: string, location: string) {
+export function generatorMenuMix(
+  routerMap: Array<RouteRecordRaw>,
+  routerName: string,
+  location: string
+) {
   const cloneRouterMap = cloneDeep(routerMap);
   const newRouter = filterRouter(cloneRouterMap);
   if (location === "header") {
-    const firstRouter: any[] = [];
+    const firstRouter: MenuMixedOption[] = [];
     newRouter.forEach((item) => {
       const isRoot = isRootRouter(item);
-      const info = isRoot ? item.children[0] : item;
+      const info = isRoot ? (item.children || [])[0] : item;
       info.children = undefined;
       const currentMenu = {
         ...info,
         ...info.meta,
         label: info.meta?.title,
         key: info.name
-      };
+      } as MenuMixedOption;
       firstRouter.push(currentMenu);
     });
     return firstRouter;
@@ -104,16 +112,16 @@ export function generatorMenuMix(routerMap: Array<any>, routerName: string, loca
 /**
  * 递归组装子菜单
  * */
-export function getChildrenRouter(routerMap: Array<any>) {
+export function getChildrenRouter(routerMap: Array<RouteRecordRaw>) {
   return filterRouter(routerMap).map((item) => {
     const isRoot = isRootRouter(item);
-    const info = isRoot ? item.children[0] : item;
+    const info = isRoot ? (item.children || [])[0] : item;
     const currentMenu = {
       ...info,
       ...info.meta,
       label: info.meta?.title,
       key: info.name
-    };
+    } as MenuMixedOption;
     // 是否有子菜单，并递归处理
     if (info.children && info.children.length > 0) {
       // Recursion
@@ -136,7 +144,7 @@ export function isRootRouter(item) {
 /**
  * 排除Router
  * */
-export function filterRouter(routerMap: Array<any>) {
+export function filterRouter(routerMap: Array<RouteRecordRaw>) {
   return routerMap.filter((item) => {
     return (
       (item.meta?.hidden || false) != true &&
@@ -238,4 +246,9 @@ export function lighten(color: string, amount: number) {
  * */
 export function isUrl(url: string) {
   return /^(http|https):\/\//g.test(url);
+}
+
+// cn
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }

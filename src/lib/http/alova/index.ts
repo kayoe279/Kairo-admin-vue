@@ -1,9 +1,9 @@
 import mocks from "./mocks";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
-import { isUrl } from "@/lib";
 import { storage } from "@/lib/Storage";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { PageEnum } from "@/lib/enums/pageEnum";
+import { isUrl } from "@/lib/utils";
 import { useUser } from "@/store/modules/user";
 import { createAlovaMockAdapter } from "@alova/mock";
 import { createAlova } from "alova";

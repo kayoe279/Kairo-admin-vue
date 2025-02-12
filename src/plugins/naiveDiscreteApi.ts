@@ -1,4 +1,4 @@
-import { lighten } from "@/lib/index";
+import { lighten } from "@/lib/utils";
 import { useDesignSetting } from "@/store/modules/designSetting";
 import * as NaiveUI from "naive-ui";
 import { computed } from "vue";
@@ -13,15 +13,15 @@ export function setupNaiveDiscreteApi() {
   const designStore = useDesignSetting();
 
   const configProviderPropsRef = computed(() => ({
-    theme: designStore.darkTheme ? NaiveUI.darkTheme : undefined,
+    theme: designStore.theme === "dark" ? NaiveUI.darkTheme : undefined,
     themeOverrides: {
       common: {
-        primaryColor: designStore.appTheme,
-        primaryColorHover: lighten(designStore.appTheme, 6),
-        primaryColorPressed: lighten(designStore.appTheme, 6)
+        primaryColor: designStore.themeColor,
+        primaryColorHover: lighten(designStore.themeColor, 6),
+        primaryColorPressed: lighten(designStore.themeColor, 6)
       },
       LoadingBar: {
-        colorLoading: designStore.appTheme
+        colorLoading: designStore.themeColor
       }
     }
   }));

@@ -21,12 +21,17 @@ export const appThemeList: string[] = [
 ];
 
 const setting = {
-  //深色主题
-  darkTheme: false,
+  theme: "light" as "light" | "dark",
   //系统主题色
-  appTheme: "#009688",
+  themeColor: "#009688",
   //系统内置主题色列表
-  appThemeList
+  appThemeList,
+  // 暗色侧边栏
+  darkNav: false,
+  // 灰度模式
+  grayMode: false
 };
+
+export type DesignSettingProps = typeof setting;
 
 export default setting;

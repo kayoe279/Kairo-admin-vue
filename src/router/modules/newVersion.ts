@@ -1,4 +1,4 @@
-import { renderIcon, renderNew } from "@/lib/index";
+import { renderIcon, renderNew } from "@/lib/utils";
 import { Layout } from "@/router/constant";
 import { SketchOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";

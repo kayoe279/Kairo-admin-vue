@@ -1,4 +1,4 @@
-import { renderIcon, renderNew } from "@/lib";
+import { renderIcon, renderNew } from "@/lib/utils";
 import { Layout, ParentLayout } from "@/router/constant";
 import { WalletOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";

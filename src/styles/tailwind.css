@@ -3,7 +3,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-primary-active: #2d8cf0;
+  --primary-foreground: #2d8cf0;
+  --background-root: #f5f7f9;
+  --background: #ffffff;
+  --foreground: #333639;
+}
+
+html.dark {
+  --background-root: #101014;
+  --background: #242429;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -12,15 +21,16 @@
   --font-white-angelica: var(--font-white-angelica);
   --font-gloria-hallelujah: var(--font-gloria-hallelujah);
 
-  --color-active: var(--color-primary-active);
+  --color-primary: var(--primary-foreground);
+  --color-background-root: var(--background-root);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 }
 
 @theme {
-  --color-primary: #2d8cf0;
   --color-success: #009688;
   --color-warning: #fb9300;
   --color-error: #ff3d68;
-  --color-gray-300: #f5f7f9;
 
   --text-8: 0.5rem;
   --text-9: 0.5625rem;

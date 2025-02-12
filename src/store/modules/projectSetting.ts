@@ -1,5 +1,6 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import projectSetting from "@/settings/projectSetting";
+import projectSetting, { ProjectSettingProps } from "@/settings/projectSetting";
+import { useToggle } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -18,8 +19,14 @@ export const useProjectSettingStore = defineStore(
     const isPageAnimate = ref(projectSetting.isPageAnimate);
     const pageAnimateType = ref(projectSetting.pageAnimateType);
 
+    const [open, toggleDrawer] = useToggle(false);
+
     const setNavTheme = (value: string) => {
       navTheme.value = value;
+    };
+
+    const setNavMode = (value: ProjectSettingProps["navMode"]) => {
+      navMode.value = value;
     };
 
     const setIsMobile = (value: boolean) => {
@@ -27,6 +34,8 @@ export const useProjectSettingStore = defineStore(
     };
 
     return {
+      open,
+      toggleDrawer,
       navMode,
       navTheme,
       isMobile,
@@ -39,6 +48,7 @@ export const useProjectSettingStore = defineStore(
       isPageAnimate,
       pageAnimateType,
       setNavTheme,
+      setNavMode,
       setIsMobile
     };
   },

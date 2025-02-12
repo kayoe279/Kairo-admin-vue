@@ -1,6 +1,6 @@
 const setting = {
-  //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式
-  navMode: "vertical",
+  //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式 horizontal-mix 顶部菜单混合模式
+  navMode: "vertical" as "vertical" | "horizontal" | "horizontal-mix",
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏
   navTheme: "light",
   // 是否处于移动端模式
@@ -34,7 +34,7 @@ const setting = {
     //固定菜单
     fixed: true,
     //分割菜单
-    mixMenu: false,
+    mixMenu: true,
     //触发移动端侧边栏的宽度
     mobileWidth: 800,
     // 折叠菜单
@@ -54,4 +54,6 @@ const setting = {
   //路由动画类型
   pageAnimateType: "zoom-fade"
 };
+
+export type ProjectSettingProps = typeof setting;
 export default setting;
