@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { LockScreen } from "@/components/LockScreen";
-import AppProvider from "@/layout/AppProvider.vue";
 import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { dateZhCN, darkTheme as naiveDarkTheme, zhCN } from "naive-ui";

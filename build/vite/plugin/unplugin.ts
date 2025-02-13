@@ -9,7 +9,7 @@ export function setupUnplugin() {
     // 按需引入NaiveUi且自动创建组件声明
     Components({
       dts: "src/types/components.d.ts",
-      dirs: ["src/components", "src/layout"],
+      dirs: ["src/components", "src/layouts"],
       resolvers: [NaiveUiResolver()]
     }),
     // 创建svg图标
