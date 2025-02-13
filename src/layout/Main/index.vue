@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
+import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
-import { useProjectSettingStore } from "@/store/modules/projectSetting";
 import { storeToRefs } from "pinia";
 import { computed, defineComponent, unref } from "vue";
 
@@ -39,7 +39,7 @@ export default defineComponent({
     }
   },
   setup() {
-    const settingStore = useProjectSettingStore();
+    const settingStore = useAppSettingStore();
     const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
     const asyncRouteStore = useAsyncRouteStore();
     // 需要缓存的路由组件

@@ -12,7 +12,7 @@ export interface ProjectSettingState {
   //多标签
   multiTabsSetting: object;
   //面包屑
-  crumbsSetting: object;
+  breadcrumbsSetting: object;
   //权限模式
   permissionMode: string;
 }

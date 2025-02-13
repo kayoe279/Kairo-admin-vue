@@ -93,7 +93,7 @@
 
 <script lang="ts">
 import { useTableContext } from "../../hooks/useTableContext";
-import { useDesignSettingStore } from "@/store/modules/designSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import {
   DragOutlined,
   SettingOutlined,
@@ -120,7 +120,7 @@ export default defineComponent({
     VerticalLeftOutlined
   },
   setup() {
-    const designStore = useDesignSettingStore();
+    const themeStore = useThemeSettingStore();
     const table: any = useTableContext();
     const columnsList = ref<Options[]>([]);
     const cacheColumnsList = ref<Options[]>([]);
@@ -246,7 +246,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       columnsList,
-      darkTheme: designStore.theme === "dark",
+      darkTheme: themeStore.theme === "dark",
       onChange,
       onCheckAll,
       onSelection,

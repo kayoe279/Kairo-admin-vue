@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-3 gap-x-5 py-3">
     <div class="size-full h-16">
-      <NTooltip placement="bottom">
+      <n-tooltip placement="bottom">
         <template #trigger>
           <button
             :class="
@@ -20,11 +20,11 @@
           </button>
         </template>
         <span>左侧菜单模式</span>
-      </NTooltip>
+      </n-tooltip>
     </div>
 
     <div class="size-full h-16">
-      <NTooltip placement="bottom">
+      <n-tooltip placement="bottom">
         <template #trigger>
           <button
             :class="
@@ -42,11 +42,11 @@
           </button>
         </template>
         <span>顶部菜单模式</span>
-      </NTooltip>
+      </n-tooltip>
     </div>
 
     <div class="size-full h-16">
-      <NTooltip placement="bottom">
+      <n-tooltip placement="bottom">
         <template #trigger>
           <button
             :class="
@@ -65,22 +65,21 @@
           </button>
         </template>
         <span>顶部菜单混合模式</span>
-      </NTooltip>
+      </n-tooltip>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { cn } from "@/lib/utils";
-import type { ProjectSettingProps } from "@/settings/projectSetting";
-import { useDesignSettingStore } from "@/store/modules/designSetting";
-import { useProjectSettingStore } from "@/store/modules/projectSetting";
+import type { AppSettingProps } from "@/settings/appSetting";
+import { useAppSettingStore } from "@/store/modules/appSetting";
 import { storeToRefs } from "pinia";
 
-const settingStore = useProjectSettingStore();
+const settingStore = useAppSettingStore();
 const { navMode } = storeToRefs(settingStore);
 
-const togNavMode = (mode: ProjectSettingProps["navMode"]) => {
+const togNavMode = (mode: AppSettingProps["navMode"]) => {
   settingStore.setNavMode(mode);
 };
 </script>

@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { generatorMenu, generatorMenuMix } from "@/lib/utils";
+import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
-import { useDesignSettingStore } from "@/store/modules/designSetting";
-import { useProjectSettingStore } from "@/store/modules/projectSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref, unref, watch } from "vue";
@@ -41,9 +41,9 @@ const emit = defineEmits(["update:collapsed", "clickMenuItem"]);
 const currentRoute = useRoute();
 const router = useRouter();
 const asyncRouteStore = useAsyncRouteStore();
-const designStore = useDesignSettingStore();
-const settingStore = useProjectSettingStore();
-const { inverted, darkNav } = storeToRefs(designStore);
+const themeStore = useThemeSettingStore();
+const settingStore = useAppSettingStore();
+const { inverted, darkNav } = storeToRefs(themeStore);
 const { navMode } = storeToRefs(settingStore);
 
 const menus = ref<MenuMixedOption[]>([]);

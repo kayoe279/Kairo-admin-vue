@@ -1,14 +1,12 @@
-import { computed } from 'vue';
-import { useProjectSettingStore } from '@/store/modules/projectSetting';
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { computed } from "vue";
 
 export function useProjectSetting() {
-  const projectStore = useProjectSettingStore();
+  const projectStore = useAppSettingStore();
 
   const navMode = computed(() => projectStore.navMode);
 
   const navTheme = computed(() => projectStore.navTheme);
-
-  const isMobile = computed(() => projectStore.isMobile);
 
   const headerSetting = computed(() => projectStore.headerSetting);
 
@@ -16,7 +14,7 @@ export function useProjectSetting() {
 
   const menuSetting = computed(() => projectStore.menuSetting);
 
-  const crumbsSetting = computed(() => projectStore.crumbsSetting);
+  const breadcrumbsSetting = computed(() => projectStore.breadcrumbsSetting);
 
   const permissionMode = computed(() => projectStore.permissionMode);
 
@@ -29,14 +27,13 @@ export function useProjectSetting() {
   return {
     navMode,
     navTheme,
-    isMobile,
     headerSetting,
     multiTabsSetting,
     menuSetting,
-    crumbsSetting,
+    breadcrumbsSetting,
     permissionMode,
     showFooter,
     isPageAnimate,
-    pageAnimateType,
+    pageAnimateType
   };
 }

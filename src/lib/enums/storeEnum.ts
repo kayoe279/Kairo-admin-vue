@@ -1,6 +1,6 @@
 export enum StoreEnum {
   setting = "app-setting",
-  design = "app-design",
+  theme = "app-theme",
   user = "app-user",
   tabViews = "app-tabViews",
   screenLock = "app-screenLock",

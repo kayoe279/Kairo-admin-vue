@@ -3,14 +3,12 @@ const setting = {
   navMode: "vertical" as "vertical" | "horizontal" | "horizontal-mix",
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏
   navTheme: "light",
-  // 是否处于移动端模式
-  isMobile: false,
   //顶部
   headerSetting: {
-    //背景色
-    bgColor: "#fff",
-    //固定顶部
+    //固定顶部和页签
     fixed: true,
+    //顶部高度
+    height: 64,
     //显示重载按钮
     isReload: true
   },
@@ -18,12 +16,9 @@ const setting = {
   showFooter: true,
   //多标签
   multiTabsSetting: {
-    //背景色
-    bgColor: "#fff",
+    height: 44,
     //是否显示
-    show: true,
-    //固定多标签
-    fixed: true
+    show: true
   },
   //菜单
   menuSetting: {
@@ -31,17 +26,11 @@ const setting = {
     minMenuWidth: 64,
     //菜单宽度
     menuWidth: 200,
-    //固定菜单
-    fixed: true,
-    //分割菜单
-    mixMenu: true,
     //触发移动端侧边栏的宽度
-    mobileWidth: 800,
-    // 折叠菜单
-    collapsed: false
+    mobileWidth: 768
   },
   //面包屑
-  crumbsSetting: {
+  breadcrumbsSetting: {
     //是否显示
     show: true,
     //显示图标
@@ -55,5 +44,5 @@ const setting = {
   pageAnimateType: "zoom-fade"
 };
 
-export type ProjectSettingProps = typeof setting;
+export type AppSettingProps = typeof setting;
 export default setting;

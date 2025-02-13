@@ -1,36 +1,32 @@
 <template>
   <div v-if="position === 'header'">
     <div @click="() => handleToggleTheme(isDark ? 'light' : 'dark')">
-      <NIcon size="20" :component="isDark ? SunnyOutline : MoonOutline" />
+      <n-icon size="20" :component="isDark ? SunnyOutline : MoonOutline" />
     </div>
   </div>
   <div v-else class="m-auto flex w-[70%] items-center justify-center">
-    <NTabs
-      type="segment"
-      animated
-      :on-update:value="handleToggleTheme"
-      :default-value="designStore.theme"
-    >
-      <NTabPane name="light">
+    <n-tabs type="segment" animated :value="themeStore.theme" :on-update:value="handleToggleTheme">
+      <n-tab-pane name="light">
         <!-- @vue-ignore -->
         <template #tab>
-          <NIcon size="20" :component="Sunny" />
+          <n-icon size="20" :component="Sunny" />
         </template>
-      </NTabPane>
-      <NTabPane name="dark">
+      </n-tab-pane>
+      <n-tab-pane name="dark">
         <!-- @vue-ignore -->
         <template #tab>
-          <NIcon size="20" :component="Moon" />
+          <n-icon size="20" :component="Moon" />
         </template>
-      </NTabPane>
-    </NTabs>
+      </n-tab-pane>
+    </n-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useDesignSettingStore } from "@/store/modules/designSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { Moon, MoonOutline, Sunny, SunnyOutline } from "@vicons/ionicons5";
 import { useDark, useToggle } from "@vueuse/core";
+import { watch } from "vue";
 
 withDefaults(
   defineProps<{
@@ -42,12 +38,23 @@ withDefaults(
 );
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const designStore = useDesignSettingStore();
+const themeStore = useThemeSettingStore();
 
 const handleToggleTheme = (value: "light" | "dark") => {
-  toggleDark();
-  designStore.setTheme(value);
+  themeStore.setTheme(value);
 };
+
+watch(
+  () => themeStore.theme,
+  (value) => {
+    if (value === "light" && isDark.value) {
+      toggleDark();
+    }
+    if (value === "dark" && !isDark.value) {
+      toggleDark();
+    }
+  }
+);
 </script>
 
 <style>

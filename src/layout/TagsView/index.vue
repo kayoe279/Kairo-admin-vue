@@ -1,20 +1,23 @@
 <template>
   <div
-    :class="
-      cn(
-        'flex w-full py-1.5 transition-all duration-1000 ease-in-out',
-        multiTabsSetting.fixed && 'absolute left-0 z-[5] px-4 py-1.5'
-      )
-    "
+    class="flex w-full px-4 py-1.5 transition-all duration-1000 ease-in-out"
+    :style="{ height: multiTabsSetting.height + 'px' }"
   >
-    <div class="flex h-8 max-w-full min-w-full">
+    <div class="flex max-w-full min-w-full items-center">
       <div
         ref="navWrap"
-        :class="cn('relative flex-1 overflow-hidden', { 'overflow-hidden px-8': state.scrollable })"
+        :class="
+          cn('relative flex h-full flex-1 items-center overflow-hidden', {
+            'overflow-hidden px-8': state.scrollable
+          })
+        "
       >
         <button
           :class="
-            cn('absolute left-0 w-8 cursor-pointer text-center', !state.scrollable && 'hidden')
+            cn(
+              'absolute top-1/2 left-0 w-8 -translate-y-1/2 cursor-pointer text-center',
+              !state.scrollable && 'hidden'
+            )
           "
           @click="scrollPrev"
         >
@@ -22,7 +25,10 @@
         </button>
         <button
           :class="
-            cn('absolute right-0 w-8 cursor-pointer text-center', !state.scrollable && 'hidden')
+            cn(
+              'absolute top-1/2 right-0 w-8 -translate-y-1/2 cursor-pointer text-center',
+              !state.scrollable && 'hidden'
+            )
           "
           @click="scrollNext"
         >
@@ -32,7 +38,7 @@
             :component="RightOutlined"
           />
         </button>
-        <div ref="navScroll" class="overflow-hidden whitespace-nowrap">
+        <div ref="navScroll" class="flex h-full items-center overflow-hidden whitespace-nowrap">
           <Draggable :list="tabsList" animation="300" item-key="fullPath" class="flex">
             <template #item="{ element }">
               <div
@@ -61,7 +67,7 @@
       </div>
 
       <div class="size-8 cursor-pointer rounded-xs text-center">
-        <NDropdown
+        <n-dropdown
           trigger="hover"
           @select="closeHandleSelect"
           placement="bottom-end"
@@ -70,9 +76,9 @@
           <div class="flex size-full items-center justify-center">
             <nIcon size="16" :component="DownOutlined" />
           </div>
-        </NDropdown>
+        </n-dropdown>
       </div>
-      <NDropdown
+      <n-dropdown
         :show="state.showDropdown"
         :x="state.dropdownX"
         :y="state.dropdownY"
@@ -91,8 +97,8 @@ import { storage } from "@/lib/Storage";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { cn } from "@/lib/utils";
 import { renderIcon } from "@/lib/utils";
+import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
-import { useProjectSettingStore } from "@/store/modules/projectSetting";
 import { useTabsViewStore } from "@/store/modules/tabsView";
 import type { RouteItem } from "@/store/modules/tabsView";
 import { TABS_ROUTES } from "@/store/mutation-types";
@@ -112,7 +118,7 @@ import { computed, nextTick, onMounted, provide, reactive, ref, watch } from "vu
 import { useRoute, useRouter } from "vue-router";
 import Draggable from "vuedraggable";
 
-const settingStore = useProjectSettingStore();
+const settingStore = useAppSettingStore();
 const { headerSetting, multiTabsSetting } = storeToRefs(settingStore);
 
 const message = useMessage();
@@ -134,8 +140,7 @@ const state = reactive({
   dropdownX: 0,
   dropdownY: 0,
   showDropdown: false,
-  isMultiHeaderFixed: false,
-  multiTabsSetting: multiTabsSetting
+  isMultiHeaderFixed: false
 });
 
 // 获取简易的路由对象
@@ -203,11 +208,7 @@ function onScroll(e) {
     document.documentElement.scrollTop ||
     window.pageYOffset ||
     document.body.scrollTop; // 滚动条偏移量
-  state.isMultiHeaderFixed = !!(
-    !headerSetting.value.fixed &&
-    multiTabsSetting.value.fixed &&
-    scrollTop >= 64
-  );
+  state.isMultiHeaderFixed = !!(!headerSetting.value.fixed && scrollTop >= 64);
 }
 
 // 移除缓存组件名称

@@ -9,8 +9,10 @@ export function setupUnplugin() {
     // 按需引入NaiveUi且自动创建组件声明
     Components({
       dts: "src/types/components.d.ts",
+      dirs: ["src/components", "src/layout"],
       resolvers: [NaiveUiResolver()]
     }),
+    // 创建svg图标
     createSvgIconsPlugin({
       iconDirs: [path.resolve(__dirname, "src/assets/icons/")],
       symbolId: "icon-[dir]-[name]"

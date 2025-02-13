@@ -3,7 +3,7 @@
     v-if="!isLock"
     :locale="zhCN"
     :theme="darkTheme"
-    :theme-overrides="getThemeOverrides"
+    :theme-overrides="themeOverrides"
     :date-locale="dateZhCN"
     class="h-full"
   >
@@ -20,9 +20,8 @@
 <script lang="ts" setup>
 import { LockScreen } from "@/components/LockScreen";
 import AppProvider from "@/layout/AppProvider.vue";
-import { lighten } from "@/lib/utils";
-import { useDesignSettingStore } from "@/store/modules/designSetting";
-import { useScreenLockStore } from "@/store/modules/screenLock.js";
+import { useScreenLockStore } from "@/store/modules/screenLock";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { dateZhCN, darkTheme as naiveDarkTheme, zhCN } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
@@ -30,26 +29,12 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const useScreenLock = useScreenLockStore();
-const designStore = useDesignSettingStore();
-const { theme, themeColor, grayMode } = storeToRefs(designStore);
+const themeStore = useThemeSettingStore();
+const { theme, themeOverrides, grayMode } = storeToRefs(themeStore);
 
 const darkTheme = computed(() => (theme.value === "dark" ? naiveDarkTheme : undefined));
 const isLock = computed(() => useScreenLock.isLocked);
 const lockTime = computed(() => useScreenLock.lockTime);
-const getThemeOverrides = computed(() => {
-  const lightenStr = lighten(themeColor.value, 6);
-  return {
-    common: {
-      primaryColor: themeColor.value,
-      primaryColorHover: lightenStr,
-      primaryColorPressed: lightenStr,
-      primaryColorSuppl: themeColor.value
-    },
-    LoadingBar: {
-      colorLoading: themeColor.value
-    }
-  };
-});
 
 // set gray-mode class to html or body dom
 watch(grayMode, (value) => {
@@ -82,7 +67,7 @@ const timekeeping = () => {
 };
 
 onMounted(() => {
-  designStore.setAppThemeVariable();
+  themeStore.setAppThemeVariable();
   document.addEventListener("mousedown", timekeeping);
 });
 

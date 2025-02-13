@@ -1,4 +1,4 @@
-import { useProjectSettingStore } from "./projectSetting";
+import { useAppSettingStore } from "./appSetting";
 import { generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes, constantRouter } from "@/router/index";
 import { store } from "@/store";
@@ -95,7 +95,7 @@ export const useAsyncRouteStore = defineStore({
         if (!permissions) return true;
         return permissionsList.some((item) => permissions.includes(item.value));
       };
-      const settingStore = useProjectSettingStore();
+      const settingStore = useAppSettingStore();
       if (unref(settingStore.permissionMode) === "BACK") {
         // 动态获取菜单
         try {

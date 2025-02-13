@@ -1,14 +1,14 @@
-import { useDesignSettingStore } from "@/store/modules/designSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { computed } from "vue";
 
 export function useDesignSetting() {
-  const designStore = useDesignSettingStore();
+  const themeStore = useThemeSettingStore();
 
-  const getDarkTheme = computed(() => designStore.theme === "dark");
+  const getDarkTheme = computed(() => themeStore.theme === "dark");
 
-  const getAppTheme = computed(() => designStore.themeColor);
+  const getAppTheme = computed(() => themeStore.themeColor);
 
-  const getAppThemeList = computed(() => designStore.appThemeList);
+  const getAppThemeList = computed(() => themeStore.appThemeList);
 
   return {
     getDarkTheme,
