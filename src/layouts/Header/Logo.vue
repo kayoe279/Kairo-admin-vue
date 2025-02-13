@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts" setup>
-import { websiteConfig } from "@/config/website.config";
 import { cn } from "@/lib/utils";
+import { websiteConfig } from "@/lib/websiteConfig";
 
 defineProps<{ collapsed: boolean }>();
 </script>

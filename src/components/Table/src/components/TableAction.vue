@@ -35,7 +35,7 @@
 <script lang="ts">
 import type { ActionItem } from "@/components/Table";
 import { usePermission } from "@/hooks/web/usePermission";
-import { isBoolean, isFunction } from "@/lib/is";
+import { isBoolean, isFunction } from "@/lib/utils/is";
 import { DownOutlined } from "@vicons/antd";
 import type { PropType } from "vue";
 import { computed, defineComponent, toRaw } from "vue";

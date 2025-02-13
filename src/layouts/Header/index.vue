@@ -124,7 +124,7 @@
 </template>
 
 <script lang="ts" setup>
-import { websiteConfig } from "@/config/website.config";
+import { websiteConfig } from "@/lib/websiteConfig";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useUserStore } from "@/store/modules/user";

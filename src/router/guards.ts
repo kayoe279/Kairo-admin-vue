@@ -15,8 +15,8 @@ export function createRouterGuards(router: Router) {
   const userStore = useUser();
   const asyncRouteStore = useAsyncRoute();
   router.beforeEach(async (to, from, next) => {
-    const Loading = window["$loading"] || null;
-    Loading && Loading.start();
+    const loadingBar = window["$loadingBar"] || null;
+    loadingBar && loadingBar.start();
     if (from.path === LOGIN_PATH && to.name === "errorPage") {
       next(PageEnum.BASE_HOME);
       return;
@@ -76,7 +76,7 @@ export function createRouterGuards(router: Router) {
     const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect };
     asyncRouteStore.setDynamicRouteAdded(true);
     next(nextData);
-    Loading && Loading.finish();
+    loadingBar && loadingBar.finish();
   });
 
   router.afterEach((to, _, failure) => {
@@ -99,8 +99,8 @@ export function createRouterGuards(router: Router) {
       }
     }
     asyncRouteStore.setKeepAliveComponents(keepAliveComponents);
-    const Loading = window["$loading"] || null;
-    Loading && Loading.finish();
+    const loadingBar = window["$loadingBar"] || null;
+    loadingBar && loadingBar.finish();
   });
 
   router.onError((error) => {

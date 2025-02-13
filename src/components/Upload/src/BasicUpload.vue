@@ -72,7 +72,7 @@
 import { basicProps } from "./props";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
 import { ResultEnum } from "@/lib/enums/httpEnum";
-import { isString } from "@/lib/is";
+import { isString } from "@/lib/utils/is";
 import componentSetting from "@/settings/componentSetting";
 import { DeleteOutlined, EyeOutlined, PlusOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";

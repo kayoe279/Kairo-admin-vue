@@ -1,7 +1,7 @@
 import { APISETTING } from "../const";
 import type { PaginationProps } from "../types/pagination";
 import type { BasicTableProps } from "../types/table";
-import { isBoolean, isFunction } from "@/lib/is";
+import { isBoolean, isFunction } from "@/lib/utils/is";
 import type { ComputedRef } from "vue";
 import { computed, onMounted, ref, unref, watch, watchEffect } from "vue";
 

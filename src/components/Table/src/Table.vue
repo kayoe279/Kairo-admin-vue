@@ -94,8 +94,8 @@ import { createTableContext } from "./hooks/useTableContext";
 import { basicProps } from "./props";
 import type { BasicTableProps } from "./types/table";
 import { useWindowSizeFn } from "@/hooks/event/useWindowSizeFn";
-import { getViewportOffset } from "@/lib/domUtils";
-import { isBoolean } from "@/lib/is";
+import { getViewportOffset } from "@/lib/utils/dom";
+import { isBoolean } from "@/lib/utils/is";
 import { ColumnHeightOutlined, QuestionCircleOutlined, ReloadOutlined } from "@vicons/antd";
 import { computed, nextTick, onMounted, ref, toRaw, unref } from "vue";
 

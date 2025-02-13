@@ -4,7 +4,7 @@
   </span>
 </template>
 <script lang="ts" setup>
-import { isNumber } from "@/lib/is";
+import { isNumber } from "@/lib/utils/is";
 import { TransitionPresets, useTransition } from "@vueuse/core";
 import { computed, onMounted, ref, unref, watch, watchEffect } from "vue";
 

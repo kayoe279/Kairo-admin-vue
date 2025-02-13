@@ -1,5 +1,5 @@
 import { PageEnum } from "@/lib/enums/pageEnum";
-import { isString } from "@/lib/is";
+import { isString } from "@/lib/utils/is";
 import { RedirectName } from "@/router/constant";
 import { unref } from "vue";
 import type { RouteLocationRaw, Router } from "vue-router";

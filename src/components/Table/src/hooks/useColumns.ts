@@ -2,7 +2,7 @@ import { renderEditCell } from "../components/editable";
 import type { BasicColumn, BasicTableProps } from "../types/table";
 import type { ActionItem } from "@/components/Table";
 import { usePermission } from "@/hooks/web/usePermission";
-import { isArray, isBoolean, isFunction, isString } from "@/lib/is";
+import { isArray, isBoolean, isFunction, isString } from "@/lib/utils/is";
 import { FormOutlined } from "@vicons/antd";
 import { cloneDeep, isEqual } from "lodash-es";
 import { NIcon, NTooltip } from "naive-ui";

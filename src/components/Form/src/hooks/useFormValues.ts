@@ -1,5 +1,5 @@
 import type { FormSchema } from "../types/form";
-import { isArray, isFunction, isNullOrUnDef, isObject, isString } from "@/lib/is";
+import { isArray, isFunction, isNullOrUnDef, isObject, isString } from "@/lib/utils/is";
 import { set } from "lodash-es";
 import { unref } from "vue";
 import type { ComputedRef, Ref } from "vue";

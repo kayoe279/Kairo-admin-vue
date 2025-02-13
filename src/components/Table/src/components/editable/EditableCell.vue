@@ -39,8 +39,8 @@ import { createPlaceholderMessage } from "./helper";
 import type { EditRecordRow } from "./index";
 import { EventEnum } from "@/components/Table/src/componentMap";
 import clickOutside from "@/directives/clickOutside";
-import { isArray, isBoolean, isFunction, isNumber, isString } from "@/lib/is";
-import { propTypes } from "@/lib/propTypes";
+import { propTypes } from "@/lib/propTypes";@/lib/utils/is
+import { isArray, isBoolean, isFunction, isNumber, isString } from "@/lib/utils/isUtils";
 import { CheckOutlined, CloseOutlined, FormOutlined } from "@vicons/antd";
 import { format, parseISO } from "date-fns";
 import { omit, set } from "lodash-es";

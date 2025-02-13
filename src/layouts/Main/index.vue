@@ -19,44 +19,27 @@
   </RouterView>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { getEnv } from "@/lib/env";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { storeToRefs } from "pinia";
-import { computed, defineComponent, unref } from "vue";
+import { computed, ref, unref } from "vue";
 
-export default defineComponent({
-  name: "MainView",
-  components: {},
-  props: {
-    notNeedKey: {
-      type: Boolean,
-      default: false
-    },
-    animate: {
-      type: Boolean,
-      default: true
-    }
-  },
-  setup() {
-    const settingStore = useAppSettingStore();
-    const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
-    const asyncRouteStore = useAsyncRouteStore();
-    // 需要缓存的路由组件
-    const keepAliveComponents = computed(() => asyncRouteStore.keepAliveComponents);
+type Props = { notNeedKey: boolean; animate: boolean };
+withDefaults(defineProps<Props>(), {
+  notNeedKey: false,
+  animate: true
+});
 
-    const getTransitionName = computed(() => {
-      return unref(isPageAnimate) ? unref(pageAnimateType) : "";
-    });
+const asyncRouteStore = useAsyncRouteStore();
+const settingStore = useAppSettingStore();
+const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
 
-    const mode = import.meta.env.MODE;
-    return {
-      keepAliveComponents,
-      getTransitionName,
-      mode
-    };
-  }
+const mode = ref(getEnv());
+
+const keepAliveComponents = computed(() => asyncRouteStore.keepAliveComponents);
+const getTransitionName = computed(() => {
+  return unref(isPageAnimate) ? unref(pageAnimateType) : "";
 });
 </script>
-
-<style lang="less" scoped></style>

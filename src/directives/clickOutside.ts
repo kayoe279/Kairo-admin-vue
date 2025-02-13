@@ -1,5 +1,5 @@
-import { on } from "@/lib/domUtils";
-import { isServer } from "@/lib/is";
+import { on } from "@/lib/utils/dom";
+import { isServer } from "@/lib/utils/is";
 import type { ComponentPublicInstance, DirectiveBinding, ObjectDirective } from "vue";
 
 type DocumentHandler = <T extends MouseEvent>(mouseup: T, mousedown: T) => void;

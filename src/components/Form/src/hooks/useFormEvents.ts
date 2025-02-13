@@ -1,5 +1,5 @@
 import type { FormActionType, FormProps, FormSchema } from "../types/form";
-import { isFunction } from "@/lib/is";
+import { isFunction } from "@/lib/utils/is";
 import type { ComputedRef, Ref } from "vue";
 import { toRaw, unref } from "vue";
 

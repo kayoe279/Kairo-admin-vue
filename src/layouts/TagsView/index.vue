@@ -273,20 +273,20 @@ const reloadPage = () => {
 };
 
 // 关闭左侧
-const closeLeft = (route) => {
-  tabsViewStore.closeLeftTabs(route);
-  state.activeKey = route.fullPath;
-  router.replace(route.fullPath);
-  updateNavScroll();
-};
+// const closeLeft = (route) => {
+//   tabsViewStore.closeLeftTabs(route);
+//   state.activeKey = route.fullPath;
+//   router.replace(route.fullPath);
+//   updateNavScroll();
+// };
 
-// 关闭右侧
-const closeRight = (route) => {
-  tabsViewStore.closeRightTabs(route);
-  state.activeKey = route.fullPath;
-  router.replace(route.fullPath);
-  updateNavScroll();
-};
+// // 关闭右侧
+// const closeRight = (route) => {
+//   tabsViewStore.closeRightTabs(route);
+//   state.activeKey = route.fullPath;
+//   router.replace(route.fullPath);
+//   updateNavScroll();
+// };
 
 // 关闭其他
 const closeOther = (route) => {

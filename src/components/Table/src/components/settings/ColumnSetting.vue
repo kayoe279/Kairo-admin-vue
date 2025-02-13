@@ -231,7 +231,7 @@ export default defineComponent({
 
     //固定
     function fixedColumn(item, fixed) {
-      if (!state.checkList.includes(item.key)) return;
+      if (!state.checkList.includes(item.key as never)) return;
       const columns = getColumns();
       const isFixed = item.fixed === fixed ? undefined : fixed;
       const index = columns.findIndex((res) => res.key === item.key);

@@ -1,5 +1,5 @@
-import { isObject } from "./is/index";
 import { PageEnum } from "@/lib/enums/pageEnum";
+import { isObject } from "@/lib/utils/is";
 import { type ClassValue, clsx } from "clsx";
 import { cloneDeep } from "lodash-es";
 import { NIcon, NTag } from "naive-ui";
@@ -239,13 +239,6 @@ export function lighten(color: string, amount: number) {
     color.substring(2, 4),
     amount
   )}${addLight(color.substring(4, 6), amount)}`;
-}
-
-/**
- * 判断是否 url
- * */
-export function isUrl(url: string) {
-  return /^(http|https):\/\//g.test(url);
 }
 
 // cn

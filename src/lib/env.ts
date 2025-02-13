@@ -1,7 +1,7 @@
-import { getConfigFileName } from "../../build/getConfigFileName";
-import pkg from "../../package.json";
-import type { GlobEnvConfig } from "../types/config";
 import { warn } from "@/lib/log";
+import type { GlobEnvConfig } from "@/types/config";
+import { getConfigFileName } from "~/build/getConfigFileName";
+import pkg from "~/package.json";
 
 export function getCommonStoragePrefix() {
   const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();
@@ -65,8 +65,8 @@ export const prodMode = "production";
  * @returns:
  * @example:
  */
-export function getEnv(): string {
-  return import.meta.env.MODE;
+export function getEnv() {
+  return import.meta.env.MODE as "development" | "production";
 }
 
 /**

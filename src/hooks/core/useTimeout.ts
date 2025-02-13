@@ -1,4 +1,4 @@
-import { isFunction } from "@/lib/is";
+import { isFunction } from "@/lib/utils/is";
 import { tryOnUnmounted } from "@vueuse/core";
 import { ref, watch } from "vue";
 

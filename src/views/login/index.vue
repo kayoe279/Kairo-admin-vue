@@ -85,9 +85,9 @@
 </template>
 
 <script lang="ts" setup>
-import { websiteConfig } from "@/config/website.config";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { PageEnum } from "@/lib/enums/pageEnum";
+import { websiteConfig } from "@/lib/websiteConfig";
 import { useUserStore } from "@/store/modules/user";
 import { LockClosedOutline, LogoFacebook, LogoGithub, PersonOutline } from "@vicons/ionicons5";
 import { useMessage } from "naive-ui";

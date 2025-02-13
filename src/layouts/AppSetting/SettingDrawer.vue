@@ -1,5 +1,5 @@
 <template>
-  <n-drawer v-model:show="open" :width="360" placement="right">
+  <n-drawer v-model:show="open" :width="DRAWER_WIDTH" placement="right">
     <n-drawer-content title="项目配置" :native-scrollbar="false" closable>
       <div>
         <n-divider title-placement="center">主题</n-divider>
@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { DRAWER_WIDTH } from "@/lib/constants";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { useMessage } from "naive-ui";
