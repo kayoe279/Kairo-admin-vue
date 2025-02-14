@@ -1,5 +1,5 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import projectSetting, { AppSettingProps } from "@/settings/appSetting";
+import appSetting, { AppSettingProps } from "@/settings/appSetting";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
@@ -8,7 +8,7 @@ import { ref, toRefs } from "vue";
 export const useAppSettingStore = defineStore(
   StoreEnum.setting,
   () => {
-    const settings = ref(cloneDeep(projectSetting));
+    const settings = ref(cloneDeep(appSetting));
 
     const [open, toggleDrawer] = useToggle(false);
 
@@ -23,7 +23,7 @@ export const useAppSettingStore = defineStore(
     // 重置 store
     const resetAppSetting = () => {
       Object.assign(settings.value, {
-        ...cloneDeep(projectSetting)
+        ...cloneDeep(appSetting)
       });
     };
 

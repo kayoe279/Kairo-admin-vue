@@ -1,9 +1,10 @@
 import { useAppSettingStore } from "./appSetting";
+import { StoreEnum } from "@/lib/enums/storeEnum";
 import { generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes, constantRouter } from "@/router/index";
 import { store } from "@/store";
 import { defineStore } from "pinia";
-import { toRaw, unref } from "vue";
+import { ref, toRaw, unref } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 
 interface TreeHelperConfig {
@@ -48,75 +49,87 @@ function filter<T = any>(
   return listFilter(tree);
 }
 
-export const useAsyncRouteStore = defineStore({
-  id: "app-async-route",
-  state: (): IAsyncRouteState => ({
-    menus: [],
-    routers: constantRouter,
-    routersAdded: [],
-    keepAliveComponents: [],
-    // Whether the route has been dynamically added
-    isDynamicRouteAdded: false
-  }),
-  getters: {
-    getMenus(): RouteRecordRaw[] {
-      return this.menus;
-    },
-    getIsDynamicRouteAdded(): boolean {
-      return this.isDynamicRouteAdded;
-    }
-  },
-  actions: {
-    getRouters() {
-      return toRaw(this.routersAdded);
-    },
-    setDynamicRouteAdded(added: boolean) {
-      this.isDynamicRouteAdded = added;
-    },
-    // 设置动态路由
-    setRouters(routers: RouteRecordRaw[]) {
-      this.routersAdded = routers;
-      this.routers = constantRouter.concat(routers);
-    },
-    setMenus(menus: RouteRecordRaw[]) {
-      // 设置动态路由
-      this.menus = menus;
-    },
-    setKeepAliveComponents(compNames: string[]) {
-      // 设置需要缓存的组件
-      this.keepAliveComponents = compNames;
-    },
-    async generateRoutes(data) {
-      let accessedRouters;
-      const permissionsList = data.permissions ?? [];
-      const routeFilter = (route) => {
-        const { meta } = route;
-        const { permissions } = meta || {};
-        if (!permissions) return true;
-        return permissionsList.some((item) => permissions.includes(item.value));
-      };
-      const settingStore = useAppSettingStore();
-      if (unref(settingStore.permissionMode) === "BACK") {
-        // 动态获取菜单
-        try {
-          accessedRouters = await generateDynamicRoutes();
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          //过滤账户是否拥有某一个权限，并将菜单从加载列表移除
-          accessedRouters = filter(asyncRoutes, routeFilter);
-        } catch (error) {
-          console.log(error);
-        }
+export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
+  const settingStore = useAppSettingStore();
+
+  const activeMenu = ref<string | null>(null);
+  const menus = ref<RouteRecordRaw[]>([]);
+  const routers = ref<RouteRecordRaw[]>(constantRouter);
+  const routersAdded = ref<RouteRecordRaw[]>([]);
+  const keepAliveComponents = ref<string[]>([]);
+  const isDynamicRouteAdded = ref<boolean>(false);
+
+  // set the currently highlighted menu key
+  const setActiveMenu = (key: string) => {
+    activeMenu.value = key;
+  };
+
+  const getRouters = () => {
+    return toRaw(routersAdded.value);
+  };
+
+  const setDynamicRouteAdded = (added: boolean) => {
+    isDynamicRouteAdded.value = added;
+  };
+  // 设置动态路由
+  const setRouters = (_routers: RouteRecordRaw[]) => {
+    routersAdded.value = _routers;
+    routers.value = constantRouter.concat(_routers);
+  };
+  // 设置菜单
+  const setMenus = (_menus: RouteRecordRaw[]) => {
+    menus.value = _menus;
+  };
+  // 设置需要缓存的组件
+  const setKeepAliveComponents = (compNames: string[]) => {
+    keepAliveComponents.value = compNames;
+  };
+  // 生成路由
+  const generateRoutes = async (data) => {
+    let accessedRouters;
+    const permissionsList = data.permissions ?? [];
+    const routeFilter = (route) => {
+      const { meta } = route;
+      const { permissions } = meta || {};
+      if (!permissions) return true;
+      return permissionsList.some((item) => permissions.includes(item.value));
+    };
+    if (unref(settingStore.permissionMode) === "BACK") {
+      // 动态获取菜单
+      try {
+        accessedRouters = await generateDynamicRoutes();
+      } catch (error) {
+        console.log(error);
       }
-      accessedRouters = accessedRouters.filter(routeFilter);
-      this.setRouters(accessedRouters);
-      this.setMenus(accessedRouters);
-      return toRaw(accessedRouters);
+    } else {
+      try {
+        //过滤账户是否拥有某一个权限，并将菜单从加载列表移除
+        accessedRouters = filter(asyncRoutes, routeFilter);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
+    accessedRouters = accessedRouters.filter(routeFilter);
+    setRouters(accessedRouters);
+    setMenus(accessedRouters);
+    return toRaw(accessedRouters);
+  };
+
+  return {
+    activeMenu,
+    menus,
+    routers,
+    routersAdded,
+    keepAliveComponents,
+    isDynamicRouteAdded,
+    setActiveMenu,
+    getRouters,
+    setDynamicRouteAdded,
+    setRouters,
+    setMenus,
+    setKeepAliveComponents,
+    generateRoutes
+  };
 });
 
 // Need to be used outside the setup

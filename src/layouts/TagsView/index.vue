@@ -15,58 +15,59 @@
         <button
           :class="
             cn(
-              'absolute top-1/2 left-0 w-8 -translate-y-1/2 cursor-pointer text-center',
+              'absolute top-1/2 left-0 w-8 -translate-y-1/2 cursor-pointer rounded-md text-center',
               !state.scrollable && 'hidden'
             )
           "
           @click="scrollPrev"
         >
-          <nIcon size="16" class="!flex !size-8 !items-center" :component="LeftOutlined" />
+          <n-icon
+            size="16"
+            class="!flex !size-8 !items-center !justify-center"
+            :component="LeftOutlined"
+          />
         </button>
         <button
           :class="
             cn(
-              'absolute top-1/2 right-0 w-8 -translate-y-1/2 cursor-pointer text-center',
+              'absolute top-1/2 right-0 w-8 -translate-y-1/2 cursor-pointer rounded-md text-center',
               !state.scrollable && 'hidden'
             )
           "
           @click="scrollNext"
         >
-          <nIcon
+          <n-icon
             size="16"
             class="!flex !size-8 !items-center !justify-center"
             :component="RightOutlined"
           />
         </button>
         <div ref="navScroll" class="flex h-full items-center overflow-hidden whitespace-nowrap">
-          <Draggable :list="tabsList" animation="300" item-key="fullPath" class="flex">
+          <Draggable :list="tabsList" animation="300" item-key="fullPath" class="flex gap-x-2">
             <template #item="{ element }">
-              <div
+              <n-button
                 :id="`tag${element.fullPath.split('/').join('\/')}`"
-                :class="
-                  cn(
-                    'tabs-card-scroll-item text-foreground hover:text-primary bg-background relative mr-1.5 flex h-8 cursor-pointer items-center justify-center rounded-md px-4 py-1.5 transition-all',
-                    state.activeKey === element.fullPath && 'text-primary'
-                  )
-                "
+                class="tabs-card-scroll-item relative flex !h-8 cursor-pointer items-center justify-center rounded-md px-4 py-1.5"
+                secondary
+                :type="state.activeKey === element.fullPath ? 'primary' : 'default'"
                 @click.stop="goPage(element)"
                 @contextmenu="handleContextMenu($event, element)"
               >
                 <span>{{ element.meta.title }}</span>
-                <nIcon
+                <n-icon
                   v-if="!element.meta.affix"
                   size="14"
                   :component="CloseOutlined"
                   class="ml-2 !flex !size-3.5 !items-center"
                   @click.stop="closeTabItem(element)"
                 />
-              </div>
+              </n-button>
             </template>
           </Draggable>
         </div>
       </div>
 
-      <div class="size-8 cursor-pointer rounded-xs text-center">
+      <n-button quaternary class="!size-8 cursor-pointer rounded-md text-center">
         <n-dropdown
           trigger="hover"
           @select="closeHandleSelect"
@@ -74,10 +75,10 @@
           :options="TabsMenuOptions"
         >
           <div class="flex size-full items-center justify-center">
-            <nIcon size="16" :component="DownOutlined" />
+            <n-icon size="16" :component="DownOutlined" />
           </div>
         </n-dropdown>
-      </div>
+      </n-button>
       <n-dropdown
         :show="state.showDropdown"
         :x="state.dropdownX"
@@ -94,6 +95,7 @@
 <script setup lang="ts">
 import { useGo } from "@/hooks/web/usePage";
 import { storage } from "@/lib/Storage";
+import { TABS_ROUTES } from "@/lib/constants";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { cn } from "@/lib/utils";
 import { renderIcon } from "@/lib/utils";
@@ -101,7 +103,6 @@ import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { useTabsViewStore } from "@/store/modules/tabsView";
 import type { RouteItem } from "@/store/modules/tabsView";
-import { TABS_ROUTES } from "@/store/mutation-types";
 import {
   CloseOutlined,
   ColumnWidthOutlined,
@@ -114,7 +115,7 @@ import {
 import elementResizeDetectorMaker from "element-resize-detector";
 import { useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed, nextTick, onMounted, provide, reactive, ref, watch } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Draggable from "vuedraggable";
 
@@ -127,11 +128,10 @@ const router = useRouter();
 const tabsViewStore = useTabsViewStore();
 const asyncRouteStore = useAsyncRouteStore();
 
-// Refs
 const navScroll = ref<HTMLElement | null>(null);
 const navWrap = ref<HTMLElement | null>(null);
 const isCurrent = ref(false);
-const go = useGo();
+const navigateTo = useGo();
 
 // Reactive state
 const state = reactive({
@@ -414,7 +414,7 @@ function goPage(e) {
   const { fullPath } = e;
   if (fullPath === route.fullPath) return;
   state.activeKey = fullPath;
-  go(e, true);
+  navigateTo(e, true);
 }
 
 //删除tab
@@ -433,7 +433,4 @@ function onElementResize() {
   const observer = elementResizeDetectorMaker();
   observer.listenTo(navWrap.value, handleResize);
 }
-
-// Provide
-provide("reloadPage", reloadPage);
 </script>

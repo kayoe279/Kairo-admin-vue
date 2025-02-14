@@ -1,13 +1,9 @@
-import { PageEnum } from "@/lib/enums/pageEnum";
 import { isObject } from "@/lib/utils/is";
 import { type ClassValue, clsx } from "clsx";
-import { cloneDeep } from "lodash-es";
 import { NIcon, NTag } from "naive-ui";
-import { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import { twMerge } from "tailwind-merge";
 import { h, unref } from "vue";
 import type { App, Component, Plugin } from "vue";
-import type { RouteRecordRaw } from "vue-router";
 
 /**
  * render 图标
@@ -54,103 +50,6 @@ export function renderNew(type = "warning", text = "New", color: object = newTag
       },
       { default: () => text }
     );
-}
-
-/**
- * 递归组装菜单格式
- */
-export function generatorMenu(routerMap: Array<RouteRecordRaw>) {
-  return filterRouter(routerMap).map((item) => {
-    const isRoot = isRootRouter(item);
-    const info = isRoot ? (item.children || [])[0] : item;
-    const currentMenu = {
-      ...info,
-      ...info.meta,
-      label: info.meta?.title,
-      key: info.name,
-      icon: isRoot ? item.meta?.icon : info.meta?.icon
-    } as MenuMixedOption;
-    // 是否有子菜单，并递归处理
-    if (info?.children && info?.children.length > 0) {
-      // Recursion
-      currentMenu.children = generatorMenu(info.children);
-    }
-    return currentMenu;
-  });
-}
-
-/**
- * 混合菜单
- * */
-export function generatorMenuMix(
-  routerMap: Array<RouteRecordRaw>,
-  routerName: string,
-  location: string
-) {
-  const cloneRouterMap = cloneDeep(routerMap);
-  const newRouter = filterRouter(cloneRouterMap);
-  if (location === "header") {
-    const firstRouter: MenuMixedOption[] = [];
-    newRouter.forEach((item) => {
-      const isRoot = isRootRouter(item);
-      const info = isRoot ? (item.children || [])[0] : item;
-      info.children = undefined;
-      const currentMenu = {
-        ...info,
-        ...info.meta,
-        label: info.meta?.title,
-        key: info.name
-      } as MenuMixedOption;
-      firstRouter.push(currentMenu);
-    });
-    return firstRouter;
-  } else {
-    return getChildrenRouter(newRouter.filter((item) => item.name === routerName));
-  }
-}
-
-/**
- * 递归组装子菜单
- * */
-export function getChildrenRouter(routerMap: Array<RouteRecordRaw>) {
-  return filterRouter(routerMap).map((item) => {
-    const isRoot = isRootRouter(item);
-    const info = isRoot ? (item.children || [])[0] : item;
-    const currentMenu = {
-      ...info,
-      ...info.meta,
-      label: info.meta?.title,
-      key: info.name
-    } as MenuMixedOption;
-    // 是否有子菜单，并递归处理
-    if (info.children && info.children.length > 0) {
-      // Recursion
-      currentMenu.children = getChildrenRouter(info.children);
-    }
-    return currentMenu;
-  });
-}
-
-/**
- * 判断根路由 Router
- * */
-export function isRootRouter(item) {
-  return (
-    item.meta?.alwaysShow != true &&
-    item?.children?.filter((item) => !Boolean(item?.meta?.hidden))?.length === 1
-  );
-}
-
-/**
- * 排除Router
- * */
-export function filterRouter(routerMap: Array<RouteRecordRaw>) {
-  return routerMap.filter((item) => {
-    return (
-      (item.meta?.hidden || false) != true &&
-      !["/:path(.*)*", "/", PageEnum.REDIRECT, PageEnum.BASE_LOGIN].includes(item.path)
-    );
-  });
 }
 
 export const withInstall = <T extends Component>(component: T, alias?: string) => {

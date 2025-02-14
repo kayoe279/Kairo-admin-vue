@@ -1,7 +1,7 @@
 <template>
   <n-layout :position="fixedMenu" has-sider>
     <n-layout-sider
-      v-show="showMenu"
+      v-if="showMenu"
       show-trigger="bar"
       @collapse="collapsed = true"
       @expand="collapsed = false"
@@ -14,7 +14,7 @@
       class="!z-[12] !shadow-xs !transition-all duration-200 ease-in-out"
     >
       <Logo :collapsed="collapsed" />
-      <Menu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
+      <Menu v-model:collapsed="collapsed" />
     </n-layout-sider>
 
     <n-drawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
@@ -26,7 +26,7 @@
         :inverted="inverted || darkNav"
       >
         <Logo :collapsed="collapsed" />
-        <Menu v-model:location="getMenuLocation" />
+        <Menu />
       </n-layout-sider>
     </n-drawer>
 
@@ -92,10 +92,6 @@ const mainStyles = computed(() => {
 const desktopMenuWidth = computed(() => {
   const { minMenuWidth, menuWidth } = unref(menuSetting);
   return collapsed.value ? minMenuWidth : menuWidth;
-});
-
-const getMenuLocation = computed(() => {
-  return unref(navMode) === "horizontal" ? "header" : "left";
 });
 
 // 控制显示或隐藏移动端侧边栏

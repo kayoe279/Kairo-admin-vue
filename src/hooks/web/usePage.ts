@@ -20,7 +20,10 @@ export function useGo(_router?: Router) {
     router = useRouter();
   }
   const { push, replace } = _router || router;
-  function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
+  function navigateTo(
+    opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME,
+    isReplace = false
+  ) {
     if (!opt) {
       return;
     }
@@ -31,7 +34,7 @@ export function useGo(_router?: Router) {
       isReplace ? replace(o).catch(handleError) : push(o).catch(handleError);
     }
   }
-  return go;
+  return navigateTo;
 }
 
 /**

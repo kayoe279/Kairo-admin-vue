@@ -20,11 +20,13 @@
     <SettingItem title="显示面包屑导航">
       <n-switch v-model:value="breadcrumbsSetting.show" />
     </SettingItem>
-
     <SettingItem title="显示面包屑显示图标">
       <n-switch v-model:value="breadcrumbsSetting.showIcon" />
     </SettingItem>
 
+    <SettingItem title="菜单手风琴模式">
+      <n-switch v-model:value="menuSetting.accordion" />
+    </SettingItem>
     <SettingItem title="菜单展开宽度">
       <n-input-number v-model:value="menuSetting.menuWidth" class="w-30" />
     </SettingItem>

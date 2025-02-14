@@ -1,12 +1,14 @@
-import { getUserInfo as getUserInfoApi, login } from "@/api/system/user";
+import { getUserInfo as getUserInfoApi, login as loginApi } from "@/api/system/user";
 import { storage } from "@/lib/Storage";
+import { ACCESS_TOKEN, CURRENT_USER, IS_SCREEN_LOCKED } from "@/lib/constants";
 import { ResultEnum } from "@/lib/enums/httpEnum";
+import { StoreEnum } from "@/lib/enums/storeEnum";
 import { store } from "@/store";
-import { ACCESS_TOKEN, CURRENT_USER, IS_SCREENLOCKED } from "@/store/mutation-types";
 import { defineStore } from "pinia";
+import { computed, ref } from "vue";
 
+// TODO: add your own data
 export type UserInfoType = {
-  // TODO: add your own data
   username: string;
   email: string;
 };
@@ -20,84 +22,86 @@ export interface IUserState {
   info: UserInfoType;
 }
 
-export const useUserStore = defineStore({
-  id: "app-user",
-  state: (): IUserState => ({
-    token: storage.get(ACCESS_TOKEN, ""),
-    username: "",
-    welcome: "",
-    avatar: "",
-    permissions: [],
-    info: storage.get(CURRENT_USER, {})
-  }),
-  getters: {
-    getToken(): string {
-      return this.token;
-    },
-    getAvatar(): string {
-      return this.avatar;
-    },
-    getNickname(): string {
-      return this.username;
-    },
-    getPermissions(): [any][] {
-      return this.permissions;
-    },
-    getUserInfo(): UserInfoType {
-      return this.info;
-    }
-  },
-  actions: {
-    setToken(token: string) {
-      this.token = token;
-    },
-    setAvatar(avatar: string) {
-      this.avatar = avatar;
-    },
-    setPermissions(permissions) {
-      this.permissions = permissions;
-    },
-    setUserInfo(info: UserInfoType) {
-      this.info = info;
-    },
-    // 登录
-    async login(params: any) {
-      const response = await login(params);
-      const { result, code } = response;
-      if (code === ResultEnum.SUCCESS) {
-        const ex = 7 * 24 * 60 * 60;
-        storage.set(ACCESS_TOKEN, result.token, ex);
-        storage.set(CURRENT_USER, result, ex);
-        storage.set(IS_SCREENLOCKED, false);
-        this.setToken(result.token);
-        this.setUserInfo(result);
-      }
-      return response;
-    },
+export const useUserStore = defineStore(StoreEnum.user, () => {
+  const token = ref("");
+  const username = ref("");
+  const avatar = ref("");
+  const permissions = ref<any[]>([]);
+  const info = ref<UserInfoType | null>(null);
 
-    // 获取用户信息
-    async getInfo() {
-      const data = await getUserInfoApi();
-      const { result } = data;
-      if (result.permissions && result.permissions.length) {
-        const permissionsList = result.permissions;
-        this.setPermissions(permissionsList);
-        this.setUserInfo(result);
-      } else {
-        throw new Error("getInfo: permissionsList must be a non-null array !");
-      }
-      this.setAvatar(result.avatar);
-      return result;
-    },
+  const getToken = computed(() => token.value);
+  const getAvatar = computed(() => avatar.value);
+  const getNickname = computed(() => username.value);
+  const getPermissions = computed(() => permissions.value);
+  const getUserInfo = computed(() => info.value);
 
-    // 登出
-    async logout() {
-      this.setPermissions([]);
-      this.setUserInfo({ username: "", email: "" });
-      storage.remove(ACCESS_TOKEN);
-      storage.remove(CURRENT_USER);
+  const setToken = (_token: string) => {
+    token.value = _token;
+  };
+  const setAvatar = (_avatar: string) => {
+    avatar.value = _avatar;
+  };
+  const setPermissions = (_permissions: any[]) => {
+    permissions.value = _permissions;
+  };
+  const setUserInfo = (_info: UserInfoType) => {
+    info.value = _info;
+  };
+
+  const login = async (params: any) => {
+    const response = await loginApi(params);
+    const { result, code } = response;
+    if (code === ResultEnum.SUCCESS) {
+      const ex = 7 * 24 * 60 * 60;
+      storage.set(ACCESS_TOKEN, result.token, ex);
+      storage.set(CURRENT_USER, result, ex);
+      storage.set(IS_SCREEN_LOCKED, false);
+      setToken(result.token);
+      setUserInfo(result);
     }
-  }
+    return response;
+  };
+
+  const getInfo = async () => {
+    const data = await getUserInfoApi();
+    const { result } = data;
+    if (result.permissions && result.permissions.length) {
+      const permissionsList = result.permissions;
+      setPermissions(permissionsList);
+      setUserInfo(result);
+    } else {
+      throw new Error("getInfo: permissionsList must be a non-null array !");
+    }
+    setAvatar(result.avatar);
+    return result;
+  };
+
+  const logout = async () => {
+    setPermissions([]);
+    setUserInfo({ username: "", email: "" });
+    storage.remove(ACCESS_TOKEN);
+    storage.remove(CURRENT_USER);
+  };
+
+  return {
+    token,
+    username,
+    avatar,
+    permissions,
+    info,
+    getToken,
+    getAvatar,
+    getNickname,
+    getPermissions,
+    getUserInfo,
+    setToken,
+    setAvatar,
+    setPermissions,
+    setUserInfo,
+    login,
+    getInfo,
+    logout
+  };
 });
 
 // Need to be used outside the setup

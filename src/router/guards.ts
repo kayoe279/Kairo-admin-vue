@@ -1,9 +1,9 @@
 import { storage } from "@/lib/Storage";
+import { ACCESS_TOKEN } from "@/lib/constants";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { ErrorPageRoute } from "@/router/base";
 import { useAsyncRoute } from "@/store/modules/asyncRoute";
 import { useUser } from "@/store/modules/user";
-import { ACCESS_TOKEN } from "@/store/mutation-types";
 import type { RouteRecordRaw, Router } from "vue-router";
 import { isNavigationFailure } from "vue-router";
 
@@ -51,7 +51,7 @@ export function createRouterGuards(router: Router) {
       return;
     }
 
-    if (asyncRouteStore.getIsDynamicRouteAdded) {
+    if (asyncRouteStore.isDynamicRouteAdded) {
       next();
       return;
     }
@@ -77,6 +77,11 @@ export function createRouterGuards(router: Router) {
     asyncRouteStore.setDynamicRouteAdded(true);
     next(nextData);
     loadingBar && loadingBar.finish();
+  });
+
+  router.beforeResolve((to) => {
+    // 设置菜单高亮
+    asyncRouteStore.setActiveMenu((to.meta?.activeMenu as string) ?? (to.name as string));
   });
 
   router.afterEach((to, _, failure) => {

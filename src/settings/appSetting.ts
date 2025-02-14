@@ -16,7 +16,7 @@ const setting = {
   showFooter: true,
   //多标签
   multiTabsSetting: {
-    height: 44,
+    height: 46,
     //是否显示
     show: true
   },
@@ -27,7 +27,9 @@ const setting = {
     //菜单宽度
     menuWidth: 200,
     //触发移动端侧边栏的宽度
-    mobileWidth: 768
+    mobileWidth: 768,
+    // 菜单手风琴模式
+    accordion: false
   },
   //面包屑
   breadcrumbsSetting: {

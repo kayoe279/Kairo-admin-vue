@@ -124,11 +124,11 @@
 </template>
 
 <script lang="ts" setup>
+import { TABS_ROUTES } from "@/lib/constants";
 import { websiteConfig } from "@/lib/websiteConfig";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useUserStore } from "@/store/modules/user";
-import { TABS_ROUTES } from "@/store/mutation-types";
 import {
   FullscreenExitOutlined,
   FullscreenOutlined,

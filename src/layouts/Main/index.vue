@@ -26,12 +26,6 @@ import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { storeToRefs } from "pinia";
 import { computed, ref, unref } from "vue";
 
-type Props = { notNeedKey: boolean; animate: boolean };
-withDefaults(defineProps<Props>(), {
-  notNeedKey: false,
-  animate: true
-});
-
 const asyncRouteStore = useAsyncRouteStore();
 const settingStore = useAppSettingStore();
 const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);

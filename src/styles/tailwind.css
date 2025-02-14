@@ -17,9 +17,6 @@ html.dark {
 
 @theme inline {
   --font-poppins: var(--font-poppins);
-  --font-comfortaa: var(--font-comfortaa);
-  --font-white-angelica: var(--font-white-angelica);
-  --font-gloria-hallelujah: var(--font-gloria-hallelujah);
 
   --color-primary: var(--primary-foreground);
   --color-background-root: var(--background-root);
@@ -28,9 +25,9 @@ html.dark {
 }
 
 @theme {
-  --color-success: #009688;
-  --color-warning: #fb9300;
-  --color-error: #ff3d68;
+  --color-gray-200: #f3f3f5;
+
+  --font-maple: "Maple", sans-serif;
 
   --text-8: 0.5rem;
   --text-9: 0.5625rem;
