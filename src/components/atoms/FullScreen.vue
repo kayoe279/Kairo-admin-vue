@@ -1,19 +1,23 @@
 <script setup lang="ts">
+import { useAppSettingStore } from "@/store/modules/appSetting";
+
 defineOptions({
-  name: "ReloadButton"
+  name: "FullScreen"
 });
 
 interface Props {
-  loading?: boolean;
+  full?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const settingStore = useAppSettingStore();
 </script>
 
 <template>
-  <ButtonIcon tooltip-content="刷新页面">
-    <icon-ant-design-reload-outlined :class="{ 'animate-duration-750 animate-spin': loading }" />
-  </ButtonIcon>
+  <ButtonIcon
+    :key="String(full)"
+    :tooltipContent="full ? '退出全屏' : '全屏'"
+    :icon="props.full ? 'ant-design:fullscreen-exit-outlined' : 'ant-design:fullscreen-outlined'"
+    @click="() => settingStore.toggleFullScreen()"
+  />
 </template>
-
-<style scoped></style>

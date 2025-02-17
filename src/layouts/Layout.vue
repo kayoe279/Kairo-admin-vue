@@ -1,3 +1,53 @@
+<script lang="ts" setup>
+import { useMedia } from "@/hooks/useMedia";
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { storeToRefs } from "pinia";
+import { computed, ref, unref } from "vue";
+import { useRoute } from "vue-router";
+
+const currentRoute = useRoute();
+const { isMobile } = useMedia();
+
+const settingStore = useAppSettingStore();
+const themeStore = useThemeSettingStore();
+const { inverted, darkNav } = storeToRefs(themeStore);
+const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } =
+  storeToRefs(settingStore);
+
+const collapsed = ref<boolean>(false);
+
+const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
+const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
+const showMenu = computed(() => {
+  const hideMixMenuSub = navMode.value === "horizontal-mix" && !currentRoute.meta.isRoot;
+  if (fullScreen.value) return false;
+  return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
+});
+const mainStyles = computed(() => {
+  const headerHeight = headerSetting.value.height || 0;
+  const multiTabsHeight = multiTabsSetting.value.height || 0;
+  const showMultiTabs = multiTabsSetting.value.show;
+  if (headerSetting.value.fixed) {
+    return {
+      "padding-top": `${(fullScreen.value ? 0 : headerHeight) + (showMultiTabs ? multiTabsHeight : 0) + 16}px`
+    };
+  }
+  return undefined;
+});
+
+const desktopMenuWidth = computed(() => {
+  const { minMenuWidth, menuWidth } = unref(menuSetting);
+  return collapsed.value ? minMenuWidth : menuWidth;
+});
+
+// 控制显示或隐藏移动端侧边栏
+const showSideDrawer = computed({
+  get: () => isMobile.value && collapsed.value,
+  set: (val) => (collapsed.value = val)
+});
+</script>
+
 <template>
   <n-layout :position="fixedMenu" has-sider>
     <n-layout-sider
@@ -38,7 +88,7 @@
         class="!bg-background-root h-full"
       >
         <n-layout-header :inverted="inverted" :position="fixedHeader" class="!z-10">
-          <Header v-model:collapsed="collapsed" />
+          <Header v-if="!fullScreen" v-model:collapsed="collapsed" />
           <TabsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
         </n-layout-header>
 
@@ -51,52 +101,3 @@
     </div>
   </n-layout>
 </template>
-
-<script lang="ts" setup>
-import { useMedia } from "@/hooks/useMedia";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
-import { NLayoutHeader } from "naive-ui";
-import { storeToRefs } from "pinia";
-import { computed, ref, unref } from "vue";
-import { useRoute } from "vue-router";
-
-const currentRoute = useRoute();
-const { isMobile } = useMedia();
-
-const settingStore = useAppSettingStore();
-const themeStore = useThemeSettingStore();
-const { inverted, darkNav } = storeToRefs(themeStore);
-const { navMode, headerSetting, menuSetting, multiTabsSetting } = storeToRefs(settingStore);
-
-const collapsed = ref<boolean>(false);
-
-const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
-const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
-const showMenu = computed(() => {
-  const hideMixMenuSub = navMode.value === "horizontal-mix" && !currentRoute.meta.isRoot;
-  return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
-});
-const mainStyles = computed(() => {
-  const headerHeight = headerSetting.value.height || 0;
-  const multiTabsHeight = multiTabsSetting.value.height || 0;
-  const showMultiTabs = multiTabsSetting.value.show;
-  if (headerSetting.value.fixed) {
-    return {
-      "padding-top": `${headerHeight + (showMultiTabs ? multiTabsHeight : 0) + 16}px`
-    };
-  }
-  return undefined;
-});
-
-const desktopMenuWidth = computed(() => {
-  const { minMenuWidth, menuWidth } = unref(menuSetting);
-  return collapsed.value ? minMenuWidth : menuWidth;
-});
-
-// 控制显示或隐藏移动端侧边栏
-const showSideDrawer = computed({
-  get: () => isMobile.value && collapsed.value,
-  set: (val) => (collapsed.value = val)
-});
-</script>

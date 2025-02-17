@@ -1,48 +1,14 @@
 <script setup lang="ts">
-import { renderIcon } from "@/lib/utils";
+import { useSvgIcon } from "@/hooks/useSvgIcon";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { useTabsViewStore } from "@/store/modules/tabsView";
-import {
-  CloseOutlined,
-  ColumnWidthOutlined,
-  LeftOutlined,
-  MinusOutlined,
-  ReloadOutlined,
-  RightOutlined
-} from "@vicons/antd";
-import { computed, nextTick, ref } from "vue";
-import type { VNode } from "vue";
+import { type VNode, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 defineOptions({
-  name: "ContextMenu"
+  name: "TabsContextMenu"
 });
-
-interface Props {
-  /** ClientX */
-  x: number;
-  /** ClientY */
-  y: number;
-  tabId: string;
-  excludeKeys?: DropdownKey[];
-  disabledKeys?: DropdownKey[];
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  excludeKeys: () => [],
-  disabledKeys: () => []
-});
-
-const visible = defineModel<boolean>("visible");
-
-const route = useRoute();
-const router = useRouter();
-const isCurrentTab = ref(false);
-const settingStore = useAppSettingStore();
-const asyncRouteStore = useAsyncRouteStore();
-const { closeCurrentTab, closeOtherTabs, closeAllTabs, closeLeftTabs, closeRightTabs } =
-  useTabsViewStore();
 
 type DropdownOption = {
   key: DropdownKey;
@@ -51,37 +17,66 @@ type DropdownOption = {
   disabled?: boolean;
 };
 
+interface Props {
+  tabId: string;
+  x?: number;
+  y?: number;
+  excludeKeys?: DropdownKey[];
+  disabledKeys?: DropdownKey[];
+  type?: "button" | "dropdown";
+}
+const props = withDefaults(defineProps<Props>(), {
+  type: "button",
+  x: 0,
+  y: 0,
+  excludeKeys: () => [],
+  disabledKeys: () => []
+});
+
+defineSlots<{ default(): any }>();
+
+const visible = defineModel<boolean>("visible");
+
+const route = useRoute();
+const router = useRouter();
+const settingStore = useAppSettingStore();
+const asyncRouteStore = useAsyncRouteStore();
+const { closeCurrentTab, closeOtherTabs, closeAllTabs, closeLeftTabs, closeRightTabs } =
+  useTabsViewStore();
+
+const { SvgIconVNode } = useSvgIcon();
+
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       label: "刷新",
       key: "reloadCurrent",
-      icon: renderIcon(ReloadOutlined)
+      icon: SvgIconVNode({ icon: "solar:refresh-outline", fontSize: 18 })
     },
     {
       label: `关闭`,
       key: "closeCurrent",
-      icon: renderIcon(CloseOutlined)
+      icon: SvgIconVNode({ icon: "ant-design:close-outlined", fontSize: 18 })
     },
     {
       label: `关闭左边`,
       key: "closeLeft",
-      icon: renderIcon(LeftOutlined)
+      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-left", fontSize: 18 })
     },
     {
       label: `关闭右边`,
       key: "closeRight",
-      icon: renderIcon(RightOutlined)
+      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-right", fontSize: 18 })
     },
     {
       label: "关闭其他",
       key: "closeOther",
-      icon: renderIcon(ColumnWidthOutlined)
+      icon: SvgIconVNode({ icon: "ant-design:column-width-outlined", fontSize: 18 })
     },
     {
       label: "关闭全部",
       key: "closeAll",
-      icon: renderIcon(MinusOutlined)
+      icon: SvgIconVNode({ icon: "ant-design:line-outlined", fontSize: 18 })
     }
   ];
 
@@ -145,6 +140,19 @@ function handleDropdown(optionKey: DropdownKey) {
 
 <template>
   <n-dropdown
+    v-if="props.type === 'dropdown'"
+    placement="bottom"
+    trigger="hover"
+    :options="options"
+    @select="handleDropdown"
+  >
+    <button>
+      <SvgIcon icon="icon-park-outline:more-app" class="stroke-2 text-lg" />
+    </button>
+  </n-dropdown>
+
+  <n-dropdown
+    v-else
     :show="visible"
     placement="bottom-start"
     trigger="manual"

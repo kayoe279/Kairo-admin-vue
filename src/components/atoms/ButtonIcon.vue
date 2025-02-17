@@ -17,25 +17,31 @@ interface Props {
   /** Tooltip placement */
   tooltipPlacement?: PopoverPlacement;
   zIndex?: number;
+  /** Hide tooltip */
+  hideTooltip?: boolean;
 }
-
 const props = withDefaults(defineProps<Props>(), {
   class: "",
   icon: "",
   tooltipContent: "",
   tooltipPlacement: "bottom",
-  zIndex: 98
+  zIndex: 98,
+  hideTooltip: false
 });
+
+defineSlots<{ default(): any }>();
 </script>
 
 <template>
-  <NTooltip :placement="tooltipPlacement" :z-index="zIndex" :disabled="!tooltipContent">
+  <button v-if="hideTooltip" :class="cn('text-xl', props.class)" v-bind="$attrs">
+    <SvgIcon :icon="icon" />
+  </button>
+  <NTooltip v-else :placement="tooltipPlacement" :z-index="zIndex" :disabled="!tooltipContent">
     <template #trigger>
-      <NButton quaternary :class="cn('text-icon h-9', props.class)" v-bind="$attrs">
-        <div class="flex-center gap-2">
-          <SvgIcon :icon="icon" />
-        </div>
-      </NButton>
+      <button :class="cn('text-xl', props.class)" v-bind="$attrs">
+        <SvgIcon :icon="icon" v-if="icon" />
+        <slot v-else />
+      </button>
     </template>
     {{ tooltipContent }}
   </NTooltip>

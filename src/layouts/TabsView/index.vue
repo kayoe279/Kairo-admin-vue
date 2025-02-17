@@ -1,97 +1,13 @@
-<template>
-  <div
-    class="flex w-full px-4 py-1.5 transition-all duration-1000 ease-in-out"
-    :style="{ height: multiTabsSetting.height + 'px' }"
-  >
-    <div ref="bsWrapper" class="flex min-w-0 flex-1 items-center">
-      <BetterScroll
-        ref="bsScroll"
-        :options="{ scrollX: true, scrollY: false, click: isMobile }"
-        @click="removeFocus"
-        class="min-w-0 flex-1 overflow-hidden"
-      >
-        <div
-          ref="tabRef"
-          class="flex h-full items-center gap-x-2 overflow-hidden whitespace-nowrap"
-        >
-          <n-button
-            v-for="tab in tabsList.filter(typedBoolean)"
-            :key="tab.name"
-            class="tabs-card-scroll-item relative flex !h-8 cursor-pointer items-center justify-center rounded-md px-4 py-1.5"
-            :[TAB_DATA_ID]="tab.name"
-            secondary
-            :type="activeTabId === tab.name ? 'primary' : 'default'"
-            @click.stop="switchTabItem(tab.name)"
-            @contextmenu="handleContextMenu($event, tab.name)"
-          >
-            <span>{{ tab?.meta?.title }}</span>
-            <n-icon
-              v-if="!tab?.meta?.affix"
-              size="14"
-              :component="CloseOutlined"
-              class="ml-2 !flex !size-3.5 !items-center"
-              @click.stop="closeCurrentTab(tab.name)"
-            />
-          </n-button>
-        </div>
-      </BetterScroll>
-    </div>
-
-    <!-- <n-button quaternary class="!size-8 cursor-pointer rounded-md text-center">
-      <n-dropdown
-        trigger="hover"
-        @select="closeHandleSelect"
-        placement="bottom-end"
-        :options="TabsMenuOptions"
-      >
-        <div class="flex size-full items-center justify-center">
-          <n-icon size="16" :component="DownOutlined" />
-        </div>
-      </n-dropdown>
-    </n-button> -->
-    <!-- <n-dropdown
-      :show="state.showDropdown"
-      :x="state.dropdownX"
-      :y="state.dropdownY"
-      @clickoutside="onClickOutside"
-      placement="bottom-start"
-      @select="closeHandleSelect"
-      :options="TabsMenuOptions"
-    /> -->
-    <TabsContextMenu
-      v-model:visible="dropdown.visible"
-      :tabId="dropdown.tabId"
-      :disabledKeys="menuDisabledKeys"
-      :x="dropdown.x"
-      :y="dropdown.y"
-      @update:visible="handleDropdownVisible"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import BetterScroll from "@/components/atoms/BetterScroll.vue";
 import { useMedia } from "@/hooks/useMedia";
-import { storage } from "@/lib/Storage";
-import { TABS_ROUTES, TABS_WHITE_LIST, TAB_DATA_ID } from "@/lib/constants";
+import { TAB_DATA_ID } from "@/lib/constants";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { typedBoolean } from "@/lib/utils";
 import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { useTabsViewStore } from "@/store/modules/tabsView";
-import type { TabItem } from "@/store/modules/tabsView";
 import type { TabNamedNodeMap } from "@/types/utils";
-import {
-  CloseOutlined,
-  ColumnWidthOutlined,
-  DownOutlined,
-  LeftOutlined,
-  MinusOutlined,
-  ReloadOutlined,
-  RightOutlined
-} from "@vicons/antd";
 import { useElementBounding } from "@vueuse/core";
-import { useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed, nextTick, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -108,7 +24,6 @@ const { initTabs, addTab, closeCurrentTab, switchTabItem } = tabsViewStore;
 const bsWrapper = ref<HTMLElement>();
 const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
 const bsScroll = ref<InstanceType<typeof BetterScroll>>();
-// const navScroll = ref<HTMLElement | null>(null);
 const tabRef = ref<HTMLElement>();
 
 const dropdown = reactive({
@@ -120,7 +35,7 @@ const dropdown = reactive({
 
 // 获取标签页右键菜单禁用项
 const menuDisabledKeys = computed(() => {
-  const tabId = dropdown.tabId;
+  const tabId = dropdown.tabId || route.name;
   const disabledKeys: DropdownKey[] = [];
   const tabItemIndex = tabsList.value.findIndex((item) => item.name === tabId);
   if (tabItemIndex === tabsList.value.length - 1) {
@@ -219,3 +134,62 @@ watch(
   }
 );
 </script>
+
+<template>
+  <div
+    class="flex w-full gap-x-4 px-4 py-1.5 transition-all duration-1000 ease-in-out"
+    :style="{ height: multiTabsSetting.height + 'px' }"
+  >
+    <div ref="bsWrapper" class="flex min-w-0 flex-1 items-center">
+      <BetterScroll
+        ref="bsScroll"
+        :options="{ scrollX: true, scrollY: false, click: isMobile }"
+        @click="removeFocus"
+        class="min-w-0 flex-1 overflow-hidden"
+      >
+        <div
+          ref="tabRef"
+          class="flex h-full items-center gap-x-2 overflow-hidden whitespace-nowrap"
+        >
+          <n-button
+            v-for="tab in tabsList.filter(typedBoolean)"
+            :key="tab.name"
+            class="tabs-card-scroll-item relative flex !h-8 cursor-pointer items-center justify-center rounded-md px-4 py-1.5"
+            :[TAB_DATA_ID]="tab.name"
+            secondary
+            :type="activeTabId === tab.name ? 'primary' : 'default'"
+            @click.stop="switchTabItem(tab.name)"
+            @contextmenu="handleContextMenu($event, tab.name)"
+          >
+            <span>{{ tab?.meta?.title }}</span>
+            <SvgIcon
+              v-if="!tab?.meta?.affix"
+              icon="ant-design:close-outlined"
+              class="ml-2 !flex !size-3.5 !items-center"
+              @click.stop="closeCurrentTab(tab.name)"
+            />
+          </n-button>
+        </div>
+      </BetterScroll>
+    </div>
+
+    <div class="flex items-center gap-x-4">
+      <ReloadButton />
+      <FullScreen />
+      <TabsContextMenu
+        type="dropdown"
+        :tabId="String(route.name)"
+        :disabledKeys="menuDisabledKeys"
+      />
+    </div>
+
+    <TabsContextMenu
+      v-model:visible="dropdown.visible"
+      :tabId="dropdown.tabId"
+      :disabledKeys="menuDisabledKeys"
+      :x="dropdown.x"
+      :y="dropdown.y"
+      @update:visible="handleDropdownVisible"
+    />
+  </div>
+</template>

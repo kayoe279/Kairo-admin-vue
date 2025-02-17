@@ -1,3 +1,17 @@
+<script lang="ts" setup>
+import { cn } from "@/lib/utils";
+import type { AppSettingProps } from "@/settings/appSetting";
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { storeToRefs } from "pinia";
+
+const settingStore = useAppSettingStore();
+const { navMode } = storeToRefs(settingStore);
+
+const togNavMode = (mode: AppSettingProps["navMode"]) => {
+  settingStore.setNavMode(mode);
+};
+</script>
+
 <template>
   <div class="grid grid-cols-3 gap-x-5 py-3">
     <div class="size-full h-16">
@@ -69,17 +83,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { cn } from "@/lib/utils";
-import type { AppSettingProps } from "@/settings/appSetting";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { storeToRefs } from "pinia";
-
-const settingStore = useAppSettingStore();
-const { navMode } = storeToRefs(settingStore);
-
-const togNavMode = (mode: AppSettingProps["navMode"]) => {
-  settingStore.setNavMode(mode);
-};
-</script>

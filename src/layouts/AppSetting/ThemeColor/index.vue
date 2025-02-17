@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+import { type ThemeType, useThemeSettingStore } from "@/store/modules/themeSetting";
+
+const themeStore = useThemeSettingStore();
+
+const updateThemeColor = (color: string, type: ThemeType) => {
+  themeStore.setThemeColor(type, color);
+};
+</script>
+
 <template>
   <div class="space-y-4 py-3">
     <SettingItem title="主色">
@@ -37,13 +47,3 @@
     </SettingItem>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { type ThemeType, useThemeSettingStore } from "@/store/modules/themeSetting";
-
-const themeStore = useThemeSettingStore();
-
-const updateThemeColor = (color: string, type: ThemeType) => {
-  themeStore.setThemeColor(type, color);
-};
-</script>

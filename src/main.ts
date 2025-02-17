@@ -26,7 +26,7 @@ async function bootstrap() {
   setupDirectives(app);
 
   // 注册全局方法，如：app.config.globalProperties.$message = message
-  //setupGlobalMethods(app);
+  // setupGlobalMethods(app);
 
   // 挂载路由
   await setupRouter(app);

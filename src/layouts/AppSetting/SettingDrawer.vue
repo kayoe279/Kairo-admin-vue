@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { DRAWER_WIDTH } from "@/lib/constants";
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { useMessage } from "naive-ui";
+import { storeToRefs } from "pinia";
+
+const message = useMessage();
+const settingStore = useAppSettingStore();
+const themeStore = useThemeSettingStore();
+const { open } = storeToRefs(settingStore);
+
+const resetSetting = () => {
+  settingStore.resetAppSetting();
+  themeStore.resetDesignSetting();
+  message.success("恢复默认配置成功");
+};
+</script>
+
 <template>
   <n-drawer v-model:show="open" :width="DRAWER_WIDTH" placement="right">
     <n-drawer-content title="项目配置" :native-scrollbar="false" closable>
@@ -26,25 +45,6 @@
     </n-drawer-content>
   </n-drawer>
 </template>
-
-<script setup lang="ts">
-import { DRAWER_WIDTH } from "@/lib/constants";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
-import { useMessage } from "naive-ui";
-import { storeToRefs } from "pinia";
-
-const message = useMessage();
-const settingStore = useAppSettingStore();
-const themeStore = useThemeSettingStore();
-const { open } = storeToRefs(settingStore);
-
-const resetSetting = () => {
-  settingStore.resetAppSetting();
-  themeStore.resetDesignSetting();
-  message.success("恢复默认配置成功");
-};
-</script>
 
 <style scoped>
 .n-divider:not(.n-divider--vertical) {

@@ -86,19 +86,6 @@ export default defineMock({
   }
 });
 
-// 图标列表
-export const iconList = [
-  {
-    icon: "GithubOutlined",
-    component: GithubOutlined,
-    tips: "github"
-  },
-  {
-    icon: "LockOutlined",
-    component: LockOutlined,
-    tips: "锁屏"
-  }
-];
 export const avatarOptions = [
   {
     label: "个人设置",

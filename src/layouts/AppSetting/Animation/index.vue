@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+import { animates as animateOptions } from "@/settings/appSetting";
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { storeToRefs } from "pinia";
+
+const settingStore = useAppSettingStore();
+const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
+</script>
+
 <template>
   <div class="space-y-4 py-3">
     <SettingItem title="启用动画">
@@ -8,12 +17,3 @@
     </SettingItem>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { animates as animateOptions } from "@/settings/appSetting";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { storeToRefs } from "pinia";
-
-const settingStore = useAppSettingStore();
-const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
-</script>

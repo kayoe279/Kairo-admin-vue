@@ -1,22 +1,3 @@
-<template>
-  <n-menu
-    ref="menuInstRef"
-    :accordion="menuSetting.accordion"
-    :options="menus"
-    :inverted="inverted || darkNav"
-    :mode="mode"
-    :collapsed="collapsed"
-    :collapsed-width="64"
-    :collapsed-icon-size="20"
-    :indent="24"
-    :value="selectedValues"
-    @update:value="onMenuItemClick"
-    :default-expanded-keys="defaultExpandedKeys"
-    :watch-props="['defaultExpandedKeys']"
-    responsive
-  />
-</template>
-
 <script setup lang="ts">
 import { generatorMenu, generatorMenuMix } from "@/lib/utils/router";
 import { useAppSettingStore } from "@/store/modules/appSetting";
@@ -116,3 +97,22 @@ onMounted(() => {
   updateMenus();
 });
 </script>
+
+<template>
+  <n-menu
+    ref="menuInstRef"
+    :accordion="menuSetting.accordion"
+    :options="menus"
+    :inverted="inverted || darkNav"
+    :mode="mode"
+    :collapsed="collapsed"
+    :collapsed-width="64"
+    :collapsed-icon-size="20"
+    :indent="24"
+    :value="selectedValues"
+    @update:value="onMenuItemClick"
+    :default-expanded-keys="defaultExpandedKeys"
+    :watch-props="['defaultExpandedKeys']"
+    responsive
+  />
+</template>

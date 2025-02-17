@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+import { useAppSettingStore } from "@/store/modules/appSetting";
+import { storeToRefs } from "pinia";
+
+const settingStore = useAppSettingStore();
+const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } =
+  storeToRefs(settingStore);
+</script>
+
 <template>
   <div class="space-y-4 py-3">
     <SettingItem title="顶部高度">
@@ -35,12 +44,3 @@
     </SettingItem>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { storeToRefs } from "pinia";
-
-const settingStore = useAppSettingStore();
-const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } =
-  storeToRefs(settingStore);
-</script>
