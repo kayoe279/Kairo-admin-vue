@@ -1,9 +1,10 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import appSetting, { AppSettingProps } from "@/settings/appSetting";
+import type { AppSettingProps } from "@/settings/appSetting";
+import appSetting from "@/settings/appSetting";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
-import { ref, toRefs } from "vue";
+import { nextTick, ref, toRefs } from "vue";
 
 export const useAppSettingStore = defineStore(
   StoreEnum.setting,
@@ -11,6 +12,8 @@ export const useAppSettingStore = defineStore(
     const settings = ref(cloneDeep(appSetting));
 
     const [open, toggleDrawer] = useToggle(false);
+    const [reloadFlag, toggleReloadFlag] = useToggle(true);
+    const [fullScreen, toggleFullScreen] = useToggle(false);
 
     const setNavTheme = (value: string) => {
       settings.value.navTheme = value;
@@ -27,12 +30,28 @@ export const useAppSettingStore = defineStore(
       });
     };
 
+    // 刷新页面
+    const reloadPage = async (duration = 300) => {
+      toggleReloadFlag(false);
+      const d = settings.value.isPageAnimate ? duration : 40;
+      await nextTick();
+      await new Promise((resolve) => {
+        setTimeout(resolve, d);
+      });
+
+      toggleReloadFlag(true);
+    };
+
     return {
       ...toRefs(settings.value),
+      reloadFlag,
       open,
+      fullScreen,
+      toggleFullScreen,
       toggleDrawer,
       setNavTheme,
       setNavMode,
+      reloadPage,
       resetAppSetting
     };
   },

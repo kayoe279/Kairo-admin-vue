@@ -24,7 +24,7 @@ export function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     progress(),
 
     // 引入unplugin
-    ...setupUnplugin(),
+    ...setupUnplugin(viteEnv),
 
     // vite-plugin-html
     configHtmlPlugin(viteEnv, isBuild)

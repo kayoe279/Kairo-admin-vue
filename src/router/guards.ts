@@ -91,19 +91,19 @@ export function createRouterGuards(router: Router) {
     }
     const asyncRouteStore = useAsyncRoute();
     // 在这里设置需要缓存的组件名称
-    const keepAliveComponents = asyncRouteStore.keepAliveComponents;
+    const cacheRoutes = asyncRouteStore.cacheRoutes;
     const currentComName: any = to.matched.find((item) => item.name == to.name)?.name;
-    if (currentComName && !keepAliveComponents.includes(currentComName) && to.meta?.keepAlive) {
+    if (currentComName && !cacheRoutes.includes(currentComName) && to.meta?.keepAlive) {
       // 需要缓存的组件
-      keepAliveComponents.push(currentComName);
+      cacheRoutes.push(currentComName);
     } else if (!to.meta?.keepAlive || to.name == "Redirect") {
       // 不需要缓存的组件
-      const index = asyncRouteStore.keepAliveComponents.findIndex((name) => name == currentComName);
+      const index = asyncRouteStore.cacheRoutes.findIndex((name) => name == currentComName);
       if (index != -1) {
-        keepAliveComponents.splice(index, 1);
+        cacheRoutes.splice(index, 1);
       }
     }
-    asyncRouteStore.setKeepAliveComponents(keepAliveComponents);
+    asyncRouteStore.setKeepAliveComponents(cacheRoutes);
     const loadingBar = window["$loadingBar"] || null;
     loadingBar && loadingBar.finish();
   });

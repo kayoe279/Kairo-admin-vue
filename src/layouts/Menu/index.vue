@@ -23,7 +23,7 @@ import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import type { MenuInst } from "naive-ui";
-import { MenuMixedOption } from "naive-ui/es/menu/src/interface";
+import type { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";

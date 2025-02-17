@@ -4,7 +4,9 @@ import Components from "unplugin-vue-components/vite";
 import type { PluginOption } from "vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
-export function setupUnplugin() {
+export function setupUnplugin(viteEnv: ViteEnv) {
+  const { VITE_ICON_LOCAL_PREFIX } = viteEnv;
+
   const plugins: PluginOption[] = [
     // 按需引入NaiveUi且自动创建组件声明
     Components({
@@ -15,7 +17,7 @@ export function setupUnplugin() {
     // 创建svg图标
     createSvgIconsPlugin({
       iconDirs: [path.resolve(__dirname, "src/assets/icons/")],
-      symbolId: "icon-[dir]-[name]"
+      symbolId: `${VITE_ICON_LOCAL_PREFIX}-[dir]-[name]`
     })
   ];
 

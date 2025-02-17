@@ -1,10 +1,11 @@
 import { useAppSettingStore } from "./appSetting";
+import { PageEnum } from "@/lib/enums/pageEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes, constantRouter } from "@/router/index";
 import { store } from "@/store";
 import { defineStore } from "pinia";
-import { ref, toRaw, unref } from "vue";
+import { computed, ref, toRaw, unref } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 
 interface TreeHelperConfig {
@@ -25,7 +26,7 @@ export interface IAsyncRouteState {
   menus: RouteRecordRaw[];
   routers: any[];
   routersAdded: any[];
-  keepAliveComponents: string[];
+  cacheRoutes: string[];
   isDynamicRouteAdded: boolean;
 }
 
@@ -56,8 +57,15 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
   const menus = ref<RouteRecordRaw[]>([]);
   const routers = ref<RouteRecordRaw[]>(constantRouter);
   const routersAdded = ref<RouteRecordRaw[]>([]);
-  const keepAliveComponents = ref<string[]>([]);
+  const cacheRoutes = ref<string[]>([]);
   const isDynamicRouteAdded = ref<boolean>(false);
+
+  const homeRoute = computed(() => {
+    const home = routers.value.find((item) => item.name === PageEnum.HOME_NAME);
+    return home?.children?.find(
+      (item) => item.meta?.affix || item.name === PageEnum.BASE_HOME_NAME
+    );
+  });
 
   // set the currently highlighted menu key
   const setActiveMenu = (key: string) => {
@@ -82,7 +90,7 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
   };
   // 设置需要缓存的组件
   const setKeepAliveComponents = (compNames: string[]) => {
-    keepAliveComponents.value = compNames;
+    cacheRoutes.value = compNames;
   };
   // 生成路由
   const generateRoutes = async (data) => {
@@ -120,8 +128,9 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
     menus,
     routers,
     routersAdded,
-    keepAliveComponents,
+    cacheRoutes,
     isDynamicRouteAdded,
+    homeRoute,
     setActiveMenu,
     getRouters,
     setDynamicRouteAdded,

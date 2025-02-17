@@ -93,6 +93,7 @@
           <span>项目配置</span>
         </n-tooltip>
       </button>
+      <ButtonIcon icon="lsicon:setting-outline" tooltipContent="项目配置" />
       <!-- 切换主题 -->
 
       <button class="size-5 cursor-pointer">

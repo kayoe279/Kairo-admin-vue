@@ -39,7 +39,7 @@
       >
         <n-layout-header :inverted="inverted" :position="fixedHeader" class="!z-10">
           <Header v-model:collapsed="collapsed" />
-          <TagsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
+          <TabsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
         </n-layout-header>
 
         <main class="px-4 pt-4" :style="mainStyles">

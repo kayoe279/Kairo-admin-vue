@@ -144,3 +144,10 @@ export function lighten(color: string, amount: number) {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export type FalseType = "" | 0 | false | null | undefined;
+export const typedBoolean = <Value>(
+  value: Value,
+): value is Exclude<Value, FalseType> => {
+  return Boolean(value);
+};

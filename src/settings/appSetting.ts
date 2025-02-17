@@ -43,8 +43,17 @@ const setting = {
   //是否开启路由动画
   isPageAnimate: true,
   //路由动画类型
-  pageAnimateType: "zoom-fade"
+  pageAnimateType: "fade-slide"
 };
+
+export const animates = [
+  { value: "fade-slide", label: "滑动" },
+  { value: "zoom-fade", label: "渐变" },
+  { value: "zoom-out", label: "闪现" },
+  { value: "fade", label: "消退" },
+  { value: "fade-bottom", label: "底部消退" },
+  { value: "fade-scale", label: "缩放消退" }
+];
 
 export type AppSettingProps = typeof setting;
 export default setting;

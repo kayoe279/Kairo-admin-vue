@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { animates as animateOptions } from "@/settings/animateSetting";
+import { animates as animateOptions } from "@/settings/appSetting";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { storeToRefs } from "pinia";
 

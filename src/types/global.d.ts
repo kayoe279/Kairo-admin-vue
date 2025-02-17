@@ -1,11 +1,11 @@
 import type {
+  ComponentPublicInstance,
   ComponentRenderProxy,
+  FunctionalComponent,
   VNode,
   VNodeChild,
-  ComponentPublicInstance,
-  FunctionalComponent,
-  PropType as VuePropType,
-} from 'vue';
+  PropType as VuePropType
+} from "vue";
 
 declare global {
   const __APP_INFO__: {
@@ -73,13 +73,23 @@ declare global {
     VITE_GLOB_PROD_MOCK: boolean;
     VITE_GLOB_IMG_URL: string;
     VITE_PROXY: [string, string][];
-    VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
+    VITE_BUILD_COMPRESS: "gzip" | "brotli" | "none";
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
+    VITE_ICON_PREFIX: string;
+    VITE_ICON_LOCAL_PREFIX: string;
   }
 
   declare function parseInt(s: string | number, radix?: number): number;
 
   declare function parseFloat(string: string | number): number;
+
+  type DropdownKey =
+    | "closeCurrent"
+    | "closeOther"
+    | "closeLeft"
+    | "closeRight"
+    | "closeAll"
+    | "reloadCurrent";
 
   namespace JSX {
     // tslint:disable no-empty-interface
@@ -101,7 +111,7 @@ declare global {
   }
 }
 
-declare module 'vue' {
+declare module "vue" {
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }
     | FunctionalComponent<Props>;
