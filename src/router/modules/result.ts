@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { CheckCircleOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "结果页面",
-      icon: renderIcon(CheckCircleOutlined),
+      icon: svgIconRender({ icon: "solar:emoji-funny-circle-linear" }),
       sort: 4
     },
     children: [

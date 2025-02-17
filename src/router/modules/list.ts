@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { TableOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "列表页面",
-      icon: renderIcon(TableOutlined),
+      icon: svgIconRender({ icon: "solar:checklist-minimalistic-outline" }),
       sort: 2
     },
     children: [

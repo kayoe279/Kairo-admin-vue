@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { DocumentTextOutline } from "@vicons/ionicons5";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -10,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "项目文档",
-      icon: renderIcon(DocumentTextOutline),
+      icon: svgIconRender({ icon: "solar:document-outline" }),
       sort: 11
     }
   }

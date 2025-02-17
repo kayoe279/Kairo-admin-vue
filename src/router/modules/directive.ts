@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { BorderOuterOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -12,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
       sort: 9,
       isRoot: true,
       activeMenu: "directive_index",
-      icon: renderIcon(BorderOuterOutlined)
+      icon: svgIconRender({ icon: "solar:compass-broken" })
     },
     children: [
       {

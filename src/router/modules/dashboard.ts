@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { DashboardOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routeName = "dashboard";
@@ -13,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "Dashboard",
-      icon: renderIcon(DashboardOutlined),
+      icon: svgIconRender({ icon: "ant-design:dashboard-outlined" }),
       permissions: ["dashboard_console", "dashboard_console", "dashboard_workplace"],
       sort: 0
     },
@@ -28,15 +27,15 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/dashboard/console/console.vue")
       },
-      // {
-      //   path: 'monitor',
-      //   name: `${ routeName }_monitor`,
-      //   meta: {
-      //     title: '监控页',
-      //     permissions: ['dashboard_monitor']
-      //   },
-      //   component: () => import('@/views/dashboard/monitor/monitor.vue')
-      // },
+      {
+        path: "monitor",
+        name: `${routeName}_monitor`,
+        meta: {
+          title: "监控页",
+          permissions: ["dashboard_monitor"]
+        },
+        component: () => import("@/views/dashboard/monitor/monitor.vue")
+      },
       {
         path: "workplace",
         name: `${routeName}_workplace`,

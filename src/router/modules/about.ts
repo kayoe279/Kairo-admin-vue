@@ -1,4 +1,4 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
 import { ProjectOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
       sort: 10,
       isRoot: true,
       activeMenu: "about_index",
-      icon: renderIcon(ProjectOutlined)
+      icon: svgIconRender({ icon: "ix:about" })
     },
     children: [
       {

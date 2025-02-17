@@ -1,6 +1,5 @@
-import { renderIcon, renderNew } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout, ParentLayout } from "@/router/constant";
-import { WalletOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routeName = "comp";
@@ -13,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/comp/table",
     meta: {
       title: "组件示例",
-      icon: renderIcon(WalletOutlined),
+      icon: svgIconRender({ icon: "proicons:component" }),
       sort: 8
     },
     children: [
@@ -99,8 +98,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "richtext",
         name: `richtext`,
         meta: {
-          title: "富文本",
-          extra: renderNew()
+          title: "富文本"
         },
         component: () => import("@/views/comp/richtext/vue-quill.vue")
       },
@@ -108,8 +106,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "drag",
         name: `Drag`,
         meta: {
-          title: "拖拽",
-          extra: renderNew()
+          title: "拖拽"
         },
         component: () => import("@/views/comp/drag/index.vue")
       }

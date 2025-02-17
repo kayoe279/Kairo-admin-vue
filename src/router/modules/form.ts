@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { ProfileOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "表单页面",
-      icon: renderIcon(ProfileOutlined),
+      icon: svgIconRender({ icon: "solar:document-add-broken" }),
       sort: 3
     },
     children: [

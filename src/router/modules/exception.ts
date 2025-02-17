@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { ExclamationCircleOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "异常页面",
-      icon: renderIcon(ExclamationCircleOutlined),
+      icon: svgIconRender({ icon: "solar:confounded-circle-broken" }),
       sort: 3
     },
     children: [

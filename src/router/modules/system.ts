@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { OptionsSharp } from "@vicons/ionicons5";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "系统设置",
-      icon: renderIcon(OptionsSharp),
+      icon: svgIconRender({ icon: "solar:settings-minimalistic-linear" }),
       sort: 1
     },
     children: [

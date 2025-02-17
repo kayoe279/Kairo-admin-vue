@@ -1,6 +1,5 @@
-import { renderIcon } from "@/lib/utils";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { DesktopOutline } from "@vicons/ionicons5";
 import type { RouteRecordRaw } from "vue-router";
 
 const IFrame = () => import("@/views/iframe/index.vue");
@@ -14,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "外部页面",
       sort: 8,
-      icon: renderIcon(DesktopOutline)
+      icon: svgIconRender({ icon: "solar:euro-broken" })
     },
     children: [
       {

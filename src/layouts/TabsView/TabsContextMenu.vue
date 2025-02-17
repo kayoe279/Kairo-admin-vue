@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSvgIcon } from "@/hooks/useSvgIcon";
+import { svgIconRender } from "@/lib/svgIconRender";
 import { useAppSettingStore } from "@/store/modules/appSetting";
 import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
 import { useTabsViewStore } from "@/store/modules/tabsView";
@@ -44,39 +44,37 @@ const asyncRouteStore = useAsyncRouteStore();
 const { closeCurrentTab, closeOtherTabs, closeAllTabs, closeLeftTabs, closeRightTabs } =
   useTabsViewStore();
 
-const { SvgIconVNode } = useSvgIcon();
-
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       label: "刷新",
       key: "reloadCurrent",
-      icon: SvgIconVNode({ icon: "solar:refresh-outline", fontSize: 18 })
+      icon: svgIconRender({ icon: "solar:refresh-outline", fontSize: 18 })
     },
     {
       label: `关闭`,
       key: "closeCurrent",
-      icon: SvgIconVNode({ icon: "ant-design:close-outlined", fontSize: 18 })
+      icon: svgIconRender({ icon: "ant-design:close-outlined", fontSize: 18 })
     },
     {
       label: `关闭左边`,
       key: "closeLeft",
-      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-left", fontSize: 18 })
+      icon: svgIconRender({ icon: "mdi:format-horizontal-align-left", fontSize: 18 })
     },
     {
       label: `关闭右边`,
       key: "closeRight",
-      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-right", fontSize: 18 })
+      icon: svgIconRender({ icon: "mdi:format-horizontal-align-right", fontSize: 18 })
     },
     {
       label: "关闭其他",
       key: "closeOther",
-      icon: SvgIconVNode({ icon: "ant-design:column-width-outlined", fontSize: 18 })
+      icon: svgIconRender({ icon: "ant-design:column-width-outlined", fontSize: 18 })
     },
     {
       label: "关闭全部",
       key: "closeAll",
-      icon: SvgIconVNode({ icon: "ant-design:line-outlined", fontSize: 18 })
+      icon: svgIconRender({ icon: "ant-design:line-outlined", fontSize: 18 })
     }
   ];
 
