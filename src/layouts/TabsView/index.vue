@@ -158,16 +158,14 @@ watch(
             :[TAB_DATA_ID]="tab.name"
             secondary
             :type="activeTabId === tab.name ? 'primary' : 'default'"
-            @click.stop="switchTabItem(tab.name)"
+            @click="switchTabItem(tab.name)"
             @contextmenu="handleContextMenu($event, tab.name)"
           >
             <span>{{ tab?.meta?.title }}</span>
-            <SvgIcon
-              v-if="!tab?.meta?.affix"
-              icon="ant-design:close-outlined"
-              class="ml-2 !flex !size-3.5 !items-center"
-              @click.stop="closeCurrentTab(tab.name)"
-            />
+            <SvgIcon v-if="tab?.meta?.affix" icon="la:thumbtack" class="ml-1 text-base" />
+            <button v-else @click.stop="closeCurrentTab(tab.name)">
+              <SvgIcon icon="ant-design:close-outlined" class="ml-2" />
+            </button>
           </n-button>
         </div>
       </BetterScroll>

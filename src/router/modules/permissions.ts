@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: "权限",
-      icon: svgIconRender({ icon: "solar:mask-sad-broken" }),
+      icon: svgIconRender({ icon: "solar:shield-user-broken" }),
       sort: 3
     },
     children: [

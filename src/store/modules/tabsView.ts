@@ -98,6 +98,7 @@ export const useTabsViewStore = defineStore(
     };
     // 关闭当前页
     const closeCurrentTab = (tabId: string, cb?: () => void) => {
+      console.log("%c [ tabId ]-101", "font-size:13px; background:pink; color:#bf2c9f;", tabId);
       if (tabsList.value.length === 1) {
         return;
       }
