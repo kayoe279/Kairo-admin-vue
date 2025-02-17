@@ -52,7 +52,6 @@ const showSideDrawer = computed({
   <n-layout :position="fixedMenu" has-sider>
     <n-layout-sider
       v-if="showMenu"
-      show-trigger="bar"
       @collapse="collapsed = true"
       @expand="collapsed = false"
       :collapsed="collapsed"
@@ -96,7 +95,7 @@ const showSideDrawer = computed({
           <Main />
         </main>
 
-        <n-back-top :right="100" />
+        <n-back-top :right="80" />
       </n-layout>
     </div>
   </n-layout>

@@ -1,6 +1,5 @@
 import { svgIconRender } from "@/lib/svgIconRender";
 import { Layout } from "@/router/constant";
-import { ProjectOutlined } from "@vicons/antd";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
