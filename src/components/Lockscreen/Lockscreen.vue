@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     :class="{ onLockLogin: showLogin }"
     class="lockScreen"
@@ -16,7 +16,7 @@
           </span>
         </div>
       </div>
-      <!--充电-->
+
       <recharge
         :battery="battery"
         :battery-status="batteryStatus"
@@ -36,7 +36,7 @@
       </div>
     </template>
 
-    <!--登录-->
+
     <template v-if="showLogin">
       <div class="login-box">
         <n-avatar :size="128">
@@ -72,9 +72,9 @@
       </div>
     </template>
   </div>
-</template>
+</template> -->
 
-<script lang="ts">
+<!-- <script lang="ts">
 import recharge from "./Recharge.vue";
 import { useBattery } from "@/hooks/useBattery";
 import { useOnline } from "@/hooks/useOnline";
@@ -185,9 +185,9 @@ export default defineComponent({
     };
   }
 });
-</script>
+</script> -->
 
-<style scoped>
+<!-- <style scoped>
 .lockScreen {
   position: fixed;
   top: 0;
@@ -296,4 +296,4 @@ export default defineComponent({
   background-color: red;
   z-index: 10;
 }
-</style>
+</style> -->

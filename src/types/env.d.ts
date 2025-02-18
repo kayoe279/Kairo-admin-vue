@@ -31,9 +31,14 @@ interface ImportMetaEnv {
   readonly VITE_DEFAULT_LANG: App.lang;
   /** 后端服务的环境类型 */
   readonly MODE: ServiceEnvType;
-
+  /** 存储前缀 */
+  readonly VITE_STORAGE_PREFIX: string;
+  /** API 地址 */
   readonly VITE_API_URL: string;
+  /** 路由加载模式 */
   readonly VITE_ROUTER_LOAD_MODE: "static" | "dynamic";
+  /** 缓存过期时间 */
+  readonly VITE_CACHE_EXPIRE: number;
 }
 
 interface ImportMeta {

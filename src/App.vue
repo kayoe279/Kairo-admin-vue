@@ -1,6 +1,5 @@
 <template>
   <NConfigProvider
-    v-if="!isLock"
     :locale="zhCN"
     :theme="darkTheme"
     :theme-overrides="themeOverrides"
@@ -12,27 +11,22 @@
     </AppProvider>
   </NConfigProvider>
 
-  <transition v-if="isLock && $route.name !== 'login'" name="slide-up">
+  <!-- 暂时不要这个 -->
+  <!-- <transition v-if="isLock && $route.name !== 'login'" name="slide-up">
     <LockScreen />
-  </transition>
+  </transition> -->
 </template>
 
 <script lang="ts" setup>
-import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useThemeSettingStore } from "@/store/modules/themeSetting";
 import { dateZhCN, darkTheme as naiveDarkTheme, zhCN } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { computed, watch } from "vue";
 
-const route = useRoute();
-const useScreenLock = useScreenLockStore();
 const themeStore = useThemeSettingStore();
 const { theme, themeOverrides, grayMode } = storeToRefs(themeStore);
 
 const darkTheme = computed(() => (theme.value === "dark" ? naiveDarkTheme : undefined));
-const isLock = computed(() => useScreenLock.isLocked);
-const lockTime = computed(() => useScreenLock.lockTime);
 
 // set gray-mode class to html or body dom
 watch(grayMode, (value) => {
@@ -43,33 +37,33 @@ watch(grayMode, (value) => {
   }
 });
 
-const timer = ref<NodeJS.Timeout>();
+// const timer = ref<NodeJS.Timeout>();
 
-const timekeeping = () => {
-  clearInterval(timer.value);
+// const timekeeping = () => {
+//   clearInterval(timer.value);
 
-  if (route.name == "login" || isLock.value) return;
-  // 设置不锁屏
-  useScreenLock.setLock(false);
-  // 重置锁屏时间
-  useScreenLock.setLockTime();
-  timer.value = setInterval(() => {
-    // 锁屏倒计时递减
-    useScreenLock.setLockTime(lockTime.value - 1);
-    if (lockTime.value <= 0) {
-      // 设置锁屏
-      useScreenLock.setLock(true);
-      return clearInterval(timer.value);
-    }
-  }, 1000);
-};
+//   if (route.name == "login" || isLock.value) return;
+//   // 设置不锁屏
+//   useScreenLock.setLock(false);
+//   // 重置锁屏时间
+//   useScreenLock.setLockTime();
+//   timer.value = setInterval(() => {
+//     // 锁屏倒计时递减
+//     useScreenLock.setLockTime(lockTime.value - 1);
+//     if (lockTime.value <= 0) {
+//       // 设置锁屏
+//       useScreenLock.setLock(true);
+//       return clearInterval(timer.value);
+//     }
+//   }, 1000);
+// };
 
-onMounted(() => {
-  themeStore.setAppThemeVariable();
-  document.addEventListener("mousedown", timekeeping);
-});
+// onMounted(() => {
+//   themeStore.setAppThemeVariable();
+//   document.addEventListener("mousedown", timekeeping);
+// });
 
-onUnmounted(() => {
-  document.removeEventListener("mousedown", timekeeping);
-});
+// onUnmounted(() => {
+//   document.removeEventListener("mousedown", timekeeping);
+// });
 </script>

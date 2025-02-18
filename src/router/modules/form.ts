@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/form",
     name: "form",
     redirect: "/form/basic-form",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "表单页面",
       icon: svgIconRender({ icon: "solar:document-add-broken" }),

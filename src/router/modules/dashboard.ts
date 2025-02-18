@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routeName = "dashboard";
@@ -9,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: routeName,
     redirect: "/dashboard/console",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "Dashboard",
       icon: svgIconRender({ icon: "ant-design:dashboard-outlined" }),

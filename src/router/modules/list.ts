@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/list",
     name: "list",
     redirect: "/list/basic-list",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "列表页面",
       icon: svgIconRender({ icon: "solar:checklist-minimalistic-outline" }),

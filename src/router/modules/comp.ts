@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routeName = "comp";
@@ -8,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/comp",
     name: routeName,
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     redirect: "/comp/table",
     meta: {
       title: "组件示例",

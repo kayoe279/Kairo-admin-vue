@@ -1,17 +1,17 @@
 /// <reference path="../global.d.ts"/>
 
-namespace Api {
+declare namespace Api {
   namespace Login {
     /* 登录返回的用户字段, 该数据是根据用户表扩展而来, 部分字段可能需要覆盖，例如id */
     interface Info extends Entity.User {
       /** 用户id */
-      id: number
+      id: number;
       /** 用户角色类型 */
-      role: Entity.RoleType[]
+      roles: Entity.RoleType[];
       /** 访问toekn */
-      accessToken: string
+      accessToken: string;
       /** 刷新toekn */
-      refreshToken: string
+      refreshToken: string;
     }
   }
 }

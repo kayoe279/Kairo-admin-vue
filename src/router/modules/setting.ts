@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/setting",
     name: "setting",
     redirect: "/setting/account",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "设置页面",
       icon: svgIconRender({ icon: "solar:settings-outline" }),

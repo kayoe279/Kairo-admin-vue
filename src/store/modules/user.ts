@@ -1,9 +1,10 @@
-import { storage } from "@/lib/Storage2";
 import { ACCESS_TOKEN, CURRENT_USER, IS_SCREEN_LOCKED } from "@/lib/constants";
+import { removeUserToken, setUserToken } from "@/lib/cookie";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { local } from "@/lib/storage";
 import { getUserInfo as getUserInfoApi, login as loginApi } from "@/service/api/system/user";
-import { store } from "@/store";
+import { store, useRouteStore } from "@/store";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -11,7 +12,7 @@ import { computed, ref } from "vue";
 export type UserInfoType = {
   username: string;
   email: string;
-  role: string[];
+  roles: string[];
 };
 
 type LoginParams = {
@@ -29,6 +30,15 @@ export interface IUserState {
 }
 
 export const useUserStore = defineStore(StoreEnum.user, () => {
+  const routeStore = useRouteStore();
+
+  const userInfo = ref<Api.Login.Info | null>({
+    userName: "kay",
+    id: 1,
+    roles: ["super"],
+    accessToken: "123",
+    refreshToken: "123"
+  });
   const token = ref("");
   const username = ref("");
   const avatar = ref("");
@@ -58,13 +68,14 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
     const response = await loginApi(params);
     const { result, code } = response;
     if (code === ResultEnum.SUCCESS) {
-      const ex = 7 * 24 * 60 * 60;
-      storage.set(ACCESS_TOKEN, result.token, ex);
-      storage.set(CURRENT_USER, result, ex);
-      storage.set(IS_SCREEN_LOCKED, false);
+      // const ex = 7 * 24 * 60 * 60;
+      setUserToken(result.token);
+      // storage.set(CURRENT_USER, result, ex);
+
       setToken(result.token);
       setUserInfo(result);
     }
+    await routeStore.initAuthRoute();
     return response;
   };
 
@@ -84,9 +95,8 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
 
   const logout = async () => {
     setPermissions([]);
-    setUserInfo({ username: "", email: "", role: [] });
-    storage.remove(ACCESS_TOKEN);
-    storage.remove(CURRENT_USER);
+    setUserInfo({ username: "", email: "", roles: [] });
+    removeUserToken();
   };
 
   return {
@@ -100,6 +110,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
     getNickname,
     getPermissions,
     getUserInfo,
+    userInfo,
     setToken,
     setAvatar,
     setPermissions,

@@ -23,7 +23,7 @@ declare namespace AppRoute {
     /* 菜单排序。 */
     sort?: number;
     /* 嵌套外链  */
-    href?: string;
+    externalLink?: string;
     /** 当前路由不在左侧菜单显示，但需要高亮某个菜单的情况 不设置默认去路由 name */
     activeMenu?: string;
     /** 当前路由是否会被添加到Tab中 */

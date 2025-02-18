@@ -2,7 +2,7 @@
 import { TABS_ROUTES } from "@/lib/constants";
 import { websiteConfig } from "@/lib/websiteConfig";
 import { useAppStore } from "@/store/modules/appSetting";
-import { useScreenLockStore } from "@/store/modules/screenLock";
+// import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useUserStore } from "@/store/modules/user";
 import { useFullscreen } from "@vueuse/core";
 import { useDialog, useMessage } from "naive-ui";
@@ -17,7 +17,7 @@ const router = useRouter();
 const route = useRoute();
 
 const userStore = useUserStore();
-const lockScreen = useScreenLockStore();
+// const lockScreen = useScreenLockStore();
 const message = useMessage();
 const dialog = useDialog();
 const appStore = useAppStore();
@@ -85,7 +85,7 @@ const onIconClick = (key: "github" | "lock") => {
   if (key === "github") {
     window.open("https://github.com/jekip/naive-ui-admin");
   } else if (key === "lock") {
-    lockScreen.setLock(true);
+    // lockScreen.setLock(true);
   }
 };
 

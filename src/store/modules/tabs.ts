@@ -1,6 +1,5 @@
 import { useRouteStore } from "./route";
-import { TABS_WHITE_LIST } from "@/lib/constants";
-import { PageEnum } from "@/lib/enums/pageEnum";
+import { PAGE } from "@/lib/constants";
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -56,7 +55,7 @@ export const useTabsStore = defineStore(
 
     // 初始化tab
     const initTabs = () => {
-      const homeTab = tabsList.value.some((item) => item.name === PageEnum.BASE_HOME_NAME);
+      const homeTab = tabsList.value.some((item) => item.name === PAGE.HOME_NAME_REDIRECT);
       if (!homeTab) {
         const homeRoute = routeStore.homeRoute as unknown as Route;
         if (homeRoute) {
@@ -67,7 +66,7 @@ export const useTabsStore = defineStore(
     // 添加标签页
     const addTab = (route: Route) => {
       const name = route.name as string;
-      if (TABS_WHITE_LIST.includes(name as PageEnum)) return;
+      if (route.meta?.withoutTab || route.meta?.hidden) return;
       const isExists = tabsList.value.some((item) => item.name == name);
       if (!isExists) {
         tabsList.value.push(getTabByRoute(route));

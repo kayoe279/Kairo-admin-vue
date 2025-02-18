@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const IFrame = () => import("@/views/iframe/index.vue");
@@ -9,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/frame",
     name: "frame",
     redirect: "/frame/docs",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "外部页面",
       sort: 7,

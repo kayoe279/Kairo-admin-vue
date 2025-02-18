@@ -1,5 +1,5 @@
 import { setupRouterGuard } from "./guards";
-import { baseRoutes, errorRoutes } from "@/router/base";
+import { baseRoutes, innerRoutes } from "@/router/base";
 import type { App } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
@@ -18,7 +18,7 @@ export const asyncRoutes: RouteRecordRaw[] = Object.keys(modules)
   });
 
 //普通路由 无需验证权限
-export const constantRouter: RouteRecordRaw[] = [...baseRoutes, ...errorRoutes];
+export const constantRouter: RouteRecordRaw[] = [...baseRoutes, ...innerRoutes];
 
 const { VITE_BASE_URL, VITE_ROUTE_MODE } = import.meta.env;
 

@@ -8,7 +8,6 @@ export * from "./modules/route";
 export * from "./modules/tabs";
 export * from "./modules/themeSetting";
 export * from "./modules/user";
-export * from "./modules/screenLock";
 
 const store = createPinia();
 

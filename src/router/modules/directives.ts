@@ -1,12 +1,11 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/directive",
     name: "directive",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       sort: 9,
       isRoot: true,

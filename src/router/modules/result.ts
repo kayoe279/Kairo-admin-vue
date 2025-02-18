@@ -1,5 +1,4 @@
 import { svgIconRender } from "@/lib/svgIconRender";
-import { Layout } from "@/router/constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/result",
     name: "result",
     redirect: "/result/success",
-    component: Layout,
+    component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "结果页面",
       icon: svgIconRender({ icon: "solar:emoji-funny-circle-linear" }),

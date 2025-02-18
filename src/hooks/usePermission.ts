@@ -7,12 +7,12 @@ export function usePermission() {
   function hasPermission(permission?: Entity.RoleType[]) {
     if (!permission) return true;
 
-    if (!userStore.info) return false;
-    const { role } = userStore.info;
+    if (!userStore.userInfo) return false;
+    const { roles } = userStore.userInfo;
 
-    let has = role.includes("super");
+    let has = roles?.includes("super");
     if (!has) {
-      has = permission.every((i) => role.includes(i));
+      has = permission.every((i) => roles?.includes(i));
     }
     return has;
   }

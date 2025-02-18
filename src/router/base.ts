@@ -1,7 +1,27 @@
 import type { RouteRecordRaw } from "vue-router";
 
-// 404 on a page
-export const errorRoutes: RouteRecordRaw[] = [
+export const baseRoutes: RouteRecordRaw[] = [
+  {
+    path: "/",
+    name: "root",
+    redirect: "/dashboard/console",
+    meta: {
+      title: "Root"
+    }
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/login/index.vue"),
+    meta: {
+      title: "登录",
+      withoutTab: true,
+      ignoreAuth: true
+    }
+  }
+];
+
+export const innerRoutes: RouteRecordRaw[] = [
   {
     path: "/403",
     name: "403",
@@ -36,32 +56,11 @@ export const errorRoutes: RouteRecordRaw[] = [
   },
   {
     path: "/:path(.*)*",
-    name: "errorPage",
+    name: "404",
     component: () => import("@/views/exception/404.vue"),
     meta: {
       title: "找不到页面",
       icon: "icon-park-outline:ghost",
-      withoutTab: true,
-      ignoreAuth: true
-    }
-  }
-];
-
-export const baseRoutes: RouteRecordRaw[] = [
-  {
-    path: "/",
-    name: "root",
-    redirect: "/dashboard/console",
-    meta: {
-      title: "Root"
-    }
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: () => import("@/views/login/index.vue"),
-    meta: {
-      title: "登录",
       withoutTab: true,
       ignoreAuth: true
     }

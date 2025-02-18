@@ -1,8 +1,8 @@
 import mocks from "./mocks";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
-import { storage } from "@/lib/Storage2";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { PageEnum } from "@/lib/enums/pageEnum";
+import { local } from "@/lib/storage";
 import { isUrl } from "@/lib/utils/is";
 import { useUser } from "@/store/modules/user";
 import { createAlovaMockAdapter } from "@alova/mock";
@@ -105,7 +105,7 @@ export const Alova = createAlova({
           closable: false,
           maskClosable: false,
           onOk: async () => {
-            storage.clear();
+            local.clear();
             window.location.href = LoginPath;
           }
         });

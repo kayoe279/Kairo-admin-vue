@@ -53,9 +53,9 @@ const updateMenus = () => {
     const matched = route.matched;
     const firstRouteName =
       (matched[0].meta?.activeMenu as string) || (matched[0].name as string) || "";
-    menus.value = generatorMenuMix(routeStore.menus, firstRouteName, props.location);
+    menus.value = generatorMenuMix(routeStore.rowRoutes, firstRouteName, props.location);
   } else {
-    menus.value = generatorMenu(routeStore.menus);
+    menus.value = generatorMenu(routeStore.rowRoutes);
   }
 
   updateSelectedValues();

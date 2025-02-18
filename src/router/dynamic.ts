@@ -180,6 +180,36 @@ export const dynamicRoutes: AppRoute.DynamicRouteRecordRaw[] = [
     ]
   },
   {
+    path: "/permissions",
+    name: "Permissions",
+    redirect: "/permissions/example",
+    component: "/Layout.vue",
+    meta: {
+      title: "权限",
+      icon: "solar:shield-user-broken",
+      sort: 5
+    },
+    children: [
+      {
+        path: "/permissions/example",
+        name: "permissions-example",
+        meta: {
+          title: "权限展示"
+        },
+        component: "/permissions/example.vue"
+      },
+      {
+        path: "/permissions/super",
+        name: "permissions-super",
+        meta: {
+          title: "超级管理员",
+          roles: ["super"]
+        },
+        component: "/permissions/super.vue"
+      }
+    ]
+  },
+  {
     path: "/comp",
     name: "comp",
     component: "/Layout.vue",
@@ -300,7 +330,7 @@ export const dynamicRoutes: AppRoute.DynamicRouteRecordRaw[] = [
         name: "frame-naive-admin",
         meta: {
           title: "NaiveAdmin",
-          href: "https://www.naiveadmin.com"
+          externalLink: "https://www.naiveadmin.com"
         },
         component: "/iframe/index.vue"
       },
@@ -309,7 +339,7 @@ export const dynamicRoutes: AppRoute.DynamicRouteRecordRaw[] = [
         name: "frame-docs",
         meta: {
           title: "项目文档(内嵌)",
-          href: "https://jekip.github.io/docs"
+          externalLink: "https://jekip.github.io/docs"
         },
         component: "/iframe/index.vue"
       },
@@ -318,7 +348,7 @@ export const dynamicRoutes: AppRoute.DynamicRouteRecordRaw[] = [
         name: "frame-naive",
         meta: {
           title: "NaiveUi(内嵌)",
-          href: "https://www.naiveui.com"
+          externalLink: "https://www.naiveui.com"
         },
         component: "/iframe/index.vue"
       }
