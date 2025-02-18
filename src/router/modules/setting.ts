@@ -5,17 +5,33 @@ import type { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/setting",
-    name: "Setting",
+    name: "setting",
     redirect: "/setting/account",
     component: Layout,
     meta: {
       title: "设置页面",
       icon: svgIconRender({ icon: "solar:settings-outline" }),
-      sort: 5
+      sort: 8
     },
     children: [
       {
-        path: "account",
+        path: "/setting/menu",
+        name: "setting-menu",
+        meta: {
+          title: "菜单权限"
+        },
+        component: () => import("@/views/system/menu/menu.vue")
+      },
+      {
+        path: "/setting/role",
+        name: "setting-role",
+        meta: {
+          title: "角色权限"
+        },
+        component: () => import("@/views/system/role/role.vue")
+      },
+      {
+        path: "/setting/account",
         name: "setting-account",
         meta: {
           title: "个人设置"
@@ -23,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/setting/account/account.vue")
       },
       {
-        path: "system",
+        path: "/setting/system",
         name: "setting-system",
         meta: {
           title: "系统设置"

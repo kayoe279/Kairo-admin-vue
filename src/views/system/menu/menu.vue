@@ -127,9 +127,9 @@
 </template>
 <script lang="ts" setup>
 import CreateDrawer from "./CreateDrawer.vue";
-import { getMenuList } from "@/api/system/menu";
-import type { ListDate } from "@/api/system/menu";
 import { getTreeItem } from "@/lib/utils";
+import { getMenuList } from "@/service/api/system/menu";
+import type { ListDate } from "@/service/api/system/menu";
 import { AlignLeftOutlined, DownOutlined, FormOutlined, SearchOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { computed, onMounted, reactive, ref, unref } from "vue";

@@ -16,35 +16,35 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref } from 'vue';
-  import { BasicTable } from '@/components/Table';
-  import { getTableList } from '@/api/table/list';
-  import { columns } from './CellColumns';
+import { columns } from "./CellColumns";
+import { BasicTable } from "@/components/Table";
+import { getTableList } from "@/service/api/table/list";
+import { reactive, ref } from "vue";
 
-  const actionRef = ref();
-  const params = reactive({
-    pageSize: 5,
-    name: 'NaiveAdmin',
-  });
+const actionRef = ref();
+const params = reactive({
+  pageSize: 5,
+  name: "NaiveAdmin"
+});
 
-  function onEditChange({ column, value, record }) {
-    if (column.key === 'id') {
-      record.editValueRefs.name4.value = `${value}`;
-    }
-    console.log(column, value, record);
+function onEditChange({ column, value, record }) {
+  if (column.key === "id") {
+    record.editValueRefs.name4.value = `${value}`;
   }
+  console.log(column, value, record);
+}
 
-  const loadDataTable = async (res) => {
-    return await getTableList({ ...params, ...res });
-  };
+const loadDataTable = async (res) => {
+  return await getTableList({ ...params, ...res });
+};
 
-  function onCheckedRow(rowKeys) {
-    console.log(rowKeys);
-  }
+function onCheckedRow(rowKeys) {
+  console.log(rowKeys);
+}
 
-  function editEnd({ value }) {
-    console.log(value);
-  }
+function editEnd({ value }) {
+  console.log(value);
+}
 </script>
 
 <style lang="less" scoped></style>

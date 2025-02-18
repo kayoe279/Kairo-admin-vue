@@ -1,4 +1,4 @@
-import { Alova } from "@/lib/http/alova/index";
+import { Alova } from "@/service";
 
 //获取table
 export function getTableList(params) {

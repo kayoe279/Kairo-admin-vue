@@ -10,16 +10,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       sort: 9,
       isRoot: true,
-      activeMenu: "directive_index",
+
       icon: svgIconRender({ icon: "solar:compass-broken" })
     },
     children: [
       {
-        path: "index",
-        name: `directive_index`,
+        path: "/directive/index",
+        name: `directive-index`,
         meta: {
-          title: "指令示例",
-          activeMenu: "directive_index"
+          title: "指令示例"
         },
         component: () => import("@/views/directive/index.vue")
       }

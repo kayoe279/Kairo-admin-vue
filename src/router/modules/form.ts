@@ -5,7 +5,7 @@ import type { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/form",
-    name: "Form",
+    name: "form",
     redirect: "/form/basic-form",
     component: Layout,
     meta: {
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: "basic-form",
+        path: "/form/basic-form",
         name: "form-basic-form",
         meta: {
           title: "基础表单"
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/form/basicForm/index.vue")
       },
       {
-        path: "step-form",
+        path: "/form/step-form",
         name: "form-step-form",
         meta: {
           title: "分步表单"
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/form/stepForm/stepForm.vue")
       },
       {
-        path: "detail",
+        path: "/form/detail",
         name: "form-detail",
         meta: {
           title: "表单详情"

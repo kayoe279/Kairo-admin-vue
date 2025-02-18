@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { svgIconRender } from "@/lib/svgIconRender";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useAsyncRouteStore } from "@/store/modules/asyncRoute";
-import { useTabsViewStore } from "@/store/modules/tabsView";
+import { useAppStore, useRouteStore, useTabsStore } from "@/store";
 import { type VNode, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -39,10 +37,10 @@ const visible = defineModel<boolean>("visible");
 
 const route = useRoute();
 const router = useRouter();
-const settingStore = useAppSettingStore();
-const asyncRouteStore = useAsyncRouteStore();
+const appStore = useAppStore();
+const routeStore = useRouteStore();
 const { closeCurrentTab, closeOtherTabs, closeAllTabs, closeLeftTabs, closeRightTabs } =
-  useTabsViewStore();
+  useTabsStore();
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
@@ -101,7 +99,7 @@ const delKeepAliveCompName = () => {
     const name = router.currentRoute.value.matched.find((item) => item.name == route.name)
       ?.components?.default.name;
     if (name) {
-      asyncRouteStore.cacheRoutes = asyncRouteStore.cacheRoutes.filter((item) => item != name);
+      routeStore.cacheRoutes = routeStore.cacheRoutes.filter((item) => item != name);
     }
   }
 };
@@ -109,7 +107,7 @@ const delKeepAliveCompName = () => {
 const dropdownAction: Record<DropdownKey, () => void> = {
   async reloadCurrent() {
     delKeepAliveCompName();
-    await settingStore.reloadPage();
+    await appStore.reloadPage();
   },
   closeCurrent() {
     closeCurrentTab(props.tabId, () => {

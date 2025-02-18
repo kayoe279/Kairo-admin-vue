@@ -75,6 +75,7 @@ declare global {
     VITE_PROXY: [string, string][];
     VITE_BUILD_COMPRESS: "gzip" | "brotli" | "none";
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
+
     VITE_ICON_PREFIX: string;
     VITE_ICON_LOCAL_PREFIX: string;
   }
@@ -109,6 +110,13 @@ declare global {
       [elem: string]: any;
     }
   }
+}
+
+interface Window {
+  $loadingBar: import("naive-ui").LoadingBarApi;
+  $dialog: import("naive-ui").DialogApi;
+  $message: import("naive-ui").MessageApi;
+  $notification: import("naive-ui").NotificationApi;
 }
 
 declare module "vue" {

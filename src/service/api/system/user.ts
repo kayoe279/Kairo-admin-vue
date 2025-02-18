@@ -1,4 +1,4 @@
-import { Alova } from "@/lib/http/alova/index";
+import { Alova } from "@/service";
 
 /**
  * @description: 获取用户信息

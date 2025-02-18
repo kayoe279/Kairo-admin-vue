@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { useAppStore, useThemeSettingStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed, ref, unref } from "vue";
 import { useRoute } from "vue-router";
@@ -9,11 +8,10 @@ import { useRoute } from "vue-router";
 const currentRoute = useRoute();
 const { isMobile } = useMedia();
 
-const settingStore = useAppSettingStore();
+const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
 const { inverted, darkNav } = storeToRefs(themeStore);
-const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } =
-  storeToRefs(settingStore);
+const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = storeToRefs(appStore);
 
 const collapsed = ref<boolean>(false);
 

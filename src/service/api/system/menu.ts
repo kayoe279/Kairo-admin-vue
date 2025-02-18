@@ -1,4 +1,4 @@
-import { Alova } from "@/lib/http/alova/index";
+import { Alova } from "@/service";
 
 export interface ListDate {
   label: string;

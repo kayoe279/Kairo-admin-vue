@@ -1,4 +1,4 @@
-import { useAsyncRouteStore } from "./asyncRoute";
+import { useRouteStore } from "./route";
 import { TABS_WHITE_LIST } from "@/lib/constants";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
@@ -16,12 +16,12 @@ export type TabItem = Route & {
   isFixed?: boolean;
 };
 
-export const useTabsViewStore = defineStore(
+export const useTabsStore = defineStore(
   StoreEnum.tabViews,
   () => {
     const route = useRoute();
     const router = useRouter();
-    const asyncRouteStore = useAsyncRouteStore();
+    const routeStore = useRouteStore();
 
     const activeTabId = ref<string>("");
     const tabsList = ref<TabItem[]>([]);
@@ -58,7 +58,7 @@ export const useTabsViewStore = defineStore(
     const initTabs = () => {
       const homeTab = tabsList.value.some((item) => item.name === PageEnum.BASE_HOME_NAME);
       if (!homeTab) {
-        const homeRoute = asyncRouteStore.homeRoute as unknown as Route;
+        const homeRoute = routeStore.homeRoute as unknown as Route;
         if (homeRoute) {
           tabsList.value.unshift(getTabByRoute(homeRoute));
         }
@@ -98,7 +98,6 @@ export const useTabsViewStore = defineStore(
     };
     // 关闭当前页
     const closeCurrentTab = (tabId: string, cb?: () => void) => {
-      console.log("%c [ tabId ]-101", "font-size:13px; background:pink; color:#bf2c9f;", tabId);
       if (tabsList.value.length === 1) {
         return;
       }

@@ -68,11 +68,11 @@
 import CreateModal from "./CreateModal.vue";
 import EditModal from "./EditModal.vue";
 import { columns } from "./columns";
-import { getMenuList } from "@/api/system/menu";
-import type { ListDate } from "@/api/system/menu";
-import { getRoleList } from "@/api/system/role";
 import { BasicTable, TableAction } from "@/components/Table";
 import { getTreeAll } from "@/lib/utils";
+import { getMenuList } from "@/service/api/system/menu";
+import type { ListDate } from "@/service/api/system/menu";
+import { getRoleList } from "@/service/api/system/role";
 import { PlusOutlined } from "@vicons/antd";
 import { useMessage } from "naive-ui";
 import { h, onMounted, reactive, ref, unref } from "vue";

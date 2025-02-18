@@ -1,8 +1,8 @@
-import { getUserInfo as getUserInfoApi, login as loginApi } from "@/api/system/user";
-import { storage } from "@/lib/Storage";
+import { storage } from "@/lib/Storage2";
 import { ACCESS_TOKEN, CURRENT_USER, IS_SCREEN_LOCKED } from "@/lib/constants";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { getUserInfo as getUserInfoApi, login as loginApi } from "@/service/api/system/user";
 import { store } from "@/store";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -11,6 +11,12 @@ import { computed, ref } from "vue";
 export type UserInfoType = {
   username: string;
   email: string;
+  role: string[];
+};
+
+type LoginParams = {
+  username: string;
+  password: string;
 };
 
 export interface IUserState {
@@ -48,7 +54,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
     info.value = _info;
   };
 
-  const login = async (params: any) => {
+  const login = async (params: LoginParams) => {
     const response = await loginApi(params);
     const { result, code } = response;
     if (code === ResultEnum.SUCCESS) {
@@ -78,7 +84,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
 
   const logout = async () => {
     setPermissions([]);
-    setUserInfo({ username: "", email: "" });
+    setUserInfo({ username: "", email: "", role: [] });
     storage.remove(ACCESS_TOKEN);
     storage.remove(CURRENT_USER);
   };

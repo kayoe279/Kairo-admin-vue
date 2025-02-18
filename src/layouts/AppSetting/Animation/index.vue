@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { animates as animateOptions } from "@/settings/appSetting";
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 
-const settingStore = useAppSettingStore();
-const { isPageAnimate, pageAnimateType } = storeToRefs(settingStore);
+const appStore = useAppStore();
+const { isPageAnimate, pageAnimateType } = storeToRefs(appStore);
 </script>
 
 <template>

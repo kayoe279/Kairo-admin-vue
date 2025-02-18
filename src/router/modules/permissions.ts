@@ -11,16 +11,25 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "权限",
       icon: svgIconRender({ icon: "solar:shield-user-broken" }),
-      sort: 3
+      sort: 5
     },
     children: [
       {
-        path: "example",
+        path: "/permissions/example",
         name: "permissions-example",
         meta: {
           title: "权限展示"
         },
         component: () => import("@/views/permissions/example.vue")
+      },
+      {
+        path: "/permissions/super",
+        name: "permissions-super",
+        meta: {
+          title: "超级管理员",
+          roles: ["super"]
+        },
+        component: () => import("@/views/permissions/super.vue")
       }
     ]
   }

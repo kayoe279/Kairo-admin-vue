@@ -5,7 +5,7 @@ import type { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/result",
-    name: "Result",
+    name: "result",
     redirect: "/result/success",
     component: Layout,
     meta: {
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: "success",
+        path: "/result/success",
         name: "result-success",
         meta: {
           title: "成功页"
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/result/success.vue")
       },
       {
-        path: "fail",
+        path: "/result/fail",
         name: "result-fail",
         meta: {
           title: "失败页"
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/result/fail.vue")
       },
       {
-        path: "info",
+        path: "/result/info",
         name: "result-info",
         meta: {
           title: "信息页"

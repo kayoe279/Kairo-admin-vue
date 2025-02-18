@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { DRAWER_WIDTH } from "@/lib/constants";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { useAppStore, useThemeSettingStore } from "@/store";
 import { useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 
 const message = useMessage();
-const settingStore = useAppSettingStore();
+const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
-const { open } = storeToRefs(settingStore);
+const { open } = storeToRefs(appStore);
 
 const resetSetting = () => {
-  settingStore.resetAppSetting();
+  appStore.resetAppSetting();
   themeStore.resetDesignSetting();
   message.success("恢复默认配置成功");
 };

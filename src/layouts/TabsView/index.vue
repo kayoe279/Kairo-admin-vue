@@ -4,8 +4,7 @@ import { useMedia } from "@/hooks/useMedia";
 import { TAB_DATA_ID } from "@/lib/constants";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { typedBoolean } from "@/lib/utils";
-import { useAppSettingStore } from "@/store/modules/appSetting";
-import { useTabsViewStore } from "@/store/modules/tabsView";
+import { useAppStore, useTabsStore } from "@/store";
 import type { TabNamedNodeMap } from "@/types/utils";
 import { useElementBounding } from "@vueuse/core";
 import { storeToRefs } from "pinia";
@@ -13,13 +12,13 @@ import { computed, nextTick, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const { isMobile } = useMedia();
-const settingStore = useAppSettingStore();
-const { multiTabsSetting } = storeToRefs(settingStore);
+const appStore = useAppStore();
+const { multiTabsSetting } = storeToRefs(appStore);
 
 const route = useRoute();
-const tabsViewStore = useTabsViewStore();
-const { tabsList, activeTabId } = storeToRefs(tabsViewStore);
-const { initTabs, addTab, closeCurrentTab, switchTabItem } = tabsViewStore;
+const tabsStore = useTabsStore();
+const { tabsList, activeTabId } = storeToRefs(tabsStore);
+const { initTabs, addTab, closeCurrentTab, switchTabItem } = tabsStore;
 
 const bsWrapper = ref<HTMLElement>();
 const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
@@ -128,7 +127,7 @@ watch(
 );
 
 watch(
-  () => tabsViewStore.activeTabId,
+  () => tabsStore.activeTabId,
   () => {
     scrollToActiveTab();
   }

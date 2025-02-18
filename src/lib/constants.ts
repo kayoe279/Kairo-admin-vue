@@ -2,13 +2,14 @@ import { PageEnum } from "./enums/pageEnum";
 
 export const DRAWER_WIDTH = 360;
 
+export const PAGE = {
+  LOGIN_NAME: "login",
+  LOGIN_PATH: "/login"
+} as const;
+
 // store 常量
 // 不需要出现在标签页中的路由
-export const TABS_WHITE_LIST = [
-  PageEnum.REDIRECT_NAME,
-  PageEnum.BASE_LOGIN_NAME,
-  PageEnum.ERROR_PAGE_NAME
-];
+export const TABS_WHITE_LIST = [PageEnum.REDIRECT_NAME, PAGE.LOGIN_NAME, PageEnum.ERROR_PAGE_NAME];
 export const ACCESS_TOKEN = "ACCESS-TOKEN"; // 用户token
 export const CURRENT_USER = "CURRENT-USER"; // 当前用户信息
 export const IS_SCREEN_LOCKED = "IS-SCREEN-LOCKED"; // 是否锁屏

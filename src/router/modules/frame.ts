@@ -7,39 +7,39 @@ const IFrame = () => import("@/views/iframe/index.vue");
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/frame",
-    name: "Frame",
+    name: "frame",
     redirect: "/frame/docs",
     component: Layout,
     meta: {
       title: "外部页面",
-      sort: 8,
+      sort: 7,
       icon: svgIconRender({ icon: "solar:euro-broken" })
     },
     children: [
       {
-        path: "naive-admin",
-        name: "naive-admin",
+        path: "/frame/naive-admin",
+        name: "frame-naive-admin",
         meta: {
           title: "NaiveAdmin",
-          frameSrc: "https://www.naiveadmin.com"
+          href: "https://www.naiveadmin.com"
         },
         component: IFrame
       },
       {
-        path: "docs",
+        path: "/frame/docs",
         name: "frame-docs",
         meta: {
           title: "项目文档(内嵌)",
-          frameSrc: "https://jekip.github.io/docs"
+          href: "https://jekip.github.io/docs"
         },
         component: IFrame
       },
       {
-        path: "naive",
+        path: "/frame/naive",
         name: "frame-naive",
         meta: {
           title: "NaiveUi(内嵌)",
-          frameSrc: "https://www.naiveui.com"
+          href: "https://www.naiveui.com"
         },
         component: IFrame
       }

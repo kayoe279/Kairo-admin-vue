@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 
-const settingStore = useAppSettingStore();
-const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } =
-  storeToRefs(settingStore);
+const appStore = useAppStore();
+const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } = storeToRefs(appStore);
 </script>
 
 <template>

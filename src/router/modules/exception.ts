@@ -5,17 +5,17 @@ import type { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/exception",
-    name: "Exception",
+    name: "exception",
     redirect: "/exception/403",
     component: Layout,
     meta: {
       title: "异常页面",
       icon: svgIconRender({ icon: "solar:confounded-circle-broken" }),
-      sort: 3
+      sort: 2
     },
     children: [
       {
-        path: "403",
+        path: "/exception/403",
         name: "exception-403",
         meta: {
           title: "403"
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/exception/403.vue")
       },
       {
-        path: "404",
+        path: "/exception/404",
         name: "exception-404",
         meta: {
           title: "404"
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/exception/404.vue")
       },
       {
-        path: "500",
+        path: "/exception/500",
         name: "exception-500",
         meta: {
           title: "500"

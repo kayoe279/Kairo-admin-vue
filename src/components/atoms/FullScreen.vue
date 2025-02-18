@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 
 defineOptions({
   name: "FullScreen"
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const settingStore = useAppSettingStore();
+const appStore = useAppStore();
 </script>
 
 <template>
@@ -18,6 +18,6 @@ const settingStore = useAppSettingStore();
     :key="String(full)"
     :tooltipContent="full ? '退出全屏' : '全屏'"
     :icon="props.full ? 'ant-design:fullscreen-exit-outlined' : 'ant-design:fullscreen-outlined'"
-    @click="() => settingStore.toggleFullScreen()"
+    @click="() => appStore.toggleFullScreen()"
   />
 </template>

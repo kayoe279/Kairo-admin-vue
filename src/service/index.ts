@@ -1,6 +1,6 @@
 import mocks from "./mocks";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
-import { storage } from "@/lib/Storage";
+import { storage } from "@/lib/Storage2";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { isUrl } from "@/lib/utils/is";

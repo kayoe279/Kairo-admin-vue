@@ -1,8 +1,8 @@
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 import { computed } from "vue";
 
 export function useProjectSetting() {
-  const projectStore = useAppSettingStore();
+  const projectStore = useAppStore();
 
   const navMode = computed(() => projectStore.navMode);
 

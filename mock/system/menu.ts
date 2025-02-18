@@ -1,7 +1,6 @@
 import { resultSuccess } from "../_util";
-import type { ListDate } from "@/api/system/menu";
+import type { ListDate } from "@/service/api/system/menu";
 import { defineMock } from "@alova/mock";
-import { GithubOutlined, LockOutlined } from "@vicons/antd";
 
 const menuList = () => {
   const result: ListDate[] = [

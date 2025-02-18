@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { cn } from "@/lib/utils";
 import type { AppSettingProps } from "@/settings/appSetting";
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 
-const settingStore = useAppSettingStore();
-const { navMode } = storeToRefs(settingStore);
+const appStore = useAppStore();
+const { navMode } = storeToRefs(appStore);
 
 const togNavMode = (mode: AppSettingProps["navMode"]) => {
-  settingStore.setNavMode(mode);
+  appStore.setNavMode(mode);
 };
 </script>
 

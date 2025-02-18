@@ -1,12 +1,17 @@
-import { useAppSettingStore } from "./appSetting";
+import { useAppStore } from "./appSetting";
+import { useUserStore } from "./user";
+import { usePermission } from "@/hooks/usePermission";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { local } from "@/lib/storage222";
+import router from "@/router";
+import { dynamicRoutes } from "@/router/dynamic";
 import { generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes, constantRouter } from "@/router/index";
 import { store } from "@/store";
 import { defineStore } from "pinia";
 import { computed, ref, toRaw, unref } from "vue";
-import type { RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from "vue-router";
 
 interface TreeHelperConfig {
   id: string;
@@ -50,8 +55,12 @@ function filter<T = any>(
   return listFilter(tree);
 }
 
-export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
-  const settingStore = useAppSettingStore();
+export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
+  const appStore = useAppStore();
+  const userStore = useUserStore();
+  const { hasPermission } = usePermission();
+
+  const rowRoutes = ref<RouteRecordRaw[]>([]);
 
   const activeMenu = ref<string | null>(null);
   const menus = ref<RouteRecordRaw[]>([]);
@@ -59,6 +68,7 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
   const routersAdded = ref<RouteRecordRaw[]>([]);
   const cacheRoutes = ref<string[]>([]);
   const isDynamicRouteAdded = ref<boolean>(false);
+  const isInitAuthRoute = ref<boolean>(false);
 
   const homeRoute = computed(() => {
     const home = routers.value.find((item) => item.name === PageEnum.HOME_NAME);
@@ -102,13 +112,13 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
       if (!permissions) return true;
       return permissionsList.some((item) => permissions.includes(item.value));
     };
-    if (unref(settingStore.permissionMode) === "BACK") {
+    if (unref(appStore.permissionMode) === "BACK") {
       // 动态获取菜单
-      try {
-        accessedRouters = await generateDynamicRoutes();
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   accessedRouters = await generateDynamicRoutes();
+      // } catch (error) {
+      //   console.log(error);
+      // }
     } else {
       try {
         //过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -123,6 +133,56 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
     return toRaw(accessedRouters);
   };
 
+  const initAuthRoute = async () => {
+    isInitAuthRoute.value = false;
+
+    let resultRouter: RouteRecordRaw[] = [];
+
+    if (import.meta.env.VITE_ROUTE_LOAD_MODE === "dynamic") {
+      const userInfo = local.get("userInfo");
+      if (!userInfo || !userInfo.id) {
+        userStore.logout();
+        return;
+      }
+
+      // TODO: 获取用户路由
+      // const { data } = await fetchUserRoutes({
+      //   id: userInfo.id,
+      // })
+      // if (data) {
+      //   return data
+      // }
+      resultRouter = generateDynamicRoutes(dynamicRoutes);
+    } else {
+      resultRouter = asyncRoutes;
+    }
+
+    // Route permission filtering
+    resultRouter = resultRouter.filter((i) => hasPermission(i.meta?.roles));
+    rowRoutes.value = resultRouter;
+    console.log(
+      "%c [ resultRouter ]-158",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      resultRouter
+    );
+    resultRouter.forEach((item) => {
+      router.addRoute(item);
+    });
+
+    // 生成菜单
+    // this.menus = createMenus(rowRoutes)
+
+    // 生成keepalive 的缓存路由
+    // this.cacheRoutes = generateCacheRoutes(rowRoutes);
+
+    isInitAuthRoute.value = true;
+    console.log(
+      "%c [ isInitAuthRoute.value ]-182",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      isInitAuthRoute.value
+    );
+  };
+
   return {
     activeMenu,
     menus,
@@ -131,6 +191,8 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
     cacheRoutes,
     isDynamicRouteAdded,
     homeRoute,
+    isInitAuthRoute,
+    initAuthRoute,
     setActiveMenu,
     getRouters,
     setDynamicRouteAdded,
@@ -143,5 +205,5 @@ export const useAsyncRouteStore = defineStore(StoreEnum.asyncRoute, () => {
 
 // Need to be used outside the setup
 export function useAsyncRoute() {
-  return useAsyncRouteStore(store);
+  return useRouteStore(store);
 }

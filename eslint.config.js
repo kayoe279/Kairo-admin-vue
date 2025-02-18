@@ -61,12 +61,12 @@ export default defineConfigWithVueTs(
       "vue/multi-word-component-names": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-expressions": "off",
-      "@typescript-eslint/consistent-type-imports": "warn",
       "@typescript-eslint/no-unsafe-function-type": "off",
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-duplicate-enum-values": "off",
       "prefer-rest-params": "off",
-      "@typescript-eslint/no-unused-vars": "warn"
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/consistent-type-imports": "off"
     }
   }
 );

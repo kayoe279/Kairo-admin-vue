@@ -10,16 +10,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       sort: 10,
       isRoot: true,
-      activeMenu: "about_index",
       icon: svgIconRender({ icon: "ix:about" })
     },
     children: [
       {
-        path: "index",
-        name: `about_index`,
+        path: "/about/index",
+        name: `about-index`,
         meta: {
-          title: "关于项目",
-          activeMenu: "about_index"
+          title: "关于项目"
         },
         component: () => import("@/views/about/index.vue")
       }

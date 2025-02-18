@@ -6,7 +6,7 @@ import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
 import { nextTick, ref, toRefs } from "vue";
 
-export const useAppSettingStore = defineStore(
+export const useAppStore = defineStore(
   StoreEnum.setting,
   () => {
     const settings = ref(cloneDeep(appSetting));

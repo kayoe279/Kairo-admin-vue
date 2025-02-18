@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { cn } from "@/lib/utils";
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store";
 
 defineOptions({
   name: "ReloadButton"
@@ -10,7 +10,7 @@ defineProps<{
   loading?: boolean;
 }>();
 
-const appStore = useAppSettingStore();
+const appStore = useAppStore();
 </script>
 
 <template>

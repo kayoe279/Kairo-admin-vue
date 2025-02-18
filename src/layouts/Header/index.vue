@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { TABS_ROUTES } from "@/lib/constants";
 import { websiteConfig } from "@/lib/websiteConfig";
-import { useAppSettingStore } from "@/store/modules/appSetting";
+import { useAppStore } from "@/store/modules/appSetting";
 import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useUserStore } from "@/store/modules/user";
 import { useFullscreen } from "@vueuse/core";
@@ -20,8 +20,8 @@ const userStore = useUserStore();
 const lockScreen = useScreenLockStore();
 const message = useMessage();
 const dialog = useDialog();
-const settingStore = useAppSettingStore();
-const { navMode, headerSetting, breadcrumbsSetting } = storeToRefs(settingStore);
+const appStore = useAppStore();
+const { navMode, headerSetting, breadcrumbsSetting } = storeToRefs(appStore);
 
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
@@ -176,7 +176,7 @@ const avatarSelect = (key) => {
       <ButtonIcon
         icon="solar:settings-broken"
         tooltipContent="项目配置"
-        @click="() => settingStore.toggleDrawer()"
+        @click="() => appStore.toggleDrawer()"
       />
       <!-- 切换主题 -->
       <ThemeSwitch />

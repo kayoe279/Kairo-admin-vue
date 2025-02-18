@@ -1,4 +1,4 @@
-import { storage } from "@/lib/Storage";
+import { storage } from "@/lib/Storage2";
 import { IS_SCREEN_LOCKED } from "@/lib/constants";
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { defineStore } from "pinia";

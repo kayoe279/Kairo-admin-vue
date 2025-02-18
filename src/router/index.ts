@@ -1,11 +1,10 @@
-import { createRouterGuards } from "./guards";
-import type { IModuleType } from "./types";
-import { LoginRoute, RedirectRoute, RootRoute } from "@/router/base";
+import { setupRouterGuard } from "./guards";
+import { baseRoutes, errorRoutes } from "@/router/base";
 import type { App } from "vue";
 import type { RouteRecordRaw } from "vue-router";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 
-const modules = import.meta.glob<IModuleType>("./modules/**/*.ts", { eager: true });
+const modules = import.meta.glob<AppRoute.IModuleType>("./modules/**/*.ts", { eager: true });
 
 //需要验证权限
 export const asyncRoutes: RouteRecordRaw[] = Object.keys(modules)
@@ -17,22 +16,17 @@ export const asyncRoutes: RouteRecordRaw[] = Object.keys(modules)
   .sort((a, b) => {
     return ((a.meta?.sort as number) ?? 0) - ((b.meta?.sort as number) ?? 0);
   });
-console.log(
-  "%c [ asyncRoutes ]-43",
-  "font-size:13px; background:pink; color:#bf2c9f;",
-  asyncRoutes
-);
 
 //普通路由 无需验证权限
-export const constantRouter: RouteRecordRaw[] = [LoginRoute, RootRoute, RedirectRoute];
-console.log(
-  "%c [ constantRouter ]-47",
-  "font-size:13px; background:pink; color:#bf2c9f;",
-  constantRouter
-);
+export const constantRouter: RouteRecordRaw[] = [...baseRoutes, ...errorRoutes];
+
+const { VITE_BASE_URL, VITE_ROUTE_MODE } = import.meta.env;
 
 const router = createRouter({
-  history: createWebHistory(),
+  history:
+    VITE_ROUTE_MODE === "hash"
+      ? createWebHashHistory(VITE_BASE_URL)
+      : createWebHistory(VITE_BASE_URL),
   routes: constantRouter,
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 })
@@ -41,7 +35,7 @@ const router = createRouter({
 export async function setupRouter(app: App) {
   app.use(router);
   // 创建路由守卫
-  createRouterGuards(router);
+  setupRouterGuard(router);
 
   // 路由准备就绪后挂载 APP 实例
   // https://router.vuejs.org/api/interfaces/router.html#isready

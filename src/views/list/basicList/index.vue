@@ -70,10 +70,10 @@
 <script lang="ts" setup>
 import type { ListData } from "./columns";
 import { columns } from "./columns";
-import { getTableList } from "@/api/table/list";
 import type { FormSchema } from "@/components/Form/index";
 import { BasicForm, useForm } from "@/components/Form/index";
 import { BasicTable, TableAction } from "@/components/Table";
+import { getTableList } from "@/service/api/table/list";
 import { PlusOutlined } from "@vicons/antd";
 import { type FormRules } from "naive-ui";
 import { h, reactive, ref } from "vue";
