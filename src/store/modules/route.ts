@@ -3,7 +3,7 @@ import { useUserStore } from "./user";
 import { usePermission } from "@/hooks/usePermission";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import { local } from "@/lib/storage222";
+import { local } from "@/lib/storage";
 import router from "@/router";
 import { dynamicRoutes } from "@/router/dynamic";
 import { generateDynamicRoutes } from "@/router/generator";
