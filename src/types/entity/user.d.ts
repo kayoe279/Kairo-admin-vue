@@ -6,7 +6,7 @@ declare namespace Entity {
     /** 用户id */
     id?: number;
     /** 用户名 */
-    userName?: string;
+    username?: string;
     /* 用户头像 */
     avatar?: string;
     /* 用户性别 */

@@ -8,9 +8,9 @@ declare namespace Api {
       id: number;
       /** 用户角色类型 */
       roles: Entity.RoleType[];
-      /** 访问toekn */
+      /** 访问token */
       accessToken: string;
-      /** 刷新toekn */
+      /** 刷新token */
       refreshToken: string;
     }
   }

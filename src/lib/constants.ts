@@ -5,7 +5,7 @@ export const PAGE = {
   LOGIN_PATH: "/login",
   ERROR_PAGE_NAME: "404",
   HOME_NAME: "dashboard",
-  HOME_NAME_REDIRECT: "dashboard-console"
+  HOME_NAME_REDIRECT: "dashboard-workplace"
 } as const;
 
 export const ACCESS_TOKEN = "ACCESS-TOKEN"; // 用户token

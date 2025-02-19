@@ -16,7 +16,7 @@ export const appThemeList: string[] = [
   "#22C55E"
 ];
 
-const setting = {
+export const themeSetting = {
   theme: "light" as "light" | "dark",
   // 暗色侧边栏
   darkNav: false,
@@ -58,6 +58,4 @@ export const initDesignSetting = () => {
   };
 };
 
-export type ThemeSettingProps = typeof setting;
-
-export default setting;
+export type ThemeSettingProps = typeof themeSetting;

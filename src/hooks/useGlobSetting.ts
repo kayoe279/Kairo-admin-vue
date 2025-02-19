@@ -1,6 +1,16 @@
 import { getAppEnvConfig } from "@/lib/env";
 import { warn } from "@/lib/log";
-import type { GlobConfig } from "@/types/config";
+
+export interface GlobConfig {
+  title: string;
+  apiUrl: string;
+  shortName: string;
+  urlPrefix?: string;
+  uploadUrl?: string;
+  useMock: boolean;
+  fileUrl?: string;
+  loggerMock: boolean;
+}
 
 export const useGlobSetting = (): Readonly<GlobConfig> => {
   const {

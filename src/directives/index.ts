@@ -1,7 +1,7 @@
 import copy from "@/directives/copy";
 import debounce from "@/directives/debounce";
 import draggable from "@/directives/draggable";
-import { permission } from "@/directives/permission";
+import permission from "@/directives/permission";
 import throttle from "@/directives/throttle";
 import type { App } from "vue";
 
@@ -10,7 +10,7 @@ import type { App } from "vue";
  * @param app
  */
 export function setupDirectives(app: App) {
-  // 权限控制指令（演示）
+  // 权限控制指令
   app.directive("permission", permission);
   // 复制指令
   app.directive("copy", copy);

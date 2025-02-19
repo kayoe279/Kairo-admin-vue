@@ -1,6 +1,5 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import type { AppSettingProps } from "@/settings/appSetting";
-import appSetting from "@/settings/appSetting";
+import { type AppSettingProps, appSetting } from "@/lib/settings/app";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";

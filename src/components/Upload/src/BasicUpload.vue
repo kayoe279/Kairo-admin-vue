@@ -72,8 +72,8 @@
 import { basicProps } from "./props";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
 import { ResultEnum } from "@/lib/enums/httpEnum";
+import { componentSetting } from "@/lib/settings/component";
 import { isString } from "@/lib/utils/is";
-import componentSetting from "@/settings/componentSetting";
 import { DeleteOutlined, EyeOutlined, PlusOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { computed, defineComponent, reactive, toRefs, watch } from "vue";

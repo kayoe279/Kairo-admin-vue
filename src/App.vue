@@ -59,7 +59,6 @@ watch(grayMode, (value) => {
 // };
 
 // onMounted(() => {
-//   themeStore.setAppThemeVariable();
 //   document.addEventListener("mousedown", timekeeping);
 // });
 

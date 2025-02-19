@@ -1,11 +1,13 @@
-@import url("./transition/index.less");
-// @import url("./fonts.css");
+@import "./tailwind.css";
+@import "./transition.css";
+@import "./fonts.css";
 
 html,
 body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  font-family: "Poppins", sans-serif;
 }
 
 body.gray-mode {

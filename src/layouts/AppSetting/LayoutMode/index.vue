@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import type { AppSettingProps } from "@/lib/settings/app";
 import { cn } from "@/lib/utils";
-import type { AppSettingProps } from "@/settings/appSetting";
 import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 

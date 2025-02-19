@@ -2,19 +2,20 @@ import { COOKIE_ACCESS_TOKEN, COOKIE_LANG, COOKIE_REFRESH_TOKEN } from "./consta
 import Cookies from "universal-cookie";
 
 const STORAGE_PREFIX = import.meta.env.VITE_STORAGE_PREFIX;
-const CACHE_EXPIRE = import.meta.env.VITE_CACHE_EXPIRE; //7天
+const CACHE_EXPIRE = import.meta.env.VITE_CACHE_EXPIRE; // 7天
 
-export const createCookie = <T extends Cookie.Local>() => {
-  const cookies = new Cookies();
+const cookies = new Cookies();
 
+export const createCookie = <T extends Cookie.Local>(prefix: string) => {
   function set<K extends keyof T>(key: K, value: T[K], expire: number = 1 * CACHE_EXPIRE) {
-    cookies.set(`${STORAGE_PREFIX}${String(key)}`, value, {
-      expires: new Date(new Date().getTime() + expire * 1000)
+    cookies.set(`${prefix}${String(key)}`, value, {
+      expires: new Date(new Date().getTime() + expire * 1000),
+      path: "/" // 确保设置和删除时的 path 一致
     });
   }
 
   function get<K extends keyof T>(key: K) {
-    const value = cookies.get(`${STORAGE_PREFIX}${String(key)}`);
+    const value = cookies.get(`${prefix}${String(key)}`);
     if (!value) {
       remove(key);
       return null;
@@ -23,7 +24,9 @@ export const createCookie = <T extends Cookie.Local>() => {
   }
 
   function remove(key: keyof T) {
-    cookies.remove(`${STORAGE_PREFIX}${String(key)}`);
+    cookies.remove(`${prefix}${String(key)}`, {
+      path: "/" // 确保与设置时的 path 一致
+    });
   }
 
   return {
@@ -33,19 +36,20 @@ export const createCookie = <T extends Cookie.Local>() => {
   };
 };
 
-export const cookie = createCookie();
+export const cookie = createCookie(STORAGE_PREFIX);
 
 // 用户token
 export const getUserToken = () => {
   return cookie.get(COOKIE_ACCESS_TOKEN);
 };
+
 export const setUserToken = (token: string) => {
   cookie.set(COOKIE_ACCESS_TOKEN, token);
 };
+
 export const removeUserToken = () => {
   cookie.remove(COOKIE_ACCESS_TOKEN);
 };
-
 // 刷新token
 export const getRefreshToken = () => {
   return cookie.get(COOKIE_REFRESH_TOKEN);

@@ -3,20 +3,18 @@
 `Naive Ui Admin` 是一款 完全免费 且可商用的中后台解决方案，基于 🌟 `Vue3.0` 🌟、🚀 `Vite` 🚀、✨ [Naive UI](https://www.naiveui.com/) ✨ 和 🎉 `TypeScript` 🎉。
 它融合了最新的前端技术栈，提炼了典型的业务模型和页面，包括二次封装组件、动态菜单、权限校验等功能，助力快速搭建企业级中后台项目。
 
-
-
-
 ## 🌈 特性
+
 📦 二次封装的实用高扩展性组件
 🎨 响应式、多主题、多配置，快速集成，开箱即用
 🚀 强大的鉴权系统，支持 三种鉴权模式，满足多样业务需求
 🌐 持续更新的实用性页面模板和交互设计，简化页面构建
 
-
 ## 🎥 预览
+
 - [naive-ui-admin](https://jekip.github.io)
 
-账号：admin，密码：123456（随意）
+账号：super，密码：123456（随意）
 
 ## 💡 提示
 
@@ -75,7 +73,6 @@
 - [NaiveUi](https://www.naiveui.com/) - ui 基本使用
 - [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
 
-
 ## 🏗️ 使用
 
 - 获取项目代码
@@ -108,7 +105,6 @@ pnpm build
 ## 📜 更新日志
 
 [CHANGELOG](./CHANGELOG.md)
-
 
 ## 🤝 如何贡献
 
@@ -147,10 +143,11 @@ pnpm build
 支持现代浏览器, 不支持 IE
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                             not support                                                                                              |                                                                                            last 2 versions                                                                                             |                                                                                                  last 2 versions                                                                                                  |                                                                                                last 2 versions                                                                                                |                                                                                                last 2 versions                                                                                                |
 
 ## 👥 维护者
+
 [@Ah jung](https://github.com/jekip)
 
 ## 💬 交流
@@ -161,6 +158,7 @@ QQ1群：328347666 （已满）
 QQ2群：741353560
 
 ## 💖 赞助
+
 #### 如果您觉得这个项目对您有帮助，可以通过下面的链接为作者买一杯果汁，表示感谢！。
 
 ![donate](https://assets.naiveadmin.com/images/sponsor.png)

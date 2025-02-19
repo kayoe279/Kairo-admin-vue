@@ -34,6 +34,7 @@ declare module 'vue' {
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
     NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
     NCard: typeof import('naive-ui')['NCard']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NCheckboxGroup: typeof import('naive-ui')['NCheckboxGroup']
@@ -53,6 +54,8 @@ declare module 'vue' {
     NGi: typeof import('naive-ui')['NGi']
     NGrid: typeof import('naive-ui')['NGrid']
     NGridItem: typeof import('naive-ui')['NGridItem']
+    NH1: typeof import('naive-ui')['NH1']
+    NH2: typeof import('naive-ui')['NH2']
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NInputGroup: typeof import('naive-ui')['NInputGroup']
@@ -104,5 +107,6 @@ declare module 'vue' {
     ThemeColor: typeof import('./../layouts/AppSetting/ThemeColor/index.vue')['default']
     ThemeMode: typeof import('./../layouts/AppSetting/ThemeMode/ThemeMode.vue')['default']
     ThemeSwitch: typeof import('./../layouts/AppSetting/ThemeMode/ThemeSwitch.vue')['default']
+    User: typeof import('./../layouts/Header/User.vue')['default']
   }
 }

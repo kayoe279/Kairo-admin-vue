@@ -16,8 +16,6 @@ html.dark {
 }
 
 @theme inline {
-  --font-poppins: var(--font-poppins);
-
   --color-primary: var(--primary-foreground);
   --color-background-root: var(--background-root);
   --color-background: var(--background);
@@ -28,6 +26,7 @@ html.dark {
   --color-gray-200: #f3f3f5;
 
   --font-maple: "Maple", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
 
   --text-8: 0.5rem;
   --text-9: 0.5625rem;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { animates as animateOptions } from "@/settings/appSetting";
+import { animates as animateOptions } from "@/lib/settings/app";
 import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 

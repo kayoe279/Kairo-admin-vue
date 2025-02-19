@@ -1,19 +1,17 @@
-import { useAppStore } from "./appSetting";
 import { useUserStore } from "./user";
 import { usePermission } from "@/hooks/usePermission";
 import { PAGE } from "@/lib/constants";
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { getUserInfo } from "@/lib/storage";
-import router from "@/router";
-import { dynamicRoutes } from "@/router/dynamic";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes } from "@/router/index";
+import { getUserRoutes } from "@/service/api/login";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { type RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw, useRouter } from "vue-router";
 
 export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
-  const appStore = useAppStore();
+  const router = useRouter();
   const userStore = useUserStore();
   const { hasPermission } = usePermission();
 
@@ -33,7 +31,7 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
       if (route.children?.length) {
         route.children = filterRoutes(route.children);
       }
-      return hasPermission(route.meta?.roles);
+      return hasPermission(route.meta?.roles || []);
     });
   };
 
@@ -44,25 +42,20 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
 
     if (import.meta.env.VITE_ROUTE_LOAD_MODE === "dynamic") {
       const userInfo = getUserInfo();
-      console.log(
-        "%c [ userInfo ]-143",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        userInfo
-      );
+      if (!userInfo || !userInfo.id) {
+        userStore.logout();
+        return;
+      }
 
-      // if (!userInfo || !userInfo.id) {
-      //   userStore.logout();
-      //   return;
-      // }
-
-      // TODO: 获取用户路由
-      // const { data } = await fetchUserRoutes({
-      //   id: userInfo.id,
-      // })
-      // if (data) {
-      //   return data
-      // }
-      resultRouter = generateDynamicRoutes(dynamicRoutes);
+      const { data: dynamicRoutes } = await getUserRoutes({
+        id: userInfo.id
+      });
+      if (dynamicRoutes?.length) {
+        resultRouter = generateDynamicRoutes(dynamicRoutes);
+      } else {
+        userStore.logout();
+        return;
+      }
     } else {
       resultRouter = asyncRoutes;
     }
@@ -70,7 +63,7 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
     // 路由权限过滤
     resultRouter = filterRoutes(resultRouter);
 
-    filterRoutes(resultRouter).forEach((item) => {
+    resultRouter.forEach((item) => {
       router.addRoute(item);
     });
 
@@ -82,11 +75,24 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
     isInitAuthRoute.value = true;
   };
 
+  const resetRoutes = () => {
+    rowRoutes.value.forEach((route) => {
+      const name = route.name as string;
+      if (router.hasRoute(name)) {
+        router.removeRoute(name);
+      }
+    });
+    rowRoutes.value = [];
+    cacheRoutes.value = [];
+    isInitAuthRoute.value = false;
+  };
+
   return {
     homeRoute,
     rowRoutes,
     cacheRoutes,
     isInitAuthRoute,
-    initAuthRoute
+    initAuthRoute,
+    resetRoutes
   };
 });

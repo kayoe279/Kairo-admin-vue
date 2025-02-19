@@ -1,10 +1,11 @@
+import { createAlovaInstance } from "./alova";
 import mocks from "./mocks";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
 import { ResultEnum } from "@/lib/enums/httpEnum";
 import { PageEnum } from "@/lib/enums/pageEnum";
 import { local } from "@/lib/storage";
 import { isUrl } from "@/lib/utils/is";
-import { useUser } from "@/store/modules/user";
+import { useUserStore } from "@/store";
 import { createAlovaMockAdapter } from "@alova/mock";
 import { createAlova } from "alova";
 import adapterFetch from "alova/fetch";
@@ -55,8 +56,8 @@ export const Alova = createAlova({
   cacheLogger: process.env.NODE_ENV === "development",
   requestAdapter: mockAdapter,
   beforeRequest(method) {
-    const userStore = useUser();
-    const token = userStore.getToken;
+    const userStore = useUserStore();
+    const token = userStore.token;
     // 添加 token 到请求头
     if (!method.meta?.ignoreToken && token) {
       method.config.headers["token"] = token;
@@ -122,3 +123,7 @@ export const Alova = createAlova({
 // export const AlovaTwo = createAlova({
 //   baseURL: 'http://localhost:9001',
 // });
+
+export const request = createAlovaInstance({
+  baseURL: import.meta.env.VITE_API_ENDPOINT
+});

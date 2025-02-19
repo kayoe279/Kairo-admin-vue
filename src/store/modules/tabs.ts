@@ -123,6 +123,12 @@ export const useTabsStore = defineStore(
       router.push({ name: currentTab.name });
     };
 
+    // 清空所有
+    const clearAllTabs = () => {
+      activeTabId.value = "";
+      tabsList.value = [];
+    };
+
     return {
       activeTabId,
       setActiveTabId,
@@ -134,7 +140,8 @@ export const useTabsStore = defineStore(
       closeOtherTabs,
       closeCurrentTab,
       closeAllTabs,
-      switchTabItem
+      switchTabItem,
+      clearAllTabs
     };
   },
   {

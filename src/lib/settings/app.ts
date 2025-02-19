@@ -1,4 +1,7 @@
-const setting = {
+import avatarImage from "@/assets/images/avatar.jpg";
+import loginImage from "@/assets/images/avatar.jpg";
+
+export const appSetting = {
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式 horizontal-mix 顶部菜单混合模式
   navMode: "vertical" as "vertical" | "horizontal" | "horizontal-mix",
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏
@@ -25,7 +28,7 @@ const setting = {
     //最小宽度
     minMenuWidth: 64,
     //菜单宽度
-    menuWidth: 200,
+    menuWidth: 220,
     //触发移动端侧边栏的宽度
     mobileWidth: 768,
     // 菜单手风琴模式
@@ -48,12 +51,23 @@ const setting = {
 
 export const animates = [
   { value: "fade-slide", label: "滑动" },
-  { value: "zoom-fade", label: "渐变" },
-  { value: "zoom-out", label: "闪现" },
-  { value: "fade", label: "消退" },
+  { value: "fade", label: "淡入淡出" },
   { value: "fade-bottom", label: "底部消退" },
-  { value: "fade-scale", label: "缩放消退" }
+  { value: "fade-scale", label: "缩放消退" },
+  { value: "zoom-fade", label: "渐变" },
+  { value: "zoom-out", label: "闪现" }
 ];
 
-export type AppSettingProps = typeof setting;
-export default setting;
+export type AppSettingProps = typeof appSetting;
+
+export const defaultLoginParams = {
+  username: "super",
+  password: "123456"
+};
+
+export const appConfig = {
+  title: "Kairo Admin",
+  avatar: avatarImage,
+  logo: loginImage,
+  loginDesc: "kairo Admin中后台前端/设计解决方案 "
+};

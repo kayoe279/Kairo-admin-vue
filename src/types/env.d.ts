@@ -26,7 +26,7 @@ interface ImportMetaEnv {
   /** 版权信息 */
   readonly VITE_COPYRIGHT_INFO: string;
   /** 是否自动刷新token */
-  readonly VITE_AUTO_REFRESH_TOKEN: "Y" | "N";
+  readonly VITE_AUTO_REFRESH_TOKEN: "Yes" | "No";
   /** 默认语言 */
   readonly VITE_DEFAULT_LANG: App.lang;
   /** 后端服务的环境类型 */
@@ -34,7 +34,7 @@ interface ImportMetaEnv {
   /** 存储前缀 */
   readonly VITE_STORAGE_PREFIX: string;
   /** API 地址 */
-  readonly VITE_API_URL: string;
+  readonly VITE_API_ENDPOINT: string;
   /** 路由加载模式 */
   readonly VITE_ROUTER_LOAD_MODE: "static" | "dynamic";
   /** 缓存过期时间 */

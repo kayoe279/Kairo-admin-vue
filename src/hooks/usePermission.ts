@@ -1,23 +1,27 @@
 import { useUserStore } from "@/store";
 
 /** 权限判断 */
-export function usePermission() {
+export const usePermission = () => {
   const userStore = useUserStore();
 
-  function hasPermission(permission?: Entity.RoleType[]) {
-    if (!permission) return true;
+  // 是否包含其中某个权限
+  const hasPermission = (accesses: Entity.RoleType[]) => {
+    if (!accesses || !accesses.length) return true;
 
-    if (!userStore.userInfo) return false;
-    const { roles } = userStore.userInfo;
+    const roles = userStore.userInfo?.roles || [];
+    return accesses.some((r) => roles.includes(r));
+  };
 
-    let has = roles?.includes("super");
-    if (!has) {
-      has = permission.every((i) => roles?.includes(i));
-    }
-    return has;
-  }
+  // 包含所有权限
+  const hasEveryPermission = (accesses: Entity.RoleType[]) => {
+    if (!accesses || !accesses.length) return true;
+
+    const roles = userStore.userInfo?.roles || [];
+    return accesses.every((r) => roles?.includes(r));
+  };
 
   return {
-    hasPermission
+    hasPermission,
+    hasEveryPermission
   };
-}
+};

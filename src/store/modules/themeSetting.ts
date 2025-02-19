@@ -1,18 +1,18 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { type ThemeSettingProps, themeSetting } from "@/lib/settings/theme";
 import { lighten } from "@/lib/utils";
-import designSetting, { ThemeSettingProps } from "@/settings/themeSetting";
 import { store } from "@/store";
 import cloneDeep from "lodash-es/cloneDeep";
 import type { GlobalThemeOverrides } from "naive-ui";
 import { defineStore } from "pinia";
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs, watch } from "vue";
 
 export type ThemeType = "primary" | "info" | "success" | "warning" | "error";
 
 export const useThemeSettingStore = defineStore(
   StoreEnum.theme,
   () => {
-    const settings = ref(cloneDeep(designSetting));
+    const settings = ref(cloneDeep(themeSetting));
 
     const inverted = computed(() => {
       return settings.value.theme === "dark";
@@ -26,10 +26,10 @@ export const useThemeSettingStore = defineStore(
       const warningColor = settings.value.warningColor;
       const errorColor = settings.value.errorColor;
       const lightenStr = lighten(themeColor, 6);
-      const infoStr = lighten(themeColor, 6);
-      const successStr = lighten(themeColor, 6);
-      const warningStr = lighten(themeColor, 6);
-      const errorStr = lighten(themeColor, 6);
+      const infoStr = lighten(infoColor, 6);
+      const successStr = lighten(successColor, 6);
+      const warningStr = lighten(warningColor, 6);
+      const errorStr = lighten(errorColor, 6);
 
       return {
         common: {
@@ -57,7 +57,7 @@ export const useThemeSettingStore = defineStore(
           errorColorHover: errorStr,
           errorColorPressed: errorStr,
           errorColorSuppl: errorColor,
-          borderRadius: "6px"
+          borderRadius: "5px"
         },
         LoadingBar: {
           colorLoading: themeColor
@@ -77,7 +77,6 @@ export const useThemeSettingStore = defineStore(
     const setThemeColor = (type: ThemeType, value: string) => {
       if (type === "primary") {
         settings.value.themeColor = value;
-        setAppThemeVariable(value);
       } else if (type === "info") {
         settings.value.infoColor = value;
       } else if (type === "success") {
@@ -106,9 +105,19 @@ export const useThemeSettingStore = defineStore(
     // 重置store
     const resetDesignSetting = () => {
       Object.assign(settings.value, {
-        ...cloneDeep(designSetting)
+        ...cloneDeep(themeSetting)
       });
     };
+
+    watch(
+      () => settings.value.themeColor,
+      (newVal) => {
+        setAppThemeVariable(newVal);
+      },
+      {
+        immediate: true
+      }
+    );
 
     return {
       ...toRefs(settings.value),

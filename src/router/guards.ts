@@ -1,6 +1,6 @@
 import { PAGE } from "@/lib/constants";
 import { getUserToken } from "@/lib/cookie";
-import { useAppStore, useRouteStore, useTabsStore, useUser } from "@/store";
+import { useRouteStore } from "@/store";
 import type { Router } from "vue-router";
 
 const title = import.meta.env.VITE_GLOB_APP_TITLE;

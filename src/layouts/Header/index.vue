@@ -1,25 +1,18 @@
 <script lang="ts" setup>
-import { TABS_ROUTES } from "@/lib/constants";
-import { websiteConfig } from "@/lib/websiteConfig";
 import { useAppStore } from "@/store/modules/appSetting";
 // import { useScreenLockStore } from "@/store/modules/screenLock";
-import { useUserStore } from "@/store/modules/user";
 import { useFullscreen } from "@vueuse/core";
-import { useDialog, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { avatarOptions } from "~/mock/system/menu";
 
 const collapsed = defineModel<boolean>("collapsed");
 
 const router = useRouter();
 const route = useRoute();
 
-const userStore = useUserStore();
 // const lockScreen = useScreenLockStore();
-const message = useMessage();
-const dialog = useDialog();
+
 const appStore = useAppStore();
 const { navMode, headerSetting, breadcrumbsSetting } = storeToRefs(appStore);
 
@@ -54,50 +47,12 @@ const dropdownSelect = (key) => {
   router.push({ name: key });
 };
 
-// 退出登录
-const doLogout = () => {
-  dialog.info({
-    title: "提示",
-    content: "您确定要退出登录吗",
-    positiveText: "确定",
-    negativeText: "取消",
-    onPositiveClick: () => {
-      userStore.logout().then(() => {
-        message.success("成功退出登录");
-        // 移除标签页
-        localStorage.removeItem(TABS_ROUTES);
-        router
-          .replace({
-            name: "Login",
-            query: {
-              redirect: route.fullPath
-            }
-          })
-          .finally(() => location.reload());
-      });
-    },
-    onNegativeClick: () => {}
-  });
-};
-
 const onIconClick = (key: "github" | "lock") => {
   console.log(key);
   if (key === "github") {
     window.open("https://github.com/jekip/naive-ui-admin");
   } else if (key === "lock") {
     // lockScreen.setLock(true);
-  }
-};
-
-//头像下拉菜单
-const avatarSelect = (key) => {
-  switch (key) {
-    case 1:
-      router.push({ name: "Setting" });
-      break;
-    case 2:
-      doLogout();
-      break;
   }
 };
 </script>
@@ -119,12 +74,11 @@ const avatarSelect = (key) => {
         v-if="navMode === 'horizontal' || navMode === 'horizontal-mix'"
         class="flex h-full min-w-0 flex-1 items-center gap-x-5"
       >
-        <div
+        <Logo
           v-if="navMode === 'horizontal'"
           class="flex h-16 items-center justify-center overflow-hidden whitespace-nowrap max-md:hidden"
-        >
-          <img class="size-10" :src="websiteConfig.logo" alt="" />
-        </div>
+        />
+
         <Menu location="header" mode="horizontal" />
       </div>
       <div class="hidden items-center md:flex" v-else>
@@ -182,14 +136,7 @@ const avatarSelect = (key) => {
       <ThemeSwitch />
 
       <!-- 个人中心 -->
-      <div class="flex items-center justify-center" @click="avatarSelect">
-        <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
-          <div class="flex cursor-pointer items-center justify-center">
-            <n-avatar :src="websiteConfig.logo" />
-            <span class="ml-2">{{ userStore?.info?.username ?? "" }}</span>
-          </div>
-        </n-dropdown>
-      </div>
+      <User />
     </div>
   </div>
   <!--项目配置drawer -->
