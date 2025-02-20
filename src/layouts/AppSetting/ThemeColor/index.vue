@@ -10,35 +10,35 @@ const updateThemeColor = (color: string, type: ThemeType) => {
 
 <template>
   <div class="space-y-4 py-3">
-    <SettingItem title="主色">
+    <SettingItem :title="$t('app.theme.primary')">
       <ColorPicker
         :color="themeStore.themeColor"
         :palettes="themeStore.appThemeList"
         @update:color="updateThemeColor($event, 'primary')"
       />
     </SettingItem>
-    <SettingItem title="信息色">
+    <SettingItem :title="$t('app.theme.info')">
       <ColorPicker
         :color="themeStore.infoColor"
         :palettes="themeStore.appThemeList"
         @update:color="updateThemeColor($event, 'info')"
       />
     </SettingItem>
-    <SettingItem title="成功色">
+    <SettingItem :title="$t('app.theme.success')">
       <ColorPicker
         :color="themeStore.successColor"
         :palettes="themeStore.appThemeList"
         @update:color="updateThemeColor($event, 'success')"
       />
     </SettingItem>
-    <SettingItem title="警告色">
+    <SettingItem :title="$t('app.theme.warning')">
       <ColorPicker
         :color="themeStore.warningColor"
         :palettes="themeStore.appThemeList"
         @update:color="updateThemeColor($event, 'warning')"
       />
     </SettingItem>
-    <SettingItem title="错误色">
+    <SettingItem :title="$t('app.theme.error')">
       <ColorPicker
         :color="themeStore.errorColor"
         :palettes="themeStore.appThemeList"

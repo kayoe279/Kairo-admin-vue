@@ -36,7 +36,7 @@ function createDocumentHandler(el: HTMLElement, binding: DirectiveBinding): Docu
   return function (mouseup, mousedown) {
     const popperRef = (
       binding.instance as ComponentPublicInstance<{
-        popperRef: Nullable<HTMLElement>;
+        popperRef: HTMLElement | null;
       }>
     ).popperRef;
     const mouseUpTarget = mouseup.target as Node;

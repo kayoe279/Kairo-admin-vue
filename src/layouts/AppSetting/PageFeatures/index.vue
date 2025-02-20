@@ -8,37 +8,37 @@ const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } = sto
 
 <template>
   <div class="space-y-4 py-3">
-    <SettingItem title="顶部高度">
+    <SettingItem :title="$t('app.pageFeature.headerHeight')">
       <n-input-number v-model:value="headerSetting.height" class="w-30" />
     </SettingItem>
-    <SettingItem title="固定顶部和多页签">
+    <SettingItem :title="$t('app.pageFeature.fixedHeaderAndTabs')">
       <n-switch v-model:value="headerSetting.fixed" />
     </SettingItem>
-    <SettingItem title="显示重载页面按钮">
+    <SettingItem :title="$t('app.pageFeature.showReloadButton')">
       <n-switch v-model:value="headerSetting.isReload" />
     </SettingItem>
 
-    <SettingItem title="显示多页签">
+    <SettingItem :title="$t('app.pageFeature.showTabs')">
       <n-switch v-model:value="multiTabsSetting.show" />
     </SettingItem>
-    <SettingItem title="多页签高度">
+    <SettingItem :title="$t('app.pageFeature.tabHeight')">
       <n-input-number v-model:value="multiTabsSetting.height" class="w-30" />
     </SettingItem>
 
-    <SettingItem title="显示面包屑导航">
+    <SettingItem :title="$t('app.pageFeature.showBreadcrumb')">
       <n-switch v-model:value="breadcrumbsSetting.show" />
     </SettingItem>
-    <SettingItem title="显示面包屑显示图标">
+    <SettingItem :title="$t('app.pageFeature.showBreadcrumbIcon')">
       <n-switch v-model:value="breadcrumbsSetting.showIcon" />
     </SettingItem>
 
-    <SettingItem title="菜单手风琴模式">
+    <SettingItem :title="$t('app.pageFeature.menuAccordion')">
       <n-switch v-model:value="menuSetting.accordion" />
     </SettingItem>
-    <SettingItem title="菜单展开宽度">
+    <SettingItem :title="$t('app.pageFeature.menuWidth')">
       <n-input-number v-model:value="menuSetting.menuWidth" class="w-30" />
     </SettingItem>
-    <SettingItem title="菜单收缩宽度">
+    <SettingItem :title="$t('app.pageFeature.minMenuWidth')">
       <n-input-number v-model:value="menuSetting.minMenuWidth" class="w-30" />
     </SettingItem>
   </div>

@@ -1,3 +1,4 @@
+import { TAB_DATA_ID } from "@/lib/constants";
 import type { ComputedRef, Ref } from "vue";
 
 export type DynamicProps<T> = {

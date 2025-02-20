@@ -5,7 +5,7 @@ import { tryOnUnmounted } from "@vueuse/core";
 import { getCurrentInstance, ref, unref, watch } from "vue";
 
 export function useModal(props): UseModalReturnType {
-  const modalRef = ref<Nullable<ModalMethods>>(null);
+  const modalRef = ref<ModalMethods | null>(null);
   const currentInstance = getCurrentInstance();
 
   const getInstance = () => {

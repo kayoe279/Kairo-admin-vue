@@ -1,7 +1,10 @@
 import avatarImage from "@/assets/images/avatar.jpg";
 import loginImage from "@/assets/images/avatar.jpg";
+import { $t } from "@/lib/i18n";
 
 export const appSetting = {
+  // 语言
+  locale: import.meta.env.VITE_DEFAULT_LOCALE,
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式 horizontal-mix 顶部菜单混合模式
   navMode: "vertical" as "vertical" | "horizontal" | "horizontal-mix",
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏
@@ -49,15 +52,6 @@ export const appSetting = {
   pageAnimateType: "fade-slide"
 };
 
-export const animates = [
-  { value: "fade-slide", label: "滑动" },
-  { value: "fade", label: "淡入淡出" },
-  { value: "fade-bottom", label: "底部消退" },
-  { value: "fade-scale", label: "缩放消退" },
-  { value: "zoom-fade", label: "渐变" },
-  { value: "zoom-out", label: "闪现" }
-];
-
 export type AppSettingProps = typeof appSetting;
 
 export const defaultLoginParams = {
@@ -69,5 +63,6 @@ export const appConfig = {
   title: "Kairo Admin",
   avatar: avatarImage,
   logo: loginImage,
-  loginDesc: "kairo Admin中后台前端/设计解决方案 "
+  loginDesc: "kairo Admin中后台前端/设计解决方案",
+  github: "https://github.com/kayoe279"
 };

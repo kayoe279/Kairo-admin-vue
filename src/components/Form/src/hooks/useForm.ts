@@ -7,8 +7,8 @@ import { nextTick, onUnmounted, ref, unref, watch } from "vue";
 type Props = Partial<DynamicProps<FormProps>>;
 
 export function useForm(props?: Props): UseFormReturnType {
-  const formRef = ref<Nullable<FormActionType>>(null);
-  const loadedRef = ref<Nullable<boolean>>(false);
+  const formRef = ref<FormActionType | null>(null);
+  const loadedRef = ref<boolean>(false);
 
   async function getForm() {
     const form = unref(formRef);
@@ -25,7 +25,7 @@ export function useForm(props?: Props): UseFormReturnType {
     isProdMode() &&
       onUnmounted(() => {
         formRef.value = null;
-        loadedRef.value = null;
+        loadedRef.value = false;
       });
     if (unref(loadedRef) && isProdMode() && instance === unref(formRef)) return;
 
@@ -67,7 +67,7 @@ export function useForm(props?: Props): UseFormReturnType {
 
     setFieldsValue: async <T>(values: T) => {
       const form = await getForm();
-      await form.setFieldsValue(values as Recordable);
+      await form.setFieldsValue(values);
     },
 
     submit: async (): Promise<any> => {
@@ -75,7 +75,7 @@ export function useForm(props?: Props): UseFormReturnType {
       return form.submit();
     },
 
-    validate: async (nameList?: any[]): Promise<Recordable> => {
+    validate: async (nameList?: any[]): Promise<Record<string, any>> => {
       const form = await getForm();
       return form.validate(nameList);
     },

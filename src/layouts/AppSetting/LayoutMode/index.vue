@@ -33,7 +33,7 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             </div>
           </button>
         </template>
-        <span>左侧菜单模式</span>
+        <span>{{ $t("app.layout.vertical") }}</span>
       </n-tooltip>
     </div>
 
@@ -55,7 +55,7 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             </div>
           </button>
         </template>
-        <span>顶部菜单模式</span>
+        <span>{{ $t("app.layout.horizontal") }}</span>
       </n-tooltip>
     </div>
 
@@ -78,7 +78,7 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             </div>
           </button>
         </template>
-        <span>顶部菜单混合模式</span>
+        <span>{{ $t("app.layout.horizontalMix") }}</span>
       </n-tooltip>
     </div>
   </div>

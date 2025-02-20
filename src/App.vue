@@ -1,32 +1,16 @@
-<template>
-  <NConfigProvider
-    :locale="zhCN"
-    :theme="darkTheme"
-    :theme-overrides="themeOverrides"
-    :date-locale="dateZhCN"
-    class="h-full"
-  >
-    <AppProvider>
-      <RouterView />
-    </AppProvider>
-  </NConfigProvider>
-
-  <!-- 暂时不要这个 -->
-  <!-- <transition v-if="isLock && $route.name !== 'login'" name="slide-up">
-    <LockScreen />
-  </transition> -->
-</template>
-
 <script lang="ts" setup>
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
-import { dateZhCN, darkTheme as naiveDarkTheme, zhCN } from "naive-ui";
+import { naiveI18nOptions } from "@/lib/i18n";
+import { useAppStore, useThemeSettingStore } from "@/store";
+import { darkTheme as naiveDarkTheme } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed, watch } from "vue";
 
+const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
 const { theme, themeOverrides, grayMode } = storeToRefs(themeStore);
 
 const darkTheme = computed(() => (theme.value === "dark" ? naiveDarkTheme : undefined));
+const naiveLocale = computed(() => naiveI18nOptions[appStore.locale] ?? naiveI18nOptions["zh-CN"]);
 
 // set gray-mode class to html or body dom
 watch(grayMode, (value) => {
@@ -66,3 +50,22 @@ watch(grayMode, (value) => {
 //   document.removeEventListener("mousedown", timekeeping);
 // });
 </script>
+
+<template>
+  <n-config-provider
+    :locale="naiveLocale.locale"
+    :date-locale="naiveLocale.dateLocale"
+    :theme="darkTheme"
+    :theme-overrides="themeOverrides"
+    class="h-full"
+  >
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </n-config-provider>
+
+  <!-- 暂时不要这个 -->
+  <!-- <transition v-if="isLock && $route.name !== 'login'" name="slide-up">
+    <LockScreen />
+  </transition> -->
+</template>

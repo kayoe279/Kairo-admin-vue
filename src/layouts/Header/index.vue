@@ -1,20 +1,16 @@
 <script lang="ts" setup>
+import { appConfig } from "@/lib/settings/app";
 import { useAppStore } from "@/store/modules/appSetting";
-// import { useScreenLockStore } from "@/store/modules/screenLock";
 import { useFullscreen } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const collapsed = defineModel<boolean>("collapsed");
 
-const router = useRouter();
 const route = useRoute();
-
-// const lockScreen = useScreenLockStore();
-
 const appStore = useAppStore();
-const { navMode, headerSetting, breadcrumbsSetting } = storeToRefs(appStore);
+const { navMode, headerSetting } = storeToRefs(appStore);
 
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
@@ -24,35 +20,9 @@ const hideCollapseIcon = computed(() => {
   );
 });
 
-const generator = (routerMap) => {
-  return routerMap.map((item) => {
-    const currentMenu = {
-      ...item,
-      label: item.meta.title,
-      key: item.name,
-      disabled: item.path === "/"
-    };
-    if (item.children && item.children.length > 0) {
-      currentMenu.children = generator(item.children);
-    }
-    return currentMenu;
-  });
-};
-
-const breadcrumbList = computed(() => {
-  return generator(route.matched);
-});
-
-const dropdownSelect = (key) => {
-  router.push({ name: key });
-};
-
 const onIconClick = (key: "github" | "lock") => {
-  console.log(key);
   if (key === "github") {
-    window.open("https://github.com/jekip/naive-ui-admin");
-  } else if (key === "lock") {
-    // lockScreen.setLock(true);
+    window.open(appConfig.github);
   }
 };
 </script>
@@ -76,43 +46,13 @@ const onIconClick = (key: "github" | "lock") => {
       >
         <Logo
           v-if="navMode === 'horizontal'"
-          class="flex h-16 items-center justify-center overflow-hidden whitespace-nowrap max-md:hidden"
+          class="flex h-16 shrink-0 items-center justify-center overflow-hidden whitespace-nowrap max-md:hidden"
         />
-
         <Menu location="header" mode="horizontal" />
       </div>
-      <div class="hidden items-center md:flex" v-else>
-        <!-- 面包屑 -->
-        <n-breadcrumb v-if="breadcrumbsSetting.show">
-          <template
-            v-for="routeItem in breadcrumbList"
-            :key="routeItem.name === 'Redirect' ? void 0 : routeItem.name"
-          >
-            <n-breadcrumb-item v-if="routeItem.meta.title">
-              <n-dropdown
-                v-if="routeItem.children.length"
-                :options="routeItem.children"
-                @select="dropdownSelect"
-              >
-                <span>
-                  <component
-                    v-if="breadcrumbsSetting.showIcon && routeItem.meta.icon"
-                    :is="routeItem.meta.icon"
-                  />
-                  {{ routeItem.meta.title }}
-                </span>
-              </n-dropdown>
-              <span v-else>
-                <component
-                  v-if="breadcrumbsSetting.showIcon && routeItem.meta.icon"
-                  :is="routeItem.meta.icon"
-                />
-                {{ routeItem.meta.title }}
-              </span>
-            </n-breadcrumb-item>
-          </template>
-        </n-breadcrumb>
-      </div>
+
+      <!-- 面包屑 -->
+      <Breadcrumb v-else class="hidden items-center md:flex" />
     </div>
     <div class="flex h-full items-center gap-x-6">
       <ButtonIcon icon="proicons:github" tooltipContent="GitHub" @click="onIconClick('github')" />
@@ -122,18 +62,22 @@ const onIconClick = (key: "github" | "lock") => {
         :icon="
           isFullscreen ? 'solar:quit-full-screen-square-broken' : 'solar:full-screen-square-broken'
         "
-        tooltipContent="全屏"
+        :tooltipContent="$t('app.fullScreen')"
         @click="toggleFullScreen"
       />
+
+      <!-- 切换语音 -->
+      <SwitchLanguage />
+
+      <!-- 切换主题 -->
+      <ThemeSwitch />
 
       <!--设置-->
       <ButtonIcon
         icon="solar:settings-broken"
-        tooltipContent="项目配置"
+        :tooltipContent="$t('app.projectSetting')"
         @click="() => appStore.toggleDrawer()"
       />
-      <!-- 切换主题 -->
-      <ThemeSwitch />
 
       <!-- 个人中心 -->
       <User />

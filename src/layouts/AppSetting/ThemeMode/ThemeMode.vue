@@ -9,10 +9,10 @@ const { darkNav, grayMode } = storeToRefs(themeStore);
 <template>
   <div class="space-y-4 py-3">
     <ThemeSwitch position="drawer" />
-    <SettingItem title="暗色侧边栏">
+    <SettingItem :title="$t('app.theme.darkSidebar')">
       <n-switch v-model:value="darkNav" />
     </SettingItem>
-    <SettingItem title="灰色模式">
+    <SettingItem :title="$t('app.theme.grayMode')">
       <n-switch v-model:value="grayMode" />
     </SettingItem>
   </div>

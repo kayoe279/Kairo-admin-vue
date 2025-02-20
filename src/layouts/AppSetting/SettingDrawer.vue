@@ -3,7 +3,9 @@ import { DRAWER_WIDTH } from "@/lib/constants";
 import { useAppStore, useThemeSettingStore } from "@/store";
 import { useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const message = useMessage();
 const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
@@ -12,33 +14,35 @@ const { open } = storeToRefs(appStore);
 const resetSetting = () => {
   appStore.resetAppSetting();
   themeStore.resetDesignSetting();
-  message.success("恢复默认配置成功");
+  message.success(t("app.resetSuccess"));
 };
 </script>
 
 <template>
   <n-drawer v-model:show="open" :width="DRAWER_WIDTH" placement="right">
-    <n-drawer-content title="项目配置" :native-scrollbar="false" closable>
+    <n-drawer-content :title="$t('app.projectSetting')" :native-scrollbar="false" closable>
       <div>
-        <n-divider title-placement="center">主题</n-divider>
+        <n-divider title-placement="center">{{ $t("app.theme.title") }}</n-divider>
         <ThemeMode />
 
-        <n-divider title-placement="center">布局模式</n-divider>
+        <n-divider title-placement="center">{{ $t("app.layout.title") }}</n-divider>
         <LayoutMode />
 
-        <n-divider title-placement="center">主题颜色</n-divider>
+        <n-divider title-placement="center">{{ $t("app.theme.themeColor") }}</n-divider>
         <ThemeColor />
 
-        <n-divider title-placement="center">页面功能</n-divider>
+        <n-divider title-placement="center">{{ $t("app.pageFeature.title") }}</n-divider>
         <PageFeatures />
 
-        <n-divider title-placement="center">动画</n-divider>
+        <n-divider title-placement="center">{{ $t("app.animation.title") }}</n-divider>
         <Animation />
       </div>
 
       <template #footer>
         <div class="flex w-full items-center justify-center">
-          <n-button strong secondary type="error" @click="resetSetting"> 恢复默认配置 </n-button>
+          <n-button strong secondary type="error" @click="resetSetting">
+            {{ $t("app.resetConfig") }}
+          </n-button>
         </div>
       </template>
     </n-drawer-content>

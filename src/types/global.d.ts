@@ -1,126 +1,40 @@
-import type {
-  ComponentPublicInstance,
-  ComponentRenderProxy,
-  FunctionalComponent,
-  VNode,
-  VNodeChild,
-  PropType as VuePropType
-} from "vue";
+import "vue";
 
 declare global {
-  const __APP_INFO__: {
-    pkg: {
-      name: string;
-      version: string;
-      dependencies: Recordable<string>;
-      devDependencies: Recordable<string>;
-    };
-    lastBuildTime: string;
-  };
-  // declare interface Window {
-  //   // Global vue app instance
-  //   __APP__: App<Element>;
-  // }
+  declare type Locale = "zh-CN" | "en-US";
 
-  // vue
-  declare type PropType<T> = VuePropType<T>;
-  declare type VueNode = VNodeChild | JSX.Element;
-
-  export type Writable<T> = {
-    -readonly [P in keyof T]: T[P];
-  };
-
-  declare interface InResult<T = any> {
-    code: number;
-    message: string;
-    result: T;
+  interface Window {
+    $loadingBar: import("naive-ui").LoadingBarApi;
+    $dialog: import("naive-ui").DialogApi;
+    $message: import("naive-ui").MessageApi;
+    $notification: import("naive-ui").NotificationApi;
   }
 
-  declare type Nullable<T> = T | null;
-  declare type NonNullable<T> = T extends null | undefined ? never : T;
-  declare type Recordable<T = any> = Record<string, T>;
-  declare type ReadonlyRecordable<T = any> = {
-    readonly [key: string]: T;
-  };
-  declare type Indexable<T = any> = {
-    [key: string]: T;
-  };
-  declare type DeepPartial<T> = {
-    [P in keyof T]?: DeepPartial<T[P]>;
-  };
-  declare type TimeoutHandle = ReturnType<typeof setTimeout>;
-  declare type IntervalHandle = ReturnType<typeof setInterval>;
-
-  declare interface ChangeEvent extends Event {
-    target: HTMLInputElement;
+  interface DictMap {
+    [key: string]: Entity.Dict[];
   }
 
-  declare interface WheelEvent {
-    path?: EventTarget[];
-  }
-
-  interface ImportMetaEnv extends ViteEnv {
-    __: unknown;
-  }
-
-  declare interface ViteEnv {
-    VITE_PORT: number;
-    VITE_USE_MOCK: boolean;
-    VITE_PUBLIC_PATH: string;
-    VITE_GLOB_APP_TITLE: string;
-    VITE_GLOB_APP_SHORT_NAME: string;
-    VITE_DROP_CONSOLE: boolean;
-    VITE_GLOB_PROD_MOCK: boolean;
-    VITE_GLOB_IMG_URL: string;
-    VITE_PROXY: [string, string][];
-    VITE_BUILD_COMPRESS: "gzip" | "brotli" | "none";
-    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
-
-    VITE_ICON_PREFIX: string;
-    VITE_ICON_LOCAL_PREFIX: string;
-  }
-
-  declare function parseInt(s: string | number, radix?: number): number;
-
-  declare function parseFloat(string: string | number): number;
-
-  type DropdownKey =
-    | "closeCurrent"
-    | "closeOther"
-    | "closeLeft"
-    | "closeRight"
-    | "closeAll"
-    | "reloadCurrent";
-
-  namespace JSX {
-    // tslint:disable no-empty-interface
-    type Element = VNode;
-    // tslint:disable no-empty-interface
-    type ElementClass = ComponentRenderProxy;
-
-    interface ElementAttributesProperty {
-      $props: any;
+  declare namespace Storage {
+    interface Session {
+      dict: DictMap;
     }
 
-    interface IntrinsicElements {
-      [elem: string]: any;
-    }
-
-    interface IntrinsicAttributes {
-      [elem: string]: any;
+    interface Local {
+      /* 存储用户信息 */
+      userInfo: Api.Login.Info;
+      /* 存储登录账号 */
+      loginAccount: any;
+      /* 存储当前语言 */
+      locale: Locale;
     }
   }
-}
 
-interface Window {
-  $loadingBar: import("naive-ui").LoadingBarApi;
-  $dialog: import("naive-ui").DialogApi;
-  $message: import("naive-ui").MessageApi;
-  $notification: import("naive-ui").NotificationApi;
-}
-
-declare module "vue" {
-  export type JSXComponent<Props = any> =
-    | { new (): ComponentPublicInstance<Props> }
-    | FunctionalComponent<Props>;
+  declare namespace Cookie {
+    interface Key {
+      /* 存储访问token */
+      accessToken: string;
+      /* 存储刷新token */
+      refreshToken: string;
+    }
+  }
 }

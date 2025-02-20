@@ -129,11 +129,11 @@ const emit = defineEmits([
 
 const props = defineProps({ ...basicProps });
 const deviceHeight = ref(150);
-const tableElRef = ref<ComponentRef>(null);
-const wrapRef = ref<Nullable<HTMLDivElement>>(null);
+const tableElRef = ref<HTMLTableElement | null>(null);
+const wrapRef = ref<HTMLDivElement | null>(null);
 let paginationEl: HTMLElement | null;
 const isStriped = ref(props.striped || false);
-const tableData = ref<Recordable[]>([]);
+const tableData = ref<Record<string, any>[]>([]);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
 const getProps = computed(() => {
@@ -225,10 +225,10 @@ const getCanResize = computed(() => {
 });
 
 async function computeTableHeight() {
-  const table = unref(tableElRef);
+  const table = tableElRef.value;
   if (!table) return;
   if (!unref(getCanResize)) return;
-  const tableEl: any = table?.$el;
+  const tableEl = (table as any)?.$el;
   const headEl = tableEl.querySelector(".n-data-table-thead ");
   const { bottomIncludeBody } = getViewportOffset(headEl);
   const headerH = 64;

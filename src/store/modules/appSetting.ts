@@ -1,5 +1,7 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { setI18nLocale } from "@/lib/i18n";
 import { type AppSettingProps, appSetting } from "@/lib/settings/app";
+import { setCurrentLocale } from "@/lib/storage";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
@@ -20,6 +22,12 @@ export const useAppStore = defineStore(
 
     const setNavMode = (value: AppSettingProps["navMode"]) => {
       settings.value.navMode = value;
+    };
+
+    const setLocale = (value: Locale) => {
+      setI18nLocale(value);
+      setCurrentLocale(value);
+      settings.value.locale = value;
     };
 
     // 重置 store
@@ -50,6 +58,7 @@ export const useAppStore = defineStore(
       toggleDrawer,
       setNavTheme,
       setNavMode,
+      setLocale,
       reloadPage,
       resetAppSetting
     };

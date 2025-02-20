@@ -9,7 +9,7 @@ defineOptions({
 });
 
 type DropdownOption = {
-  key: DropdownKey;
+  key: Tabs.DropdownKey;
   label: string;
   icon?: () => VNode;
   disabled?: boolean;
@@ -19,8 +19,8 @@ interface Props {
   tabId: string;
   x?: number;
   y?: number;
-  excludeKeys?: DropdownKey[];
-  disabledKeys?: DropdownKey[];
+  excludeKeys?: Tabs.DropdownKey[];
+  disabledKeys?: Tabs.DropdownKey[];
   type?: "button" | "dropdown";
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -104,7 +104,7 @@ const delKeepAliveCompName = () => {
   }
 };
 
-const dropdownAction: Record<DropdownKey, () => void> = {
+const dropdownAction: Record<Tabs.DropdownKey, () => void> = {
   async reloadCurrent() {
     delKeepAliveCompName();
     await appStore.reloadPage();
@@ -128,7 +128,7 @@ const dropdownAction: Record<DropdownKey, () => void> = {
   }
 };
 
-function handleDropdown(optionKey: DropdownKey) {
+function handleDropdown(optionKey: Tabs.DropdownKey) {
   dropdownAction[optionKey]?.();
   hideDropdown();
 }

@@ -28,11 +28,9 @@ interface ImportMetaEnv {
   /** 是否自动刷新token */
   readonly VITE_AUTO_REFRESH_TOKEN: "Yes" | "No";
   /** 默认语言 */
-  readonly VITE_DEFAULT_LANG: App.lang;
+  readonly VITE_DEFAULT_LOCALE: "zh-CN" | "en-US";
   /** 后端服务的环境类型 */
   readonly MODE: ServiceEnvType;
-  /** 存储前缀 */
-  readonly VITE_STORAGE_PREFIX: string;
   /** API 地址 */
   readonly VITE_API_ENDPOINT: string;
   /** 路由加载模式 */

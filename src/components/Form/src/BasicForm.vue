@@ -143,11 +143,11 @@ export default defineComponent({
   },
   emits: ["reset", "submit", "register"],
   setup(props, { emit, attrs }) {
-    const defaultFormModel = ref<Recordable>({});
-    const formModel = reactive<Recordable>({});
+    const defaultFormModel = ref<Record<string, any>>({});
+    const formModel = reactive<Record<string, any>>({});
     const propsRef = ref<Partial<FormProps>>({});
-    const schemaRef = ref<Nullable<FormSchema[]>>(null);
-    const formElRef = ref<Nullable<FormActionType>>(null);
+    const schemaRef = ref<FormSchema[] | null>(null);
+    const formElRef = ref<FormActionType | null>(null);
     const gridCollapsed = ref(true);
     const loadingSub = ref(false);
     const isUpdateDefaultRef = ref(false);
@@ -210,7 +210,7 @@ export default defineComponent({
       };
     });
 
-    const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable);
+    const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }));
 
     const getSchema = computed((): FormSchema[] => {
       const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);

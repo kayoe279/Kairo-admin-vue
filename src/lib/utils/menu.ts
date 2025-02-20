@@ -1,4 +1,4 @@
-import { PageEnum } from "@/lib/enums/pageEnum";
+import { PAGE } from "@/lib/constants";
 import { cloneDeep } from "lodash-es";
 import { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import type { RouteRecordRaw } from "vue-router";
@@ -20,7 +20,7 @@ export function filterRouter(routerMap: Array<RouteRecordRaw>) {
   return routerMap.filter((item) => {
     return (
       (item.meta?.hidden || false) != true &&
-      !["/:path(.*)*", "/", PageEnum.REDIRECT, PageEnum.BASE_LOGIN].includes(item.path)
+      !["/:path(.*)*", "/", PAGE.REDIRECT_PATH, PAGE.LOGIN_PATH].includes(item.path)
     );
   });
 }

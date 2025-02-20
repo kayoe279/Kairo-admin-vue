@@ -30,7 +30,7 @@ watch(
   <ButtonIcon
     v-if="position === 'header'"
     :icon="isDark ? 'solar:sun-2-broken' : 'solar:moon-stars-broken'"
-    tooltipContent="主题切换"
+    :tooltipContent="$t('app.theme.themeSwitch')"
     @click="() => handleToggleTheme(isDark ? 'light' : 'dark')"
   />
 

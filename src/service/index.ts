@@ -2,7 +2,6 @@ import { createAlovaInstance } from "./alova";
 import mocks from "./mocks";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
 import { ResultEnum } from "@/lib/enums/httpEnum";
-import { PageEnum } from "@/lib/enums/pageEnum";
 import { local } from "@/lib/storage";
 import { isUrl } from "@/lib/utils/is";
 import { useUserStore } from "@/store";
@@ -93,7 +92,7 @@ export const Alova = createAlova({
       // @ts-expect-error okay
       const Modal = window.$dialog;
 
-      const LoginPath = PageEnum.BASE_LOGIN;
+      const LoginPath = "/login";
       if (ResultEnum.SUCCESS === code) {
         return result;
       }

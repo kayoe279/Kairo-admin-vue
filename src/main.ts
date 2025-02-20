@@ -2,15 +2,21 @@ import App from "./App.vue";
 import { setupRouter } from "./router";
 import "./styles/index.css";
 import { setupDirectives } from "@/directives";
-import { setupNaive, setupNaiveDiscreteApi } from "@/plugins";
+import { setupI18n, setupNaive, setupNaiveDiscreteApi } from "@/plugins";
 import { setupStore } from "@/store";
 import { createApp } from "vue";
 
 async function bootstrap() {
   const app = createApp(App);
 
+  // 注册国际化
+  setupI18n(app);
+
   // 挂载状态管理
   setupStore(app);
+
+  // 挂载路由
+  await setupRouter(app);
 
   // 注册全局常用的 naive-ui 组件
   setupNaive(app);
@@ -26,9 +32,6 @@ async function bootstrap() {
 
   // 注册全局方法，如：app.config.globalProperties.$message = message
   // setupGlobalMethods(app);
-
-  // 挂载路由
-  await setupRouter(app);
 
   // https://www.naiveui.com/en-US/os-theme/docs/style-conflict#About-Tailwind's-Preflight-Style-Override
   const meta = document.createElement("meta");

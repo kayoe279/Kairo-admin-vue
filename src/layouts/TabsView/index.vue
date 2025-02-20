@@ -2,7 +2,6 @@
 import BetterScroll from "@/components/atoms/BetterScroll.vue";
 import { useMedia } from "@/hooks/useMedia";
 import { TAB_DATA_ID } from "@/lib/constants";
-import { PageEnum } from "@/lib/enums/pageEnum";
 import { typedBoolean } from "@/lib/utils";
 import { useAppStore, useTabsStore } from "@/store";
 import type { TabNamedNodeMap } from "@/types/utils";
@@ -35,7 +34,7 @@ const dropdown = reactive({
 // 获取标签页右键菜单禁用项
 const menuDisabledKeys = computed(() => {
   const tabId = dropdown.tabId || route.name;
-  const disabledKeys: DropdownKey[] = [];
+  const disabledKeys: Tabs.DropdownKey[] = [];
   const tabItemIndex = tabsList.value.findIndex((item) => item.name === tabId);
   if (tabItemIndex === tabsList.value.length - 1) {
     disabledKeys.push("closeRight");
@@ -45,8 +44,8 @@ const menuDisabledKeys = computed(() => {
   }
 
   const isFixed = tabsList.value.find((item) => item.name == tabId)?.meta?.affix ?? false;
-  if (isFixed || tabId === PageEnum.BASE_HOME_NAME) {
-    const homeDisable: DropdownKey[] = ["closeCurrent", "closeLeft"];
+  if (isFixed) {
+    const homeDisable: Tabs.DropdownKey[] = ["closeCurrent", "closeLeft"];
     disabledKeys.push(...homeDisable);
   }
 
