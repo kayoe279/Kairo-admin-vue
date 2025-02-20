@@ -56,6 +56,7 @@
     "fullScreen": "Full Screen",
     "resetConfig": "Reset Configuration",
     "resetSuccess": "Reset Configuration Successfully",
+    "resetConfigContent": "After resetting the project configuration, the project configuration will be restored to the initial state, whether to continue?",
     "zh-CN": "Chinese",
     "en-US": "English"
   },

@@ -3,23 +3,14 @@ import { naiveI18nOptions } from "@/lib/i18n";
 import { useAppStore, useThemeSettingStore } from "@/store";
 import { darkTheme as naiveDarkTheme } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed, watch } from "vue";
+import { computed } from "vue";
 
 const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
-const { theme, themeOverrides, grayMode } = storeToRefs(themeStore);
+const { themeMode, themeOverrides } = storeToRefs(themeStore);
 
-const darkTheme = computed(() => (theme.value === "dark" ? naiveDarkTheme : undefined));
+const darkTheme = computed(() => (themeMode.value === "dark" ? naiveDarkTheme : undefined));
 const naiveLocale = computed(() => naiveI18nOptions[appStore.locale] ?? naiveI18nOptions["zh-CN"]);
-
-// set gray-mode class to html or body dom
-watch(grayMode, (value) => {
-  if (value) {
-    document.body.classList.add("gray-mode");
-  } else {
-    document.body.classList.remove("gray-mode");
-  }
-});
 
 // const timer = ref<NodeJS.Timeout>();
 

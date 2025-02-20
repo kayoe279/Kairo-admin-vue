@@ -1,20 +1,35 @@
 <script setup lang="ts">
 import { DRAWER_WIDTH } from "@/lib/constants";
 import { useAppStore, useThemeSettingStore } from "@/store";
-import { useMessage } from "naive-ui";
+import { useDialog, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const message = useMessage();
+const dialog = useDialog();
 const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
 const { open } = storeToRefs(appStore);
 
 const resetSetting = () => {
-  appStore.resetAppSetting();
-  themeStore.resetDesignSetting();
-  message.success(t("app.resetSuccess"));
+  dialog.warning({
+    title: t("app.resetConfig"),
+    content: t("app.resetConfigContent"),
+    positiveText: t("common.confirm"),
+    negativeText: t("common.cancel"),
+    positiveButtonProps: {
+      size: "medium"
+    },
+    negativeButtonProps: {
+      size: "medium"
+    },
+    onPositiveClick: () => {
+      appStore.resetAppSetting();
+      themeStore.resetDesignSetting();
+      message.success(t("app.resetSuccess"));
+    }
+  });
 };
 </script>
 

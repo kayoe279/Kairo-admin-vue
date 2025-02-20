@@ -1,11 +1,10 @@
-import { appSetting } from "@/lib/settings/app";
 import { getCurrentLocale } from "@/lib/storage";
 import type { App } from "vue";
 import { createI18n } from "vue-i18n";
 import enUS from "~/locales/en-US.json";
 import zhCN from "~/locales/zh-CN.json";
 
-const defaultLocale = appSetting.locale;
+const defaultLocale = import.meta.env.VITE_DEFAULT_LOCALE;
 
 export const i18n = createI18n({
   legacy: false,

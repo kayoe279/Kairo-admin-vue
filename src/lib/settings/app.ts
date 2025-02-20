@@ -1,10 +1,7 @@
 import avatarImage from "@/assets/images/avatar.jpg";
 import loginImage from "@/assets/images/avatar.jpg";
-import { $t } from "@/lib/i18n";
 
 export const appSetting = {
-  // 语言
-  locale: import.meta.env.VITE_DEFAULT_LOCALE,
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式 horizontal-mix 顶部菜单混合模式
   navMode: "vertical" as "vertical" | "horizontal" | "horizontal-mix",
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏

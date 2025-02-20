@@ -1,7 +1,7 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { setI18nLocale } from "@/lib/i18n";
 import { type AppSettingProps, appSetting } from "@/lib/settings/app";
-import { setCurrentLocale } from "@/lib/storage";
+import { getCurrentLocale, setCurrentLocale } from "@/lib/storage";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
@@ -11,6 +11,8 @@ export const useAppStore = defineStore(
   StoreEnum.setting,
   () => {
     const settings = ref(cloneDeep(appSetting));
+
+    const locale = ref(getCurrentLocale() || import.meta.env.VITE_DEFAULT_LOCALE);
 
     const [open, toggleDrawer] = useToggle(false);
     const [reloadFlag, toggleReloadFlag] = useToggle(true);
@@ -27,7 +29,7 @@ export const useAppStore = defineStore(
     const setLocale = (value: Locale) => {
       setI18nLocale(value);
       setCurrentLocale(value);
-      settings.value.locale = value;
+      locale.value = value;
     };
 
     // 重置 store
@@ -51,6 +53,7 @@ export const useAppStore = defineStore(
 
     return {
       ...toRefs(settings.value),
+      locale,
       reloadFlag,
       open,
       fullScreen,

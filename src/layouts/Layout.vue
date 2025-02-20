@@ -10,7 +10,7 @@ const { isMobile } = useMedia();
 
 const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
-const { inverted, darkNav } = storeToRefs(themeStore);
+const { darkNav } = storeToRefs(themeStore);
 const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = storeToRefs(appStore);
 
 const collapsed = ref<boolean>(false);
@@ -57,7 +57,7 @@ const showSideDrawer = computed({
       :collapsed-width="menuSetting.minMenuWidth"
       :width="desktopMenuWidth"
       :native-scrollbar="false"
-      :inverted="inverted || darkNav"
+      :inverted="darkNav"
       class="!z-[12] !shadow-xs !transition-all duration-200 ease-in-out"
     >
       <Logo :collapsed="collapsed" />
@@ -70,7 +70,7 @@ const showSideDrawer = computed({
         :collapsed="false"
         :width="menuSetting.menuWidth"
         :native-scrollbar="false"
-        :inverted="inverted || darkNav"
+        :inverted="darkNav"
       >
         <Logo :collapsed="collapsed" />
         <Menu />
@@ -79,12 +79,11 @@ const showSideDrawer = computed({
 
     <div class="relative h-screen min-w-0 flex-1 overflow-hidden">
       <n-layout
-        :inverted="inverted"
         :position="fixedHeader"
         :native-scrollbar="false"
         class="!bg-background-root h-full"
       >
-        <n-layout-header :inverted="inverted" :position="fixedHeader" class="!z-10">
+        <n-layout-header :position="fixedHeader" class="!z-10">
           <Header v-if="!fullScreen" v-model:collapsed="collapsed" />
           <TabsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
         </n-layout-header>

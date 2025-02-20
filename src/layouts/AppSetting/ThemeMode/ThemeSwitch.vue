@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
-import { useDark, useToggle } from "@vueuse/core";
-import { watch } from "vue";
+import { type ThemeMode, useThemeSettingStore } from "@/store";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
 
 withDefaults(defineProps<{ position?: "header" | "drawer" }>(), { position: "header" });
 
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 const themeStore = useThemeSettingStore();
+const { themeMode, storeTheme } = storeToRefs(themeStore);
 
-const handleToggleTheme = (value: "light" | "dark") => {
-  themeStore.setTheme(value);
+const isDark = computed(() => themeMode.value === "dark");
+
+const handleToggleTheme = (value: ThemeMode) => {
+  themeStore.setThemeMode(value);
 };
-
-watch(
-  () => themeStore.theme,
-  (value) => {
-    if (value === "light" && isDark.value) {
-      toggleDark();
-    }
-    if (value === "dark" && !isDark.value) {
-      toggleDark();
-    }
-  }
-);
 </script>
 
 <template>
@@ -34,8 +23,8 @@ watch(
     @click="() => handleToggleTheme(isDark ? 'light' : 'dark')"
   />
 
-  <div v-else class="m-auto flex w-[70%] items-center justify-center">
-    <n-tabs type="segment" animated :value="themeStore.theme" :on-update:value="handleToggleTheme">
+  <div v-else class="m-auto mb-2 flex w-[80%] items-center justify-center">
+    <n-tabs type="segment" animated :value="storeTheme" :on-update:value="handleToggleTheme">
       <n-tab-pane name="light">
         <!-- @vue-ignore -->
         <template #tab>
@@ -46,6 +35,12 @@ watch(
         <!-- @vue-ignore -->
         <template #tab>
           <SvgIcon icon="solar:moon-stars-bold" class="text-xl" />
+        </template>
+      </n-tab-pane>
+      <n-tab-pane name="auto">
+        <!-- @vue-ignore -->
+        <template #tab>
+          <SvgIcon icon="solar:sunrise-broken" class="text-xl" />
         </template>
       </n-tab-pane>
     </n-tabs>

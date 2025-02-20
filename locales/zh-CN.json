@@ -56,6 +56,7 @@
     "fullScreen": "全屏",
     "resetConfig": "恢复默认配置",
     "resetSuccess": "恢复默认配置成功",
+    "resetConfigContent": "恢复默认配置后，项目配置将恢复到初始状态，是否继续？",
     "zh-CN": "中文",
     "en-US": "英文"
   },

@@ -24,14 +24,8 @@ async function bootstrap() {
   // 挂载 naive-ui 脱离上下文的 Api
   setupNaiveDiscreteApi();
 
-  // 注册全局自定义组件
-  //setupCustomComponents();
-
   // 注册全局自定义指令，如：v-permission权限指令
   setupDirectives(app);
-
-  // 注册全局方法，如：app.config.globalProperties.$message = message
-  // setupGlobalMethods(app);
 
   // https://www.naiveui.com/en-US/os-theme/docs/style-conflict#About-Tailwind's-Preflight-Style-Override
   const meta = document.createElement("meta");

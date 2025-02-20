@@ -13,7 +13,7 @@ const { darkNav, grayMode } = storeToRefs(themeStore);
       <n-switch v-model:value="darkNav" />
     </SettingItem>
     <SettingItem :title="$t('app.theme.grayMode')">
-      <n-switch v-model:value="grayMode" />
+      <n-switch v-model:value="grayMode" @update:value="themeStore.toggleGrayMode" />
     </SettingItem>
   </div>
 </template>

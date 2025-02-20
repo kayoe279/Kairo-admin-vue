@@ -1,21 +1,27 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
-import { type ThemeSettingProps, themeSetting } from "@/lib/settings/theme";
+import { themeSetting } from "@/lib/settings/theme";
 import { lighten } from "@/lib/utils";
 import { store } from "@/store";
+import { useColorMode } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import type { GlobalThemeOverrides } from "naive-ui";
 import { defineStore } from "pinia";
 import { computed, ref, toRefs, watch } from "vue";
 
 export type ThemeType = "primary" | "info" | "success" | "warning" | "error";
+export type ThemeMode = "light" | "dark" | "auto";
 
 export const useThemeSettingStore = defineStore(
   StoreEnum.theme,
   () => {
     const settings = ref(cloneDeep(themeSetting));
 
-    const inverted = computed(() => {
-      return settings.value.theme === "dark";
+    const { system, store } = useColorMode({
+      emitAuto: true
+    });
+
+    const themeMode = computed(() => {
+      return store.value === "auto" ? system.value : store.value;
     });
 
     // naive-ui 主题 overrides
@@ -89,17 +95,18 @@ export const useThemeSettingStore = defineStore(
     };
 
     // 设置主题 暗黑模式
-    const setTheme = (value: ThemeSettingProps["theme"]) => {
-      settings.value.theme = value;
+    const setThemeMode = (mode: ThemeMode) => {
+      store.value = mode;
     };
 
-    // 设置 侧边栏, 顶栏, 灰色模式
-    const setMode = (type: "darkNav" | "grayMode", value: boolean) => {
-      if (type === "darkNav") {
-        settings.value.darkNav = value;
-      } else if (type === "grayMode") {
-        settings.value.grayMode = value;
+    // 设置灰色模式
+    const toggleGrayMode = (value: boolean) => {
+      if (value) {
+        document.body.classList.add("gray-mode");
+      } else {
+        document.body.classList.remove("gray-mode");
       }
+      settings.value.grayMode = value;
     };
 
     // 重置store
@@ -121,10 +128,12 @@ export const useThemeSettingStore = defineStore(
 
     return {
       ...toRefs(settings.value),
-      inverted,
+      system,
+      storeTheme: store,
+      themeMode,
       themeOverrides,
-      setMode,
-      setTheme,
+      toggleGrayMode,
+      setThemeMode,
       setThemeColor,
       setAppThemeVariable,
       resetDesignSetting

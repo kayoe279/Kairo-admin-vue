@@ -24,7 +24,7 @@ const router = useRouter();
 const routeStore = useRouteStore();
 const themeStore = useThemeSettingStore();
 const appStore = useAppStore();
-const { inverted, darkNav } = storeToRefs(themeStore);
+const { darkNav } = storeToRefs(themeStore);
 const { navMode, menuSetting } = storeToRefs(appStore);
 
 const menuInstRef = ref<MenuInst | null>(null);
@@ -101,7 +101,7 @@ onMounted(() => {
     ref="menuInstRef"
     :accordion="menuSetting.accordion"
     :options="menus"
-    :inverted="inverted || darkNav"
+    :inverted="darkNav"
     :mode="mode"
     :collapsed="collapsed"
     :collapsed-width="64"

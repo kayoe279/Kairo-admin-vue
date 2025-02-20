@@ -26,3 +26,8 @@ html.dark {
 button {
   cursor: pointer;
 }
+
+/* n-dialog */
+.n-dialog__content {
+  margin: 16px 0 !important;
+}
