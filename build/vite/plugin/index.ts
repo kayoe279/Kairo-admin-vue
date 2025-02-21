@@ -1,4 +1,4 @@
-import { configCompressPlugin } from "./compress";
+// import { configCompressPlugin } from "./compress";
 import { configHtmlPlugin } from "./html";
 import { setupUnplugin } from "./unplugin";
 import tailwindcss from "@tailwindcss/vite";
@@ -8,8 +8,8 @@ import type { PluginOption } from "vite";
 import progress from "vite-plugin-progress";
 import VueDevtools from "vite-plugin-vue-devtools";
 
-export function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
-  const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
+export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean) {
+  // const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
 
   const vitePlugins: PluginOption[] = [
     vue(),
@@ -32,9 +32,9 @@ export function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   if (isBuild) {
     // rollup-plugin-gzip
-    vitePlugins.push(
-      configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
-    );
+    // vitePlugins.push(
+    //   configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
+    // );
   }
 
   return vitePlugins;

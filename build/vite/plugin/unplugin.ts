@@ -6,7 +6,7 @@ import Components from "unplugin-vue-components/vite";
 import type { PluginOption } from "vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
-export function setupUnplugin(viteEnv: ViteEnv) {
+export function setupUnplugin(viteEnv: ImportMetaEnv) {
   const { VITE_ICON_LOCAL_PREFIX, VITE_ICON_PREFIX } = viteEnv;
 
   const localIconPath = path.join(process.cwd(), "src/assets/icons");

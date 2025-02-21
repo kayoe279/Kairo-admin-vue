@@ -18,8 +18,8 @@ const collapsed = ref<boolean>(false);
 const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
 const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
 const showMenu = computed(() => {
-  const hideMixMenuSub = navMode.value === "horizontal-mix" && !currentRoute.meta.isRoot;
   if (fullScreen.value) return false;
+  const hideMixMenuSub = navMode.value === "horizontal-mix" && !currentRoute.meta.isRoot;
   return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
 });
 const mainStyles = computed(() => {

@@ -1,5 +1,4 @@
 import avatarImage from "@/assets/images/avatar.jpg";
-import loginImage from "@/assets/images/avatar.jpg";
 
 export const appSetting = {
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式 horizontal-mix 顶部菜单混合模式
@@ -59,7 +58,6 @@ export const defaultLoginParams = {
 export const appConfig = {
   title: "Kairo Admin",
   avatar: avatarImage,
-  logo: loginImage,
   loginDesc: "kairo Admin中后台前端/设计解决方案",
   github: "https://github.com/kayoe279"
 };

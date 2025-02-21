@@ -1,12 +1,18 @@
 import App from "./App.vue";
 import { setupRouter } from "./router";
 import "./styles/index.css";
+import AppLoading from "@/components/atoms/AppLoading.vue";
 import { setupDirectives } from "@/directives";
 import { setupI18n, setupNaive, setupNaiveDiscreteApi } from "@/plugins";
 import { setupStore } from "@/store";
+import "virtual:svg-icons-register";
 import { createApp } from "vue";
 
-async function bootstrap() {
+async function setupApp() {
+  // 载入全局loading加载状态
+  const appLoading = createApp(AppLoading);
+  appLoading.mount("#appLoading");
+
   const app = createApp(App);
 
   // 注册国际化
@@ -32,7 +38,10 @@ async function bootstrap() {
   meta.name = "naive-ui-style";
   document.head.appendChild(meta);
 
+  // 卸载载入动画
+  appLoading.unmount();
+
   app.mount("#app", true);
 }
 
-void bootstrap();
+setupApp();

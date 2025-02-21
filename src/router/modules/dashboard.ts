@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/dashboard/workplace",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
-      title: "Dashboard",
+      title: "工作台",
       icon: svgIconRender({ icon: "ant-design:dashboard-outlined" }),
       sort: 0
     },
@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/dashboard/workplace",
         name: `${routeName}-workplace`,
         meta: {
-          title: "工作台",
+          title: "首页",
           keepAlive: true,
           affix: true
         },
