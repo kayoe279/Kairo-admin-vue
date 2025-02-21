@@ -37,6 +37,10 @@ interface ImportMetaEnv {
   readonly VITE_ROUTER_LOAD_MODE: "static" | "dynamic";
   /** 缓存过期时间 */
   readonly VITE_CACHE_EXPIRE: number;
+  /** 本地svg图标前缀 */
+  readonly VITE_ICON_LOCAL_PREFIX: string;
+  /** 本地svg图标前缀 */
+  readonly VITE_ICON_PREFIX: string;
 }
 
 interface ImportMeta {

@@ -1,7 +1,6 @@
 import { StoreEnum } from "@/lib/enums/storeEnum";
 import { themeSetting } from "@/lib/settings/theme";
 import { lighten } from "@/lib/utils";
-import { store } from "@/store";
 import { useColorMode } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import type { GlobalThemeOverrides } from "naive-ui";
@@ -23,6 +22,8 @@ export const useThemeSettingStore = defineStore(
     const themeMode = computed(() => {
       return store.value === "auto" ? system.value : store.value;
     });
+
+    const isDark = computed(() => themeMode.value === "dark");
 
     // naive-ui 主题 overrides
     const themeOverrides = computed<GlobalThemeOverrides>(() => {
@@ -131,6 +132,7 @@ export const useThemeSettingStore = defineStore(
       system,
       storeTheme: store,
       themeMode,
+      isDark,
       themeOverrides,
       toggleGrayMode,
       setThemeMode,
@@ -143,8 +145,3 @@ export const useThemeSettingStore = defineStore(
     persist: true
   }
 );
-
-// Need to be used outside the setup
-export function useDesignSetting() {
-  return useThemeSettingStore(store);
-}

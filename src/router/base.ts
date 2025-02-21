@@ -4,7 +4,7 @@ export const baseRoutes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "root",
-    redirect: "/dashboard/console",
+    redirect: "/dashboard/workplace",
     meta: {
       title: "Root"
     }

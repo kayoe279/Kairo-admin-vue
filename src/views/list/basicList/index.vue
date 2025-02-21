@@ -325,22 +325,22 @@ function confirmForm(e) {
   });
 }
 
-function handleEdit(record: Recordable) {
+function handleEdit(record) {
   console.log("点击了编辑", record);
   router.push({ name: "basic-info", params: { id: record.id } });
 }
 
-function handleDelete(record: Recordable) {
+function handleDelete(record) {
   console.log("点击了删除", record);
   window["$message"].info("点击了删除");
 }
 
-function handleSubmit(values: Recordable) {
+function handleSubmit(values) {
   console.log(values);
   reloadTable();
 }
 
-function handleReset(values: Recordable) {
+function handleReset(values) {
   console.log(values);
 }
 </script>

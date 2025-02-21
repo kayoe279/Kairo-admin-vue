@@ -7,9 +7,9 @@ import { computed } from "vue";
 
 const appStore = useAppStore();
 const themeStore = useThemeSettingStore();
-const { themeMode, themeOverrides } = storeToRefs(themeStore);
+const { isDark, themeOverrides } = storeToRefs(themeStore);
 
-const darkTheme = computed(() => (themeMode.value === "dark" ? naiveDarkTheme : undefined));
+const darkTheme = computed(() => (isDark.value ? naiveDarkTheme : undefined));
 const naiveLocale = computed(() => naiveI18nOptions[appStore.locale] ?? naiveI18nOptions["zh-CN"]);
 </script>
 

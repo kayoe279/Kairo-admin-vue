@@ -25,7 +25,7 @@ const routeStore = useRouteStore();
 const themeStore = useThemeSettingStore();
 const appStore = useAppStore();
 const { darkNav } = storeToRefs(themeStore);
-const { navMode, menuSetting } = storeToRefs(appStore);
+const { navMode, menuSetting, locale } = storeToRefs(appStore);
 
 const menuInstRef = ref<MenuInst | null>(null);
 const menus = ref<MenuMixedOption[]>([]);
@@ -70,6 +70,11 @@ const onMenuItemClick = (key: string) => {
   }
   emit("onMenuItemClick", key);
 };
+
+// 监听语言变化
+watch(locale, () => {
+  updateMenus();
+});
 
 // 监听导航栏模式
 watch(navMode, () => {

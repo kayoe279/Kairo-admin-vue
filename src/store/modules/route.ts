@@ -2,10 +2,12 @@ import { useUserStore } from "./user";
 import { usePermission } from "@/hooks/usePermission";
 import { PAGE } from "@/lib/constants";
 import { StoreEnum } from "@/lib/enums/storeEnum";
+import { $t } from "@/lib/i18n";
 import { getUserInfo } from "@/lib/storage";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes } from "@/router/index";
 import { getUserRoutes } from "@/service/api/login";
+import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { type RouteRecordRaw, useRouter } from "vue-router";
@@ -52,12 +54,14 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
       });
       if (dynamicRoutes?.length) {
         resultRouter = generateDynamicRoutes(dynamicRoutes);
-      } else {
-        userStore.logout();
-        return;
       }
     } else {
-      resultRouter = asyncRoutes;
+      resultRouter = cloneDeep(asyncRoutes);
+    }
+
+    if (!resultRouter.length) {
+      window.$message.error($t(`app.getRouteError`));
+      return;
     }
 
     // 路由权限过滤

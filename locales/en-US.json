@@ -58,7 +58,8 @@
     "resetSuccess": "Reset Configuration Successfully",
     "resetConfigContent": "After resetting the project configuration, the project configuration will be restored to the initial state, whether to continue?",
     "zh-CN": "Chinese",
-    "en-US": "English"
+    "en-US": "English",
+    "getRouteError": "Failed to get route"
   },
   "http": {
     "400": "Syntax error in the request",
@@ -90,27 +91,23 @@
     }
   },
   "login": {
-    "signInTitle": "Login",
-    "accountRuleTip": "Please enter account",
-    "passwordRuleTip": "Please enter password",
-    "or": "Or",
+    "username": "Username",
+    "password": "Password",
+    "loginButton": "Login",
+    "usernamePlaceholder": "Please enter username",
+    "passwordPlaceholder": "Please enter password",
     "rememberMe": "Remember me",
-    "forgotPassword": "Forget the password?",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "noAccountText": "Don't have an account?",
-    "accountPlaceholder": "Enter the account number",
-    "checkPasswordPlaceholder": "Please enter password again",
+    "forgotPassword": "Forgot password?",
+    "register": "Register",
+    "noAccountText": "No account?",
+    "haveAccountText": "Have account?",
     "checkPasswordRuleTip": "Please confirm password again",
-    "haveAccountText": "Do you have an account?",
-    "passwordPlaceholder": "Enter password",
-    "readAndAgree": "I have read and agree",
-    "registerTitle": "Register",
-    "userAgreement": "User Agreement",
-    "resetPassword": "Reset password",
-    "resetPasswordPlaceholder": "Enter account/mobile phone number",
-    "resetPasswordRuleTip": "Please enter your account/mobile phone number",
-    "resetPasswordTitle": "Reset"
+    "registerButton": "Register",
+    "checkPasswordPlaceholder": "Please enter password again",
+    "loginSuccess": "Login successfully, entering system",
+    "loginLoading": "Login...",
+    "loginError": "Login failed",
+    "loginErrorTip": "Please enter complete information and verify the captcha"
   },
   "route": {
     "dashboard": "Dashboard",

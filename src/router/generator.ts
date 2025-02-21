@@ -1,30 +1,26 @@
-import { svgIconRender } from "@/lib/svgIconRender";
 import type { RouteRecordRaw } from "vue-router";
 
 const Layout = () => import("@/layouts/Layout.vue");
 
 // 生成动态路由
-let viewsModules: Record<string, () => Promise<Recordable>>;
-export const generateDynamicRoutes = (routes: AppRoute.DynamicRouteRecordRaw[]) => {
+let viewsModules: Record<string, () => Promise<Record<string, any>>>;
+export const generateDynamicRoutes = (routes: AppRoute.DynamicRouteRecordRaw[], level = 1) => {
   if (!routes.length) return [];
 
   viewsModules = viewsModules || import.meta.glob("@/views/**/*.vue");
 
   routes.forEach((item) => {
-    if (item.meta?.isRoot || (item.redirect && item.component)) {
+    if (level === 1 && item.component) {
       item.component = Layout;
     }
-    if (item.component && !item.meta?.isRoot && !item.redirect) {
+    if (level > 1 && item.component) {
       const Component = viewsModules[`/src/views${item.component}`];
       if (Component) {
         item.component = Component;
       }
     }
-    if (item?.meta?.icon && typeof item.meta.icon === "string") {
-      item.meta.icon = svgIconRender({ icon: item.meta.icon });
-    }
     if (item.children) {
-      generateDynamicRoutes(item.children);
+      generateDynamicRoutes(item.children, level + 1);
     }
   });
 

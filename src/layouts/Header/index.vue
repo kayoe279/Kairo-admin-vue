@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { appConfig } from "@/lib/settings/app";
-import { useAppStore } from "@/store/modules/appSetting";
+import { isRootRoute } from "@/lib/utils/menu";
+import { useAppStore } from "@/store";
 import { useFullscreen } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
@@ -16,7 +17,8 @@ const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
 const hideCollapseIcon = computed(() => {
   return (
-    navMode.value === "horizontal" || (navMode.value === "horizontal-mix" && route.meta.isRoot)
+    navMode.value === "horizontal" ||
+    (navMode.value === "horizontal-mix" && isRootRoute(route.matched[0]))
   );
 });
 
@@ -67,7 +69,7 @@ const onIconClick = (key: "github" | "lock") => {
       />
 
       <!-- 切换语音 -->
-      <SwitchLanguage />
+      <LanguageSwitch />
 
       <!-- 切换主题 -->
       <ThemeSwitch />

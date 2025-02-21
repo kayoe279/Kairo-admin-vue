@@ -7,6 +7,7 @@
   --background-root: #f5f7f9;
   --background: #ffffff;
   --foreground: #333639;
+  --size: 45px;
 }
 
 html.dark {

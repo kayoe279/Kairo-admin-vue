@@ -54,7 +54,7 @@ const dropdownSelect = (key) => {
               :is="routeItem.meta.icon"
               class="mr-px inline-block align-bottom text-lg"
             />
-            {{ routeItem.meta.title }}
+            {{ $t(`route.${routeItem.name}`, routeItem.meta.title) }}
           </span>
         </n-dropdown>
         <span v-else>
@@ -62,7 +62,7 @@ const dropdownSelect = (key) => {
             v-if="breadcrumbsSetting.showIcon && routeItem.meta.icon"
             :is="routeItem.meta.icon"
           />
-          {{ routeItem.meta.title }}
+          {{ $t(`route.${routeItem.name}`, routeItem.meta.title) }}
         </span>
       </n-breadcrumb-item>
     </template>

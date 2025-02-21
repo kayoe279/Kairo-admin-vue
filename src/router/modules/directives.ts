@@ -9,7 +9,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       sort: 9,
       isRoot: true,
-
       icon: svgIconRender({ icon: "solar:compass-broken" })
     },
     children: [

@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { type ThemeMode, useThemeSettingStore } from "@/store";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
 
 withDefaults(defineProps<{ position?: "header" | "drawer" }>(), { position: "header" });
 
 const themeStore = useThemeSettingStore();
-const { themeMode, storeTheme } = storeToRefs(themeStore);
-
-const isDark = computed(() => themeMode.value === "dark");
+const { isDark, storeTheme } = storeToRefs(themeStore);
 
 const handleToggleTheme = (value: ThemeMode) => {
   themeStore.setThemeMode(value);

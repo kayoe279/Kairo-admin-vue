@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
+import { isRootRoute } from "@/lib/utils/menu";
 import { useAppStore, useThemeSettingStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed, ref, unref } from "vue";
 import { useRoute } from "vue-router";
 
-const currentRoute = useRoute();
+const route = useRoute();
 const { isMobile } = useMedia();
 
 const appStore = useAppStore();
@@ -19,7 +20,7 @@ const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "st
 const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
 const showMenu = computed(() => {
   if (fullScreen.value) return false;
-  const hideMixMenuSub = navMode.value === "horizontal-mix" && !currentRoute.meta.isRoot;
+  const hideMixMenuSub = navMode.value === "horizontal-mix" && !isRootRoute(route.matched?.[0]);
   return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
 });
 const mainStyles = computed(() => {

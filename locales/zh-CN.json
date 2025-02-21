@@ -58,7 +58,8 @@
     "resetSuccess": "恢复默认配置成功",
     "resetConfigContent": "恢复默认配置后，项目配置将恢复到初始状态，是否继续？",
     "zh-CN": "中文",
-    "en-US": "英文"
+    "en-US": "English",
+    "getRouteError": "获取路由失败"
   },
   "http": {
     "400": "请求出现语法错误",
@@ -90,27 +91,23 @@
     }
   },
   "login": {
-    "signInTitle": "登录",
-    "accountPlaceholder": "输入账号",
-    "passwordPlaceholder": "输入密码",
-    "accountRuleTip": "请输入账户",
-    "passwordRuleTip": "请输入密码",
-    "or": "其他",
-    "signIn": "登录",
+    "username": "用户名",
+    "password": "密码",
+    "loginButton": "登录",
+    "usernamePlaceholder": "请输入用户名",
+    "passwordPlaceholder": "请输入密码",
     "rememberMe": "记住我",
     "forgotPassword": "忘记密码？",
-    "signUp": "注册",
-    "noAccountText": "你没有账户？",
-    "haveAccountText": "已有账号?",
+    "register": "注册",
+    "noAccountText": "没有账号？",
+    "haveAccountText": "已有账号？",
     "checkPasswordRuleTip": "请再次确认密码",
-    "registerTitle": "注册",
+    "registerButton": "注册",
     "checkPasswordPlaceholder": "请再次输入密码",
-    "readAndAgree": "我已阅读并同意",
-    "userAgreement": "用户协议",
-    "resetPasswordTitle": "重置密码",
-    "resetPasswordPlaceholder": "输入账号/手机号码",
-    "resetPasswordRuleTip": "请输入账号/手机号码",
-    "resetPassword": "重置密码"
+    "loginSuccess": "登录成功，即将进入系统",
+    "loginLoading": "登录中...",
+    "loginError": "登录失败",
+    "loginErrorTip": "请填写完整信息，并且进行验证码校验"
   },
   "route": {
     "dashboard": "工作台",
