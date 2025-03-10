@@ -85,6 +85,6 @@ const onIconClick = (key: "github" | "lock") => {
       <User />
     </div>
   </div>
-  <!--项目配置drawer -->
+
   <SettingDrawer />
 </template>
