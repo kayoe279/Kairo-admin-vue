@@ -1,17 +1,17 @@
 {
-  "name": "naive-ui-admin",
-  "version": "2.0.0",
+  "name": "naive-admin-template",
+  "version": "1.0.0",
   "type": "module",
   "author": {
     "name": "Kayoe",
-    "email": "735878602@qq.com",
-    "url": "https://github.com/jekip/naive-ui-admin"
+    "email": "735878602@qq.com"
   },
   "private": true,
   "engines": {
     "node": ">=18.12.0",
     "pnpm": ">=8.7.0"
   },
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
     "dev": "vite",
     "build": "vite build && esno ./build/script/postBuild.ts",
