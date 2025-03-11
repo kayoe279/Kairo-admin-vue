@@ -1,8 +1,5 @@
 <template>
   <n-modal id="basic-modal" v-bind="getBindValue" v-model:show="isModal" @close="onCloseModal">
-    <template #header>
-      <div class="w-full cursor-move" id="basic-modal-bar">{{ getBindValue.title }}</div>
-    </template>
     <template #default>
       <slot name="default"></slot>
     </template>
@@ -24,7 +21,7 @@
 import { basicProps } from "./props";
 import type { ModalMethods, ModalProps } from "./type";
 import type { FormProps } from "@/components/Form";
-import startDrag from "@/lib/drag";
+import { startDrag } from "@/lib/drag";
 import { deepMerge } from "@/lib/utils";
 import { computed, getCurrentInstance, nextTick, ref, unref, useAttrs } from "vue";
 

@@ -13,7 +13,7 @@ const params = {
   flag: false,
 };
 
-const startDrag = function (bar, target, callback?) {
+export const startDrag = function (bar, target, callback?) {
   const screenWidth = document.body.clientWidth; // body当前宽度
   const screenHeight = document.documentElement.clientHeight; // 可见区域高度
 
@@ -64,8 +64,8 @@ const startDrag = function (bar, target, callback?) {
       const disX = nowX - params.currentX,
         disY = nowY - params.currentY;
 
-      let left = parseInt(params.left) + disX;
-      let top = parseInt(params.top) + disY;
+      let left = parseInt(String(params.left)) + disX;
+      let top = parseInt(String(params.top)) + disY;
 
       // 拖出屏幕边缘
       if (-left > minDomLeft) {
@@ -84,7 +84,7 @@ const startDrag = function (bar, target, callback?) {
       target.style.top = top + 'px';
 
       if (typeof callback == 'function') {
-        callback((parseInt(params.left) || 0) + disX, (parseInt(params.top) || 0) + disY);
+        callback((parseInt(String(params.left)) || 0) + disX, (parseInt(String(params.top)) || 0) + disY);
       }
 
       if (event.preventDefault) {
@@ -95,4 +95,4 @@ const startDrag = function (bar, target, callback?) {
   };
 };
 
-export default startDrag;
+
