@@ -1,5 +1,4 @@
 import { warn } from "@/lib/log";
-import { getConfigFileName } from "~/build/getConfigFileName";
 import pkg from "~/package.json";
 
 export function getCommonStoragePrefix() {
@@ -13,12 +12,12 @@ export function getStorageShortName() {
 }
 
 export function getAppEnvConfig() {
-  const ENV_NAME = getConfigFileName(import.meta.env);
+  const ENV = import.meta.env 
 
-  const ENV = (import.meta.env.DEV
-    ? // Get the global configuration (the configuration will be extracted independently when packaging)
-      (import.meta.env as unknown as ImportMetaEnv)
-    : window[ENV_NAME as any]) as unknown as ImportMetaEnv;
+  if (!ENV) {
+    throw new Error("ENV is undefined");
+  }
+ 
 
   const {
     VITE_GLOB_APP_TITLE,
