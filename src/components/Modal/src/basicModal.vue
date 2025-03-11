@@ -21,9 +21,9 @@
 import { basicProps } from "./props";
 import type { ModalMethods, ModalProps } from "./type";
 import type { FormProps } from "@/components/Form";
-import { startDrag } from "@/lib/drag";
+// import { startDrag } from "@/lib/drag";
 import { deepMerge } from "@/lib/utils";
-import { computed, getCurrentInstance, nextTick, ref, unref, useAttrs } from "vue";
+import { computed, getCurrentInstance, ref, unref, useAttrs } from "vue";
 
 const attrs = useAttrs();
 const props = defineProps({ ...basicProps });
@@ -61,11 +61,12 @@ function setSubLoading(status: boolean) {
 
 function openModal() {
   isModal.value = true;
-  nextTick(() => {
-    const oBox = document.getElementById("basic-modal");
-    const oBar = document.getElementById("basic-modal-bar");
-    startDrag(oBar, oBox);
-  });
+  // TODO: build 错误
+  // nextTick(() => {
+  //   const oBox = document.getElementById("basic-modal");
+  //   const oBar = document.getElementById("basic-modal-bar");
+  //   startDrag(oBar, oBox);
+  // });
 }
 
 function closeModal() {

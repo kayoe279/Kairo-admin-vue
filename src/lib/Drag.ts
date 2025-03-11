@@ -13,7 +13,7 @@ const params = {
   flag: false,
 };
 
-export const startDrag = function (bar, target, callback?) {
+export const startDrag = function (bar, target, callback?: (left: number, top: number) => void) {
   const screenWidth = document.body.clientWidth; // body当前宽度
   const screenHeight = document.documentElement.clientHeight; // 可见区域高度
 
