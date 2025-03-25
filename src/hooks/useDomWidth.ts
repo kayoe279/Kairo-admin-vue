@@ -1,5 +1,5 @@
-import { ref, onMounted, onUnmounted } from 'vue';
-import { debounce } from 'lodash-es';
+import { debounce } from "lodash-es";
+import { onMounted, onUnmounted, ref } from "vue";
 
 /**
  * description: 获取页面宽度
@@ -13,10 +13,10 @@ export function useDomWidth() {
   }
 
   onMounted(() => {
-    window.addEventListener('resize', debounce(resize, 80));
+    window.addEventListener("resize", debounce(resize, 80));
   });
   onUnmounted(() => {
-    window.removeEventListener('resize', resize);
+    window.removeEventListener("resize", resize);
   });
 
   return domWidth;

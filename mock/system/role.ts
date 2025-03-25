@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 function getMenuKeys() {
   const keys = ['dashboard', 'console', 'workplace', 'basic-form', 'step-form', 'detail'];
   const newKeys = [];
-  doCustomTimes(parseInt(Math.random() * 6), () => {
+  doCustomTimes(parseInt(String(Math.random() * 6)), () => {
     const key = keys[Math.floor(Math.random() * keys.length)];
     newKeys.push(key as never);
   });

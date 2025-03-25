@@ -1,7 +1,6 @@
-import type { Ref } from 'vue';
-
-import { ref, watch, unref } from 'vue';
-import { useThrottleFn, useDebounceFn } from '@vueuse/core';
+import { useDebounceFn, useThrottleFn } from "@vueuse/core";
+import type { Ref } from "vue";
+import { ref, unref, watch } from "vue";
 
 export type RemoveEventFn = () => void;
 
@@ -22,11 +21,9 @@ export function useEventListener({
   options,
   autoRemove = true,
   isDebounce = true,
-  wait = 80,
+  wait = 80
 }: UseEventParams): { removeEvent: RemoveEventFn } {
-   
-    let remove: RemoveEventFn = () => {
-    };
+  let remove: RemoveEventFn = () => {};
   const isAddRef = ref(false);
 
   if (el) {

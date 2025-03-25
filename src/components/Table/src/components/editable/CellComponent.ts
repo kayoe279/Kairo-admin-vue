@@ -1,10 +1,8 @@
-import type { FunctionalComponent, defineComponent } from 'vue';
-import type { ComponentType } from '../../types/componentType';
-import { componentMap } from '@/components/Table/src/componentMap';
-
-import { h } from 'vue';
-
-import { NPopover } from 'naive-ui';
+import type { ComponentType } from "../../types/componentType";
+import { componentMap } from "@/components/Table/src/componentMap";
+import { NPopover } from "naive-ui";
+import type { FunctionalComponent, defineComponent } from "vue";
+import { h } from "vue";
 
 export interface ComponentProps {
   component: ComponentType;
@@ -14,7 +12,7 @@ export interface ComponentProps {
 }
 
 export const CellComponent: FunctionalComponent = (
-  { component = 'NInput', rule = true, ruleMessage, popoverVisible }: ComponentProps,
+  { component = "NInput", rule = true, ruleMessage, popoverVisible }: ComponentProps,
   { attrs }
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;
@@ -25,23 +23,23 @@ export const CellComponent: FunctionalComponent = (
   }
   return h(
     NPopover,
-    { 'display-directive': 'show', show: !!popoverVisible, manual: 'manual' },
+    { "display-directive": "show", show: !!popoverVisible, manual: "manual" },
     {
       trigger: () => DefaultComp,
       default: () =>
         h(
-          'span',
+          "span",
           {
             style: {
-              color: 'red',
-              width: '90px',
-              display: 'inline-block',
-            },
+              color: "red",
+              width: "90px",
+              display: "inline-block"
+            }
           },
           {
-            default: () => ruleMessage,
+            default: () => ruleMessage
           }
-        ),
+        )
     }
   );
 };

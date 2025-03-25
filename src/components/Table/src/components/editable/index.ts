@@ -1,8 +1,7 @@
-import type { BasicColumn } from '@/components/Table/src/types/table';
-import type { Ref } from 'vue';
-import { h } from 'vue';
-
-import EditableCell from './EditableCell.vue';
+import EditableCell from "./EditableCell.vue";
+import type { BasicColumn } from "@/components/Table/src/types/table";
+import type { Ref } from "vue";
+import { h } from "vue";
 
 export function renderEditCell(column: BasicColumn) {
   return (record, index) => {
@@ -31,7 +30,7 @@ export function renderEditCell(column: BasicColumn) {
       value,
       record,
       column,
-      index,
+      index
     });
   };
 }
@@ -45,6 +44,6 @@ export type EditRecordRow<T = Recordable> = Partial<
     submitCbs: Fn[];
     cancelCbs: Fn[];
     validCbs: Fn[];
-    editValueRefs: Recordable<Ref>;
+    editValueRefs: Record<string, Ref>;
   } & T
 >;

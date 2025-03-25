@@ -10,7 +10,7 @@ const params = {
   top: 0,
   currentX: 0,
   currentY: 0,
-  flag: false,
+  flag: false
 };
 
 export const startDrag = function (bar, target, callback?: (left: number, top: number) => void) {
@@ -26,11 +26,11 @@ export const startDrag = function (bar, target, callback?: (left: number, top: n
   const maxDragDomLeft = screenWidth - minDomLeft - dragDomW;
   const maxDragDomTop = screenHeight - minDomTop - dragDomH;
 
-  if (getCss(target, 'left') !== 'auto') {
-    params.left = getCss(target, 'left');
+  if (getCss(target, "left") !== "auto") {
+    params.left = getCss(target, "left");
   }
-  if (getCss(target, 'top') !== 'auto') {
-    params.top = getCss(target, 'top');
+  if (getCss(target, "top") !== "auto") {
+    params.top = getCss(target, "top");
   }
 
   //o是移动对象
@@ -49,11 +49,11 @@ export const startDrag = function (bar, target, callback?: (left: number, top: n
   };
   document.onmouseup = function () {
     params.flag = false;
-    if (getCss(target, 'left') !== 'auto') {
-      params.left = getCss(target, 'left');
+    if (getCss(target, "left") !== "auto") {
+      params.left = getCss(target, "left");
     }
-    if (getCss(target, 'top') !== 'auto') {
-      params.top = getCss(target, 'top');
+    if (getCss(target, "top") !== "auto") {
+      params.top = getCss(target, "top");
     }
   };
   document.onmousemove = function (event) {
@@ -80,11 +80,14 @@ export const startDrag = function (bar, target, callback?: (left: number, top: n
         top = maxDragDomTop;
       }
 
-      target.style.left = left + 'px';
-      target.style.top = top + 'px';
+      target.style.left = left + "px";
+      target.style.top = top + "px";
 
-      if (typeof callback == 'function') {
-        callback((parseInt(String(params.left)) || 0) + disX, (parseInt(String(params.top)) || 0) + disY);
+      if (typeof callback == "function") {
+        callback(
+          (parseInt(String(params.left)) || 0) + disX,
+          (parseInt(String(params.top)) || 0) + disY
+        );
       }
 
       if (event.preventDefault) {
@@ -94,5 +97,3 @@ export const startDrag = function (bar, target, callback?: (left: number, top: n
     }
   };
 };
-
-

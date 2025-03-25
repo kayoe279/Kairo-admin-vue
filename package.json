@@ -1,10 +1,10 @@
 {
-  "name": "naive-admin-template",
+  "name": "kairo-admin",
   "version": "1.0.0",
   "type": "module",
   "author": {
     "name": "Kayoe",
-    "email": "735878602@qq.com"
+    "email": "kayoe279@gmail.com"
   },
   "private": true,
   "engines": {
@@ -26,8 +26,7 @@
     "lint:fix": "eslint \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "format": "prettier --write src/",
     "typecheck": "tsc --noEmit",
-    "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint:pretty": "pretty-quick --staged"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@alova/mock": "^2.0.11",
@@ -78,7 +77,6 @@
     "@vue/compiler-sfc": "^3.5.13",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.3.0",
-    "autoprefixer": "^10.4.20",
     "commitizen": "^4.3.1",
     "core-js": "^3.40.0",
     "cross-env": "^7.0.3",
@@ -89,21 +87,14 @@
     "eslint-plugin-vue": "^9.32.0",
     "esno": "^4.8.0",
     "gh-pages": "^6.3.0",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "jest": "^29.7.0",
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
     "lint-staged": "^15.4.3",
-    "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "pretty-quick": "^4.0.0",
     "rimraf": "^6.0.1",
-    "stylelint": "^16.14.1",
-    "stylelint-config-prettier": "^9.0.5",
-    "stylelint-config-standard": "^37.0.0",
-    "stylelint-order": "^6.0.4",
-    "stylelint-scss": "^6.11.0",
     "typescript": "^5.7.3",
     "unplugin-icons": "^22.0.0",
     "unplugin-vue-components": "^28.0.0",
@@ -119,7 +110,7 @@
     "vuedraggable": "^4.1.0"
   },
   "lint-staged": {
-    "*.{vue,js,ts,tsx}": "eslint --fix"
+    "*.{vue,js,ts,tsx}": "eslint ."
   },
   "config": {
     "commitizen": {
@@ -135,14 +126,5 @@
     "tsx",
     "admin",
     "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jekip/naive-ui-admin.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jekip/naive-ui-admin/issues"
-  },
-  "homepage": "https://github.com/jekip/naive-ui-admin"
+  ]
 }

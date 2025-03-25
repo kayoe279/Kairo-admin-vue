@@ -2,7 +2,7 @@ import { isFunction } from "@/lib/utils/is";
 import { tryOnUnmounted } from "@vueuse/core";
 import { ref, watch } from "vue";
 
-export function useTimeoutFn(handle: Fn<any>, wait: number, native = false) {
+export function useTimeoutFn(handle: Fn, wait: number, native = false) {
   if (!isFunction(handle)) {
     throw new Error("handle is not Function!");
   }
@@ -25,7 +25,7 @@ export function useTimeoutFn(handle: Fn<any>, wait: number, native = false) {
 export function useTimeoutRef(wait: number) {
   const readyRef = ref(false);
 
-  let timer: TimeoutHandle;
+  let timer: NodeJS.Timeout;
 
   function stop(): void {
     readyRef.value = false;

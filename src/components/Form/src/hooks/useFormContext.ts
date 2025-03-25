@@ -1,6 +1,6 @@
-import { provide, inject } from 'vue';
+import { inject, provide } from "vue";
 
-const key = Symbol('formElRef');
+const key = Symbol("formElRef");
 
 export function createFormContext(instance) {
   provide(key, instance);

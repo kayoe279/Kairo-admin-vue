@@ -1,4 +1,4 @@
-import { computed, onMounted, reactive, toRefs } from 'vue';
+import { computed, onMounted, reactive, toRefs } from "vue";
 
 interface Battery {
   charging: boolean; // 当前电池是否正在充电
@@ -14,8 +14,8 @@ export const useBattery = () => {
       charging: false,
       chargingTime: 0,
       dischargingTime: 0,
-      level: 100,
-    },
+      level: 100
+    }
   });
 
   // 更新电池使用状态
@@ -44,11 +44,11 @@ export const useBattery = () => {
   // 电池状态
   const batteryStatus = computed(() => {
     if (state.battery.charging && state.battery.level >= 100) {
-      return '已充满';
+      return "已充满";
     } else if (state.battery.charging) {
-      return '充电中';
+      return "充电中";
     } else {
-      return '已断开电源';
+      return "已断开电源";
     }
   });
 
@@ -88,6 +88,6 @@ export const useBattery = () => {
     ...toRefs(state),
     batteryStatus,
     calcDischargingTime,
-    calcChargingTime,
+    calcChargingTime
   };
 };

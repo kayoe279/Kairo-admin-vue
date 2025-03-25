@@ -12,12 +12,11 @@ export function getStorageShortName() {
 }
 
 export function getAppEnvConfig() {
-  const ENV = import.meta.env 
+  const ENV = import.meta.env;
 
   if (!ENV) {
     throw new Error("ENV is undefined");
   }
- 
 
   const {
     VITE_GLOB_APP_TITLE,

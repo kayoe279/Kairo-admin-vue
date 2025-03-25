@@ -32,41 +32,41 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineEmits } from 'vue';
+import { defineEmits } from "vue";
 
-  const emit = defineEmits(['finish', 'prevStep']);
-  function prevStep() {
-    emit('prevStep');
-  }
+const emit = defineEmits(["finish", "prevStep"]);
+function prevStep() {
+  emit("prevStep");
+}
 
-  function finish() {
-    emit('finish');
-  }
+function finish() {
+  emit("finish");
+}
 </script>
 
 <style lang="less" scoped>
-  .step-result {
-    max-width: 560px;
-    margin: 40px auto 0;
+.step-result {
+  max-width: 560px;
+  margin: 40px auto 0;
 
-    ::v-deep(.n-result-content) {
-      background-color: #fafafa;
-      padding: 24px 40px;
-    }
+  ::v-deep(.n-result-content) {
+    background-color: #fafafa;
+    padding: 24px 40px;
+  }
 
-    .information {
-      line-height: 22px;
+  .information {
+    line-height: 22px;
 
-      .ant-row:not(:last-child) {
-        margin-bottom: 24px;
-      }
-    }
-
-    .money {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 14px;
+    .ant-row:not(:last-child) {
+      margin-bottom: 24px;
     }
   }
+
+  .money {
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 14px;
+  }
+}
 </style>

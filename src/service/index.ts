@@ -87,9 +87,7 @@ export const Alova = createAlova({
         return res.data;
       }
 
-      // @ts-expect-error okay
       const Message = window.$message;
-      // @ts-expect-error okay
       const Modal = window.$dialog;
 
       const LoginPath = "/login";
@@ -101,10 +99,9 @@ export const Alova = createAlova({
         Modal?.warning({
           title: "提示",
           content: "登录身份已失效，请重新登录!",
-          okText: "确定",
           closable: false,
           maskClosable: false,
-          onOk: async () => {
+          onPositiveClick: async () => {
             local.clear();
             window.location.href = LoginPath;
           }
