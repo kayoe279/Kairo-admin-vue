@@ -14,45 +14,46 @@
     </n-card>
 
     <n-card :bordered="false" title="拖拽指令" class="mt-3"> 鼠标放到矩形上面拖拽试试 </n-card>
-    <div class="box" v-draggable> </div>
+    <div class="box" v-draggable></div>
   </div>
 </template>
 
 <script setup lang="ts" name="copyDirect">
-  import { ref } from 'vue';
-  import { useMessage } from 'naive-ui';
-  const data = ref<string>();
-  const message = useMessage();
-  const a = () => {
-    message.success('复制成功:' + data.value);
-  };
-  const b = () => {
-    message.success('防抖');
-    console.log(data.value);
-  };
-  const c = () => {
-    message.success('节流');
-    console.log(data.value);
-  };
+import { useMessage } from "naive-ui";
+import { ref } from "vue";
+
+const data = ref<string>();
+const message = useMessage();
+const a = () => {
+  message.success("复制成功:" + data.value);
+};
+const b = () => {
+  message.success("防抖");
+  console.log(data.value);
+};
+const c = () => {
+  message.success("节流");
+  console.log(data.value);
+};
 </script>
 
 <style scoped lang="less">
-  body {
+body {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  position: relative;
+}
+.content-box {
+  height: 100vh;
+  .box {
     width: 100px;
     height: 100px;
-    background-color: #ccc;
-    position: relative;
+    background-color: #2d8cf0;
+    position: absolute;
+    z-index: 10000000;
+    border-radius: 10px;
+    margin: 20px 5px;
   }
-  .content-box {
-    height: 100vh;
-    .box {
-      width: 100px;
-      height: 100px;
-      background-color: #2d8cf0;
-      position: absolute;
-      z-index: 10000000;
-      border-radius: 10px;
-      margin: 20px 5px;
-    }
-  }
+}
 </style>

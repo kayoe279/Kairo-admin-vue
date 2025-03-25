@@ -1,1 +1,1 @@
-<template> 项目文档 </template>
+<template>项目文档</template>

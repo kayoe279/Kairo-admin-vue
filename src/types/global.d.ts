@@ -1,13 +1,14 @@
+import type { DialogApi, LoadingBarApi, MessageApi, NotificationApi } from "naive-ui";
 import "vue";
 
 declare global {
   declare type Locale = "zh-CN" | "en-US";
 
   interface Window {
-    $loadingBar: import("naive-ui").LoadingBarApi;
-    $dialog: import("naive-ui").DialogApi;
-    $message: import("naive-ui").MessageApi;
-    $notification: import("naive-ui").NotificationApi;
+    $loadingBar: LoadingBarApi;
+    $dialog: DialogApi;
+    $message: MessageApi;
+    $notification: NotificationApi;
   }
 
   interface DictMap {
@@ -37,4 +38,8 @@ declare global {
       refreshToken: string;
     }
   }
+
+  type Recordable = Record<string, any>;
 }
+
+export {};

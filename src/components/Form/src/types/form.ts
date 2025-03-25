@@ -1,7 +1,7 @@
-import type { ComponentType } from './index';
-import type { CSSProperties } from 'vue';
-import type { GridProps, GridItemProps } from 'naive-ui/lib/grid';
-import type { ButtonProps } from 'naive-ui/lib/button';
+import type { ComponentType } from "./index";
+import type { ButtonProps } from "naive-ui/lib/button";
+import type { GridItemProps, GridProps } from "naive-ui/lib/grid";
+import type { CSSProperties } from "vue";
 
 export interface FormSchema {
   field: string;

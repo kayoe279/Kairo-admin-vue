@@ -33,40 +33,41 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineEmits } from 'vue';
-  import { useMessage } from 'naive-ui';
-  const form2Ref: any = ref(null);
-  const message = useMessage();
-  const loading = ref(false);
+import { useMessage } from "naive-ui";
+import { defineEmits, ref } from "vue";
 
-  const formValue = ref({
-    password: '086611',
+const form2Ref: any = ref(null);
+const message = useMessage();
+const loading = ref(false);
+
+const formValue = ref({
+  password: "086611"
+});
+
+const rules = {
+  password: {
+    required: true,
+    message: "请输入支付密码",
+    trigger: "blur"
+  }
+};
+
+const emit = defineEmits(["prevStep", "nextStep"]);
+
+function prevStep() {
+  emit("prevStep");
+}
+
+function formSubmit() {
+  loading.value = true;
+  form2Ref.value.validate((errors) => {
+    if (!errors) {
+      setTimeout(() => {
+        emit("nextStep");
+      }, 1500);
+    } else {
+      message.error("验证失败，请填写完整信息");
+    }
   });
-
-  const rules = {
-    password: {
-      required: true,
-      message: '请输入支付密码',
-      trigger: 'blur',
-    },
-  };
-
-  const emit = defineEmits(['prevStep', 'nextStep']);
-
-  function prevStep() {
-    emit('prevStep');
-  }
-
-  function formSubmit() {
-    loading.value = true;
-    form2Ref.value.validate((errors) => {
-      if (!errors) {
-        setTimeout(() => {
-          emit('nextStep');
-        }, 1500);
-      } else {
-        message.error('验证失败，请填写完整信息');
-      }
-    });
-  }
+}
 </script>

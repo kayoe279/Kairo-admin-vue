@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center page-container">
+  <div class="page-container flex flex-col justify-center">
     <div class="text-center">
       <img src="~@/assets/images/exception/404.svg" alt="" />
     </div>
@@ -11,30 +11,31 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
-  const router = useRouter();
-  function goHome() {
-    router.push('/');
-  }
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+function goHome() {
+  router.push("/");
+}
 </script>
 
 <style lang="less" scoped>
-  .page-container {
-    width: 100%;
-    border-radius: 4px;
-    padding: 50px 0;
-    height: 100vh;
+.page-container {
+  width: 100%;
+  border-radius: 4px;
+  padding: 50px 0;
+  height: 100vh;
 
-    .text-center {
-      h1 {
-        color: #666;
-        padding: 20px 0;
-      }
-    }
-
-    img {
-      width: 350px;
-      margin: 0 auto;
+  .text-center {
+    h1 {
+      color: #666;
+      padding: 20px 0;
     }
   }
+
+  img {
+    width: 350px;
+    margin: 0 auto;
+  }
+}
 </style>

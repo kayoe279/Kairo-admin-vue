@@ -1,15 +1,15 @@
 import {
-  CaretUpOutlined,
-  CaretDownOutlined,
-  UsergroupAddOutlined,
-  BarChartOutlined,
-  ShoppingCartOutlined,
   AccountBookOutlined,
+  BarChartOutlined,
+  CaretDownOutlined,
+  CaretUpOutlined,
   CreditCardOutlined,
   MailOutlined,
-  TagsOutlined,
   SettingOutlined,
-} from '@vicons/antd';
+  ShoppingCartOutlined,
+  TagsOutlined,
+  UsergroupAddOutlined
+} from "@vicons/antd";
 
 export default {
   CaretUpOutlined,
@@ -21,5 +21,5 @@ export default {
   CreditCardOutlined,
   MailOutlined,
   TagsOutlined,
-  SettingOutlined,
+  SettingOutlined
 };

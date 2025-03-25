@@ -9,7 +9,7 @@
     <n-card
       :bordered="false"
       title="项目信息"
-      class="mt-4 proCard"
+      class="proCard mt-4"
       size="small"
       :segmented="{ content: true }"
     >
@@ -50,7 +50,7 @@
     <n-card
       :bordered="false"
       title="开发环境依赖"
-      class="mt-4 proCard"
+      class="proCard mt-4"
       size="small"
       :segmented="{ content: true }"
     >
@@ -64,7 +64,7 @@
     <n-card
       :bordered="false"
       title="生产环境依赖"
-      class="mt-4 proCard"
+      class="proCard mt-4"
       size="small"
       :segmented="{ content: true }"
     >
@@ -78,24 +78,24 @@
 </template>
 
 <script lang="ts" setup>
-  export interface schemaItem {
-    field: string;
-    label: string;
-  }
+export interface schemaItem {
+  field: string;
+  label: string;
+}
 
-  const { pkg, lastBuildTime } = __APP_INFO__;
-  const { dependencies, devDependencies, name, version } = pkg;
+const { pkg, lastBuildTime } = __APP_INFO__;
+const { dependencies, devDependencies, name, version } = pkg;
 
-  const schema: schemaItem[] = [];
-  const devSchema: schemaItem[] = [];
+const schema: schemaItem[] = [];
+const devSchema: schemaItem[] = [];
 
-  Object.keys(dependencies).forEach((key) => {
-    schema.push({ field: key, label: dependencies[key] });
-  });
+Object.keys(dependencies).forEach((key) => {
+  schema.push({ field: key, label: dependencies[key] });
+});
 
-  Object.keys(devDependencies).forEach((key) => {
-    devSchema.push({ field: key, label: devDependencies[key] });
-  });
+Object.keys(devDependencies).forEach((key) => {
+  devSchema.push({ field: key, label: devDependencies[key] });
+});
 </script>
 
 <style lang="less" scoped></style>

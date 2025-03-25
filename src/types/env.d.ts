@@ -7,10 +7,12 @@
 type ServiceEnvType = "dev" | "test" | "prod";
 
 interface ImportMetaEnv {
+  /** 端口 */
+  readonly VITE_PORT: number;
   /** 项目基本地址 */
   readonly VITE_BASE_URL: string;
-  /** 项目标题 */
-  readonly VITE_APP_NAME: string;
+  /** 项目公共路径 */
+  readonly VITE_PUBLIC_PATH: string;
   /** 开启请求代理 */
   readonly VITE_HTTP_PROXY?: "Y" | "N";
   /** 是否开启打包压缩 */
@@ -41,6 +43,12 @@ interface ImportMetaEnv {
   readonly VITE_ICON_LOCAL_PREFIX: string;
   /** 本地svg图标前缀 */
   readonly VITE_ICON_PREFIX: string;
+  /** APP标题 */
+  readonly VITE_GLOB_APP_TITLE: string;
+  /** 应用简称 */
+  readonly VITE_GLOB_APP_SHORT_NAME: string;
+  /** 请求代理 */
+  readonly VITE_PROXY: Array<[string, string]>;
 }
 
 interface ImportMeta {

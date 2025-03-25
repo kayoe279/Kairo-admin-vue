@@ -1,5 +1,6 @@
-import type { InternalRowData, TableBaseColumn } from 'naive-ui/lib/data-table/src/interface';
-import type { ComponentType } from './componentType';
+import type { ComponentType } from "./componentType";
+import type { InternalRowData, TableBaseColumn } from "naive-ui/lib/data-table/src/interface";
+
 export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   //编辑表格
   edit?: boolean;

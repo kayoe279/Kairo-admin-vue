@@ -15,16 +15,16 @@
             </div>
           </n-gi>
           <n-gi>
-            <div class="flex justify-end w-full">
-              <div class="flex flex-col justify-center flex-1 text-right">
+            <div class="flex w-full justify-end">
+              <div class="flex flex-1 flex-col justify-center text-right">
                 <span class="text-secondary">项目数</span>
                 <span class="text-2xl">16</span>
               </div>
-              <div class="flex flex-col justify-center flex-1 text-right">
+              <div class="flex flex-1 flex-col justify-center text-right">
                 <span class="text-secondary">待办</span>
                 <span class="text-2xl">3/15</span>
               </div>
-              <div class="flex flex-col justify-center flex-1 text-right">
+              <div class="flex flex-1 flex-col justify-center text-right">
                 <span class="text-secondary">消息</span>
                 <span class="text-2xl">35</span>
               </div>
@@ -42,10 +42,10 @@
           size="small"
           title="项目"
         >
-          <div class="flex flex-wrap project-card">
+          <div class="project-card flex flex-wrap">
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -56,14 +56,14 @@
                 </span>
                 <span class="ml-4 text-lg">Github</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400">
+              <div class="mt-2 flex h-10 text-gray-400">
                 是一个面向开源及私有软件项目的托管平台。
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 开源君，2021-07-04 </div>
+              <div class="mt-2 flex h-10 text-gray-400">开源君，2021-07-04</div>
             </n-card>
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -74,12 +74,12 @@
                 </span>
                 <span class="ml-4 text-lg">Vue</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 渐进式 JavaScript 框架 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 学不动也要学，2021-07-04 </div>
+              <div class="mt-2 flex h-10 text-gray-400">渐进式 JavaScript 框架</div>
+              <div class="mt-2 flex h-10 text-gray-400">学不动也要学，2021-07-04</div>
             </n-card>
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -90,12 +90,12 @@
                 </span>
                 <span class="ml-4 text-lg">Html5</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> HTML5是互联网的下一代标准。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 撸码也是一种艺术 2021-04-01 </div>
+              <div class="mt-2 flex h-10 text-gray-400">HTML5是互联网的下一代标准。</div>
+              <div class="mt-2 flex h-10 text-gray-400">撸码也是一种艺术 2021-04-01</div>
             </n-card>
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -106,12 +106,12 @@
                 </span>
                 <span class="ml-4 text-lg">Angular</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 现代 Web 开发平台，百万粉丝热捧。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 铁粉君 2021-07-04。 </div>
+              <div class="mt-2 flex h-10 text-gray-400">现代 Web 开发平台，百万粉丝热捧。</div>
+              <div class="mt-2 flex h-10 text-gray-400">铁粉君 2021-07-04。</div>
             </n-card>
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -122,12 +122,12 @@
                 </span>
                 <span class="ml-4 text-lg">React</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 用于构建用户界面的 JavaScript 库。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 技术牛 2021-07-04。 </div>
+              <div class="mt-2 flex h-10 text-gray-400">用于构建用户界面的 JavaScript 库。</div>
+              <div class="mt-2 flex h-10 text-gray-400">技术牛 2021-07-04。</div>
             </n-card>
             <n-card
               size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
               hoverable
             >
               <div class="flex">
@@ -138,8 +138,8 @@
                 </span>
                 <span class="ml-4 text-lg">Js</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 路是走出来的，而不是空想出来的。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 架构组 2021-07-04 </div>
+              <div class="mt-2 flex h-10 text-gray-400">路是走出来的，而不是空想出来的。</div>
+              <div class="mt-2 flex h-10 text-gray-400">架构组 2021-07-04</div>
             </n-card>
           </div>
         </n-card>
@@ -227,65 +227,65 @@
           size="small"
           title="快捷操作"
         >
-          <div class="flex flex-wrap project-card">
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+          <div class="project-card flex flex-wrap">
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#68c755">
                     <DashboardOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">主控台</span>
+                <span class="text-lx text-center">主控台</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#fab251">
                     <ProfileOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">列表</span>
+                <span class="text-lx text-center">列表</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#1890ff">
                     <FileProtectOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">表单</span>
+                <span class="text-lx text-center">表单</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#f06b96">
                     <ApartmentOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">权限管理</span>
+                <span class="text-lx text-center">权限管理</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#7238d1">
                     <SettingOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">系统管理</span>
+                <span class="text-lx text-center">系统管理</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="">
                     <DashboardOutlined />
                   </n-icon>
                 </span>
-                <span class="text-center text-lx">主控台</span>
+                <span class="text-lx text-center">主控台</span>
               </div>
             </n-card>
           </div>
@@ -299,30 +299,30 @@
 </template>
 
 <script lang="ts">
-  export default { name: 'DashboardWorkplace' };
+export default { name: "DashboardWorkplace" };
 </script>
 
 <script lang="ts" setup>
-  import schoolboy from '@/assets/images/schoolboy.png';
-  import {
-    GithubOutlined,
-    DashboardOutlined,
-    ProfileOutlined,
-    FileProtectOutlined,
-    SettingOutlined,
-    ApartmentOutlined,
-    Html5Outlined,
-  } from '@vicons/antd';
-  import { LogoVue, LogoAngular, LogoReact, LogoJavascript } from '@vicons/ionicons5';
+import schoolboy from "@/assets/images/schoolboy.png";
+import {
+  ApartmentOutlined,
+  DashboardOutlined,
+  FileProtectOutlined,
+  GithubOutlined,
+  Html5Outlined,
+  ProfileOutlined,
+  SettingOutlined
+} from "@vicons/antd";
+import { LogoAngular, LogoJavascript, LogoReact, LogoVue } from "@vicons/ionicons5";
 </script>
 
 <style lang="less" scoped>
-  .project-card {
-    margin-right: -6px;
+.project-card {
+  margin-right: -6px;
 
-    &-item {
-      margin: -1px;
-      width: 33.333333%;
-    }
+  &-item {
+    margin: -1px;
+    width: 33.333333%;
   }
+}
 </style>
