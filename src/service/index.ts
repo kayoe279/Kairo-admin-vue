@@ -101,7 +101,7 @@ export const Alova = createAlova({
           content: "登录身份已失效，请重新登录!",
           closable: false,
           maskClosable: false,
-          onOk: async () => {
+          onPositiveClick: async () => {
             local.clear();
             window.location.href = LoginPath;
           }

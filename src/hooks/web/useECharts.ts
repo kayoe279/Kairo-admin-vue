@@ -16,7 +16,7 @@ export function useECharts(
   const themeStore = useThemeSettingStore();
 
   const getDarkTheme = computed(() => {
-    const sysTheme = themeStore.theme;
+    const sysTheme = themeStore.system;
     return theme === "default" ? sysTheme : theme;
   });
 

@@ -40,6 +40,7 @@ declare global {
   }
 
   type Recordable = Record<string, any>;
+  type Fn = (...args: any[]) => any;
 }
 
 export {};

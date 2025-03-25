@@ -44,6 +44,6 @@ export type EditRecordRow<T = Recordable> = Partial<
     submitCbs: Fn[];
     cancelCbs: Fn[];
     validCbs: Fn[];
-    editValueRefs: Recordable<Ref>;
+    editValueRefs: Record<string, Ref>;
   } & T
 >;

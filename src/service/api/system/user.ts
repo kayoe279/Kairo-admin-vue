@@ -4,7 +4,7 @@ import { Alova } from "@/service";
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return Alova.Get<InResult>("/admin_info", {
+  return Alova.Get("/admin_info", {
     meta: {
       isReturnNativeResponse: true
     }
@@ -15,7 +15,7 @@ export function getUserInfo() {
  * @description: 用户登录
  */
 export function login(params) {
-  return Alova.Post<InResult>(
+  return Alova.Post(
     "/login",
     {
       params
