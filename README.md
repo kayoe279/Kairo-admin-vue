@@ -86,20 +86,20 @@ git clone https://github.com/jekip/naive-ui-admin.git
 ```bash
 cd naive-ui-admin
 
-pnpm install
+bun install
 
 ```
 
 - 运行
 
 ```bash
-pnpm run dev
+bun run dev
 ```
 
 - 打包
 
 ```bash
-pnpm build
+bun build
 ```
 
 ## 📜 更新日志

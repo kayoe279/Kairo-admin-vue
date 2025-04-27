@@ -9,15 +9,15 @@
   "private": true,
   "engines": {
     "node": "22.x",
-    "pnpm": ">=8.7.0"
+    "bun": ">=1.2.8"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "bun@1.2.8",
   "scripts": {
     "dev": "vite",
     "build": "vite build && esno ./build/script/postBuild.ts",
-    "build:no-cache": "pnpm clean:cache && pnpm run build",
-    "report": "cross-env REPORT=true pnpm run build",
-    "preview": "pnpm run build && vite preview",
+    "build:no-cache": "bun clean:cache && bun run build",
+    "report": "cross-env REPORT=true bun run build",
+    "preview": "bun run build && vite preview",
     "preview:dist": "vite preview",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
     "clean:lib": "rimraf node_modules",
