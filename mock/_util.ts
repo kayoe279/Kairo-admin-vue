@@ -1,11 +1,11 @@
-import Mock from 'mockjs';
+import Mock from "mockjs";
 
-export function resultSuccess(result, { message = 'ok' } = {}) {
+export function resultSuccess(data, { message = "ok" } = {}) {
   return Mock.mock({
     code: 200,
-    result,
+    data,
     message,
-    type: 'success',
+    type: "success"
   });
 }
 
@@ -13,7 +13,7 @@ export function resultPageSuccess<T = any>(
   page: number,
   pageSize: number,
   list: T[],
-  { message = 'ok' } = {}
+  { message = "ok" } = {}
 ) {
   const pageData = pagination(page, pageSize, list);
 
@@ -22,18 +22,18 @@ export function resultPageSuccess<T = any>(
       page,
       pageSize,
       pageCount: list.length,
-      list: pageData,
+      list: pageData
     }),
-    message,
+    message
   };
 }
 
-export function resultError(message = 'Request failed', { code = -1, result = null } = {}) {
+export function resultError(message = "Request failed", { code = -1, result = null } = {}) {
   return {
     code,
     result,
     message,
-    type: 'error',
+    type: "error"
   };
 }
 

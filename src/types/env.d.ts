@@ -35,6 +35,8 @@ interface ImportMetaEnv {
   readonly MODE: ServiceEnvType;
   /** API 地址 */
   readonly VITE_API_ENDPOINT: string;
+  /** mock API 地址 */
+  readonly VITE_MOCK_API_ENDPOINT: string;
   /** 路由加载模式 */
   readonly VITE_ROUTER_LOAD_MODE: "static" | "dynamic";
   /** 缓存过期时间 */

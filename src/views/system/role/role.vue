@@ -68,7 +68,7 @@
 import CreateModal from "./CreateModal.vue";
 import EditModal from "./EditModal.vue";
 import { columns } from "./columns";
-import { BasicTable, TableAction } from "@/components/Table";
+import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getTreeAll } from "@/lib/utils";
 import { getMenuList } from "@/service/api/system/menu";
 import type { ListDate } from "@/service/api/system/menu";

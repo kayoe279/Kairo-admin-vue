@@ -1,4 +1,4 @@
-import type { BasicColumn } from "@/components/Table";
+import type { BasicColumn } from "@/components/molecules/Table";
 import { NAvatar, NTag } from "naive-ui";
 import { h } from "vue";
 

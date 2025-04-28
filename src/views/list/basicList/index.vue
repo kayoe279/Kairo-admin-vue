@@ -70,9 +70,9 @@
 <script lang="ts" setup>
 import type { ListData } from "./columns";
 import { columns } from "./columns";
-import type { FormSchema } from "@/components/Form/index";
-import { BasicForm, useForm } from "@/components/Form/index";
-import { BasicTable, TableAction } from "@/components/Table";
+import type { FormSchema } from "@/components/molecules/Form/index";
+import { BasicForm, useForm } from "@/components/molecules/Form/index";
+import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getTableList } from "@/service/api/table/list";
 import { PlusOutlined } from "@vicons/antd";
 import { type FormRules } from "naive-ui";

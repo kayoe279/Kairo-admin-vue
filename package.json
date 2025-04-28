@@ -29,7 +29,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@alova/mock": "^2.0.11",
+    "@alova/mock": "^2.0.14",
     "@better-scroll/core": "^2.5.1",
     "@simonwep/pickr": "^1.9.1",
     "@tailwindcss/vite": "^4.0.4",
@@ -37,7 +37,8 @@
     "@vicons/ionicons5": "^0.13.0",
     "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^12.5.0",
-    "alova": "^3.2.8",
+    "@vueuse/router": "^13.1.0",
+    "alova": "^3.2.10",
     "chalk": "^5.4.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

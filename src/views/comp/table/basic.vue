@@ -1,22 +1,12 @@
 <template>
-  <n-card :bordered="false" class="proCard">
-    <BasicTable
-      title="表格列表"
-      titleTooltip="这是一个提示"
-      :columns="columns"
-      :request="loadDataTable"
-      :row-key="(row) => row.id"
-      ref="actionRef"
-      :actionColumn="actionColumn"
-      :scroll-x="1360"
-      @update:checked-row-keys="onCheckedRow"
-    />
-  </n-card>
+  <div>
+    <UserTable />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { columns } from "./basicColumns";
-import { BasicTable, TableAction } from "@/components/Table";
+import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getTableList } from "@/service/api/table/list";
 import { DeleteOutlined, EditOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";

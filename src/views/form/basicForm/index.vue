@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicUpload } from "@/components/Upload";
+import { BasicUpload } from "@/components/molecules/Upload";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
 import { useMessage } from "naive-ui";
 import { reactive, ref, unref } from "vue";

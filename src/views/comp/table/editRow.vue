@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { columns } from "./rowColumns";
-import { BasicTable, TableAction } from "@/components/Table";
+import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getTableList } from "@/service/api/table/list";
 import { h, reactive, ref } from "vue";
 

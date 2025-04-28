@@ -55,9 +55,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormSchema } from "@/components/Form/index";
-import { BasicForm, useForm } from "@/components/Form/index";
-import { useModal } from "@/components/Modal";
+import type { FormSchema } from "@/components/molecules/Form/index";
+import { BasicForm, useForm } from "@/components/molecules/Form/index";
+import { useModal } from "@/components/molecules/Modal";
 import { useMessage } from "naive-ui";
 import { ref } from "vue";
 

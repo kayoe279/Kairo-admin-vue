@@ -20,8 +20,12 @@ export const refreshToken = (data: any) => {
   return method;
 };
 
-export function getUserRoutes(params: { id: number }) {
-  return request.Get<Service.ResponseResult<AppRoute.DynamicRouteRecordRaw[]>>("/getUserRoutes", {
-    params
-  });
-}
+export const getUserRoutes = async (params: { id: number }) => {
+  const res = await request.Get<Service.ResponseResult<AppRoute.DynamicRouteRecordRaw[]>>(
+    "/getUserRoutes",
+    {
+      params
+    }
+  );
+  return res;
+};

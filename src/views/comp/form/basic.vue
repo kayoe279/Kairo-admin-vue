@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormSchema } from "@/components/Form/index";
-import { BasicForm } from "@/components/Form/index";
+import type { FormSchema } from "@/components/molecules/Form/index";
+import { BasicForm } from "@/components/molecules/Form/index";
 import { useMessage } from "naive-ui";
 
 const schemas: FormSchema[] = [

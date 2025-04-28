@@ -115,11 +115,10 @@ export const Alova = createAlova({
   }
 });
 
-// 项目，多个不同 api 地址，可导出多个实例
-// export const AlovaTwo = createAlova({
-//   baseURL: 'http://localhost:9001',
-// });
-
 export const request = createAlovaInstance({
   baseURL: import.meta.env.VITE_API_ENDPOINT
+});
+
+export const mockRequest = createAlovaInstance({
+  baseURL: import.meta.env.VITE_MOCK_API_ENDPOINT
 });

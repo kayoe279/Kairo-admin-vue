@@ -5,11 +5,37 @@ import {
   handleResponseError,
   handleServiceResult
 } from "./handle";
+import mocks from "./mocks";
 import { getUserToken } from "@/lib/cookie";
+import { getAppEnvConfig } from "@/lib/env";
+import { createAlovaMockAdapter } from "@alova/mock";
 import { createAlova } from "alova";
 import { createServerTokenAuthentication } from "alova/client";
 import adapterFetch from "alova/fetch";
 import VueHook, { type VueHookType } from "alova/vue";
+
+const { VITE_USE_MOCK, VITE_LOGGER_MOCK } = getAppEnvConfig();
+
+const mockAdapter = createAlovaMockAdapter([...mocks], {
+  // 全局控制是否启用mock接口，默认为true
+  enable: VITE_USE_MOCK,
+
+  // 非模拟请求适配器，用于未匹配mock接口时发送请求
+  httpAdapter: adapterFetch(),
+
+  // mock接口响应延迟，单位毫秒
+  delay: 1000,
+
+  // 自定义打印mock接口请求信息
+  // mockRequestLogger: (res) => {
+  //   loggerMock && console.log(`Mock Request ${res.url}`, res);
+  // },
+  mockRequestLogger: VITE_LOGGER_MOCK,
+  onMockError(error, currentMethod) {
+    console.error("🚀 ~ onMockError ~ currentMethod:", currentMethod);
+    console.error("🚀 ~ onMockError ~ error:", error);
+  }
+});
 
 const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthentication<VueHookType>({
   // 服务端判定token过期
@@ -41,15 +67,17 @@ export function createAlovaInstance(
   alovaConfig: Service.AlovaConfig,
   backendConfig?: Service.BackendConfig
 ) {
-  const _backendConfig = { ...DEFAULT_BACKEND_OPTIONS, ...backendConfig };
   const _alovaConfig = { ...DEFAULT_ALOVA_OPTIONS, ...alovaConfig };
+  const _backendConfig = { ...DEFAULT_BACKEND_OPTIONS, ...backendConfig };
 
   return createAlova({
-    statesHook: VueHook,
-    requestAdapter: adapterFetch(),
-    cacheFor: null,
+    ...alovaConfig,
     baseURL: _alovaConfig.baseURL,
+    statesHook: VueHook,
+    cacheFor: null,
+    requestAdapter: mockAdapter,
     timeout: _alovaConfig.timeout,
+    cacheLogger: process.env.NODE_ENV === "development",
 
     beforeRequest: onAuthRequired((method) => {
       if (method.meta?.isFormPost) {
@@ -68,7 +96,7 @@ export function createAlovaInstance(
           if (method.meta?.isBlob) return response.blob();
 
           // 返回json数据
-          const apiData = await response.json();
+          const apiData = (response.json && (await response.json())) || response.body;
           // 请求成功
           if (apiData[_backendConfig.codeKey] === _backendConfig.successCode) {
             return handleServiceResult(apiData);

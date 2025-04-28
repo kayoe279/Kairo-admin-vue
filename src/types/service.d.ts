@@ -34,6 +34,11 @@ declare namespace Service {
     data?: any;
   }
 
+  interface RequestParams {
+    page: number;
+    pageSize: number;
+  }
+
   interface ResponseResult<T> extends RequestError {
     /** 请求服务是否成功 */
     isSuccess: boolean;

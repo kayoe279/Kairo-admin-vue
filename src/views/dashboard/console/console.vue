@@ -225,7 +225,7 @@
 </template>
 <script lang="ts" setup>
 import VisiTab from "./components/VisiTab.vue";
-import { CountTo } from "@/components/CountTo/index";
+import { CountTo } from "@/components/molecules/CountTo/index";
 import { getConsoleInfo } from "@/service/api/dashboard/console";
 import {
   AccountBookOutlined,

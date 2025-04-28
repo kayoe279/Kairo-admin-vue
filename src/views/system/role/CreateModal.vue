@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormSchema } from "@/components/Form";
-import { useForm } from "@/components/Form";
 import { useModal } from "@/components/Modal";
+import type { FormSchema } from "@/components/molecules/Form";
+import { useForm } from "@@/components/modules/Modals/Form";
 
 const schemas: FormSchema[] = [
   {
