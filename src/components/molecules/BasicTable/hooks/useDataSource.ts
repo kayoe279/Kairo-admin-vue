@@ -1,8 +1,7 @@
-import type { BasicTableProps } from "../types/table";
-import { isFunction } from "@/lib/utils";
+import type { BasicTableProps } from "../props";
 import { computed, ref, unref } from "vue";
 
-export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
+export function useDataSource(props: BasicTableProps, { emit }) {
   const dataSourceRef = ref<any[]>([]);
 
   // 获取行 key
@@ -35,34 +34,29 @@ export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
   }
 
   // 重新加载数据
-  async function reload(opt?: any) {
+  async function reload() {
     try {
-      const { request, beforeRequest, afterRequest } = props;
-      if (!request) return;
-
-      setLoading(true);
-      let params = { ...opt };
-      if (beforeRequest && isFunction(beforeRequest)) {
-        params = (await beforeRequest(params)) || params;
-      }
-
-      const res = await request(params);
-      let resultInfo = res.data || [];
-      if (afterRequest && isFunction(afterRequest)) {
-        resultInfo = (await afterRequest(resultInfo)) || resultInfo;
-      }
-
-      dataSourceRef.value = resultInfo;
-      emit("fetch-success", {
-        items: unref(resultInfo),
-        resultTotal: res.total
-      });
+      // const { request, beforeRequest, afterRequest } = props;
+      // if (!request) return;
+      // let params = { ...opt };
+      // if (beforeRequest && isFunction(beforeRequest)) {
+      //   params = (await beforeRequest(params)) || params;
+      // }
+      // const res = await request(params);
+      // let resultInfo = res.data || [];
+      // if (afterRequest && isFunction(afterRequest)) {
+      //   resultInfo = (await afterRequest(resultInfo)) || resultInfo;
+      // }
+      // dataSourceRef.value = resultInfo;
+      // emit("fetch-success", {
+      //   items: unref(resultInfo),
+      //   resultTotal: res.total
+      // });
     } catch (error) {
       console.error(error);
       emit("fetch-error", error);
       dataSourceRef.value = [];
     } finally {
-      setLoading(false);
     }
   }
 

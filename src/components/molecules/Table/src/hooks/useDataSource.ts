@@ -17,7 +17,7 @@ export function useDataSource(
   });
 
   watch(
-    () => unref(propsRef).dataSource,
+    () => unref(propsRef as any).dataSource,
     () => {
       const { dataSource }: any = unref(propsRef);
       dataSource && (dataSourceRef.value = dataSource);

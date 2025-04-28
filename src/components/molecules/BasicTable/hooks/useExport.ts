@@ -1,4 +1,4 @@
-import type { BasicColumn } from "../types/table";
+import type { BasicColumn } from "../props";
 import { ref } from "vue";
 
 export function useExport() {

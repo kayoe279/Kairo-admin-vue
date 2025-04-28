@@ -85,13 +85,13 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   watch(
     () => unref(propsRef).columns,
     (columns) => {
-      columnsRef.value = columns;
+      columnsRef.value = columns as BasicColumn[];
       cacheColumns = columns;
     }
   );
 
   function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
-    const { actionColumn } = unref(propsRef);
+    const { actionColumn } = unref(propsRef) as any;
     if (!actionColumn) return;
     !columns.find((col) => col.key === "action") &&
       columns.push({
@@ -108,13 +108,13 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       columnsRef.value = [];
       return;
     }
-    const cacheKeys = cacheColumns.map((item) => item.key);
+    const cacheKeys = cacheColumns?.map((item) => item.key) || [];
     //针对拖拽排序
     if (!isString(columns[0])) {
       columnsRef.value = columns;
     } else {
       const newColumns: any[] = [];
-      cacheColumns.forEach((item) => {
+      cacheColumns?.forEach((item) => {
         if (columnList.includes(item.key)) {
           newColumns.push({ ...item });
         }
@@ -138,7 +138,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
 
   //获取原始
   function getCacheColumns(isKey?: boolean): any[] {
-    return isKey ? cacheColumns.map((item) => item.key) : cacheColumns;
+    return isKey ? cacheColumns?.map((item) => item.key) || [] : cacheColumns || [];
   }
 
   //更新原始数据单个字段
@@ -146,7 +146,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     if (!key || !value) {
       return;
     }
-    cacheColumns.forEach((item) => {
+    cacheColumns?.forEach((item) => {
       if (item.key === key) {
         Object.assign(item, value);
         return;

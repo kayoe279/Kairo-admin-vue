@@ -1,5 +1,5 @@
 import { NDataTable } from "naive-ui";
-import type { DataTableColumn, DataTableRowKey, PaginationInfo } from "naive-ui";
+import type { DataTableColumn, PaginationInfo } from "naive-ui";
 import type {
   CreateRowKey,
   InternalRowData,

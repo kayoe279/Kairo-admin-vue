@@ -1,7 +1,6 @@
-import type { BasicTableProps } from "../types/table";
 import { ref, unref } from "vue";
 
-export function useLoading(props: BasicTableProps) {
+export function useLoading() {
   const loadingRef = ref(false);
 
   // 获取加载状态
