@@ -1,5 +1,5 @@
-import { ref, unref } from 'vue';
 import type { BasicTableProps } from "../types/table";
+import { ref, unref } from "vue";
 
 export function useLoading(props: BasicTableProps) {
   const loadingRef = ref(false);
@@ -18,4 +18,4 @@ export function useLoading(props: BasicTableProps) {
     getLoading,
     setLoading
   };
-} 
+}

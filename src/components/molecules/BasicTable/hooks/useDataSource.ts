@@ -1,6 +1,6 @@
-import { computed, ref, unref } from 'vue';
-import type { BasicTableProps } from '../types/table';
-import { isFunction } from '@/lib/utils';
+import type { BasicTableProps } from "../types/table";
+import { isFunction } from "@/lib/utils";
+import { computed, ref, unref } from "vue";
 
 export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
   const dataSourceRef = ref<any[]>([]);
@@ -11,7 +11,7 @@ export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
     return rowKey
       ? rowKey
       : () => {
-          return 'key';
+          return "key";
         };
   });
 
@@ -53,13 +53,13 @@ export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
       }
 
       dataSourceRef.value = resultInfo;
-      emit('fetch-success', {
+      emit("fetch-success", {
         items: unref(resultInfo),
         resultTotal: res.total
       });
     } catch (error) {
       console.error(error);
-      emit('fetch-error', error);
+      emit("fetch-error", error);
       dataSourceRef.value = [];
     } finally {
       setLoading(false);
@@ -73,4 +73,4 @@ export function useDataSource(props: BasicTableProps, { emit, tableRef }) {
     setTableData,
     reload
   };
-} 
+}

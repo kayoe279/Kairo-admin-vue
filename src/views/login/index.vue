@@ -55,7 +55,7 @@ const handleSubmit = (e: MouseEvent) => {
 <template>
   <div class="loginContainer flex h-screen w-screen items-center justify-center">
     <div
-      class="text-foreground bg-background relative flex w-[88%] flex-col items-center justify-center rounded-2xl p-6 inset-shadow-2xs shadow-lg sm:w-[424px]"
+      class="text-foreground bg-background relative flex w-[88%] flex-col items-center justify-center rounded-2xl p-6 shadow-lg inset-shadow-2xs sm:w-[424px]"
     >
       <div class="bg-primary/80 absolute -top-24 left-17 h-24 w-48 rounded-t-full" />
       <div class="bg-primary/80 absolute top-0 left-65 h-12 w-24 rounded-b-full" />

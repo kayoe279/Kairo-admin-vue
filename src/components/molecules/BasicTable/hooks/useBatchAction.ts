@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref } from "vue";
 
 export function useBatchAction() {
   const selectedRowKeys = ref<string[]>([]);
@@ -25,7 +25,7 @@ export function useBatchAction() {
       await deleteFn(selectedRowKeys.value);
       clearSelection();
     } catch (error) {
-      console.error('批量删除失败:', error);
+      console.error("批量删除失败:", error);
     }
   }
 
@@ -41,7 +41,7 @@ export function useBatchAction() {
       await updateFn(selectedRowKeys.value, status);
       clearSelection();
     } catch (error) {
-      console.error('批量更新状态失败:', error);
+      console.error("批量更新状态失败:", error);
     }
   }
 
@@ -53,4 +53,4 @@ export function useBatchAction() {
     batchDelete,
     batchUpdateStatus
   };
-} 
+}

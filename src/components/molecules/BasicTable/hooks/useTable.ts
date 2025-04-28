@@ -1,8 +1,8 @@
-import { computed, unref } from 'vue';
-import type { BasicTableProps } from '../types/table';
-import { useDataSource } from './useDataSource';
-import { usePagination } from './usePagination';
-import { useLoading } from './useLoading';
+import type { BasicTableProps } from "../types/table";
+import { useDataSource } from "./useDataSource";
+import { useLoading } from "./useLoading";
+import { usePagination } from "./usePagination";
+import { computed, unref } from "vue";
 
 export function useTable(props: BasicTableProps, { emit, tableRef }) {
   const { getDataSourceRef, getDataSource, getRowKey, reload } = useDataSource(props, {
@@ -32,4 +32,4 @@ export function useTable(props: BasicTableProps, { emit, tableRef }) {
     reload,
     setLoading
   };
-} 
+}
