@@ -17,6 +17,10 @@ export const basicProps = {
     type: String,
     default: "medium"
   },
+  showSize: {
+    type: Boolean,
+    default: true
+  },
   dataSource: {
     type: [Object],
     default: () => []
@@ -43,8 +47,13 @@ export const basicProps = {
     default: undefined
   },
   pagination: {
-    type: [Object, Boolean],
-    default: () => {}
+    type: [Object, false],
+    default: () => ({
+      pageSize: 10,
+      page: 1,
+      pageCount: 1,
+      itemCount: 10
+    })
   },
   //废弃
   showPagination: {

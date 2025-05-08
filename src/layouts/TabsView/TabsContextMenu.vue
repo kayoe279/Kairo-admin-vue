@@ -31,8 +31,6 @@ const props = withDefaults(defineProps<Props>(), {
   disabledKeys: () => []
 });
 
-defineSlots<{ default(): any }>();
-
 const visible = defineModel<boolean>("visible");
 
 const route = useRoute();

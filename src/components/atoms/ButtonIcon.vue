@@ -28,8 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 98,
   hideTooltip: false
 });
-
-defineSlots<{ default(): any }>();
 </script>
 
 <template>

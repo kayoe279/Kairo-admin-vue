@@ -67,6 +67,7 @@ export interface BasicTableProps {
   scrollbarProps?: Record<string, any>;
   singleColumn?: boolean;
   singleLine?: boolean;
+  showSize?: boolean;
   size?: "small" | "medium" | "large";
   spinProps?: { strokeWidth?: number; stroke?: string };
   stickyExpandedRows?: boolean;

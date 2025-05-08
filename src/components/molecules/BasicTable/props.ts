@@ -1,5 +1,5 @@
 import { NDataTable } from "naive-ui";
-import type { DataTableColumn, PaginationInfo } from "naive-ui";
+import type { DataTableColumn, PaginationProps } from "naive-ui";
 import type {
   CreateRowKey,
   InternalRowData,
@@ -23,7 +23,30 @@ export type ComponentType =
   | "NImageUpload"
   | "NEditor";
 
-export interface BasicTableProps {
+interface CustomTableProps {
+  /** 标题 */
+  title?: string;
+
+  /** 标题提示 */
+  titleTooltip?: string;
+
+  /** 是否显示size选择 */
+  showSize?: boolean;
+
+  /** 分页查询前缀 */
+  queryPrefix?: string;
+
+  /** 总条数 */
+  total?: number;
+
+  /** 调整高度偏移 */
+  resizeHeightOffset?: number;
+
+  /** 最大高度 */
+  maxHeight?: number;
+}
+
+export interface BasicTableProps extends CustomTableProps {
   /** 表格数据 */
   data?: Array<Record<string, any>>;
 
@@ -31,13 +54,7 @@ export interface BasicTableProps {
   columns: DataTableColumn[];
 
   /** 分页配置 */
-  pagination?: false | PaginationInfo;
-
-  /** 分页查询前缀 */
-  queryPrefix?: string;
-
-  /** 总条数 */
-  total?: number;
+  pagination?: PaginationProps;
 
   /** 边框 */
   bordered?: boolean;
@@ -47,6 +64,9 @@ export interface BasicTableProps {
 
   /** 是否加载中 */
   loading?: boolean;
+
+  /** 表格大小 */
+  size?: "small" | "medium" | "large";
 
   /** 行是否可选 */
   rowKey?: CreateRowKey<any>;
@@ -82,6 +102,13 @@ export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
 }
 
 export type Recordable<T = any> = Record<string, T>;
+
+export interface TableActionType {
+  // reload: (opt) => Promise<void>;
+  emit?: any;
+  getColumns: (opt?) => BasicColumn[];
+  setColumns: (columns: BasicColumn[] | string[]) => void;
+}
 
 export const basicProps = {
   ...NDataTable.props,

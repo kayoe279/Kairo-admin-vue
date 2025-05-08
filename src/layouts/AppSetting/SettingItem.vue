@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 defineProps<{ title: string }>();
-defineSlots<{ default: () => any }>();
 </script>
 
 <template>

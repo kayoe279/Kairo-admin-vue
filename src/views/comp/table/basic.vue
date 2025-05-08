@@ -1,7 +1,17 @@
 <template>
-  <div>
-    <UserTable />
-  </div>
+  <n-card :bordered="false" class="proCard">
+    <BasicTable
+      title="表格列表"
+      titleTooltip="这是一个提示"
+      :columns="columns"
+      :request="loadDataTable"
+      :row-key="(row) => row.id"
+      ref="actionRef"
+      :actionColumn="actionColumn"
+      :scroll-x="1360"
+      @update:checked-row-keys="onCheckedRow"
+    />
+  </n-card>
 </template>
 
 <script lang="ts" setup>

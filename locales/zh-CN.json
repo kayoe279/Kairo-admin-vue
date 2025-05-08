@@ -2,6 +2,7 @@
   "common": {
     "confirm": "确认",
     "cancel": "取消",
+    "reset": "重置",
     "reload": "刷新",
     "close": "关闭",
     "choose": "选择",
@@ -152,5 +153,17 @@
     "directive-index": "指令示例",
     "about": "关于",
     "about-index": "关于项目"
+  },
+  "table": {
+    "density": "密度",
+    "size": {
+      "small": "紧凑",
+      "medium": "默认",
+      "large": "宽松"
+    },
+    "columnSetting": "列设置",
+    "selection": "勾选列",
+    "fixLeft": "固定到左侧",
+    "fixRight": "固定到右侧"
   }
 }

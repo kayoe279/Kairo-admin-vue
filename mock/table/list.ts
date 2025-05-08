@@ -25,7 +25,7 @@ function tableList(pageSize: number) {
 export default defineMock({
   // 表格数据列表
   "/api/table/list": ({ query }) => {
-    const { page = 1, pageSize = 10, name } = query;
+    const { page = 1, pageSize = 20, name } = query;
     const list = tableList(Number(pageSize));
     // 并非真实，只是为了模拟搜索结果
     const count = name ? 30 : 60;

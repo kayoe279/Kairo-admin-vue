@@ -1,76 +1,59 @@
 <template>
-  <div class="table-toolbar">
-    <!--顶部左侧区域-->
-    <div class="table-toolbar-left flex items-center">
-      <template v-if="props.title">
-        <div class="table-toolbar-left-title">
-          {{ props.title }}
-          <n-tooltip trigger="hover" v-if="props.titleTooltip">
-            <template #trigger>
-              <n-icon size="18" class="ml-1 cursor-pointer text-gray-400">
-                <QuestionCircleOutlined />
-              </n-icon>
-            </template>
-            {{ props.titleTooltip }}
-          </n-tooltip>
-        </div>
-      </template>
-      <slot name="tableTitle"></slot>
-    </div>
+  <div class="space-y-4">
+    <div class="flex items-center justify-between gap-5">
+      <!--顶部左侧区域-->
+      <div v-if="props.title || slots.tableTitle" class="flex items-center text-base font-bold">
+        <span v-if="props.title"> {{ props.title }} </span>
+        <slot v-else name="tableTitle"></slot>
+        <n-tooltip v-if="props.titleTooltip" trigger="hover">
+          <template #trigger>
+            <button type="button" class="ml-1">
+              <SvgIcon icon="solar:question-circle-broken" class="text-foreground text-base" />
+            </button>
+          </template>
+          {{ props.titleTooltip }}
+        </n-tooltip>
+      </div>
 
-    <div class="table-toolbar-right flex items-center leading-none">
-      <!--顶部右侧区域-->
-      <slot name="toolbar"></slot>
+      <div class="flex items-center gap-3">
+        <!--顶部右侧区域-->
+        <slot name="toolbar"></slot>
 
-      <!--斑马纹-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon mr-2">
+        <!--斑马纹-->
+        <n-tooltip trigger="hover">
+          <template #trigger>
             <n-switch v-model:value="isStriped" @update:value="setStriped" />
-          </div>
-        </template>
-        <span>表格斑马纹</span>
-      </n-tooltip>
-      <n-divider vertical />
+          </template>
+          <span>表格斑马纹</span>
+        </n-tooltip>
 
-      <!--刷新-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon" @click="reload">
-            <n-icon size="18">
-              <ReloadOutlined />
-            </n-icon>
-          </div>
-        </template>
-        <span>刷新</span>
-      </n-tooltip>
+        <n-divider vertical />
 
-      <!--密度-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon">
-            <n-dropdown
-              @select="densitySelect"
-              trigger="click"
-              :options="densityOptions"
-              v-model:value="tableSize"
-            >
-              <n-icon size="18">
-                <ColumnHeightOutlined />
-              </n-icon>
-            </n-dropdown>
-          </div>
-        </template>
-        <span>密度</span>
-      </n-tooltip>
+        <!--刷新-->
+        <n-tooltip trigger="hover">
+          <template #trigger>
+            <button type="button" @click="reload">
+              <SvgIcon icon="ep:refresh-right" class="text-foreground text-[19px]" />
+            </button>
+          </template>
+          <span>刷新</span>
+        </n-tooltip>
 
-      <!--表格设置单独抽离成组件-->
-      <ColumnSetting />
+        <!--密度-->
+        <n-tooltip trigger="hover" v-if="props.showSize">
+          <template #trigger>
+            <TableDensity v-model="tableSize" />
+          </template>
+          <span>{{ $t("table.density") }}</span>
+        </n-tooltip>
+
+        <!--表格设置单独抽离成组件-->
+        <!-- <ColumnSetting /> -->
+      </div>
     </div>
-  </div>
-  <div class="s-table">
+
     <n-data-table
-      ref="tableElRef"
+      ref="tableRef"
       v-bind="getBindValues"
       :striped="isStriped"
       :pagination="pagination"
@@ -97,25 +80,27 @@ import { useWindowSizeFn } from "@/hooks/event/useWindowSizeFn";
 import { getViewportOffset } from "@/lib/utils/dom";
 import { isBoolean } from "@/lib/utils/is";
 import { ColumnHeightOutlined, QuestionCircleOutlined, ReloadOutlined } from "@vicons/antd";
-import { computed, nextTick, onMounted, ref, toRaw, unref } from "vue";
+import { useDebounceFn, useElementBounding, useEventListener, useWindowSize } from "@vueuse/core";
+import { DataTableInst } from "naive-ui";
+import { computed, nextTick, onMounted, ref, toRaw, unref, useSlots } from "vue";
 
-const densityOptions = [
-  {
-    type: "menu",
-    label: "紧凑",
-    key: "small"
-  },
-  {
-    type: "menu",
-    label: "默认",
-    key: "medium"
-  },
-  {
-    type: "menu",
-    label: "宽松",
-    key: "large"
-  }
-];
+// const densityOptions = [
+//   {
+//     type: "menu",
+//     label: "紧凑",
+//     key: "small"
+//   },
+//   {
+//     type: "menu",
+//     label: "默认",
+//     key: "medium"
+//   },
+//   {
+//     type: "menu",
+//     label: "宽松",
+//     key: "large"
+//   }
+// ];
 
 const emit = defineEmits([
   "fetch-success",
@@ -127,20 +112,28 @@ const emit = defineEmits([
   "edit-change"
 ]);
 
+const slots = useSlots();
+
 const props = defineProps({ ...basicProps });
-const deviceHeight = ref(150);
-const tableElRef = ref<HTMLTableElement | null>(null);
 const wrapRef = ref<HTMLDivElement | null>(null);
-let paginationEl: HTMLElement | null;
+// let paginationEl: HTMLElement | null;
 const isStriped = ref(props.striped || false);
 const tableData = ref<Record<string, any>[]>([]);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
+
+const tableRef = ref<DataTableInst | null>(null);
+const deviceHeight = ref(150);
+const HEADER_HEIGHT = 64;
+const MARGIN_HEIGHT = 30;
+const DEFAULT_PAGINATION_HEIGHT = 30;
+
+const { height: windowHeight } = useWindowSize();
 
 const getProps = computed(() => {
   return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
 });
 
-const tableSize = ref(unref(getProps as any).size || "medium");
+const tableSize = ref(unref(getProps).size || "medium");
 
 const { getLoading, setLoading } = useLoading(getProps);
 
@@ -161,24 +154,24 @@ const { getPageColumns, setColumns, getColumns, getCacheColumns, setCacheColumns
   useColumns(getProps);
 
 //页码切换
-function updatePage(page) {
+const updatePage = (page: number) => {
   setPagination({ page: page });
   reload();
-}
+};
 
 //分页数量切换
-function updatePageSize(size) {
+const updatePageSize = (size: number) => {
   setPagination({ page: 1, pageSize: size });
   reload();
-}
+};
 
 //密度切换
-function densitySelect(e) {
-  tableSize.value = e;
-}
+// function densitySelect(e) {
+//   tableSize.value = e;
+// }
 
 //获取表格大小
-const getTableSize = computed(() => tableSize.value);
+// const getTableSize = computed(() => tableSize.value);
 
 //组装表格信息
 const getBindValues = computed(() => {
@@ -190,7 +183,7 @@ const getBindValues = computed(() => {
     columns: toRaw(unref(getPageColumns)),
     rowKey: unref(getRowKey),
     data: tableData,
-    size: unref(getTableSize),
+    size: tableSize.value,
     remote: true,
     "max-height": maxHeight,
     title: "" // 重置为空 避免绑定到 table 上面
@@ -219,38 +212,39 @@ const tableAction = {
   emit
 };
 
-const getCanResize = computed(() => {
-  const { canResize } = unref(getProps);
-  return canResize;
-});
+// const getCanResize = computed(() => {
+//   const { canResize } = unref(getProps);
+//   return canResize;
+// });
 
-async function computeTableHeight() {
-  const table = tableElRef.value;
+const computeTableHeight = async () => {
+  const table = tableRef.value;
   if (!table) return;
-  if (!unref(getCanResize)) return;
-  const tableEl = (table as any)?.$el;
-  const headEl = tableEl.querySelector(".n-data-table-thead ");
-  const { bottomIncludeBody } = getViewportOffset(headEl);
-  const headerH = 64;
-  let paginationH = 2;
-  const marginH = 24;
-  if (!isBoolean(unref(pagination))) {
-    paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
-    if (paginationEl) {
-      const offsetHeight = paginationEl.offsetHeight;
-      paginationH += offsetHeight || 0;
-    } else {
-      paginationH += 28;
-    }
-  }
-  let height =
-    bottomIncludeBody - (headerH + paginationH + marginH + (props.resizeHeightOffset || 0));
-  const maxHeight = props.maxHeight;
-  height = maxHeight && maxHeight < height ? maxHeight : height;
-  deviceHeight.value = height;
-}
 
-useWindowSizeFn(computeTableHeight, 280);
+  const tableEl = (table as any)?.$el;
+  const headEl = tableEl.querySelector(".n-data-table-thead") as HTMLElement;
+  const paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
+
+  const { top } = useElementBounding(headEl);
+  const bottomIncludeBody = windowHeight.value - top.value;
+
+  // 计算分页高度
+  const paginationHeight = paginationEl ? paginationEl.offsetHeight + 2 : DEFAULT_PAGINATION_HEIGHT;
+
+  // 计算总高度
+  const totalFixedHeight =
+    HEADER_HEIGHT + paginationHeight + MARGIN_HEIGHT + (props.resizeHeightOffset || 0);
+  let height = bottomIncludeBody - totalFixedHeight;
+
+  // 如果设置了最大高度，取较小值
+  if (props.maxHeight && props.maxHeight < height) {
+    height = props.maxHeight;
+  }
+
+  deviceHeight.value = height;
+};
+
+useEventListener(window, "resize", useDebounceFn(computeTableHeight, 280));
 
 onMounted(() => {
   nextTick(() => {
@@ -258,10 +252,45 @@ onMounted(() => {
   });
 });
 
+// async function computeTableHeight() {
+//   const table = tableElRef.value;
+//   if (!table) return;
+//   if (!unref(getCanResize)) return;
+//   const tableEl = (table as any)?.$el;
+//   const headEl = tableEl.querySelector(".n-data-table-thead ");
+//   const { bottomIncludeBody } = getViewportOffset(headEl);
+//   const headerH = 64;
+//   let paginationH = 2;
+//   const marginH = 24;
+//   if (!isBoolean(unref(pagination))) {
+//     paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
+//     if (paginationEl) {
+//       const offsetHeight = paginationEl.offsetHeight;
+//       paginationH += offsetHeight || 0;
+//     } else {
+//       paginationH += 28;
+//     }
+//   }
+//   let height =
+//     bottomIncludeBody - (headerH + paginationH + marginH + (props.resizeHeightOffset || 0));
+//   const maxHeight = props.maxHeight;
+//   height = maxHeight && maxHeight < height ? maxHeight : height;
+//   deviceHeight.value = height;
+// }
+
+// useWindowSizeFn(computeTableHeight, 280);
+
+// onMounted(() => {
+//   nextTick(() => {
+//     computeTableHeight();
+//   });
+// });
+
 createTableContext({ ...tableAction, wrapRef, getBindValues });
 
 defineExpose(tableAction);
 </script>
+
 <style scoped>
 .table-toolbar {
   display: flex;

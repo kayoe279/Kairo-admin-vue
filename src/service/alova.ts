@@ -74,7 +74,6 @@ export function createAlovaInstance(
     ...alovaConfig,
     baseURL: _alovaConfig.baseURL,
     statesHook: VueHook,
-    cacheFor: null,
     requestAdapter: mockAdapter,
     timeout: _alovaConfig.timeout,
     cacheLogger: process.env.NODE_ENV === "development",

@@ -89,7 +89,7 @@ const showSideDrawer = computed({
           <TabsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
         </n-layout-header>
 
-        <main class="px-4 pt-4" :style="mainStyles">
+        <main class="p-4" :style="mainStyles">
           <Main />
         </main>
 

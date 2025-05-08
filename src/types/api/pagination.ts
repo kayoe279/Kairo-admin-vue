@@ -5,5 +5,5 @@ export type Pagination = {
 };
 
 export type PaginationResponse<T> = Pagination & {
-  list: T[];
+  list: T;
 };
