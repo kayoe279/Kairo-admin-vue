@@ -1,4 +1,4 @@
-import type { BasicColumn } from "./types/table";
+import type { BasicColumn } from "./types/props";
 import { propTypes } from "@/lib/propTypes";
 import { NDataTable } from "naive-ui";
 import type { PropType } from "vue";
@@ -16,6 +16,10 @@ export const basicProps = {
   size: {
     type: String,
     default: "medium"
+  },
+  showSize: {
+    type: Boolean,
+    default: true
   },
   dataSource: {
     type: [Object],
@@ -43,8 +47,13 @@ export const basicProps = {
     default: undefined
   },
   pagination: {
-    type: [Object, Boolean],
-    default: () => {}
+    type: [Object, false],
+    default: () => ({
+      pageSize: 10,
+      page: 1,
+      pageCount: 1,
+      itemCount: 10
+    })
   },
   //废弃
   showPagination: {

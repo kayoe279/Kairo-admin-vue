@@ -2,6 +2,7 @@
   "common": {
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "reset": "Reset",
     "close": "Closure",
     "reload": "Refresh",
     "choose": "Choose",
@@ -152,5 +153,17 @@
     "directive-index": "Directive Examples",
     "about": "About",
     "about-index": "About Project"
+  },
+  "table": {
+    "density": "Density",
+    "size": {
+      "small": "Compact",
+      "medium": "Default",
+      "large": "Loose"
+    },
+    "columnSetting": "Column Setting",
+    "selection": "Selection Column",
+    "fixLeft": "Fix to Left",
+    "fixRight": "Fix to Right"
   }
 }

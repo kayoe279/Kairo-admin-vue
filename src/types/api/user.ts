@@ -1,7 +1,7 @@
 import type { PaginationResponse } from "./pagination";
 
 export interface UserListParams extends Service.RequestParams {
-  keyword: string;
+  keyword?: string;
 }
 
 export type User = {

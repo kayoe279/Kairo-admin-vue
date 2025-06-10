@@ -13,7 +13,7 @@ export const componentSetting = {
       countField: "itemCount"
     },
     //默认分页数量
-    defaultPageSize: 10,
+    defaultPageSize: 20,
     //可切换每页数量集合
     pageSizes: [10, 20, 30, 40, 50]
   },

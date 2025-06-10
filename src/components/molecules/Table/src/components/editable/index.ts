@@ -1,5 +1,5 @@
 import EditableCell from "./EditableCell.vue";
-import type { BasicColumn } from "@/components/molecules/Table/src/types/table";
+import type { BasicColumn } from "@/components/molecules/Table/src/types/props";
 import type { Ref } from "vue";
 import { h } from "vue";
 

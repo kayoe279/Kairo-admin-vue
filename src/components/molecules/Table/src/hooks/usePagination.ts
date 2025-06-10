@@ -1,62 +1,62 @@
-import { DEFAULTPAGESIZE, PAGESIZES } from "../const";
 import type { PaginationProps } from "../types/pagination";
-import type { BasicTableProps } from "../types/table";
-import { isBoolean } from "@/lib/utils/is";
-import type { ComputedRef } from "vue";
-import { computed, ref, unref, watch } from "vue";
+import type { BasicTableProps } from "../types/props";
+import { componentSetting } from "@/lib/settings/component";
+import { isBoolean } from "@/lib/utils";
+import { type ComputedRef, computed, ref, unref, watch } from "vue";
 
-export function usePagination(refProps: ComputedRef<BasicTableProps>) {
-  const configRef = ref<PaginationProps>({});
-  const show = ref(true);
+export function usePagination(tableProps: ComputedRef<BasicTableProps>) {
+  const { defaultPageSize, pageSizes } = componentSetting.table;
+
+  const showPagination = ref(true);
+  const paginationConfig = ref<PaginationProps>({
+    page: 1,
+    pageSize: defaultPageSize
+  });
 
   watch(
-    () => unref(refProps).pagination,
+    () => unref(tableProps).pagination,
     (pagination) => {
       if (!isBoolean(pagination) && pagination) {
-        configRef.value = {
-          ...unref(configRef),
+        paginationConfig.value = {
+          ...unref(paginationConfig),
           ...(pagination ?? {})
         };
       }
     }
   );
 
-  const getPaginationInfo = computed((): PaginationProps | boolean => {
-    const { pagination } = unref(refProps);
-    if (!unref(show) || (isBoolean(pagination) && !pagination)) {
-      return false;
+  const pagination = computed((): PaginationProps => {
+    const { pagination } = unref(tableProps);
+    if (
+      !unref(showPagination) ||
+      (isBoolean(pagination) && !pagination) ||
+      !tableProps.value?.showPagination
+    ) {
+      return {};
     }
+
     return {
       page: 1, //当前页
-      pageSize: DEFAULTPAGESIZE, //分页大小
-      pageSizes: PAGESIZES, // 每页条数
+      pageSize: defaultPageSize, //分页大小
+      pageSizes: pageSizes, // 每页条数
       showSizePicker: true,
       showQuickJumper: true,
-      prefix: (pagingInfo) => `共 ${pagingInfo.itemCount} 条`, // 不需要可以通过 pagination 重置或者删除
-      ...(isBoolean(pagination) ? {} : pagination),
-      ...unref(configRef)
+      prefix: ({ itemCount }) => `共 ${itemCount} 条`,
+      ...unref(paginationConfig)
     };
   });
 
-  function setPagination(info: Partial<PaginationProps>) {
-    const paginationInfo = unref(getPaginationInfo);
-    configRef.value = {
+  const setPagination = (info: Partial<PaginationProps>) => {
+    const paginationInfo = unref(pagination);
+    paginationConfig.value = {
       ...(!isBoolean(paginationInfo) ? paginationInfo : {}),
       ...info
     };
-  }
+  };
 
-  function getPagination() {
-    return unref(getPaginationInfo);
-  }
+  const setShowPagination = (flag: boolean) => {
+    showPagination.value = flag;
+  };
 
-  function getShowPagination() {
-    return unref(show);
-  }
-
-  async function setShowPagination(flag: boolean) {
-    show.value = flag;
-  }
-
-  return { getPagination, getPaginationInfo, setShowPagination, getShowPagination, setPagination };
+  return { pagination, setShowPagination, setPagination };
 }

@@ -1,4 +1,4 @@
-import { Alova } from "@/service";
+import { mockRequest } from "@/service";
 
 export interface TypeVisits {
   dayVisits: number;
@@ -31,5 +31,5 @@ export interface TypeConsole {
 
 //获取主控台信息
 export function getConsoleInfo() {
-  return Alova.Get<TypeConsole>("/dashboard/console");
+  return mockRequest.Get<TypeConsole>("/dashboard/console");
 }

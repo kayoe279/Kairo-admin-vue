@@ -1,10 +1,10 @@
-import { Alova } from "@/service";
+import { mockRequest } from "@/service";
 
 /**
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return Alova.Get("/admin_info", {
+  return mockRequest.Get("/admin_info", {
     meta: {
       isReturnNativeResponse: true
     }
@@ -15,7 +15,7 @@ export function getUserInfo() {
  * @description: 用户登录
  */
 export function login(params) {
-  return Alova.Post(
+  return mockRequest.Post(
     "/login",
     {
       params
@@ -32,14 +32,14 @@ export function login(params) {
  * @description: 用户修改密码
  */
 export function changePassword(params, uid) {
-  return Alova.Post(`/user/u${uid}/changepw`, { params });
+  return mockRequest.Post(`/user/u${uid}/changepw`, { params });
 }
 
 /**
  * @description: 用户登出
  */
 export function logout(params) {
-  return Alova.Post("/login/logout", {
+  return mockRequest.Post("/login/logout", {
     params
   });
 }

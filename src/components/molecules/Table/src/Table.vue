@@ -1,76 +1,59 @@
 <template>
-  <div class="table-toolbar">
-    <!--顶部左侧区域-->
-    <div class="table-toolbar-left flex items-center">
-      <template v-if="props.title">
-        <div class="table-toolbar-left-title">
-          {{ props.title }}
-          <n-tooltip trigger="hover" v-if="props.titleTooltip">
-            <template #trigger>
-              <n-icon size="18" class="ml-1 cursor-pointer text-gray-400">
-                <QuestionCircleOutlined />
-              </n-icon>
-            </template>
-            {{ props.titleTooltip }}
-          </n-tooltip>
-        </div>
-      </template>
-      <slot name="tableTitle"></slot>
-    </div>
+  <div class="space-y-4">
+    <div class="flex items-center justify-between gap-5">
+      <!--顶部左侧区域-->
+      <div v-if="props.title || slots.tableTitle" class="flex items-center text-base font-bold">
+        <span v-if="props.title"> {{ props.title }} </span>
+        <slot v-else name="tableTitle"></slot>
+        <n-tooltip v-if="props.titleTooltip" trigger="hover">
+          <template #trigger>
+            <button type="button" class="ml-1">
+              <SvgIcon icon="solar:question-circle-broken" class="text-foreground text-base" />
+            </button>
+          </template>
+          {{ props.titleTooltip }}
+        </n-tooltip>
+      </div>
 
-    <div class="table-toolbar-right flex items-center leading-none">
-      <!--顶部右侧区域-->
-      <slot name="toolbar"></slot>
+      <div class="flex items-center gap-3">
+        <!--顶部右侧区域-->
+        <slot name="toolbar"></slot>
 
-      <!--斑马纹-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon mr-2">
+        <!--斑马纹-->
+        <n-tooltip trigger="hover">
+          <template #trigger>
             <n-switch v-model:value="isStriped" @update:value="setStriped" />
-          </div>
-        </template>
-        <span>表格斑马纹</span>
-      </n-tooltip>
-      <n-divider vertical />
+          </template>
+          <span>表格斑马纹</span>
+        </n-tooltip>
 
-      <!--刷新-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon" @click="reload">
-            <n-icon size="18">
-              <ReloadOutlined />
-            </n-icon>
-          </div>
-        </template>
-        <span>刷新</span>
-      </n-tooltip>
+        <n-divider vertical />
 
-      <!--密度-->
-      <n-tooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon">
-            <n-dropdown
-              @select="densitySelect"
-              trigger="click"
-              :options="densityOptions"
-              v-model:value="tableSize"
-            >
-              <n-icon size="18">
-                <ColumnHeightOutlined />
-              </n-icon>
-            </n-dropdown>
-          </div>
-        </template>
-        <span>密度</span>
-      </n-tooltip>
+        <!--刷新-->
+        <n-tooltip trigger="hover">
+          <template #trigger>
+            <button type="button" @click="() => refetch(variables)">
+              <SvgIcon icon="ep:refresh-right" class="text-foreground text-[19px]" />
+            </button>
+          </template>
+          <span>刷新</span>
+        </n-tooltip>
 
-      <!--表格设置单独抽离成组件-->
-      <ColumnSetting />
+        <!--密度-->
+        <n-tooltip trigger="hover" v-if="props.showSize">
+          <template #trigger>
+            <TableDensity v-model="tableSize" />
+          </template>
+          <span>{{ $t("table.density") }}</span>
+        </n-tooltip>
+
+        <!--表格设置单独抽离成组件-->
+        <!-- <ColumnSetting /> -->
+      </div>
     </div>
-  </div>
-  <div class="s-table">
+
     <n-data-table
-      ref="tableElRef"
+      ref="tableRef"
       v-bind="getBindValues"
       :striped="isStriped"
       :pagination="pagination"
@@ -85,37 +68,16 @@
 </template>
 
 <script lang="ts" setup>
-import ColumnSetting from "./components/settings/ColumnSetting.vue";
+// import ColumnSetting from "./components/settings/ColumnSetting.vue";
 import { useColumns } from "./hooks/useColumns";
-import { useDataSource } from "./hooks/useDataSource";
-import { useLoading } from "./hooks/useLoading";
 import { usePagination } from "./hooks/usePagination";
 import { createTableContext } from "./hooks/useTableContext";
+import { useTableData } from "./hooks/useTableData";
 import { basicProps } from "./props";
-import type { BasicTableProps } from "./types/table";
-import { useWindowSizeFn } from "@/hooks/event/useWindowSizeFn";
-import { getViewportOffset } from "@/lib/utils/dom";
-import { isBoolean } from "@/lib/utils/is";
-import { ColumnHeightOutlined, QuestionCircleOutlined, ReloadOutlined } from "@vicons/antd";
-import { computed, nextTick, onMounted, ref, toRaw, unref } from "vue";
-
-const densityOptions = [
-  {
-    type: "menu",
-    label: "紧凑",
-    key: "small"
-  },
-  {
-    type: "menu",
-    label: "默认",
-    key: "medium"
-  },
-  {
-    type: "menu",
-    label: "宽松",
-    key: "large"
-  }
-];
+import type { BasicTableProps } from "./types/props";
+import { useDebounceFn, useElementBounding, useEventListener, useWindowSize } from "@vueuse/core";
+import { DataTableInst } from "naive-ui";
+import { computed, nextTick, onMounted, ref, toRaw, unref, useSlots } from "vue";
 
 const emit = defineEmits([
   "fetch-success",
@@ -127,130 +89,97 @@ const emit = defineEmits([
   "edit-change"
 ]);
 
-const props = defineProps({ ...basicProps });
-const deviceHeight = ref(150);
-const tableElRef = ref<HTMLTableElement | null>(null);
-const wrapRef = ref<HTMLDivElement | null>(null);
-let paginationEl: HTMLElement | null;
-const isStriped = ref(props.striped || false);
-const tableData = ref<Record<string, any>[]>([]);
-const innerPropsRef = ref<Partial<BasicTableProps>>();
+const slots = useSlots();
 
-const getProps = computed(() => {
+const props = defineProps({ ...basicProps });
+const isStriped = ref(props.striped || false);
+const wrapRef = ref<HTMLDivElement | null>(null);
+const innerPropsRef = ref<Partial<BasicTableProps>>();
+const tableRef = ref<DataTableInst | null>(null);
+
+const deviceHeight = ref(150);
+const HEADER_HEIGHT = 64;
+const MARGIN_HEIGHT = 30;
+const DEFAULT_PAGINATION_HEIGHT = 30;
+
+const { height: windowHeight } = useWindowSize();
+
+const tableProps = computed(() => {
   return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
 });
 
-const tableSize = ref(unref(getProps as any).size || "medium");
+const tableSize = ref(unref(tableProps).size || "medium");
 
-const { getLoading, setLoading } = useLoading(getProps);
+const { pagination, setPagination } = usePagination(tableProps);
 
-const { getPaginationInfo, setPagination } = usePagination(getProps);
-
-const { getDataSourceRef, getDataSource, getRowKey, reload } = useDataSource(
-  getProps,
-  {
-    getPaginationInfo,
-    setPagination,
-    tableData,
-    setLoading
-  },
-  emit
-);
+const { loading, tableData, getRowKey, variables, refetch } = useTableData(tableProps, {
+  pagination,
+  setPagination
+});
 
 const { getPageColumns, setColumns, getColumns, getCacheColumns, setCacheColumnsField } =
-  useColumns(getProps);
+  useColumns(tableProps);
 
 //页码切换
-function updatePage(page) {
+const updatePage = (page: number) => {
   setPagination({ page: page });
-  reload();
-}
+};
 
 //分页数量切换
-function updatePageSize(size) {
+const updatePageSize = (size: number) => {
   setPagination({ page: 1, pageSize: size });
-  reload();
-}
-
-//密度切换
-function densitySelect(e) {
-  tableSize.value = e;
-}
-
-//获取表格大小
-const getTableSize = computed(() => tableSize.value);
+};
 
 //组装表格信息
 const getBindValues = computed(() => {
-  const tableData = unref(getDataSourceRef);
-  const maxHeight = tableData.length ? `${unref(deviceHeight)}px` : "auto";
+  const maxHeight = unref(tableData).length ? `${unref(deviceHeight)}px` : "auto";
   return {
-    ...unref(getProps),
-    loading: unref(getLoading),
+    ...unref(tableProps),
+    loading: loading.value,
     columns: toRaw(unref(getPageColumns)),
     rowKey: unref(getRowKey),
-    data: tableData,
-    size: unref(getTableSize),
+    data: unref(tableData),
+    size: tableSize.value,
     remote: true,
     "max-height": maxHeight,
     title: "" // 重置为空 避免绑定到 table 上面
   };
 });
 
-//获取分页信息
-const pagination = computed(() => toRaw(unref(getPaginationInfo)));
-
-function setProps(props: Partial<BasicTableProps>) {
+const setProps = (props: Partial<BasicTableProps>) => {
   innerPropsRef.value = { ...unref(innerPropsRef), ...props };
-}
+};
 
 const setStriped = (value: boolean) => (isStriped.value = value);
 
-const tableAction = {
-  reload,
-  setColumns,
-  setLoading,
-  setProps,
-  getColumns,
-  getDataSource,
-  getPageColumns,
-  getCacheColumns,
-  setCacheColumnsField,
-  emit
+const computeTableHeight = async () => {
+  const table = tableRef.value;
+  if (!table) return;
+
+  const tableEl = (table as any)?.$el;
+  const headEl = tableEl.querySelector(".n-data-table-thead") as HTMLElement;
+  const paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
+
+  const { top } = useElementBounding(headEl);
+  const bottomIncludeBody = windowHeight.value - top.value;
+
+  // 计算分页高度
+  const paginationHeight = paginationEl ? paginationEl.offsetHeight + 2 : DEFAULT_PAGINATION_HEIGHT;
+
+  // 计算总高度
+  const totalFixedHeight =
+    HEADER_HEIGHT + paginationHeight + MARGIN_HEIGHT + (props.resizeHeightOffset || 0);
+  let height = bottomIncludeBody - totalFixedHeight;
+
+  // 如果设置了最大高度，取较小值
+  if (props.maxHeight && props.maxHeight < height) {
+    height = props.maxHeight;
+  }
+
+  deviceHeight.value = height;
 };
 
-const getCanResize = computed(() => {
-  const { canResize } = unref(getProps);
-  return canResize;
-});
-
-async function computeTableHeight() {
-  const table = tableElRef.value;
-  if (!table) return;
-  if (!unref(getCanResize)) return;
-  const tableEl = (table as any)?.$el;
-  const headEl = tableEl.querySelector(".n-data-table-thead ");
-  const { bottomIncludeBody } = getViewportOffset(headEl);
-  const headerH = 64;
-  let paginationH = 2;
-  const marginH = 24;
-  if (!isBoolean(unref(pagination))) {
-    paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
-    if (paginationEl) {
-      const offsetHeight = paginationEl.offsetHeight;
-      paginationH += offsetHeight || 0;
-    } else {
-      paginationH += 28;
-    }
-  }
-  let height =
-    bottomIncludeBody - (headerH + paginationH + marginH + (props.resizeHeightOffset || 0));
-  const maxHeight = props.maxHeight;
-  height = maxHeight && maxHeight < height ? maxHeight : height;
-  deviceHeight.value = height;
-}
-
-useWindowSizeFn(computeTableHeight, 280);
+useEventListener(window, "resize", useDebounceFn(computeTableHeight, 280));
 
 onMounted(() => {
   nextTick(() => {
@@ -258,10 +187,22 @@ onMounted(() => {
   });
 });
 
-createTableContext({ ...tableAction, wrapRef, getBindValues });
+const tableAction = {
+  refetch,
+  setColumns,
+  setProps,
+  getColumns,
+  getPageColumns,
+  getCacheColumns,
+  setCacheColumnsField,
+  emit
+};
+
+createTableContext({ ...tableAction, wrapRef, getBindValues, emit });
 
 defineExpose(tableAction);
 </script>
+
 <style scoped>
 .table-toolbar {
   display: flex;

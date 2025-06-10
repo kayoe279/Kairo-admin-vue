@@ -1,4 +1,4 @@
-import { Alova } from "@/service";
+import { mockRequest } from "@/service";
 
 export interface ListDate {
   label: string;
@@ -15,7 +15,7 @@ export interface ListDate {
  * @description: 根据用户id获取用户菜单
  */
 export function adminMenus() {
-  return Alova.Get("/menus");
+  return mockRequest.Get("/menus");
 }
 
 /**
@@ -23,7 +23,7 @@ export function adminMenus() {
  * @param params
  */
 export function getMenuList(params?) {
-  return Alova.Get<{ list: ListDate[] }>("/menu/list", {
+  return mockRequest.Get<{ list: ListDate[] }>("/menu/list", {
     params
   });
 }
