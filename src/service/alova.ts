@@ -27,10 +27,9 @@ const mockAdapter = createAlovaMockAdapter([...mocks], {
   delay: 1000,
 
   // 自定义打印mock接口请求信息
-  // mockRequestLogger: (res) => {
-  //   loggerMock && console.log(`Mock Request ${res.url}`, res);
-  // },
-  mockRequestLogger: VITE_LOGGER_MOCK,
+  mockRequestLogger: (res) => {
+    VITE_LOGGER_MOCK && console.log(`Mock Request ${res.url}`, res);
+  },
   onMockError(error, currentMethod) {
     console.error("🚀 ~ onMockError ~ currentMethod:", currentMethod);
     console.error("🚀 ~ onMockError ~ error:", error);
@@ -121,3 +120,11 @@ export function createAlovaInstance(
     })
   });
 }
+
+export const request = createAlovaInstance({
+  baseURL: import.meta.env.VITE_API_ENDPOINT
+});
+
+export const mockRequest = createAlovaInstance({
+  baseURL: import.meta.env.VITE_MOCK_API_ENDPOINT
+});

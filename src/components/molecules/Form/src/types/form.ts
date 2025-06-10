@@ -1,5 +1,7 @@
 import type { ComponentType } from "./index";
+import { FormValidateMessages } from "naive-ui/es/form/src/interface";
 import type { ButtonProps } from "naive-ui/lib/button";
+import { FormRules } from "naive-ui/lib/form";
 import type { GridItemProps, GridProps } from "naive-ui/lib/grid";
 import type { CSSProperties } from "vue";
 
@@ -18,15 +20,10 @@ export interface FormSchema {
   suffix?: string;
 }
 
-export interface FormProps {
-  model?: Recordable;
-  labelWidth?: number | string;
+export interface CustomFormProps {
   schemas?: FormSchema[];
-  inline: boolean;
   layout?: string;
-  size: string;
-  labelPlacement: string;
-  isFull: boolean;
+  isFull?: boolean;
   showActionButtonGroup?: boolean;
   showResetButton?: boolean;
   resetButtonOptions?: Partial<ButtonProps>;
@@ -43,6 +40,24 @@ export interface FormProps {
   baseGridStyle?: CSSProperties;
   collapsedRows?: number;
 }
+
+export interface BasicFormProps {
+  disabled?: boolean;
+  inline?: boolean;
+  labelWidth?: number | string | "auto";
+  labelAlign?: "left" | "right";
+  labelPlacement?: "left" | "top";
+  model?: Recordable;
+  rules?: FormRules;
+  showFeedback?: boolean;
+  showLabel?: boolean;
+  showRequireMark?: boolean;
+  requireMarkPlacement?: "left" | "right" | "right-hanging";
+  size?: "small" | "medium" | "large";
+  validateMessages?: FormValidateMessages;
+}
+
+export interface FormProps extends CustomFormProps, BasicFormProps {}
 
 export interface FormActionType {
   submit: () => Promise<any>;

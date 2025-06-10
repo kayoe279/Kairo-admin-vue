@@ -33,7 +33,7 @@
 </template>
 <script lang="ts">
 import { useTableContext } from "../../hooks/useTableContext";
-import type { BasicColumn } from "../../types/table";
+import type { BasicColumn } from "../../types/props";
 import { CellComponent } from "./CellComponent";
 import { createPlaceholderMessage } from "./helper";
 import type { EditRecordRow } from "./index";
@@ -189,9 +189,9 @@ export default defineComponent({
       if (!e) {
         currentValueRef.value = e;
       } else if (e?.target && Reflect.has(e.target, "value")) {
-        currentValueRef.value = (e as ChangeEvent).target.value;
+        currentValueRef.value = e.target.value;
       } else if (component === "NCheckbox") {
-        currentValueRef.value = (e as ChangeEvent).target.checked;
+        currentValueRef.value = e.target.checked;
       } else if (isString(e) || isBoolean(e) || isNumber(e)) {
         currentValueRef.value = e;
       }

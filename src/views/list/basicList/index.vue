@@ -9,10 +9,10 @@
     </n-card>
     <n-card :bordered="false" class="mt-3">
       <BasicTable
-        :columns="columns"
-        :request="loadDataTable"
-        :row-key="(row: ListData) => row.id"
         ref="actionRef"
+        :columns="columns"
+        :request="getTableList"
+        :row-key="(row: ListData) => row.id"
         :actionColumn="actionColumn"
         @update:checked-row-keys="onCheckedRow"
         :scroll-x="1090"
@@ -296,17 +296,15 @@ function addTable() {
   showModal.value = true;
 }
 
-const loadDataTable = async (res) => {
-  return await getTableList({ ...getFieldsValue(), ...res });
-};
-
 function onCheckedRow(rowKeys) {
   console.log(rowKeys);
 }
 
-function reloadTable() {
-  actionRef.value.reload();
-}
+const reloadTable = (variables?: Record<string, any>) => {
+  if (actionRef.value) {
+    actionRef.value.refetch(variables);
+  }
+};
 
 function confirmForm(e) {
   e.preventDefault();
@@ -335,14 +333,15 @@ function handleDelete(record) {
   window["$message"].info("点击了删除");
 }
 
-function handleSubmit(values) {
-  console.log(values);
-  reloadTable();
-}
+const handleSubmit = (values: Record<string, any>) => {
+  if (values) {
+    reloadTable(values);
+  }
+};
 
-function handleReset(values) {
+const handleReset = (values) => {
   console.log(values);
-}
+};
 </script>
 
 <style lang="less" scoped></style>

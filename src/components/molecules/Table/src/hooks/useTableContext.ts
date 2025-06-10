@@ -1,4 +1,4 @@
-import type { BasicTableProps, TableActionType } from "../types/table";
+import type { BasicTableProps ,TableActionType} from "../types/props";
 import type { ComputedRef, Ref } from "vue";
 import { inject, provide } from "vue";
 

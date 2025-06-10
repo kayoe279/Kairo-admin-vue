@@ -1,4 +1,4 @@
-import type { BasicColumn } from "./types/table";
+import type { BasicColumn } from "./types/props";
 import { propTypes } from "@/lib/propTypes";
 import { NDataTable } from "naive-ui";
 import type { PropType } from "vue";

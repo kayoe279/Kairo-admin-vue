@@ -1,5 +1,5 @@
 import { renderEditCell } from "../components/editable";
-import type { BasicColumn, BasicTableProps } from "../types/table";
+import type { BasicColumn, BasicTableProps, TableColumn } from "../types/props";
 import type { ActionItem } from "@/components/molecules/Table";
 import { usePermission } from "@/hooks/web/usePermission";
 import { isArray, isBoolean, isFunction, isString } from "@/lib/utils/is";
@@ -108,7 +108,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       columnsRef.value = [];
       return;
     }
-    const cacheKeys = cacheColumns?.map((item) => item.key) || [];
+    const cacheKeys = cacheColumns?.map((item) => (item as TableColumn).key) || [];
     //针对拖拽排序
     if (!isString(columns[0])) {
       columnsRef.value = columns;

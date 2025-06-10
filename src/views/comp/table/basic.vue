@@ -1,12 +1,12 @@
 <template>
   <n-card :bordered="false" class="proCard">
     <BasicTable
+      ref="actionRef"
       title="表格列表"
       titleTooltip="这是一个提示"
       :columns="columns"
-      :request="loadDataTable"
+      :request="getUserList"
       :row-key="(row) => row.id"
-      ref="actionRef"
       :actionColumn="actionColumn"
       :scroll-x="1360"
       @update:checked-row-keys="onCheckedRow"
@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import { columns } from "./basicColumns";
 import { BasicTable, TableAction } from "@/components/molecules/Table";
-import { getTableList } from "@/service/api/table/list";
+import { getUserList } from "@/service/api/users";
 import { DeleteOutlined, EditOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { h, reactive, ref } from "vue";
@@ -25,11 +25,6 @@ import { h, reactive, ref } from "vue";
 const message = useMessage();
 const dialog = useDialog();
 const actionRef = ref();
-
-const params = reactive({
-  pageSize: 5,
-  name: "NaiveAdmin"
-});
 
 const actionColumn = reactive({
   width: 180,
@@ -63,10 +58,6 @@ function createActions(record) {
     }
   ];
 }
-
-const loadDataTable = async (res) => {
-  return await getTableList({ ...params, ...res });
-};
 
 function onCheckedRow(rowKeys) {
   console.log(rowKeys);

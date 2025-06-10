@@ -28,11 +28,10 @@ export default defineMock({
     const { page = 1, pageSize = 20, name } = query;
     const list = tableList(Number(pageSize));
     // 并非真实，只是为了模拟搜索结果
-    const count = name ? 30 : 60;
     return resultSuccess({
       page: Number(page),
       pageSize: Number(pageSize),
-      total: count * Number(pageSize),
+      total: 600,
       list
     });
   }
