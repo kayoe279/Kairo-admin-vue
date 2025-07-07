@@ -114,7 +114,7 @@ export default defineConfigWithVueTs(
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-duplicate-enum-values": "off",
       "prefer-rest-params": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/triple-slash-reference": "off"
     }
   }
