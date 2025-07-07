@@ -2,11 +2,11 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import type { App } from "vue";
 
-export * from "./modules/appSetting";
+export * from "./modules/app";
 export * from "./modules/user";
 export * from "./modules/route";
 export * from "./modules/tabs";
-export * from "./modules/themeSetting";
+export * from "./modules/theme";
 export * from "./modules/user";
 
 const store = createPinia();

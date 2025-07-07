@@ -1,4 +1,4 @@
-import { useThemeSettingStore } from "@/store";
+import { useThemeStore } from "@/store";
 import { createDiscreteApi, darkTheme } from "naive-ui";
 import { computed } from "vue";
 
@@ -9,7 +9,7 @@ import { computed } from "vue";
  */
 
 export function setupNaiveDiscreteApi() {
-  const themeStore = useThemeSettingStore();
+  const themeStore = useThemeStore();
 
   const configProviderPropsRef = computed(() => ({
     theme: themeStore.isDark ? darkTheme : undefined,

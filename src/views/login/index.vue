@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { appConfig, defaultLoginParams } from "@/lib/settings/app";
-import { login } from "@/service/api/login";
+import { login } from "@/service/api/auth/login";
 import { useUserStore } from "@/store";
 import { useRequest } from "alova/client";
 import { useMessage } from "naive-ui";

@@ -1,35 +1,13 @@
-<template>
-  <div>
-    <n-grid :x-gap="24">
-      <n-grid-item span="6">
-        <n-card :bordered="false" size="small" class="proCard">
-          <n-thing
-            class="thing-cell"
-            v-for="item in typeTabList"
-            :key="item.key"
-            :class="{ 'thing-cell-on': state.type === item.key }"
-            @click="switchType(item)"
-          >
-            <template #header>{{ item.name }}</template>
-            <template #description>{{ item.desc }}</template>
-          </n-thing>
-        </n-card>
-      </n-grid-item>
-      <n-grid-item span="18">
-        <n-card :bordered="false" size="small" :title="state.typeTitle" class="proCard">
-          <BasicSetting v-if="state.type === 1" />
-          <SafetySetting v-if="state.type === 2" />
-        </n-card>
-      </n-grid-item>
-    </n-grid>
-  </div>
-</template>
-<script lang="ts" setup>
-import BasicSetting from "./BasicSetting.vue";
-import SafetySetting from "./SafetySetting.vue";
-import { reactive } from "vue";
+<script setup lang="ts">
+import { computed, ref } from "vue";
 
-const typeTabList = [
+interface AccountTab {
+  name: string;
+  desc: string;
+  key: number;
+}
+
+const accountTabs: AccountTab[] = [
   {
     name: "基本设置",
     desc: "个人账户信息设置",
@@ -42,37 +20,48 @@ const typeTabList = [
   }
 ];
 
-const state = reactive({
-  type: 1,
-  typeTitle: "基本设置"
+const currentTab = ref<number>(1);
+
+const currentTabTitle = computed(() => {
+  const tab = accountTabs.find((tab) => tab.key === currentTab.value);
+  return tab?.name || "基本设置";
 });
 
-function switchType(e) {
-  state.type = e.key;
-  state.typeTitle = e.name;
-}
+const selectTab = (tab: AccountTab) => {
+  currentTab.value = tab.key;
+};
 </script>
-<style lang="less" scoped>
-.thing-cell {
-  margin: 0 -16px 10px;
-  padding: 5px 16px;
 
-  &:hover {
-    background: #f3f3f3;
-    cursor: pointer;
-  }
-}
-
-.thing-cell-on {
-  background: #f0faff;
-  color: #2d8cf0;
-
-  ::v-deep(.n-thing-main .n-thing-header .n-thing-header__title) {
-    color: #2d8cf0;
-  }
-
-  &:hover {
-    background: #f0faff;
-  }
-}
-</style>
+<template>
+  <div>
+    <n-grid :x-gap="24">
+      <n-grid-item span="6">
+        <n-card :bordered="false" size="small" class="proCard">
+          <n-thing
+            v-for="item in accountTabs"
+            :key="item.key"
+            :class="[
+              'mx-[-16px] mb-[10px] cursor-pointer px-4 py-[5px] transition-colors',
+              'hover:bg-gray-50',
+              currentTab === item.key ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-50'
+            ]"
+            @click="selectTab(item)"
+          >
+            <template #header>
+              <span :class="currentTab === item.key ? 'text-blue-600' : ''">
+                {{ item.name }}
+              </span>
+            </template>
+            <template #description>{{ item.desc }}</template>
+          </n-thing>
+        </n-card>
+      </n-grid-item>
+      <n-grid-item span="18">
+        <n-card :bordered="false" size="small" :title="currentTabTitle" class="proCard">
+          <BasicSetting v-if="currentTab === 1" />
+          <SafetySetting v-if="currentTab === 2" />
+        </n-card>
+      </n-grid-item>
+    </n-grid>
+  </div>
+</template>

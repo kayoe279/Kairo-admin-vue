@@ -41,6 +41,21 @@ declare global {
 
   type Recordable = Record<string, any>;
   type Fn = (...args: any[]) => any;
+
+  // 应用信息类型定义
+  interface AppInfo {
+    pkg: {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+      name: string;
+      version: string;
+    };
+    lastBuildTime: string;
+  }
+
+  // 全局变量声明
+  declare const __APP_INFO__: AppInfo;
+  declare const __APP_ENV__: string;
 }
 
 export {};

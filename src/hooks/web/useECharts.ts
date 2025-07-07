@@ -2,7 +2,7 @@ import { useTimeoutFn } from "@/hooks/core/useTimeout";
 import { useBreakpoint } from "@/hooks/event/useBreakpoint";
 import { useEventListener } from "@/hooks/event/useEventListener";
 import echarts from "@/lib/echarts";
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { useThemeStore } from "@/store/modules/theme";
 import { tryOnUnmounted } from "@vueuse/core";
 import { useDebounceFn } from "@vueuse/core";
 import type { EChartsOption } from "echarts";
@@ -13,7 +13,7 @@ export function useECharts(
   elRef: Ref<HTMLDivElement>,
   theme: "light" | "dark" | "default" = "default"
 ) {
-  const themeStore = useThemeSettingStore();
+  const themeStore = useThemeStore();
 
   const getDarkTheme = computed(() => {
     const sysTheme = themeStore.system;

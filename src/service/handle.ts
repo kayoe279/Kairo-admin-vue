@@ -1,6 +1,6 @@
 import { ERROR_NO_TIP_STATUS, ERROR_STATUS } from "./config";
 import { getRefreshToken, setRefreshToken, setUserToken } from "@/lib/cookie";
-import { refreshToken } from "@/service/api/login";
+import { refreshToken } from "@/service/api/auth/login";
 import { useUserStore } from "@/store";
 
 type ErrorStatus = keyof typeof ERROR_STATUS;

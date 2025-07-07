@@ -1,22 +1,20 @@
-<script lang="tsx">
-import { NEmpty } from "naive-ui";
-import { defineComponent, onBeforeMount } from "vue";
+<script lang="ts" setup>
+import { onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "Redirect",
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    onBeforeMount(() => {
-      const { params, query } = route;
-      const { path } = params;
-      router.replace({
-        path: "/" + (Array.isArray(path) ? path.join("/") : path),
-        query
-      });
-    });
-    return () => <NEmpty />;
-  }
+const route = useRoute();
+const router = useRouter();
+
+onBeforeMount(() => {
+  const { params, query } = route;
+  const { path } = params;
+  router.replace({
+    path: "/" + (Array.isArray(path) ? path.join("/") : path),
+    query
+  });
 });
 </script>
+
+<template>
+  <n-empty />
+</template>

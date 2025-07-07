@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
 import { isRootRoute } from "@/lib/utils/menu";
-import { useAppStore, useThemeSettingStore } from "@/store";
+import { useAppStore, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed, ref, unref } from "vue";
 import { useRoute } from "vue-router";
@@ -10,7 +10,7 @@ const route = useRoute();
 const { isMobile } = useMedia();
 
 const appStore = useAppStore();
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 const { darkNav } = storeToRefs(themeStore);
 const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = storeToRefs(appStore);
 

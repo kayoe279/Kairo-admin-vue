@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useThemeSettingStore } from "@/store/modules/themeSetting";
+import { useThemeStore } from "@/store/modules/theme";
 import { storeToRefs } from "pinia";
 
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 const { darkNav, grayMode } = storeToRefs(themeStore);
 </script>
 

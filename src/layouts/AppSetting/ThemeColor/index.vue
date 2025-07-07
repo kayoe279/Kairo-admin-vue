@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { type ThemeType, useThemeSettingStore } from "@/store/modules/themeSetting";
+import { type ThemeType, useThemeStore } from "@/store/modules/theme";
 
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 
 const updateThemeColor = (color: string, type: ThemeType) => {
   themeStore.setThemeColor(type, color);

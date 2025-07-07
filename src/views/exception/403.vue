@@ -1,41 +1,21 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const goHome = () => {
+  router.push("/");
+};
+</script>
+
 <template>
-  <div class="page-container flex flex-col justify-center">
+  <div class="flex h-screen w-full flex-col justify-center rounded px-0 py-12">
     <div class="text-center">
-      <img src="~@/assets/images/exception/403.svg" alt="" />
+      <img src="~@/assets/images/exception/403.svg" alt="403 错误" class="mx-auto w-[350px]" />
     </div>
     <div class="text-center">
-      <h1 class="text-base text-gray-500">抱歉，你无权访问该页面</h1>
+      <h1 class="py-5 text-base text-gray-500">抱歉，你无权访问该页面</h1>
       <n-button type="info" @click="goHome">回到首页</n-button>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-function goHome() {
-  router.push("/");
-}
-</script>
-
-<style lang="less" scoped>
-.page-container {
-  width: 100%;
-  border-radius: 4px;
-  padding: 50px 0;
-  height: 100vh;
-
-  .text-center {
-    h1 {
-      color: #666;
-      padding: 20px 0;
-    }
-  }
-
-  img {
-    width: 350px;
-    margin: 0 auto;
-  }
-}
-</style>

@@ -1,61 +1,42 @@
-<template>
-  <n-spin :show="loading">
-    <div class="frame">
-      <iframe :src="href" class="frame-iframe" ref="frameRef"></iframe>
-    </div>
-  </n-spin>
-</template>
 <script lang="ts" setup>
-import { nextTick, onMounted, ref, unref } from "vue";
+import { computed, nextTick, onMounted, ref, unref } from "vue";
 import { useRoute } from "vue-router";
 
 const currentRoute = useRoute();
-const loading = ref(false);
-const frameRef = ref<HTMLFrameElement | null>(null);
-const href = ref<string>("");
+const isLoading = ref(false);
+const iframeRef = ref<HTMLIFrameElement>();
 
-if (unref(currentRoute.meta)?.href) {
-  href.value = unref(currentRoute.meta)?.href as string;
-}
+const iframeUrl = computed(() => {
+  return (currentRoute.meta?.href as string) || "";
+});
 
-function hideLoading() {
-  loading.value = false;
-}
+const handleIframeLoad = () => {
+  isLoading.value = false;
+};
 
-function init() {
+const initIframeEvents = () => {
   nextTick(() => {
-    const iframe = unref(frameRef);
+    const iframe = unref(iframeRef);
     if (!iframe) return;
-    const _frame = iframe as any;
-    if (_frame.attachEvent) {
-      _frame.attachEvent("onload", () => {
-        hideLoading();
-      });
-    } else {
-      iframe.onload = () => {
-        hideLoading();
-      };
-    }
+
+    iframe.onload = handleIframeLoad;
   });
-}
+};
 
 onMounted(() => {
-  loading.value = true;
-  init();
+  isLoading.value = true;
+  initIframeEvents();
 });
 </script>
 
-<style lang="less" scoped>
-.frame {
-  width: 100%;
-  height: 100vh;
-
-  &-iframe {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border: 0;
-    box-sizing: border-box;
-  }
-}
-</style>
+<template>
+  <n-spin :show="isLoading">
+    <div class="h-screen w-full">
+      <iframe
+        :src="iframeUrl"
+        class="box-border h-full w-full overflow-hidden border-0"
+        ref="iframeRef"
+      />
+    </div>
+  </n-spin>
+</template>

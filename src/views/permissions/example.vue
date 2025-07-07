@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePermission } from "@/hooks/usePermission";
 import { defaultLoginParams } from "@/lib/settings/app";
-import { login } from "@/service/api/login";
+import { login } from "@/service/api/auth/login";
 import { useUserStore } from "@/store";
 import { useRequest } from "alova/client";
 

@@ -25,15 +25,6 @@ const routes: Array<RouteRecordRaw> = [
         component: IFrame
       },
       {
-        path: "/frame/docs",
-        name: "frame-docs",
-        meta: {
-          title: "项目文档(内嵌)",
-          href: "https://jekip.github.io/docs"
-        },
-        component: IFrame
-      },
-      {
         path: "/frame/naive",
         name: "frame-naive",
         meta: {

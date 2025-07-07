@@ -1,9 +1,30 @@
+<script lang="ts" setup>
+export interface schemaItem {
+  field: string;
+  label: string;
+}
+
+const { pkg, lastBuildTime } = __APP_INFO__;
+const { dependencies, devDependencies, name, version } = pkg;
+
+const schema: schemaItem[] = [];
+const devSchema: schemaItem[] = [];
+
+Object.keys(dependencies).forEach((key) => {
+  schema.push({ field: key, label: dependencies[key] });
+});
+
+Object.keys(devDependencies).forEach((key) => {
+  devSchema.push({ field: key, label: devDependencies[key] });
+});
+</script>
+
 <template>
   <div>
     <div class="n-layout-page-header">
       <n-card :bordered="false" title="关于">
-        {{ name }} 是一个基于 vue3，vite2，TypeScript
-        的中后台解决方案，它可以帮助你快速搭建企业级中后台项目，相信不管是从新技术使用还是其他方面，都能帮助到你，持续更新中。
+        {{ name }} 是一个基于 vue3，vite，TypeScript
+        的中后台解决方案，它可以帮助你快速搭建企业级中后台项目，持续更新中。
       </n-card>
     </div>
     <n-card
@@ -34,13 +55,6 @@
           <div class="flex items-center">
             <a href="https://github.com/jekip/naive-ui-admin" class="py-2" target="_blank"
               >查看Github地址</a
-            >
-          </div>
-        </n-descriptions-item>
-        <n-descriptions-item label="QQ交流群">
-          <div class="flex items-center">
-            <a href="https://jq.qq.com/?_wv=1027&k=xib9dU4C" class="py-2" target="_blank"
-              >点击链接加入群聊【Naive Admin】</a
             >
           </div>
         </n-descriptions-item>
@@ -76,26 +90,3 @@
     </n-card>
   </div>
 </template>
-
-<script lang="ts" setup>
-export interface schemaItem {
-  field: string;
-  label: string;
-}
-
-const { pkg, lastBuildTime } = __APP_INFO__;
-const { dependencies, devDependencies, name, version } = pkg;
-
-const schema: schemaItem[] = [];
-const devSchema: schemaItem[] = [];
-
-Object.keys(dependencies).forEach((key) => {
-  schema.push({ field: key, label: dependencies[key] });
-});
-
-Object.keys(devDependencies).forEach((key) => {
-  devSchema.push({ field: key, label: devDependencies[key] });
-});
-</script>
-
-<style lang="less" scoped></style>

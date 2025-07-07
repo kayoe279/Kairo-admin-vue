@@ -3,9 +3,9 @@ import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/list",
-    name: "list",
-    redirect: "/list/basic-list",
+    path: "/basic-list",
+    name: "List",
+    redirect: "/basic-list",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "列表页面",
@@ -14,21 +14,21 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: "/list/basic-list",
-        name: "list-basic-list",
+        path: "/basic-list",
+        name: "basic-list",
         meta: {
           title: "基础列表"
         },
-        component: () => import("@/views/list/basicList/index.vue")
+        component: () => import("@/views/basicList/index.vue")
       },
       {
-        path: "/list/basic-info/:id?",
+        path: "/basic-info/:id?",
         name: "list-basic-info",
         meta: {
           title: "基础详情",
           hidden: true
         },
-        component: () => import("@/views/list/basicList/info.vue")
+        component: () => import("@/views/basicList/info.vue")
       }
     ]
   }

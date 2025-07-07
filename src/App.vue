@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { naiveI18nOptions } from "@/lib/i18n";
-import { useAppStore, useThemeSettingStore } from "@/store";
+import { useAppStore, useThemeStore } from "@/store";
 import { darkTheme as naiveDarkTheme } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 
 const appStore = useAppStore();
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 const { isDark, themeOverrides } = storeToRefs(themeStore);
 
 const darkTheme = computed(() => (isDark.value ? naiveDarkTheme : undefined));

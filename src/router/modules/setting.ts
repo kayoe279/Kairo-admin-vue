@@ -14,22 +14,6 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: "/setting/menu",
-        name: "setting-menu",
-        meta: {
-          title: "菜单权限"
-        },
-        component: () => import("@/views/system/menu/menu.vue")
-      },
-      {
-        path: "/setting/role",
-        name: "setting-role",
-        meta: {
-          title: "角色权限"
-        },
-        component: () => import("@/views/system/role/role.vue")
-      },
-      {
         path: "/setting/account",
         name: "setting-account",
         meta: {

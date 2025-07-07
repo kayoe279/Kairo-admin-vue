@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { type ThemeMode, useThemeSettingStore } from "@/store";
+import { type ThemeMode, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
 
 withDefaults(defineProps<{ position?: "header" | "drawer" }>(), { position: "header" });
 
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 const { isDark, storeTheme } = storeToRefs(themeStore);
 
 const handleToggleTheme = (value: ThemeMode) => {

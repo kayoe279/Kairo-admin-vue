@@ -7,4 +7,4 @@ import TableMock from "~/mock/table/list";
 import UserMock from "~/mock/user";
 import MenusMock from "~/mock/user/menus";
 
-export default [UserMock, MenusMock, TableMock, ConsoleMock, SystemMenuMock, SystemRoleMock];
+export const mocks = [UserMock, MenusMock, TableMock, ConsoleMock, SystemMenuMock, SystemRoleMock];

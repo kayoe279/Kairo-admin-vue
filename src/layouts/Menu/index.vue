@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { generatorMenu, generatorMenuMix } from "@/lib/utils/menu";
-import { useAppStore, useRouteStore, useThemeSettingStore } from "@/store";
+import { useAppStore, useRouteStore, useThemeStore } from "@/store";
 import type { MenuInst } from "naive-ui";
 import type { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import { storeToRefs } from "pinia";
@@ -22,7 +22,7 @@ const emit = defineEmits(["update:collapsed", "onMenuItemClick"]);
 const route = useRoute();
 const router = useRouter();
 const routeStore = useRouteStore();
-const themeStore = useThemeSettingStore();
+const themeStore = useThemeStore();
 const appStore = useAppStore();
 const { darkNav } = storeToRefs(themeStore);
 const { navMode, menuSetting, locale } = storeToRefs(appStore);

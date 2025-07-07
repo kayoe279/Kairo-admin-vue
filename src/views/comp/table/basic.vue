@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import { columns } from "./basicColumns";
 import { BasicTable, TableAction } from "@/components/molecules/Table";
-import { getUserList } from "@/service/api/users";
+import { getUserList } from "@/service/api/auth/users";
 import { DeleteOutlined, EditOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { h, reactive, ref } from "vue";

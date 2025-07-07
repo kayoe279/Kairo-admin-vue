@@ -6,7 +6,7 @@ import { $t } from "@/lib/i18n";
 import { getUserInfo } from "@/lib/storage";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";
 import { asyncRoutes } from "@/router/index";
-import { getUserRoutes } from "@/service/api/login";
+import { getUserRoutes } from "@/service/api/auth/login";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";

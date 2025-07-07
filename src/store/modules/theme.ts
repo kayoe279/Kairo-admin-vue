@@ -10,7 +10,7 @@ import { computed, ref, toRefs, watch } from "vue";
 export type ThemeType = "primary" | "info" | "success" | "warning" | "error";
 export type ThemeMode = "light" | "dark" | "auto";
 
-export const useThemeSettingStore = defineStore(
+export const useThemeStore = defineStore(
   StoreEnum.theme,
   () => {
     const settings = ref(cloneDeep(themeSetting));
