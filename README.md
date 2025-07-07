@@ -12,7 +12,7 @@
 
 ## 🎥 预览
 
-- [naive-ui-admin](https://jekip.github.io)
+- [kairo-naive-ui-admin](https://vue3-naive-admin-template.vercel.app)
 
 账号：super，密码：123456（随意）
 
@@ -148,19 +148,4 @@ bun build
 
 ## 👥 维护者
 
-[@Ah jung](https://github.com/jekip)
-
-## 💬 交流
-
-有关 `Naive Ui Admin` 的使用或其他问题，欢迎加入我们的讨论群组或提出问题。
-
-QQ1群：328347666 （已满）
-QQ2群：741353560
-
-## 💖 赞助
-
-#### 如果您觉得这个项目对您有帮助，可以通过下面的链接为作者买一杯果汁，表示感谢！。
-
-![donate](https://assets.naiveadmin.com/images/sponsor.png)
-
-[Paypal Me](https://www.paypal.com/paypalme/majunping)
+[@Kayoe](https://github.com/kayoe279)
