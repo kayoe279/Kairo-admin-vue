@@ -1,311 +1,209 @@
+<script setup lang="ts">
+import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import { useGlobSetting } from "@/hooks/useGlobSetting";
+import { ResultEnum } from "@/lib/enums/httpEnum";
+import { componentSetting } from "@/lib/settings/component";
+import { isString } from "@/lib/utils/is";
+import type { UploadFileInfo } from "naive-ui";
+import { useDialog, useMessage } from "naive-ui";
+import { computed, ref, watch } from "vue";
+
+interface Props {
+  modelValue?: string[];
+  width?: number;
+  height?: number;
+  maxSize?: number;
+  accept?: string;
+  helpText?: string;
+  maxNumber?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: () => [],
+  width: 104,
+  height: 104,
+  maxSize: 2,
+  accept: ".jpg,.png,.jpeg,.svg,.gif",
+  helpText: "",
+  maxNumber: Infinity
+});
+
+const emit = defineEmits<{
+  uploadChange: [value: string[]];
+  delete: [value: string[]];
+}>();
+
+const globSetting = useGlobSetting();
+const message = useMessage();
+const dialog = useDialog();
+
+const isPreviewVisible = ref(false);
+const previewImageUrl = ref("");
+const originalImageList = ref<string[]>([]);
+const displayImageList = ref<string[]>([]);
+
+const containerStyle = computed(() => ({
+  width: `${props.width}px`,
+  height: `${props.height}px`
+}));
+
+const canUploadMore = computed(() => displayImageList.value.length < 6);
+
+watch(
+  () => props.modelValue,
+  () => {
+    displayImageList.value = props.modelValue.map((item) => buildImageUrl(item));
+    originalImageList.value = [...props.modelValue];
+  },
+  { immediate: true }
+);
+
+const showImagePreview = (url: string) => {
+  isPreviewVisible.value = true;
+  previewImageUrl.value = url;
+};
+
+const removeImage = (index: number) => {
+  dialog.info({
+    title: "提示",
+    content: "你确定要删除吗？",
+    positiveText: "确定",
+    negativeText: "取消",
+    onPositiveClick: () => {
+      displayImageList.value.splice(index, 1);
+      originalImageList.value.splice(index, 1);
+      emit("uploadChange", originalImageList.value);
+      emit("delete", originalImageList.value);
+    }
+  });
+};
+
+const buildImageUrl = (url: string): string => {
+  const { fileUrl } = globSetting;
+  return /(^http|https:\/\/)/g.test(url) ? url : `${fileUrl}${url}`;
+};
+
+const isValidFileType = (fileType: string) => {
+  return componentSetting.upload.fileType.includes(fileType);
+};
+
+const validateBeforeUpload = ({ file }: { file: UploadFileInfo }) => {
+  const fileInfo = file.file!;
+  const { maxSize, accept } = props;
+  const acceptedTypes = (isString(accept) && accept.split(",")) || [];
+
+  if (maxSize && fileInfo.size / 1024 / 1024 >= maxSize) {
+    message.error(`上传文件最大值不能超过${maxSize}M`);
+    return false;
+  }
+
+  if (acceptedTypes.length > 0 && !isValidFileType(fileInfo.type)) {
+    const fileType = componentSetting.upload.fileType;
+    message.error(`只能上传文件类型为${fileType.join(",")}`);
+    return false;
+  }
+
+  return true;
+};
+
+const handleUploadComplete = ({
+  file,
+  event
+}: {
+  file: UploadFileInfo;
+  event?: ProgressEvent<EventTarget>;
+}) => {
+  try {
+    const target = event?.target as XMLHttpRequest;
+    const res = JSON.parse(target.response);
+    const infoField = componentSetting.upload.apiSetting.infoField;
+    const { code } = res;
+    const errorMessage = res.msg || res.message || "上传失败";
+    const result = res[infoField];
+
+    if (code === ResultEnum.SUCCESS) {
+      const imageUrl: string = buildImageUrl(result.photo);
+      displayImageList.value.push(imageUrl);
+      originalImageList.value.push(result.photo);
+      emit("uploadChange", originalImageList.value);
+    } else {
+      message.error(errorMessage);
+    }
+  } catch (error) {
+    message.error("上传响应解析失败");
+  }
+};
+</script>
+
 <template>
   <div class="w-full">
-    <div class="upload">
-      <div class="upload-card">
-        <!--图片列表-->
+    <div class="w-full overflow-hidden">
+      <div class="flex h-auto w-auto flex-wrap items-center">
         <div
-          class="upload-card-item"
-          :style="getCSSProperties"
-          v-for="(item, index) in imgList"
+          v-for="(item, index) in displayImageList"
           :key="`img_${index}`"
+          class="group relative mr-2 mb-2 flex flex-col items-center justify-center rounded-sm border border-gray-300 p-2"
+          :style="containerStyle"
         >
-          <div class="upload-card-item-info">
-            <div class="img-box">
-              <img :src="item" />
+          <div class="relative h-full w-full overflow-hidden p-0">
+            <div class="relative h-full rounded-sm">
+              <img :src="item" class="h-full w-full object-cover" />
             </div>
-            <div class="img-box-actions">
-              <n-icon size="18" class="action-icon mx-2" @click="preview(item)">
-                <EyeOutlined />
-              </n-icon>
-              <n-icon size="18" class="action-icon mx-2" @click="remove(index)">
-                <DeleteOutlined />
-              </n-icon>
+            <div
+              class="bg-opacity-50 absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            >
+              <SvgIcon
+                icon="ant-design:eye-outlined"
+                class="text-opacity-85 mx-2 cursor-pointer text-lg text-white hover:text-white"
+                @click="showImagePreview(item)"
+              />
+              <SvgIcon
+                icon="ant-design:delete-outlined"
+                class="text-opacity-85 mx-2 cursor-pointer text-lg text-white hover:text-white"
+                @click="removeImage(index)"
+              />
             </div>
           </div>
         </div>
 
-        <!--上传图片-->
-        <div
-          class="upload-card-item upload-card-item-select-picture"
-          :style="getCSSProperties"
-          v-if="imgList.length < maxNumber"
+        <n-upload
+          v-if="canUploadMore"
+          class="w-full"
+          v-bind="$props"
+          :file-list-style="{ display: 'none' }"
+          @before-upload="validateBeforeUpload"
+          @finish="handleUploadComplete"
         >
-          <n-upload
-            class="w-auto"
-            v-bind="$props"
-            :file-list-style="{ display: 'none' }"
-            @before-upload="beforeUpload"
-            @finish="finish"
+          <div
+            class="relative mr-2 mb-2 flex cursor-pointer flex-col items-center justify-center rounded-sm border border-dashed border-gray-300 bg-gray-50 p-2 text-gray-600"
+            :style="containerStyle"
           >
-            <div class="flex flex-col justify-center">
-              <n-icon size="18" class="m-auto">
-                <PlusOutlined />
-              </n-icon>
-              <span class="upload-title">上传图片</span>
+            <div class="flex w-full flex-col items-center justify-center">
+              <SvgIcon icon="ant-design:plus-outlined" class="mx-auto mb-1 text-lg" />
+              <span class="text-sm text-gray-600">上传图片</span>
             </div>
-          </n-upload>
-        </div>
+          </div>
+        </n-upload>
       </div>
     </div>
 
-    <!--上传图片-->
-    <n-space>
-      <n-alert title="提示" type="info" v-if="helpText" class="flex w-full">
+    <n-space v-if="helpText" class="mt-4">
+      <n-alert title="提示" type="info" class="flex w-full">
         {{ helpText }}
       </n-alert>
     </n-space>
   </div>
 
-  <!--预览图片-->
   <n-modal
-    v-model:show="showModal"
+    v-model:show="isPreviewVisible"
     preset="card"
     title="预览"
     :bordered="false"
     :style="{ width: '520px' }"
   >
-    <img :src="previewUrl" />
+    <img :src="previewImageUrl" class="h-auto w-full" />
   </n-modal>
 </template>
-
-<script lang="ts">
-import { basicProps } from "./props";
-import { useGlobSetting } from "@/hooks/useGlobSetting";
-import { ResultEnum } from "@/lib/enums/httpEnum";
-import { componentSetting } from "@/lib/settings/component";
-import { isString } from "@/lib/utils/is";
-import { DeleteOutlined, EyeOutlined, PlusOutlined } from "@vicons/antd";
-import { useDialog, useMessage } from "naive-ui";
-import { computed, defineComponent, reactive, toRefs, watch } from "vue";
-
-const globSetting = useGlobSetting();
-
-export default defineComponent({
-  name: "BasicUpload",
-
-  components: { EyeOutlined, DeleteOutlined, PlusOutlined },
-  props: {
-    ...basicProps
-  },
-  emits: ["uploadChange", "delete"],
-  setup(props, { emit }) {
-    const getCSSProperties = computed(() => {
-      return {
-        width: `${props.width}px`,
-        height: `${props.height}px`
-      };
-    });
-
-    const message = useMessage();
-    const dialog = useDialog();
-
-    const state = reactive({
-      showModal: false,
-      previewUrl: "",
-      originalImgList: [] as string[],
-      imgList: [] as string[]
-    });
-
-    //赋值默认图片显示
-    watch(
-      () => props.value,
-      () => {
-        state.imgList = props.value.map((item) => {
-          return getImgUrl(item);
-        });
-      },
-      { immediate: true }
-    );
-
-    //预览
-    function preview(url: string) {
-      state.showModal = true;
-      state.previewUrl = url;
-    }
-
-    //删除
-    function remove(index: number) {
-      dialog.info({
-        title: "提示",
-        content: "你确定要删除吗？",
-        positiveText: "确定",
-        negativeText: "取消",
-        onPositiveClick: () => {
-          state.imgList.splice(index, 1);
-          state.originalImgList.splice(index, 1);
-          emit("uploadChange", state.originalImgList);
-          emit("delete", state.originalImgList);
-        },
-        onNegativeClick: () => {}
-      });
-    }
-
-    //组装完整图片地址
-    function getImgUrl(url: string): string {
-      const { imgUrl } = globSetting;
-      return /(^http|https:\/\/)/g.test(url) ? url : `${imgUrl}${url}`;
-    }
-
-    function checkFileType(fileType: string) {
-      return componentSetting.upload.fileType.includes(fileType);
-    }
-
-    //上传之前
-    function beforeUpload({ file }) {
-      const fileInfo = file.file;
-      const { maxSize, accept } = props;
-      const acceptRef = (isString(accept) && accept.split(",")) || [];
-
-      // 设置最大值，则判断
-      if (maxSize && fileInfo.size / 1024 / 1024 >= maxSize) {
-        message.error(`上传文件最大值不能超过${maxSize}M`);
-        return false;
-      }
-
-      // 设置类型,则判断
-      const fileType = componentSetting.upload.fileType;
-      if (acceptRef.length > 0 && !checkFileType(fileInfo.type)) {
-        message.error(`只能上传文件类型为${fileType.join(",")}`);
-        return false;
-      }
-
-      return true;
-    }
-
-    //上传结束
-    function finish({ event: Event }) {
-      const res = eval("(" + Event.target.response + ")");
-      const infoField = componentSetting.upload.apiSetting.infoField;
-      const { code } = res;
-      const message = res.msg || res.message || "上传失败";
-      const result = res[infoField];
-      //成功
-      if (code === ResultEnum.SUCCESS) {
-        const imgUrl: string = getImgUrl(result.photo);
-        state.imgList.push(imgUrl);
-        state.originalImgList.push(result.photo);
-        emit("uploadChange", state.originalImgList);
-      } else message.error(message);
-    }
-
-    return {
-      ...toRefs(state),
-      finish,
-      preview,
-      remove,
-      beforeUpload,
-      getCSSProperties
-    };
-  }
-});
-</script>
-
-<style lang="less">
-.upload {
-  width: 100%;
-  overflow: hidden;
-
-  &-card {
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    &-item {
-      margin: 0 8px 8px 0;
-      position: relative;
-      padding: 8px;
-      border: 1px solid #d9d9d9;
-      border-radius: 2px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-
-      &:hover {
-        background: 0 0;
-
-        .upload-card-item-info::before {
-          opacity: 1;
-        }
-
-        &-info::before {
-          opacity: 1;
-        }
-      }
-
-      &-info {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        overflow: hidden;
-
-        &:hover {
-          .img-box-actions {
-            opacity: 1;
-          }
-        }
-
-        &::before {
-          position: absolute;
-          z-index: 1;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          opacity: 0;
-          transition: all 0.3s;
-          content: " ";
-        }
-
-        .img-box {
-          position: relative;
-          //padding: 8px;
-          //border: 1px solid #d9d9d9;
-          border-radius: 2px;
-        }
-
-        .img-box-actions {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          z-index: 10;
-          white-space: nowrap;
-          transform: translate(-50%, -50%);
-          opacity: 0;
-          transition: all 0.3s;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          &:hover {
-            background: 0 0;
-          }
-
-          .action-icon {
-            color: rgba(255, 255, 255, 0.85);
-
-            &:hover {
-              cursor: pointer;
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-
-    &-item-select-picture {
-      border: 1px dashed #d9d9d9;
-      border-radius: 2px;
-      cursor: pointer;
-      background: #fafafa;
-      color: #666;
-
-      .upload-title {
-        color: #666;
-      }
-    }
-  }
-}
-</style>

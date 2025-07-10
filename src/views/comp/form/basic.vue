@@ -1,33 +1,11 @@
-<template>
-  <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单"> 基础表单，用于向用户收集表单信息 </n-card>
-    </div>
-    <n-card :bordered="false" class="proCard mt-4">
-      <div class="BasicForm">
-        <BasicForm
-          submitButtonText="提交预约"
-          layout="horizontal"
-          :gridProps="{ cols: 1 }"
-          :schemas="schemas"
-          @submit="handleSubmit"
-          @reset="handleReset"
-        >
-          <template #statusSlot="{ model, field }">
-            <n-input v-model:value="model[field]" />
-          </template>
-        </BasicForm>
-      </div>
-    </n-card>
-  </div>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { FormSchema } from "@/components/molecules/Form/index";
 import { BasicForm } from "@/components/molecules/Form/index";
 import { useMessage } from "naive-ui";
 
-const schemas: FormSchema[] = [
+const message = useMessage();
+
+const formSchemas: FormSchema[] = [
   {
     field: "name",
     component: "NInput",
@@ -146,31 +124,42 @@ const schemas: FormSchema[] = [
   {
     field: "status",
     label: "状态",
-    //插槽
     slot: "statusSlot"
   }
 ];
 
-const message = useMessage();
-
-function handleSubmit(values: Recordable) {
+const onSubmit = (values: Recordable) => {
   if (!values) {
     return message.error("请填写完整信息");
   }
   console.log(values);
   message.success(JSON.stringify(values));
-}
+};
 
-function handleReset(values: Recordable) {
+const onReset = (values: Recordable) => {
   console.log(values);
-}
+};
 </script>
 
-<style lang="less" scoped>
-.BasicForm {
-  width: 550px;
-  margin: 0 auto;
-  overflow: hidden;
-  padding-top: 20px;
-}
-</style>
+<template>
+  <div>
+    <n-card :bordered="false" title="基础表单"> 基础表单，用于向用户收集表单信息 </n-card>
+
+    <n-card :bordered="false" class="mt-4 rounded-lg border-0 bg-white">
+      <div class="mx-auto w-full max-w-lg overflow-hidden pt-5">
+        <BasicForm
+          submitButtonText="提交预约"
+          layout="horizontal"
+          :gridProps="{ cols: 1 }"
+          :schemas="formSchemas"
+          @submit="onSubmit"
+          @reset="onReset"
+        >
+          <template #statusSlot="{ model, field }">
+            <n-input v-model:value="model[field]" />
+          </template>
+        </BasicForm>
+      </div>
+    </n-card>
+  </div>
+</template>

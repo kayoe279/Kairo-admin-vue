@@ -1,30 +1,14 @@
-<template>
-  <n-card :bordered="false" class="proCard">
-    <BasicTable
-      ref="actionRef"
-      title="表格列表"
-      titleTooltip="这是一个提示"
-      :columns="columns"
-      :request="getUserList"
-      :row-key="(row) => row.id"
-      :actionColumn="actionColumn"
-      :scroll-x="1360"
-      @update:checked-row-keys="onCheckedRow"
-    />
-  </n-card>
-</template>
-
-<script lang="ts" setup>
+<script setup lang="ts">
 import { columns } from "./basicColumns";
+import SvgIcon from "@/components/atoms/SvgIcon.vue";
 import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getUserList } from "@/service/api/auth/users";
-import { DeleteOutlined, EditOutlined } from "@vicons/antd";
 import { useDialog, useMessage } from "naive-ui";
 import { h, reactive, ref } from "vue";
 
 const message = useMessage();
 const dialog = useDialog();
-const actionRef = ref();
+const tableRef = ref();
 
 const actionColumn = reactive({
   width: 180,
@@ -32,38 +16,34 @@ const actionColumn = reactive({
   key: "action",
   fixed: "right",
   align: "center",
-  render(record) {
+  render(record: any) {
     return h(TableAction as any, {
       style: "button",
-      actions: createActions(record)
+      actions: buildTableActions(record)
     });
   }
 });
 
-function createActions(record) {
-  return [
-    {
-      label: "删除",
-      // 配置 color 会覆盖 type
-      icon: DeleteOutlined,
-      onClick: handleDelete.bind(null, record),
-      // 根据权限控制是否显示: 有权限，会显示，支持多个
-      auth: ["basic_list"]
-    },
-    {
-      label: "编辑",
-      icon: EditOutlined,
-      onClick: handleEdit.bind(null, record),
-      auth: ["basic_list"]
-    }
-  ];
-}
+const buildTableActions = (record: any) => [
+  {
+    label: "删除",
+    icon: () => h(SvgIcon, { icon: "ant-design:delete-outlined" }),
+    onClick: () => handleDeleteRecord(record),
+    auth: ["basic_list"]
+  },
+  {
+    label: "编辑",
+    icon: () => h(SvgIcon, { icon: "ant-design:edit-outlined" }),
+    onClick: () => handleEditRecord(record),
+    auth: ["basic_list"]
+  }
+];
 
-function onCheckedRow(rowKeys) {
+const onCheckedRowsChange = (rowKeys: string[]) => {
   console.log(rowKeys);
-}
+};
 
-function handleDelete(record) {
+const handleDeleteRecord = (record: any) => {
   console.log(record);
   dialog.info({
     title: "提示",
@@ -72,15 +52,28 @@ function handleDelete(record) {
     negativeText: "取消",
     onPositiveClick: () => {
       message.success("删除成功");
-    },
-    onNegativeClick: () => {}
+    }
   });
-}
+};
 
-function handleEdit(record) {
+const handleEditRecord = (record: any) => {
   console.log(record);
   message.success("您点击了编辑按钮");
-}
+};
 </script>
 
-<style lang="less" scoped></style>
+<template>
+  <n-card :bordered="false" class="rounded-lg border-0 bg-white shadow-sm">
+    <BasicTable
+      ref="tableRef"
+      title="表格列表"
+      titleTooltip="这是一个提示"
+      :columns="columns"
+      :request="getUserList"
+      :row-key="(row) => row.id"
+      :actionColumn="actionColumn"
+      :scroll-x="1360"
+      @update:checked-row-keys="onCheckedRowsChange"
+    />
+  </n-card>
+</template>

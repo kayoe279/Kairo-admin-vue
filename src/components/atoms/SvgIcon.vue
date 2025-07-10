@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/vue";
 import omit from "lodash/omit";
 import { computed, useAttrs } from "vue";

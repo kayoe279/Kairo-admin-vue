@@ -21,9 +21,7 @@
         <template #tableTitle>
           <n-button type="primary" @click="addTable">
             <template #icon>
-              <n-icon>
-                <PlusOutlined />
-              </n-icon>
+              <SvgIcon icon="ant-design:plus-outlined" />
             </template>
             新建
           </n-button>
@@ -74,7 +72,6 @@ import type { FormSchema } from "@/components/molecules/Form/index";
 import { BasicForm, useForm } from "@/components/molecules/Form/index";
 import { BasicTable, TableAction } from "@/components/molecules/Table";
 import { getTableList } from "@/service/api/table/list";
-import { PlusOutlined } from "@vicons/antd";
 import { type FormRules } from "naive-ui";
 import { h, reactive, ref } from "vue";
 import { useRouter } from "vue-router";

@@ -50,9 +50,7 @@
             >
               <div class="flex">
                 <span>
-                  <n-icon size="30">
-                    <GithubOutlined />
-                  </n-icon>
+                  <SvgIcon icon="ant-design:github-outlined" class="text-3xl" />
                 </span>
                 <span class="ml-4 text-lg">Github</span>
               </div>
@@ -84,9 +82,11 @@
             >
               <div class="flex">
                 <span>
-                  <n-icon size="30" color="#e44c27">
-                    <Html5Outlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:html5-outlined"
+                    :style="{ color: '#e44c27' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="ml-4 text-lg">Html5</span>
               </div>
@@ -231,9 +231,11 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="#68c755">
-                    <DashboardOutlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:dashboard-outlined"
+                    :style="{ color: '#68c755' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="text-lx text-center">主控台</span>
               </div>
@@ -241,9 +243,11 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="#fab251">
-                    <ProfileOutlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:profile-outlined"
+                    :style="{ color: '#fab251' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="text-lx text-center">列表</span>
               </div>
@@ -251,9 +255,11 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="#1890ff">
-                    <FileProtectOutlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:file-protect-outlined"
+                    :style="{ color: '#1890ff' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="text-lx text-center">表单</span>
               </div>
@@ -261,9 +267,11 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="#f06b96">
-                    <ApartmentOutlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:apartment-outlined"
+                    :style="{ color: '#f06b96' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="text-lx text-center">权限管理</span>
               </div>
@@ -271,9 +279,11 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="#7238d1">
-                    <SettingOutlined />
-                  </n-icon>
+                  <SvgIcon
+                    icon="ant-design:setting-outlined"
+                    :style="{ color: '#7238d1' }"
+                    class="text-3xl"
+                  />
                 </span>
                 <span class="text-lx text-center">系统管理</span>
               </div>
@@ -281,9 +291,7 @@
             <n-card size="small" class="project-card-item cursor-pointer" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
-                  <n-icon size="30" color="">
-                    <DashboardOutlined />
-                  </n-icon>
+                  <SvgIcon icon="ant-design:dashboard-outlined" class="text-3xl" />
                 </span>
                 <span class="text-lx text-center">主控台</span>
               </div>
@@ -304,16 +312,7 @@ export default { name: "DashboardWorkplace" };
 
 <script lang="ts" setup>
 import schoolboy from "@/assets/images/schoolboy.png";
-import {
-  ApartmentOutlined,
-  DashboardOutlined,
-  FileProtectOutlined,
-  GithubOutlined,
-  Html5Outlined,
-  ProfileOutlined,
-  SettingOutlined
-} from "@vicons/antd";
-import { LogoAngular, LogoJavascript, LogoReact, LogoVue } from "@vicons/ionicons5";
+import SvgIcon from "@/components/atoms/SvgIcon.vue";
 </script>
 
 <style lang="less" scoped>

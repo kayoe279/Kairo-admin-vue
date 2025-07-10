@@ -33,8 +33,6 @@
     "@better-scroll/core": "^2.5.1",
     "@simonwep/pickr": "^1.9.1",
     "@tailwindcss/vite": "^4.0.4",
-    "@vicons/antd": "^0.13.0",
-    "@vicons/ionicons5": "^0.13.0",
     "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^12.5.0",
     "@vueuse/router": "^13.1.0",

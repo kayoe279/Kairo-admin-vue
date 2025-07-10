@@ -22,9 +22,11 @@
               <template v-else>
                 日同比
                 <CountTo :startVal="1" suffix="%" :endVal="visits.rise" />
-                <n-icon size="12" color="#00ff6f">
-                  <CaretUpOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-up-outlined"
+                  :style="{ color: '#00ff6f' }"
+                  class="text-xs"
+                />
               </template>
             </div>
             <div class="text-sn">
@@ -32,9 +34,11 @@
               <template v-else>
                 周同比
                 <CountTo :startVal="1" suffix="%" :endVal="visits.decline" />
-                <n-icon size="12" color="#ffde66">
-                  <CaretDownOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-down-outlined"
+                  :style="{ color: '#ffde66' }"
+                  class="text-xs"
+                />
               </template>
             </div>
           </div>
@@ -114,9 +118,11 @@
               <template v-else>
                 日同比
                 <CountTo :startVal="1" suffix="%" :endVal="orderLarge.rise" />
-                <n-icon size="12" color="#00ff6f">
-                  <CaretUpOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-up-outlined"
+                  :style="{ color: '#00ff6f' }"
+                  class="text-xs"
+                />
               </template>
             </div>
             <div class="text-sn">
@@ -124,9 +130,11 @@
               <template v-else>
                 周同比
                 <CountTo :startVal="1" suffix="%" :endVal="orderLarge.rise" />
-                <n-icon size="12" color="#ffde66">
-                  <CaretDownOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-down-outlined"
+                  :style="{ color: '#ffde66' }"
+                  class="text-xs"
+                />
               </template>
             </div>
           </div>
@@ -163,9 +171,11 @@
               <template v-else>
                 月同比
                 <CountTo :startVal="1" suffix="%" :endVal="volume.rise" />
-                <n-icon size="12" color="#00ff6f">
-                  <CaretUpOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-up-outlined"
+                  :style="{ color: '#00ff6f' }"
+                  class="text-xs"
+                />
               </template>
             </div>
             <div class="text-sn">
@@ -173,9 +183,11 @@
               <template v-else>
                 月同比
                 <CountTo :startVal="1" suffix="%" :endVal="volume.decline" />
-                <n-icon size="12" color="#ffde66">
-                  <CaretDownOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:caret-down-outlined"
+                  :style="{ color: '#ffde66' }"
+                  class="text-xs"
+                />
               </template>
             </div>
           </div>
@@ -204,9 +216,12 @@
               <div class="cursor-pointer" v-else>
                 <p class="flex justify-center">
                   <span>
-                    <n-icon :size="item.size" class="flex-1" :color="item.color">
-                      <component :is="item.icon" v-on="item.eventObject || {}" />
-                    </n-icon>
+                    <SvgIcon
+                      :icon="item.icon"
+                      :style="{ color: item.color }"
+                      class="flex-1 text-3xl"
+                      v-on="item.eventObject || {}"
+                    />
                   </span>
                 </p>
                 <p class="flex justify-center">
@@ -227,18 +242,6 @@
 import VisiTab from "./components/VisiTab.vue";
 import { CountTo } from "@/components/molecules/CountTo/index";
 import { getConsoleInfo } from "@/service/api/dashboard/console";
-import {
-  AccountBookOutlined,
-  BarChartOutlined,
-  CaretDownOutlined,
-  CaretUpOutlined,
-  CreditCardOutlined,
-  MailOutlined,
-  SettingOutlined,
-  ShoppingCartOutlined,
-  TagsOutlined,
-  UsergroupAddOutlined
-} from "@vicons/antd";
 import { onMounted, ref } from "vue";
 
 interface InVisits {
@@ -277,7 +280,7 @@ const volume = ref({} as InVolume);
 // 图标列表
 const iconList = [
   {
-    icon: UsergroupAddOutlined,
+    icon: "ant-design:usergroup-add-outlined",
     size: "32",
     title: "用户",
     color: "#69c0ff",
@@ -286,7 +289,7 @@ const iconList = [
     }
   },
   {
-    icon: BarChartOutlined,
+    icon: "ant-design:bar-chart-outlined",
     size: "32",
     title: "分析",
     color: "#69c0ff",
@@ -295,7 +298,7 @@ const iconList = [
     }
   },
   {
-    icon: ShoppingCartOutlined,
+    icon: "ant-design:shopping-cart-outlined",
     size: "32",
     title: "商品",
     color: "#ff9c6e",
@@ -304,7 +307,7 @@ const iconList = [
     }
   },
   {
-    icon: AccountBookOutlined,
+    icon: "ant-design:account-book-outlined",
     size: "32",
     title: "订单",
     color: "#b37feb",
@@ -313,7 +316,7 @@ const iconList = [
     }
   },
   {
-    icon: CreditCardOutlined,
+    icon: "ant-design:credit-card-outlined",
     size: "32",
     title: "票据",
     color: "#ffd666",
@@ -322,7 +325,7 @@ const iconList = [
     }
   },
   {
-    icon: MailOutlined,
+    icon: "ant-design:mail-outlined",
     size: "32",
     title: "消息",
     color: "#5cdbd3",
@@ -331,7 +334,7 @@ const iconList = [
     }
   },
   {
-    icon: TagsOutlined,
+    icon: "ant-design:tags-outlined",
     size: "32",
     title: "标签",
     color: "#ff85c0",
@@ -340,7 +343,7 @@ const iconList = [
     }
   },
   {
-    icon: SettingOutlined,
+    icon: "ant-design:setting-outlined",
     size: "32",
     title: "配置",
     color: "#ffc069",

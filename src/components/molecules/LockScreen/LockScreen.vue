@@ -83,14 +83,6 @@ import { ResultEnum } from "@/lib/enums/httpEnum";
 import { useScreenLockStore } from "@/store/modules/screenLock";
 import type { UserInfoType } from "@/store/modules/user";
 import { useUserStore } from "@/store/modules/user";
-import {
-  ApiOutlined,
-  ArrowRightOutlined,
-  LoadingOutlined,
-  LockOutlined,
-  UserOutlined,
-  WifiOutlined
-} from "@vicons/antd";
 import { defineComponent, reactive, toRefs } from "vue";
 import { useRoute, useRouter } from "vue-router";
 

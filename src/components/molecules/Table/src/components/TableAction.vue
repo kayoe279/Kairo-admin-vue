@@ -1,142 +1,132 @@
-<template>
-  <div class="tableAction">
-    <div class="flex items-center justify-center">
-      <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
-        <n-button v-bind="action" class="mx-1">
-          {{ action.label }}
-          <template #icon v-if="action.hasOwnProperty('icon')">
-            <n-icon :component="action.icon" />
-          </template>
-        </n-button>
-      </template>
-      <n-dropdown
-        v-if="dropDownActions && getDropdownList.length"
-        trigger="hover"
-        :options="getDropdownList"
-        @select="select"
-      >
-        <slot name="more"></slot>
-        <n-button v-bind="getMoreProps" class="mx-1" v-if="!$slots.more" icon-placement="right">
-          <div class="flex items-center">
-            <span>更多</span>
-            <n-icon size="14" class="ml-1">
-              <DownOutlined />
-            </n-icon>
-          </div>
-          <!--          <template #icon>-->
-          <!--            -->
-          <!--          </template>-->
-        </n-button>
-      </n-dropdown>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
+<script setup lang="ts">
 import type { ActionItem } from "@/components/molecules/Table";
 import { usePermission } from "@/hooks/web/usePermission";
 import { isBoolean, isFunction } from "@/lib/utils/is";
-import { DownOutlined } from "@vicons/antd";
-import type { PropType } from "vue";
-import { computed, defineComponent, toRaw } from "vue";
+import type { DropdownOption } from "naive-ui";
+import { computed, toRaw, useSlots } from "vue";
 
-export default defineComponent({
-  name: "TableAction",
-  components: { DownOutlined },
-  props: {
-    actions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null,
-      required: true
-    },
-    dropDownActions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null
-    },
-    style: {
-      type: String as PropType<string>,
-      default: "button"
-    },
-    select: {
-      type: Function as PropType<Function>,
-      default: () => {}
-    }
-  },
-  setup(props) {
-    const { hasPermission } = usePermission();
+interface Props {
+  actions: ActionItem[];
+  dropDownActions?: ActionItem[];
+  style?: "button" | "text";
+  select?: (key: string, option: DropdownOption) => void;
+}
 
-    const actionType =
-      props.style === "button" ? "default" : props.style === "text" ? "primary" : "default";
-    const actionText =
-      props.style === "button" ? undefined : props.style === "text" ? true : undefined;
+const props = withDefaults(defineProps<Props>(), {
+  actions: () => [],
+  dropDownActions: () => [],
+  style: "button",
+  select: () => {}
+});
 
-    const getMoreProps = computed(() => {
+const slots = useSlots();
+const { hasPermission } = usePermission();
+
+const buttonType = computed(() => {
+  return props.style === "button" ? "default" : "primary";
+});
+
+const isTextStyle = computed(() => {
+  return props.style === "text";
+});
+
+const moreButtonProps = computed(() => {
+  return {
+    text: isTextStyle.value,
+    type: buttonType.value as any,
+    size: "small" as const
+  };
+});
+
+const shouldShowAction = (action: ActionItem): boolean => {
+  const { ifShow } = action;
+
+  if (isBoolean(ifShow)) {
+    return ifShow;
+  }
+
+  if (isFunction(ifShow)) {
+    return ifShow(action);
+  }
+
+  return true;
+};
+
+const filteredActions = computed(() => {
+  return (toRaw(props.actions) || [])
+    .filter((action) => {
+      return hasPermission(action.auth as string[]) && shouldShowAction(action);
+    })
+    .map((action) => {
+      const { popConfirm, type, ...restAction } = action;
+
       return {
-        text: actionText,
-        type: actionType,
-        size: "small"
+        ...restAction,
+        size: "small" as const,
+        text: isTextStyle.value,
+        type: type as any,
+        ...(popConfirm && {
+          onConfirm: popConfirm.confirm,
+          onCancel: popConfirm.cancel
+        })
       };
     });
-
-    const getDropdownList = computed(() => {
-      return (toRaw(props.dropDownActions) || [])
-        .filter((action) => {
-          return hasPermission(action.auth as string[]) && isIfShow(action);
-        })
-        .map((action) => {
-          const { popConfirm } = action;
-          return {
-            size: "small",
-            text: actionText,
-            type: actionType,
-            ...action,
-            ...popConfirm,
-            onConfirm: popConfirm?.confirm,
-            onCancel: popConfirm?.cancel
-          };
-        });
-    });
-
-    function isIfShow(action: ActionItem): boolean {
-      const ifShow = action.ifShow;
-
-      let isIfShow = true;
-
-      if (isBoolean(ifShow)) {
-        isIfShow = ifShow;
-      }
-      if (isFunction(ifShow)) {
-        isIfShow = ifShow(action);
-      }
-      return isIfShow;
-    }
-
-    const getActions = computed(() => {
-      return (toRaw(props.actions) || [])
-        .filter((action) => {
-          return hasPermission(action.auth as string[]) && isIfShow(action);
-        })
-        .map((action) => {
-          const { popConfirm } = action;
-          //需要展示什么风格，自己修改一下参数
-          return {
-            size: "small",
-            text: actionText,
-            type: actionType,
-            ...action,
-            ...(popConfirm || {}),
-            onConfirm: popConfirm?.confirm,
-            onCancel: popConfirm?.cancel,
-            enable: !!popConfirm
-          };
-        });
-    });
-
-    return {
-      getActions,
-      getDropdownList,
-      getMoreProps
-    };
-  }
 });
+
+const dropdownOptions = computed(() => {
+  return (toRaw(props.dropDownActions) || [])
+    .filter((action) => {
+      return hasPermission(action.auth as string[]) && shouldShowAction(action);
+    })
+    .map((action) => {
+      const { popConfirm, label, onClick, ...restAction } = action;
+
+      return {
+        key: action.label || Math.random().toString(),
+        label: label || "",
+        ...restAction,
+        ...(popConfirm && {
+          onConfirm: popConfirm.confirm,
+          onCancel: popConfirm.cancel
+        }),
+        onClick: onClick
+      } as DropdownOption;
+    });
+});
+
+const hasDropdownActions = computed(() => {
+  return props.dropDownActions && dropdownOptions.value.length > 0;
+});
+
+const handleSelect = (key: string, option: DropdownOption) => {
+  props.select(key, option);
+};
 </script>
+
+<template>
+  <div class="flex items-center justify-center">
+    <template v-for="(action, index) in filteredActions" :key="`${index}-${action.label}`">
+      <n-button v-bind="action" class="mx-1">
+        {{ action.label }}
+        <template v-if="action.icon" #icon>
+          <n-icon :component="action.icon" />
+        </template>
+      </n-button>
+    </template>
+
+    <n-dropdown
+      v-if="hasDropdownActions"
+      trigger="hover"
+      :options="dropdownOptions"
+      @select="handleSelect"
+    >
+      <slot name="more" />
+      <n-button v-if="!slots.more" v-bind="moreButtonProps" class="mx-1" icon-placement="right">
+        <div class="flex items-center">
+          <span>更多</span>
+          <SvgIcon icon="ant-design:down-outlined" class="ml-1 text-sm" />
+        </div>
+      </n-button>
+    </n-dropdown>
+  </div>
+</template>

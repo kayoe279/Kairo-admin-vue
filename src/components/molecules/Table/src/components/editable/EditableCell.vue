@@ -1,406 +1,349 @@
-<template>
-  <div class="editable-cell">
-    <div class="editable-cell-content flex" v-if="isEdit" v-click-outside="onClickOutside">
-      <div class="editable-cell-content-comp">
-        <CellComponent
-          v-bind="getComponentProps"
-          :component="getComponent"
-          :popoverVisible="getRuleVisible"
-          :ruleMessage="ruleMessage"
-          :rule="getRule"
-          :class="getWrapperClass"
-          ref="elRef"
-          @options-change="handleOptionsChange"
-          @press-enter="handleEnter"
-        />
-      </div>
-      <div class="editable-cell-action" v-if="!getRowEditable">
-        <n-icon class="mx-2 cursor-pointer" title="保存">
-          <CheckOutlined @click="handleSubmit" />
-        </n-icon>
-        <n-icon class="mx-2 cursor-pointer" title="取消">
-          <CloseOutlined @click="handleCancel" />
-        </n-icon>
-      </div>
-    </div>
-    <div v-else class="editable-cell-content flex items-center" @click="handleEdit">
-      {{ getValues }}
-      <n-icon class="edit-icon ml-1" v-if="!column.editRow">
-        <FormOutlined />
-      </n-icon>
-    </div>
-  </div>
-</template>
-<script lang="ts">
-import { useTableContext } from "../../hooks/useTableContext";
-import type { BasicColumn } from "../../types/props";
+<script setup lang="ts">
 import { CellComponent } from "./CellComponent";
 import { createPlaceholderMessage } from "./helper";
 import type { EditRecordRow } from "./index";
+import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import { useTableContext } from "@/components/molecules/Table";
+import type { BasicColumn } from "@/components/molecules/Table";
 import { EventEnum } from "@/components/molecules/Table/src/componentMap";
-import clickOutside from "@/directives/clickOutside";
-import { propTypes } from "@/lib/propTypes";
 import { isArray, isBoolean, isFunction, isNumber, isString } from "@/lib/utils/is";
-import { CheckOutlined, CloseOutlined, FormOutlined } from "@vicons/antd";
 import { format, parseISO } from "date-fns";
 import { omit, set } from "lodash-es";
-import type { PropType } from "vue";
-import { computed, defineComponent, nextTick, ref, toRaw, unref, watchEffect } from "vue";
+import { computed, nextTick, ref, toRaw, unref, watchEffect } from "vue";
 
-export default defineComponent({
-  name: "EditableCell",
-  components: { FormOutlined, CloseOutlined, CheckOutlined, CellComponent },
-  directives: {
-    clickOutside
-  },
-  props: {
-    value: {
-      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
-      default: ""
-    },
-    record: {
-      type: Object as PropType<EditRecordRow>
-    },
-    column: {
-      type: Object as PropType<BasicColumn>,
-      default: () => ({})
-    },
-    index: propTypes.number
-  },
-  setup(props) {
-    const table = useTableContext();
-    const isEdit = ref(false);
-    const elRef = ref();
-    const ruleVisible = ref(false);
-    const ruleMessage = ref("");
-    const optionsRef = ref<LabelValueOptions>([]);
-    const currentValueRef = ref<any>(props.value);
-    const defaultValueRef = ref<any>(props.value);
+interface Props {
+  value?: string | number | boolean | Recordable;
+  record?: EditRecordRow;
+  column: BasicColumn;
+  index?: number;
+}
 
-    // const { prefixCls } = useDesign('editable-cell');
+const props = withDefaults(defineProps<Props>(), {
+  value: "",
+  column: () => ({}) as BasicColumn
+});
 
-    const getComponent = computed(() => props.column?.editComponent || "NInput");
-    const getRule = computed(() => props.column?.editRule);
+const table = useTableContext();
 
-    const getRuleVisible = computed(() => {
-      return unref(ruleMessage) && unref(ruleVisible);
-    });
+const isEditing = ref(false);
+const cellRef = ref();
+const isRuleVisible = ref(false);
+const ruleMessage = ref("");
+const selectOptions = ref<LabelValueOptions>([]);
+const currentValue = ref<any>(props.value);
+const defaultValue = ref<any>(props.value);
 
-    const getIsCheckComp = computed(() => {
-      const component = unref(getComponent);
-      return ["NCheckbox", "NRadio"].includes(component);
-    });
+const editComponent = computed(() => props.column?.editComponent || "NInput");
+const editRule = computed(() => props.column?.editRule);
 
-    const getComponentProps = computed(() => {
-      const compProps = props.column?.editComponentProps ?? {};
-      const editComponent = props.column?.editComponent ?? null;
-      const component = unref(getComponent);
-      const apiSelectProps: Recordable = {};
+const shouldShowRule = computed(() => {
+  return unref(ruleMessage) && unref(isRuleVisible);
+});
 
-      const isCheckValue = unref(getIsCheckComp);
+const isCheckboxComponent = computed(() => {
+  const component = unref(editComponent);
+  return ["NCheckbox", "NRadio"].includes(component);
+});
 
-      let valueField = isCheckValue ? "checked" : "value";
-      const val = unref(currentValueRef);
+const componentProps = computed(() => {
+  const compProps = props.column?.editComponentProps ?? {};
+  const editComponentType = props.column?.editComponent ?? null;
+  const component = unref(editComponent);
+  const apiSelectProps: Recordable = {};
 
-      let value = isCheckValue ? (isNumber(val) && isBoolean(val) ? val : !!val) : val;
+  const isCheckValue = unref(isCheckboxComponent);
+  let valueField = isCheckValue ? "checked" : "value";
+  const val = unref(currentValue);
+  let value = isCheckValue ? (isNumber(val) && isBoolean(val) ? val : !!val) : val;
 
-      //TODO 特殊处理 NDatePicker 可能要根据项目 规范自行调整代码
-      if (component === "NDatePicker") {
-        if (isString(value)) {
-          if (compProps.valueFormat) {
-            valueField = "formatted-value";
-          } else {
-            value = parseISO(value as any).getTime();
-          }
-        } else if (isArray(value)) {
-          if (compProps.valueFormat) {
-            valueField = "formatted-value";
-          } else {
-            value = value.map((item) => parseISO(item).getTime());
-          }
-        }
+  if (component === "NDatePicker") {
+    if (isString(value)) {
+      if (compProps.valueFormat) {
+        valueField = "formatted-value";
+      } else {
+        value = parseISO(value as any).getTime();
       }
-
-      const onEvent: any = editComponent ? EventEnum[editComponent] : undefined;
-
-      return {
-        placeholder: createPlaceholderMessage(unref(getComponent)),
-        ...apiSelectProps,
-        ...omit(compProps, "onChange"),
-        [onEvent]: handleChange,
-        [valueField]: value
-      };
-    });
-
-    const getValues = computed(() => {
-      const { editComponentProps, editValueMap } = props.column;
-
-      const value = unref(currentValueRef);
-
-      if (editValueMap && isFunction(editValueMap)) {
-        return editValueMap(value);
-      }
-
-      const component = unref(getComponent);
-      if (!component.includes("NSelect")) {
-        return value;
-      }
-
-      const options: LabelValueOptions = editComponentProps?.options ?? (unref(optionsRef) || []);
-      const option = options.find((item) => `${item.value}` === `${value}`);
-
-      return option?.label ?? value;
-    });
-
-    const getWrapperClass = computed(() => {
-      const { align = "center" } = props.column;
-      return `edit-cell-align-${align}`;
-    });
-
-    const getRowEditable = computed(() => {
-      const { editable } = props.record || {};
-      return !!editable;
-    });
-
-    watchEffect(() => {
-      defaultValueRef.value = props.value;
-    });
-
-    watchEffect(() => {
-      const { editable } = props.column;
-      if (isBoolean(editable) || isBoolean(unref(getRowEditable))) {
-        isEdit.value = !!editable || unref(getRowEditable);
-      }
-    });
-
-    function handleEdit() {
-      if (unref(getRowEditable) || unref(props.column?.editRow)) return;
-      ruleMessage.value = "";
-      isEdit.value = true;
-      nextTick(() => {
-        const el = unref(elRef);
-        el?.focus?.();
-      });
-    }
-
-    async function handleChange(e: any) {
-      const component = unref(getComponent);
-      const compProps = props.column?.editComponentProps ?? {};
-      if (!e) {
-        currentValueRef.value = e;
-      } else if (e?.target && Reflect.has(e.target, "value")) {
-        currentValueRef.value = e.target.value;
-      } else if (component === "NCheckbox") {
-        currentValueRef.value = e.target.checked;
-      } else if (isString(e) || isBoolean(e) || isNumber(e)) {
-        currentValueRef.value = e;
-      }
-
-      //TODO 特殊处理 NDatePicker 可能要根据项目 规范自行调整代码
-      if (component === "NDatePicker") {
-        if (isNumber(currentValueRef.value)) {
-          if (compProps.valueFormat) {
-            currentValueRef.value = format(currentValueRef.value, compProps.valueFormat);
-          }
-        } else if (isArray(currentValueRef.value)) {
-          if (compProps.valueFormat) {
-            currentValueRef.value = currentValueRef.value.map((item) => {
-              format(item, compProps.valueFormat);
-            });
-          }
-        }
-      }
-
-      const onChange = props.column?.editComponentProps?.onChange;
-      if (onChange && isFunction(onChange)) onChange(...arguments);
-
-      table.emit?.("edit-change", {
-        column: props.column,
-        value: unref(currentValueRef),
-        record: toRaw(props.record)
-      });
-      await handleSubmiRule();
-    }
-
-    async function handleSubmiRule() {
-      const { column, record } = props;
-      const { editRule } = column;
-      const currentValue = unref(currentValueRef);
-
-      if (editRule) {
-        if (isBoolean(editRule) && !currentValue && !isNumber(currentValue)) {
-          ruleVisible.value = true;
-          const component = unref(getComponent);
-          ruleMessage.value = createPlaceholderMessage(component);
-          return false;
-        }
-        if (isFunction(editRule)) {
-          const res = await editRule(currentValue, record as Recordable);
-          if (!!res) {
-            ruleMessage.value = res;
-            ruleVisible.value = true;
-            return false;
-          } else {
-            ruleMessage.value = "";
-            return true;
-          }
-        }
-      }
-      ruleMessage.value = "";
-      return true;
-    }
-
-    async function handleSubmit(needEmit = true, valid = true) {
-      if (valid) {
-        const isPass = await handleSubmiRule();
-        if (!isPass) return false;
-      }
-
-      const { column, index, record } = props;
-      if (!record) return false;
-      const { key } = column;
-      const value = unref(currentValueRef);
-      if (!key) return;
-
-      const dataKey = key as string;
-
-      set(record, dataKey, value);
-      //const record = await table.updateTableData(index, dataKey, value);
-      needEmit && table.emit?.("edit-end", { record, index, key, value });
-      isEdit.value = false;
-    }
-
-    async function handleEnter() {
-      if (props.column?.editRow) {
-        return;
-      }
-      await handleSubmit();
-    }
-
-    function handleCancel() {
-      isEdit.value = false;
-      currentValueRef.value = defaultValueRef.value;
-      const { column, index, record } = props;
-      const { key } = column;
-      ruleVisible.value = true;
-      ruleMessage.value = "";
-      table.emit?.("edit-cancel", {
-        record,
-        index,
-        key: key,
-        value: unref(currentValueRef)
-      });
-    }
-
-    function onClickOutside() {
-      if (props.column?.editable || unref(getRowEditable)) {
-        return;
-      }
-      const component = unref(getComponent);
-
-      if (component.includes("NInput")) {
-        handleCancel();
+    } else if (isArray(value)) {
+      if (compProps.valueFormat) {
+        valueField = "formatted-value";
+      } else {
+        value = value.map((item) => parseISO(item).getTime());
       }
     }
+  }
 
-    // only ApiSelect
-    function handleOptionsChange(options: LabelValueOptions) {
-      optionsRef.value = options;
-    }
+  const onEvent: any = editComponentType ? EventEnum[editComponentType] : undefined;
 
-    function initCbs(cbs: "submitCbs" | "validCbs" | "cancelCbs", handle: Fn) {
-      if (props.record) {
-        /* eslint-disable  */
-        isArray(props.record[cbs])
-          ? props.record[cbs]?.push(handle)
-          : (props.record[cbs] = [handle]);
-      }
-    }
+  return {
+    placeholder: createPlaceholderMessage(unref(editComponent)),
+    ...apiSelectProps,
+    ...omit(compProps, "onChange"),
+    [onEvent]: handleValueChange,
+    [valueField]: value
+  };
+});
 
-    if (props.record) {
-      initCbs("submitCbs", handleSubmit);
-      initCbs("validCbs", handleSubmiRule);
-      initCbs("cancelCbs", handleCancel);
+const displayValue = computed(() => {
+  const { editComponentProps, editValueMap } = props.column;
+  const value = unref(currentValue);
 
-      if (props.column.key) {
-        if (!props.record.editValueRefs) props.record.editValueRefs = {};
-        props.record.editValueRefs[props.column.key] = currentValueRef;
-      }
-      /* eslint-disable  */
-      props.record.onCancelEdit = () => {
-        isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn) => fn());
-      };
-      /* eslint-disable */
-      props.record.onSubmitEdit = async () => {
-        if (isArray(props.record?.submitCbs)) {
-          const validFns = (props.record?.validCbs || []).map((fn) => fn());
+  if (editValueMap && isFunction(editValueMap)) {
+    return editValueMap(value);
+  }
 
-          const res = await Promise.all(validFns);
+  const component = unref(editComponent);
+  if (!component.includes("NSelect")) {
+    return value;
+  }
 
-          const pass = res.every((item) => !!item);
+  const options: LabelValueOptions = editComponentProps?.options ?? (unref(selectOptions) || []);
+  const option = options.find((item) => `${item.value}` === `${value}`);
 
-          if (!pass) return;
-          const submitFns = props.record?.submitCbs || [];
-          submitFns.forEach((fn) => fn(false, false));
-          table.emit?.("edit-row-end");
-          return true;
-        }
-      };
-    }
+  return option?.label ?? value;
+});
 
-    return {
-      isEdit,
-      handleEdit,
-      currentValueRef,
-      handleSubmit,
-      handleChange,
-      handleCancel,
-      elRef,
-      getComponent,
-      getRule,
-      onClickOutside,
-      ruleMessage,
-      getRuleVisible,
-      getComponentProps,
-      handleOptionsChange,
-      getWrapperClass,
-      getRowEditable,
-      getValues,
-      handleEnter
-      // getSize,
-    };
+const cellAlignClass = computed(() => {
+  const { align = "center" } = props.column;
+  return `text-${align}`;
+});
+
+const isRowEditable = computed(() => {
+  const { editable } = props.record || {};
+  return !!editable;
+});
+
+watchEffect(() => {
+  defaultValue.value = props.value;
+});
+
+watchEffect(() => {
+  const { editable } = props.column;
+  if (isBoolean(editable) || isBoolean(unref(isRowEditable))) {
+    isEditing.value = !!editable || unref(isRowEditable);
   }
 });
+
+const startEditing = () => {
+  if (unref(isRowEditable) || unref(props.column?.editRow)) return;
+  ruleMessage.value = "";
+  isEditing.value = true;
+  nextTick(() => {
+    const el = unref(cellRef);
+    el?.focus?.();
+  });
+};
+
+const handleValueChange = async (e: any) => {
+  const component = unref(editComponent);
+  const compProps = props.column?.editComponentProps ?? {};
+
+  if (!e) {
+    currentValue.value = e;
+  } else if (e?.target && Reflect.has(e.target, "value")) {
+    currentValue.value = e.target.value;
+  } else if (component === "NCheckbox") {
+    currentValue.value = e.target.checked;
+  } else if (isString(e) || isBoolean(e) || isNumber(e)) {
+    currentValue.value = e;
+  }
+
+  if (component === "NDatePicker") {
+    if (isNumber(currentValue.value)) {
+      if (compProps.valueFormat) {
+        currentValue.value = format(currentValue.value, compProps.valueFormat);
+      }
+    } else if (isArray(currentValue.value)) {
+      if (compProps.valueFormat) {
+        currentValue.value = currentValue.value.map((item) => {
+          return format(item, compProps.valueFormat);
+        });
+      }
+    }
+  }
+
+  const onChange = props.column?.editComponentProps?.onChange;
+  if (onChange && isFunction(onChange)) onChange(e);
+
+  table.emit?.("edit-change", {
+    column: props.column,
+    value: unref(currentValue),
+    record: toRaw(props.record)
+  });
+  await validateRule();
+};
+
+const validateRule = async () => {
+  const { column, record } = props;
+  const { editRule } = column;
+  const currentVal = unref(currentValue);
+
+  if (editRule) {
+    if (isBoolean(editRule) && !currentVal && !isNumber(currentVal)) {
+      isRuleVisible.value = true;
+      const component = unref(editComponent);
+      ruleMessage.value = createPlaceholderMessage(component);
+      return false;
+    }
+    if (isFunction(editRule)) {
+      const res = await editRule(currentVal, record as Recordable);
+      if (!!res) {
+        ruleMessage.value = res;
+        isRuleVisible.value = true;
+        return false;
+      } else {
+        ruleMessage.value = "";
+        return true;
+      }
+    }
+  }
+  ruleMessage.value = "";
+  return true;
+};
+
+const submitEdit = async (needEmit = true, valid = true) => {
+  if (valid) {
+    const isValid = await validateRule();
+    if (!isValid) return false;
+  }
+
+  const { column, index, record } = props;
+  if (!record) return false;
+  const { key } = column;
+  const value = unref(currentValue);
+  if (!key) return;
+
+  const dataKey = key as string;
+  set(record, dataKey, value);
+  needEmit && table.emit?.("edit-end", { record, index, key, value });
+  isEditing.value = false;
+  return true;
+};
+
+const handleEnterKey = async () => {
+  if (props.column?.editRow) {
+    return;
+  }
+  await submitEdit();
+};
+
+const cancelEdit = () => {
+  isEditing.value = false;
+  currentValue.value = defaultValue.value;
+  const { column, index, record } = props;
+  const { key } = column;
+  isRuleVisible.value = false;
+  ruleMessage.value = "";
+  table.emit?.("edit-cancel", {
+    record,
+    index,
+    key: key,
+    value: unref(currentValue)
+  });
+};
+
+const handleClickOutside = () => {
+  if (props.column?.editable || unref(isRowEditable)) {
+    return;
+  }
+  const component = unref(editComponent);
+
+  if (component.includes("NInput")) {
+    cancelEdit();
+  }
+};
+
+const handleSelectOptionsChange = (options: LabelValueOptions) => {
+  selectOptions.value = options;
+};
+
+const initializeCallbacks = (cbType: "submitCbs" | "validCbs" | "cancelCbs", handler: Fn) => {
+  if (props.record) {
+    const record = toRaw(props.record);
+    isArray(record[cbType]) ? record[cbType]?.push(handler) : (record[cbType] = [handler]);
+  }
+};
+
+if (props.record) {
+  const record = toRaw(props.record);
+  initializeCallbacks("submitCbs", submitEdit);
+  initializeCallbacks("validCbs", validateRule);
+  initializeCallbacks("cancelCbs", cancelEdit);
+
+  if (props.column.key) {
+    if (!record.editValueRefs) record.editValueRefs = {};
+    record.editValueRefs[props.column.key] = currentValue;
+  }
+
+  record.onCancelEdit = () => {
+    isArray(record?.cancelCbs) && record?.cancelCbs.forEach((fn) => fn());
+  };
+
+  record.onSubmitEdit = async () => {
+    if (isArray(record?.submitCbs)) {
+      const validFns = (record?.validCbs || []).map((fn) => fn());
+      const res = await Promise.all(validFns);
+      const isValid = res.every((item) => !!item);
+
+      if (!isValid) return false;
+
+      const submitFns = record?.submitCbs || [];
+      submitFns.forEach((fn) => fn(false, false));
+      table.emit?.("edit-row-end");
+      return true;
+    }
+    return false;
+  };
+}
 </script>
 
-<style>
-.editable-cell-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<template>
+  <div>
+    <div v-if="isEditing" class="flex" v-click-outside="handleClickOutside">
+      <div class="flex-1">
+        <CellComponent
+          v-bind="componentProps"
+          :component="editComponent"
+          :popoverVisible="shouldShowRule"
+          :ruleMessage="ruleMessage"
+          :rule="editRule"
+          :class="cellAlignClass"
+          ref="cellRef"
+          @options-change="handleSelectOptionsChange"
+          @press-enter="handleEnterKey"
+        />
+      </div>
+      <div v-if="!isRowEditable" class="flex items-center justify-center">
+        <SvgIcon
+          icon="ant-design:check-outlined"
+          class="mx-2 cursor-pointer text-base hover:text-green-500"
+          title="保存"
+          @click="submitEdit"
+        />
+        <SvgIcon
+          icon="ant-design:close-outlined"
+          class="mx-2 cursor-pointer text-base hover:text-red-500"
+          title="取消"
+          @click="cancelEdit"
+        />
+      </div>
+    </div>
+    <div
+      v-else
+      class="relative flex cursor-pointer items-center overflow-hidden break-words text-ellipsis whitespace-nowrap"
+      @click="startEditing"
+    >
+      {{ displayValue }}
+      <SvgIcon
+        v-if="!column.editRow"
+        icon="ant-design:form-outlined"
+        class="ml-1 w-5 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+      />
+    </div>
+  </div>
+</template>
 
-.editable-cell-content {
-  position: relative;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.editable-cell-content .edit-icon {
-  font-size: 14px;
-  display: none;
-  width: 20px;
-  cursor: pointer;
-}
-
-.editable-cell-content-comp {
-  flex: 1;
-}
-
-.editable-cell-content:hover .edit-icon {
-  display: inline-block;
+<style scoped>
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
 }
 </style>

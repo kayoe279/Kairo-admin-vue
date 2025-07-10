@@ -1,47 +1,46 @@
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单">
-        表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
-      </n-card>
-    </div>
-    <n-card :bordered="false" class="proCard mt-4">
+    <n-card :bordered="false" title="基础表单" class="rounded-lg border-0 bg-white shadow-sm">
+      表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
+    </n-card>
+
+    <n-card :bordered="false" class="mt-4 rounded-lg border-0 bg-white shadow-sm">
       <n-grid cols="1 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
         <n-grid-item offset="0 s:0 m:1 l:1 xl:1 2xl:1">
           <n-form
             :label-width="90"
-            :model="formValue"
-            :rules="rules"
+            :model="formValues"
+            :rules="formRules"
             label-placement="left"
             ref="formRef"
             class="py-8"
           >
             <n-form-item label="预约姓名" path="name">
-              <n-input v-model:value="formValue.name" placeholder="输入姓名" />
+              <n-input v-model:value="formValues.name" placeholder="输入姓名" />
             </n-form-item>
             <n-form-item label="预约号码" path="mobile">
-              <n-input placeholder="电话号码" v-model:value="formValue.mobile" />
+              <n-input placeholder="电话号码" v-model:value="formValues.mobile" />
             </n-form-item>
             <n-form-item label="预约时间" path="datetime">
-              <n-date-picker type="datetime" v-model:value="formValue.datetime" />
+              <n-date-picker type="datetime" v-model:value="formValues.datetime" />
             </n-form-item>
             <n-form-item label="预约医生" path="doctor">
               <n-select
                 placeholder="请选择预约医生"
-                :options="doctorList"
-                v-model:value="formValue.doctor"
+                :options="doctorOptions"
+                v-model:value="formValues.doctor"
               />
             </n-form-item>
             <n-form-item label="预约事项" path="matter">
               <n-select
                 placeholder="请选择预约事项"
-                :options="matterList"
-                v-model:value="formValue.matter"
+                :options="appointmentMatterOptions"
+                v-model:value="formValues.matter"
                 multiple
               />
             </n-form-item>
             <n-form-item label="性别" path="sex">
-              <n-radio-group v-model:value="formValue.sex" name="sex">
+              <n-radio-group v-model:value="formValues.sex" name="sex">
                 <n-space>
                   <n-radio :value="1">男</n-radio>
                   <n-radio :value="2">女</n-radio>
@@ -50,30 +49,28 @@
             </n-form-item>
             <n-form-item label="预约备注" path="remark">
               <n-input
-                v-model:value="formValue.remark"
+                v-model:value="formValues.remark"
                 type="textarea"
                 placeholder="请输入预约备注"
               />
             </n-form-item>
             <n-form-item label="图片" path="img">
               <BasicUpload
-                :action="`${uploadUrl}/v1.0/files`"
+                :action="`${globSetting.uploadUrl}/v1.0/files`"
                 :headers="uploadHeaders"
                 :data="{ type: 0 }"
                 name="files"
                 :width="100"
                 :height="100"
-                @upload-change="uploadChange"
-                v-model:value="uploadList"
+                @upload-change="handleUploadChange"
+                v-model:value="uploadedFiles"
                 helpText="单个文件不超过20MB，最多只能上传10个文件"
               />
             </n-form-item>
-            <div style="margin-left: 80px">
-              <n-space>
-                <n-button type="primary" @click="formSubmit">提交预约</n-button>
-                <n-button @click="resetForm">重置</n-button>
-              </n-space>
-            </div>
+            <n-space justify="center">
+              <n-button type="primary" @click="handleFormSubmit">提交预约</n-button>
+              <n-button @click="handleFormReset">重置</n-button>
+            </n-space>
           </n-form>
         </n-grid-item>
       </n-grid>
@@ -81,45 +78,30 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicUpload } from "@/components/molecules/Upload";
 import { useGlobSetting } from "@/hooks/useGlobSetting";
+import type { FormInst, FormRules } from "naive-ui";
 import { useMessage } from "naive-ui";
-import { reactive, ref, unref } from "vue";
+import { reactive, ref } from "vue";
 
 const globSetting = useGlobSetting();
+const message = useMessage();
+const formRef = ref<FormInst | null>(null);
 
-const matterList = [
-  {
-    label: "种牙",
-    value: 1
-  },
-  {
-    label: "补牙",
-    value: 2
-  },
-  {
-    label: "根管",
-    value: 3
-  }
+const appointmentMatterOptions = [
+  { label: "种牙", value: 1 },
+  { label: "补牙", value: 2 },
+  { label: "根管", value: 3 }
 ];
 
-const doctorList = [
-  {
-    label: "李医生",
-    value: 1
-  },
-  {
-    label: "黄医生",
-    value: 2
-  },
-  {
-    label: "张医生",
-    value: 3
-  }
+const doctorOptions = [
+  { label: "李医生", value: 1 },
+  { label: "黄医生", value: 2 },
+  { label: "张医生", value: 3 }
 ];
 
-const rules = {
+const formRules: FormRules = {
   name: {
     required: true,
     message: "请输入预约姓名",
@@ -149,46 +131,43 @@ const rules = {
   }
 };
 
-const formRef: any = ref(null);
-const message = useMessage();
-const { uploadUrl } = globSetting;
-
-const defaultValueRef = () => ({
+const getDefaultFormValues = () => ({
   name: "",
   mobile: "",
   remark: "",
   sex: 1,
-  matter: null,
-  doctor: null,
-  datetime: []
+  matter: null as number[] | null,
+  doctor: null as number | null,
+  datetime: null as number | null
 });
 
-let formValue = reactive(defaultValueRef());
-const uploadList = ref([
+const formValues = reactive(getDefaultFormValues());
+const uploadedFiles = ref([
   "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
 ]);
+
 const uploadHeaders = reactive({
   platform: "miniPrograms",
   timestamp: new Date().getTime(),
   token: "Q6fFCuhc1vkKn5JNFWaCLf6gRAc5n0LQHd08dSnG4qo="
 });
 
-function formSubmit() {
-  formRef.value.validate((errors) => {
+const handleFormSubmit = () => {
+  formRef.value?.validate((errors) => {
     if (!errors) {
       message.success("验证成功");
     } else {
       message.error("验证失败，请填写完整信息");
     }
   });
-}
+};
 
-function resetForm() {
-  formRef.value.restoreValidation();
-  formValue = Object.assign(unref(formValue), defaultValueRef());
-}
+const handleFormReset = () => {
+  formRef.value?.restoreValidation();
+  Object.assign(formValues, getDefaultFormValues());
+};
 
-function uploadChange(list: string[]) {
-  console.log(list);
-}
+const handleUploadChange = (fileList: string[]) => {
+  console.log(fileList);
+};
 </script>

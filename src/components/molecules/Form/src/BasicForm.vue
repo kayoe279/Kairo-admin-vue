@@ -1,6 +1,6 @@
 <template>
   <n-form v-bind="getBindValue" :model="formModel" ref="formElRef">
-    <n-grid v-bind="getGrid">
+    <n-grid v-bind="getGrid" y-gap="16" x-gap="10">
       <n-gi v-bind="schema.giProps" v-for="schema in getSchema" :key="schema.field">
         <n-form-item :label="schema.label" :path="schema.field">
           <!--标签名右侧温馨提示-->
@@ -8,9 +8,10 @@
             {{ schema.label }}
             <n-tooltip trigger="hover" :style="schema.labelMessageStyle">
               <template #trigger>
-                <n-icon size="18" class="cursor-pointer text-gray-400">
-                  <QuestionCircleOutlined />
-                </n-icon>
+                <SvgIcon
+                  icon="ant-design:question-circle-outlined"
+                  class="cursor-pointer text-lg text-gray-400"
+                />
               </template>
               {{ schema.labelMessage }}
             </n-tooltip>
@@ -107,12 +108,16 @@
             @click="unfoldToggle"
           >
             <template #icon>
-              <n-icon size="14" class="-ml-1 flex w-full items-center" v-if="overflow">
-                <DownOutlined />
-              </n-icon>
-              <n-icon size="14" class="-ml-1 flex w-full items-center" v-else>
-                <UpOutlined />
-              </n-icon>
+              <SvgIcon
+                v-if="overflow"
+                icon="ant-design:down-outlined"
+                class="-ml-1 flex w-full items-center text-sm"
+              />
+              <SvgIcon
+                v-else
+                icon="ant-design:up-outlined"
+                class="-ml-1 flex w-full items-center text-sm"
+              />
             </template>
             {{ overflow ? "展开" : "收起" }}
           </n-button>
@@ -128,9 +133,7 @@ import { useFormEvents } from "./hooks/useFormEvents";
 import { useFormValues } from "./hooks/useFormValues";
 import type { FormActionType, FormProps, FormSchema } from "./types/form";
 import type { ComponentType } from "./types/index";
-import { deepMerge } from "@/lib/utils";
-import { isArray } from "@/lib/utils/is";
-import { DownOutlined, QuestionCircleOutlined, UpOutlined } from "@vicons/antd";
+import { deepMerge, isArray } from "@/lib/utils";
 import type { GridProps } from "naive-ui/lib/grid";
 import { computed, onMounted, reactive, ref, unref, watch } from "vue";
 import type { Ref } from "vue";
