@@ -41,21 +41,18 @@ Object.keys(devDependencies).forEach((key) => {
         <n-descriptions-item label="最后编译时间">
           <n-tag type="info"> {{ lastBuildTime }} </n-tag>
         </n-descriptions-item>
-        <n-descriptions-item label="文档地址">
-          <div class="flex items-center">
-            <a href="https://docs.naiveadmin.com" class="py-2" target="_blank">查看文档地址</a>
-          </div>
-        </n-descriptions-item>
         <n-descriptions-item label="预览地址">
           <div class="flex items-center">
-            <a href="https://v1.naiveadmin.com" class="py-2" target="_blank">查看预览地址</a>
+            <a href="https://vue3-naive-admin-template.vercel.app" class="py-2" target="_blank">
+              查看预览地址
+            </a>
           </div>
         </n-descriptions-item>
         <n-descriptions-item label="Github">
           <div class="flex items-center">
-            <a href="https://github.com/jekip/naive-ui-admin" class="py-2" target="_blank"
-              >查看Github地址</a
-            >
+            <a href="https://github.com/kayoe279/Kairo-admin#" class="py-2" target="_blank">
+              查看Github地址
+            </a>
           </div>
         </n-descriptions-item>
       </n-descriptions>

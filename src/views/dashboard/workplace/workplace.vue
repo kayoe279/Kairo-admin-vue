@@ -1,8 +1,8 @@
 <template>
-  <div class="space-y-5">
+  <div class="space-y-4">
     <!-- 顶部信息区域 -->
     <n-card class="!rounded-2xl p-6">
-      <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24">
+      <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20">
         <n-gi>
           <div class="flex items-center">
             <div class="relative">
@@ -12,10 +12,10 @@
               />
             </div>
             <div class="text-fg-base ml-6">
-              <h1 class="mb-2 text-2xl font-bold">早安，Kayoe 👋</h1>
+              <h1 class="mb-2 text-2xl font-bold">早安，{{ nickname }} 👋</h1>
               <p class="flex items-center">
                 <span class="mr-2">🌤️</span>
-                今日多云转晴，18℃ - 28℃，适合出行
+                今日多云转晴，20℃ - 30℃，适合出行
               </p>
             </div>
           </div>
@@ -23,20 +23,20 @@
         <n-gi>
           <div class="flex h-full items-center justify-end">
             <div class="grid grid-cols-3 gap-8 text-center">
-              <div class="min-w-[80px] rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-4">
-                <div class="text-2xl font-bold text-blue-500">16</div>
+              <div class="min-w-[80px] rounded-full bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+                <div class="text-2xl font-bold text-blue-500">12</div>
                 <div class="text-fg-subtle text-sm">项目数</div>
               </div>
               <div
-                class="min-w-[80px] rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 p-4"
+                class="min-w-[80px] rounded-full bg-gradient-to-br from-orange-50 to-orange-100 p-4"
               >
-                <div class="text-2xl font-bold text-orange-500">3/15</div>
+                <div class="text-2xl font-bold text-orange-500">6/21</div>
                 <div class="text-fg-subtle text-sm">待办</div>
               </div>
               <div
-                class="min-w-[80px] rounded-2xl bg-gradient-to-br from-green-50 to-green-100 p-4"
+                class="min-w-[80px] rounded-full bg-gradient-to-br from-green-50 to-green-100 p-4"
               >
-                <div class="text-2xl font-bold text-green-500">35</div>
+                <div class="text-2xl font-bold text-green-500">18</div>
                 <div class="text-fg-subtle text-sm">消息</div>
               </div>
             </div>
@@ -46,25 +46,21 @@
     </n-card>
 
     <!-- 主体内容区域 -->
-    <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24" :y-gap="24">
-      <n-gi class="space-y-5">
+    <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20" :y-gap="20">
+      <n-gi class="space-y-4">
         <n-card class="text-fg-base !rounded-2xl" title="项目">
           <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div
               v-for="item in projectList"
               :key="item.name"
-              class="group bg-background text-fg-subtle hover:text-fg-primary flex transform cursor-pointer flex-col items-center rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              :title="item.description"
+              class="group text-fg-subtle hover:text-fg-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
               @click="openInNewWindow(item.link)"
             >
               <SvgIcon
                 v-if="item.localIcon"
                 :localIcon="item.localIcon"
                 class="text-fg-base group-hover:text-fg-primary h-[60px] w-[60px] text-[60px]"
-              />
-              <img
-                v-if="item.logo"
-                :src="item.logo"
-                class="text-fg-base group-hover:text-fg-primary h-[60px] w-[60px]"
               />
               <h3 class="text-fg-base group-hover:text-fg-primary mt-2 mb-1 font-semibold">
                 {{ item.name }}
@@ -139,57 +135,32 @@
       </n-gi>
 
       <!-- 右侧区域 -->
-      <n-gi class="space-y-5">
+      <n-gi class="space-y-4">
         <n-card class="!rounded-2xl" title="快捷入口">
-          <div class="grid grid-cols-5 gap-4">
+          <div
+            class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-4 2xl:grid-cols-5"
+          >
             <button
+              v-for="item in entranceList"
+              :key="item.name"
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-blue-400 to-blue-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/dashboard/console')"
+              :class="
+                cn(
+                  'group flex w-32 transform cursor-pointer items-center justify-center gap-x-2 rounded-3xl bg-gradient-to-br py-2 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl',
+                  item.color
+                )
+              "
+              @click="navigateTo(item.link)"
             >
-              <SvgIcon icon="ant-design:dashboard-outlined" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">主控台</h3>
-            </button>
-            <button
-              type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-green-400 to-green-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/basic-list')"
-            >
-              <SvgIcon icon="ant-design:profile-outlined" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">数据列表</h3>
-            </button>
-            <button
-              type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-purple-400 to-purple-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/form/basic-form')"
-            >
-              <SvgIcon icon="ant-design:file-protect-outlined" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">表单页面</h3>
-            </button>
-            <button
-              type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-orange-400 to-orange-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/permissions')"
-            >
-              <SvgIcon icon="ant-design:apartment-outlined" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">权限管理</h3>
-            </button>
-            <button
-              type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/setting/system')"
-            >
-              <SvgIcon icon="ant-design:setting-outlined" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">系统设置</h3>
+              <SvgIcon :icon="item.icon" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">{{ item.name }}</h3>
             </button>
           </div>
         </n-card>
 
-        <n-card class="h-100 !rounded-2xl">
-          <div class="flex h-full items-center justify-center text-gray-400">
-            <div class="text-center">
-              <SvgIcon icon="ant-design:picture-outlined" class="mb-4 text-6xl" />
-            </div>
+        <n-card class="flex h-[510px] items-center justify-center !rounded-2xl text-gray-400">
+          <div class="flex h-full w-full items-center justify-center">
+            <SvgIcon localIcon="logo" class="mb-4 text-6xl" />
           </div>
         </n-card>
       </n-gi>
@@ -197,29 +168,30 @@
   </div>
 </template>
 
-<script lang="ts">
-export default { name: "DashboardWorkplace" };
-</script>
-
 <script lang="ts" setup>
-import hearemLogo from "@/assets/icons/hearem-logo.png";
 import avatar from "@/assets/images/avatar.jpg";
 import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import { cn } from "@/lib/utils";
+import { useUserStore } from "@/store";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const userStore = useUserStore();
 
-const projectList = [
+const nickname = computed(() => userStore.userInfo?.nickname);
+
+const projectList = ref([
   {
     name: "Hearem",
-    logo: hearemLogo,
+    localIcon: "hearem-logo",
     description: "AI智能可定制地将文字转为自然人声",
     link: "https://hearem.cc/en"
   },
   {
     name: "Amoihub",
     localIcon: "amoihub-logo",
-    description: "Amoihub 官网",
+    description: "将生成式AI的提示词统一管理",
     link: "https://www.amoihub.com/"
   },
   {
@@ -228,7 +200,40 @@ const projectList = [
     description: "Kayoe 博客",
     link: "https://kayoe-blog.vercel.app/"
   }
-];
+]);
+
+const entranceList = ref([
+  {
+    name: "主控台",
+    icon: "ant-design:dashboard-outlined",
+    link: "/dashboard/console",
+    color: "from-blue-400 to-blue-600"
+  },
+  {
+    name: "基础列表",
+    icon: "solar:checklist-minimalistic-outline",
+    link: "/basic-list",
+    color: "from-green-400 to-green-600"
+  },
+  {
+    name: "表单页面",
+    icon: "solar:document-add-broken",
+    link: "/form/basic-form",
+    color: "from-purple-400 to-purple-600"
+  },
+  {
+    name: "权限管理",
+    icon: "solar:shield-user-broken",
+    link: "/permissions",
+    color: "from-orange-400 to-orange-600"
+  },
+  {
+    name: "系统设置",
+    icon: "solar:settings-outline",
+    link: "/setting/system",
+    color: "from-indigo-400 to-indigo-600"
+  }
+]);
 
 const navigateTo = (path: string) => {
   router.push(path);
