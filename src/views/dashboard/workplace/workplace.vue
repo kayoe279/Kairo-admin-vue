@@ -1,305 +1,202 @@
 <template>
-  <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="工作台">
-        <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
-          <n-gi>
-            <div class="flex items-center">
-              <div>
-                <n-avatar circle :size="64" :src="schoolboy" />
+  <div class="min-h-screen space-y-5">
+    <!-- 顶部信息区域 -->
+    <n-card class="!rounded-2xl p-6">
+      <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24">
+        <n-gi>
+          <div class="flex items-center">
+            <div class="relative">
+              <n-avatar circle :size="80" :src="avatar" class="shadow-lg ring-4 ring-blue-100" />
+              <span
+                class="absolute -right-1 -bottom-1 h-6 w-6 rounded-full border-4 border-white bg-green-500"
+              />
+            </div>
+            <div class="text-fg-base ml-6">
+              <h1 class="mb-2 text-2xl font-bold">早安，Kayoe 👋</h1>
+              <p class="flex items-center">
+                <span class="mr-2">🌤️</span>
+                今日多云转晴，18℃ - 28℃，适合出行
+              </p>
+            </div>
+          </div>
+        </n-gi>
+        <n-gi>
+          <div class="flex h-full items-center justify-end">
+            <div class="grid grid-cols-3 gap-8 text-center">
+              <div class="min-w-[80px] rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+                <div class="text-2xl font-bold text-blue-500">16</div>
+                <div class="text-fg-subtle text-sm">项目数</div>
               </div>
-              <div>
-                <p class="px-4 text-xl">早安，Ah jung，开始您一天的工作吧！</p>
-                <p class="px-4 text-gray-400">今日阴转大雨，15℃ - 25℃，出门记得带伞哦。</p>
+              <div
+                class="min-w-[80px] rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 p-4"
+              >
+                <div class="text-2xl font-bold text-orange-500">3/15</div>
+                <div class="text-fg-subtle text-sm">待办</div>
+              </div>
+              <div
+                class="min-w-[80px] rounded-2xl bg-gradient-to-br from-green-50 to-green-100 p-4"
+              >
+                <div class="text-2xl font-bold text-green-500">35</div>
+                <div class="text-fg-subtle text-sm">消息</div>
               </div>
             </div>
-          </n-gi>
-          <n-gi>
-            <div class="flex w-full justify-end">
-              <div class="flex flex-1 flex-col justify-center text-right">
-                <span class="text-secondary">项目数</span>
-                <span class="text-2xl">16</span>
-              </div>
-              <div class="flex flex-1 flex-col justify-center text-right">
-                <span class="text-secondary">待办</span>
-                <span class="text-2xl">3/15</span>
-              </div>
-              <div class="flex flex-1 flex-col justify-center text-right">
-                <span class="text-secondary">消息</span>
-                <span class="text-2xl">35</span>
+          </div>
+        </n-gi>
+      </n-grid>
+    </n-card>
+
+    <!-- 主体内容区域 -->
+    <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24" :y-gap="24">
+      <n-gi class="space-y-5">
+        <n-card class="text-fg-base !rounded-2xl" title="项目">
+          <template #header-extra>
+            <button class="text-fg-primary/80 hover:text-fg-primary text-sm font-medium">
+              查看全部
+            </button>
+          </template>
+
+          <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
+            <div
+              v-for="item in projectList"
+              :key="item.name"
+              class="group bg-background text-fg-subtle hover:text-fg-primary flex transform cursor-pointer flex-col items-center rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="openInNewWindow(item.link)"
+            >
+              <SvgIcon
+                v-if="item.localIcon"
+                :localIcon="item.localIcon"
+                class="text-fg-base group-hover:text-fg-primary text-3xl"
+              />
+              <SvgIcon
+                v-else
+                :icon="item.icon"
+                class="text-fg-base group-hover:text-fg-primary text-3xl"
+              />
+              <h3 class="text-fg-base group-hover:text-fg-primary mt-1 font-semibold">
+                {{ item.name }}
+              </h3>
+              <p class="text-fg-subtle group-hover:text-fg-primary text-xs">
+                {{ item.description }}
+              </p>
+            </div>
+          </div>
+        </n-card>
+        <n-card class="text-fg-base !rounded-2xl" title="最新动态">
+          <template #header-extra>
+            <button class="text-fg-primary/80 hover:text-fg-primary text-sm font-medium">
+              查看全部
+            </button>
+          </template>
+
+          <div class="text-fg-base space-y-4">
+            <div
+              class="bg-background-root flex items-start space-x-4 rounded-2xl p-4 transition-colors"
+            >
+              <n-avatar circle :size="40" :src="avatar" class="flex-shrink-0" />
+              <div class="flex-1">
+                <div class="mb-1 flex items-center space-x-2">
+                  <span class="font-semibold">Kayoe</span>
+                  <span class="text-fg-subtle text-xs">刚刚</span>
+                </div>
+                <p class="text-fg-subtle text-sm">完成了工作台页面的重构，新的设计更加现代化 🎉</p>
               </div>
             </div>
-          </n-gi>
-        </n-grid>
-      </n-card>
-    </div>
-    <n-grid class="mt-4" cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="12" :y-gap="9">
-      <n-gi>
-        <n-card
-          :segmented="{ content: true }"
-          content-style="padding: 0;"
-          :bordered="false"
-          size="small"
-          title="项目"
-        >
-          <div class="project-card flex flex-wrap">
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+
+            <div
+              class="bg-background-root flex items-start space-x-4 rounded-2xl p-4 transition-colors"
             >
-              <div class="flex">
-                <span>
-                  <SvgIcon icon="ant-design:github-outlined" class="text-3xl" />
-                </span>
-                <span class="ml-4 text-lg">Github</span>
+              <n-avatar circle :size="40" :src="avatar" class="flex-shrink-0" />
+              <div class="flex-1">
+                <div class="mb-1 flex items-center space-x-2">
+                  <span class="font-semibold">Kayoe</span>
+                  <span class="text-fg-subtle text-xs">2小时前</span>
+                </div>
+                <p class="text-fg-subtle text-sm">优化了项目卡片的交互效果，添加了hover动画 ✨</p>
               </div>
-              <div class="mt-2 flex h-10 text-gray-400">
-                是一个面向开源及私有软件项目的托管平台。
-              </div>
-              <div class="mt-2 flex h-10 text-gray-400">开源君，2021-07-04</div>
-            </n-card>
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+            </div>
+
+            <div
+              class="bg-background-root flex items-start space-x-4 rounded-2xl p-4 transition-colors"
             >
-              <div class="flex">
-                <span>
-                  <n-icon size="30" color="#42b983">
-                    <LogoVue />
-                  </n-icon>
-                </span>
-                <span class="ml-4 text-lg">Vue</span>
+              <n-avatar circle :size="40" :src="avatar" class="flex-shrink-0" />
+              <div class="flex-1">
+                <div class="mb-1 flex items-center space-x-2">
+                  <span class="font-semibold">系统通知</span>
+                  <span class="text-fg-subtle text-xs">今天</span>
+                </div>
+                <p class="text-fg-subtle text-sm">有3个新的任务待处理，请及时查看 📋</p>
               </div>
-              <div class="mt-2 flex h-10 text-gray-400">渐进式 JavaScript 框架</div>
-              <div class="mt-2 flex h-10 text-gray-400">学不动也要学，2021-07-04</div>
-            </n-card>
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+            </div>
+
+            <div
+              class="bg-background-root flex items-start space-x-4 rounded-2xl p-4 transition-colors"
             >
-              <div class="flex">
-                <span>
-                  <SvgIcon
-                    icon="ant-design:html5-outlined"
-                    :style="{ color: '#e44c27' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="ml-4 text-lg">Html5</span>
+              <n-avatar circle :size="40" :src="avatar" class="flex-shrink-0" />
+              <div class="flex-1">
+                <div class="mb-1 flex items-center space-x-2">
+                  <span class="font-semibold">团队协作</span>
+                  <span class="text-fg-subtle text-xs">昨天</span>
+                </div>
+                <p class="text-fg-subtle text-sm">代码审查已完成，可以进行下一步部署 🚀</p>
               </div>
-              <div class="mt-2 flex h-10 text-gray-400">HTML5是互联网的下一代标准。</div>
-              <div class="mt-2 flex h-10 text-gray-400">撸码也是一种艺术 2021-04-01</div>
-            </n-card>
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+            </div>
+          </div>
+        </n-card>
+      </n-gi>
+
+      <!-- 右侧区域 -->
+      <n-gi class="space-y-5">
+        <n-card class="!rounded-2xl" title="快捷入口">
+          <div class="grid grid-cols-5 gap-4">
+            <button
+              type="button"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/dashboard/console')"
             >
-              <div class="flex">
-                <span>
-                  <n-icon size="30" color="#dd0031">
-                    <LogoAngular />
-                  </n-icon>
-                </span>
-                <span class="ml-4 text-lg">Angular</span>
-              </div>
-              <div class="mt-2 flex h-10 text-gray-400">现代 Web 开发平台，百万粉丝热捧。</div>
-              <div class="mt-2 flex h-10 text-gray-400">铁粉君 2021-07-04。</div>
-            </n-card>
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+              <SvgIcon icon="ant-design:dashboard-outlined" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">主控台</h3>
+            </button>
+            <button
+              type="button"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-green-500 to-green-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/basicList')"
             >
-              <div class="flex">
-                <span>
-                  <n-icon size="30" color="#61dafb">
-                    <LogoReact />
-                  </n-icon>
-                </span>
-                <span class="ml-4 text-lg">React</span>
-              </div>
-              <div class="mt-2 flex h-10 text-gray-400">用于构建用户界面的 JavaScript 库。</div>
-              <div class="mt-2 flex h-10 text-gray-400">技术牛 2021-07-04。</div>
-            </n-card>
-            <n-card
-              size="small"
-              class="project-card-item ms:w-1/2 cursor-pointer md:w-1/3"
-              hoverable
+              <SvgIcon icon="ant-design:profile-outlined" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">数据列表</h3>
+            </button>
+            <button
+              type="button"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-purple-500 to-purple-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/basicList')"
             >
-              <div class="flex">
-                <span>
-                  <n-icon size="30">
-                    <LogoJavascript />
-                  </n-icon>
-                </span>
-                <span class="ml-4 text-lg">Js</span>
-              </div>
-              <div class="mt-2 flex h-10 text-gray-400">路是走出来的，而不是空想出来的。</div>
-              <div class="mt-2 flex h-10 text-gray-400">架构组 2021-07-04</div>
-            </n-card>
+              <SvgIcon icon="ant-design:file-protect-outlined" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">表单页面</h3>
+            </button>
+            <button
+              type="button"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/permissions')"
+            >
+              <SvgIcon icon="ant-design:apartment-outlined" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">权限管理</h3>
+            </button>
+            <button
+              type="button"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 to-indigo-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/permissions')"
+            >
+              <SvgIcon icon="ant-design:setting-outlined" class="text-2xl" />
+              <h3 class="mt-2 mb-1 font-semibold">系统设置</h3>
+            </button>
           </div>
         </n-card>
 
-        <n-card
-          :segmented="{ content: true }"
-          content-style="padding-top: 0;padding-bottom: 0;"
-          :bordered="false"
-          size="small"
-          title="动态"
-          class="mt-4"
-        >
-          <template #header-extra><a href="javascript:;">更多</a></template>
-          <n-list>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="Ah Jung 刚才把工作台页面随便写了一些，凑合能看了！">
-                <template #description
-                  ><p class="text-xs text-gray-500">2021-07-04 22:37:16</p></template
-                >
-              </n-thing>
-            </n-list-item>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="Ah Jung 在 开源组 创建了项目 naive-ui-admin？">
-                <template #description
-                  ><p class="text-xs text-gray-500">2021-07-04 09:37:16</p></template
-                >
-              </n-thing>
-            </n-list-item>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="@It界风清扬，向naive-ui-admin提交了一个bug，抽时间看看吧！">
-                <template #description
-                  ><p class="text-xs text-gray-500">2021-07-04 22:37:16</p></template
-                >
-              </n-thing>
-            </n-list-item>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="技术部那几位童鞋，再次警告，不要摸鱼，不要摸鱼，不要摸鱼啦！">
-                <template #description
-                  ><p class="text-xs text-gray-500">2021-07-04 09:37:16</p></template
-                >
-              </n-thing>
-            </n-list-item>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="上班不摸鱼，和咸鱼有什么区别（这话真不是我说的哈）！">
-                <template #description
-                  ><p class="text-xs text-gray-500">2021-07-04 20:37:16</p></template
-                >
-              </n-thing>
-            </n-list-item>
-            <n-list-item>
-              <template #prefix>
-                <n-avatar circle :size="40" :src="schoolboy" />
-              </template>
-              <n-thing title="页面切换其实也支持缓存，只是加了过度效果，看起来像是重新渲染了">
-                <template #description>
-                  <p class="text-gray-400">
-                    <n-input type="text" placeholder="不信，输点文字试试" />
-                  </p>
-                </template>
-              </n-thing>
-            </n-list-item>
-          </n-list>
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card
-          :segmented="{ content: true }"
-          content-style="padding: 0;"
-          :bordered="false"
-          size="small"
-          title="快捷操作"
-        >
-          <div class="project-card flex flex-wrap">
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon
-                    icon="ant-design:dashboard-outlined"
-                    :style="{ color: '#68c755' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="text-lx text-center">主控台</span>
-              </div>
-            </n-card>
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon
-                    icon="ant-design:profile-outlined"
-                    :style="{ color: '#fab251' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="text-lx text-center">列表</span>
-              </div>
-            </n-card>
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon
-                    icon="ant-design:file-protect-outlined"
-                    :style="{ color: '#1890ff' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="text-lx text-center">表单</span>
-              </div>
-            </n-card>
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon
-                    icon="ant-design:apartment-outlined"
-                    :style="{ color: '#f06b96' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="text-lx text-center">权限管理</span>
-              </div>
-            </n-card>
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon
-                    icon="ant-design:setting-outlined"
-                    :style="{ color: '#7238d1' }"
-                    class="text-3xl"
-                  />
-                </span>
-                <span class="text-lx text-center">系统管理</span>
-              </div>
-            </n-card>
-            <n-card size="small" class="project-card-item cursor-pointer" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <SvgIcon icon="ant-design:dashboard-outlined" class="text-3xl" />
-                </span>
-                <span class="text-lx text-center">主控台</span>
-              </div>
-            </n-card>
+        <n-card class="h-100 !rounded-2xl p-6">
+          <div class="flex h-full items-center justify-center text-gray-400">
+            <div class="text-center">
+              <SvgIcon icon="ant-design:picture-outlined" class="mb-4 text-6xl" />
+            </div>
           </div>
-        </n-card>
-        <n-card :segmented="{ content: true }" :bordered="false" size="small" class="mt-4">
-          <img src="~@/assets/images/Business.svg" class="w-full" />
         </n-card>
       </n-gi>
     </n-grid>
@@ -311,17 +208,32 @@ export default { name: "DashboardWorkplace" };
 </script>
 
 <script lang="ts" setup>
-import schoolboy from "@/assets/images/schoolboy.png";
+import avatar from "@/assets/images/avatar.jpg";
 import SvgIcon from "@/components/atoms/SvgIcon.vue";
-</script>
+import { useRouter } from "vue-router";
 
-<style lang="less" scoped>
-.project-card {
-  margin-right: -6px;
+const router = useRouter();
 
-  &-item {
-    margin: -1px;
-    width: 33.333333%;
+const projectList = [
+  {
+    name: "GitHub",
+    icon: "ant-design:github-outlined",
+    description: "代码托管平台",
+    link: "https://github.com"
+  },
+  {
+    name: "Amoihub",
+    localIcon: "amoihub-logo",
+    description: "Amoihub 官网",
+    link: "https://www.amoihub.com/"
   }
-}
-</style>
+];
+
+const navigateTo = (path: string) => {
+  router.push(path);
+};
+
+const openInNewWindow = (url: string) => {
+  window.open(url, "_blank");
+};
+</script>

@@ -48,10 +48,7 @@ const densitySelect = (key: string) => {
       :options="densityOptions"
       v-model:value="tableSize"
     >
-      <SvgIcon
-        icon="solar:paragraph-spacing-broken"
-        class="text-foreground cursor-pointer text-lg"
-      />
+      <SvgIcon icon="solar:paragraph-spacing-broken" class="text-fg-base cursor-pointer text-lg" />
     </n-dropdown>
   </button>
 </template>

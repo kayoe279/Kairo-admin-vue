@@ -8,7 +8,7 @@
         <n-tooltip v-if="props.titleTooltip" trigger="hover">
           <template #trigger>
             <button type="button" class="ml-1">
-              <SvgIcon icon="solar:question-circle-broken" class="text-foreground text-base" />
+              <SvgIcon icon="solar:question-circle-broken" class="text-fg-base text-base" />
             </button>
           </template>
           {{ props.titleTooltip }}
@@ -33,7 +33,7 @@
         <n-tooltip trigger="hover">
           <template #trigger>
             <button type="button" @click="() => refetch(variables)">
-              <SvgIcon icon="ep:refresh-right" class="text-foreground text-[19px]" />
+              <SvgIcon icon="ep:refresh-right" class="text-fg-base text-[19px]" />
             </button>
           </template>
           <span>刷新</span>

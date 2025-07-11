@@ -55,15 +55,15 @@ const handleSubmit = (e: MouseEvent) => {
 <template>
   <div class="loginContainer flex h-screen w-screen items-center justify-center">
     <div
-      class="text-foreground bg-background relative flex w-[88%] flex-col items-center justify-center rounded-2xl p-6 shadow-lg inset-shadow-2xs sm:w-[424px]"
+      class="text-fg-base bg-background relative flex w-[88%] flex-col items-center justify-center rounded-2xl p-6 shadow-lg inset-shadow-2xs sm:w-[424px]"
     >
-      <div class="bg-primary/80 absolute -top-24 left-17 h-24 w-48 rounded-t-full" />
-      <div class="bg-primary/80 absolute top-0 left-65 h-12 w-24 rounded-b-full" />
+      <div class="bg-fg-primary/80 absolute -top-24 left-17 h-24 w-48 rounded-t-full" />
+      <div class="bg-fg-primary/80 absolute top-0 left-65 h-12 w-24 rounded-b-full" />
 
       <div class="my-10 flex flex-col items-center justify-center">
         <SvgIcon localIcon="logo" class="size-25" />
         <h1 class="mb-2 text-3xl font-bold">{{ appConfig.title }}</h1>
-        <p class="text-foreground">{{ appConfig.loginDesc }}</p>
+        <p class="text-fg-base">{{ appConfig.loginDesc }}</p>
       </div>
       <n-form
         ref="formRef"
@@ -120,8 +120,8 @@ const handleSubmit = (e: MouseEvent) => {
   width: 100vw;
   position: fixed;
   background:
-    linear-gradient(90deg, var(--foreground) 1px, transparent 1px var(--size)) 50% 50% / 45px 45px,
-    linear-gradient(var(--foreground) 1px, transparent 1px 45px) 50% 50% / 45px 45px;
+    linear-gradient(90deg, var(--fg-base) 1px, transparent 1px var(--size)) 50% 50% / 45px 45px,
+    linear-gradient(var(--fg-base) 1px, transparent 1px 45px) 50% 50% / 45px 45px;
   mask: linear-gradient(-20deg, transparent 50%, white);
   top: 0;
   transform-style: flat;

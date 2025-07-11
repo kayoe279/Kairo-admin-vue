@@ -75,7 +75,7 @@ export const useThemeStore = defineStore(
     // 设置 app 颜色主题变量
     const setAppThemeVariable = (value?: string) => {
       document.documentElement.style.setProperty(
-        "--primary-foreground",
+        "--fg-primary",
         value || settings.value.themeColor || ""
       );
     };
