@@ -7,7 +7,7 @@ defineProps<{ collapsed?: boolean }>();
 
 <template>
   <div class="flex h-16 items-center justify-center overflow-hidden whitespace-nowrap">
-    <SvgIcon localIcon="logo" class="mr-2 inline h-8 w-auto" />
+    <SvgIcon localIcon="logo" :class="cn('inline h-8 w-auto', { 'mr-2': !collapsed })" />
     <h2
       :class="
         cn(

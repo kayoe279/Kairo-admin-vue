@@ -48,7 +48,7 @@
     <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20" :y-gap="20">
       <!-- 左侧区域 -->
       <n-gi class="space-y-4">
-        <n-card class="text-fg-base !rounded-2xl" title="项目">
+        <n-card class="text-fg-base !rounded-2xl" title="友情链接 👍">
           <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div
               v-for="item in projectList"
