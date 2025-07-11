@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen space-y-5">
+  <div class="space-y-5">
     <!-- 顶部信息区域 -->
     <n-card class="!rounded-2xl p-6">
       <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24">
@@ -49,12 +49,6 @@
     <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="24" :y-gap="24">
       <n-gi class="space-y-5">
         <n-card class="text-fg-base !rounded-2xl" title="项目">
-          <template #header-extra>
-            <button class="text-fg-primary/80 hover:text-fg-primary text-sm font-medium">
-              查看全部
-            </button>
-          </template>
-
           <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div
               v-for="item in projectList"
@@ -65,17 +59,17 @@
               <SvgIcon
                 v-if="item.localIcon"
                 :localIcon="item.localIcon"
-                class="text-fg-base group-hover:text-fg-primary text-3xl"
+                class="text-fg-base group-hover:text-fg-primary h-[60px] w-[60px] text-[60px]"
               />
-              <SvgIcon
-                v-else
-                :icon="item.icon"
-                class="text-fg-base group-hover:text-fg-primary text-3xl"
+              <img
+                v-if="item.logo"
+                :src="item.logo"
+                class="text-fg-base group-hover:text-fg-primary h-[60px] w-[60px]"
               />
-              <h3 class="text-fg-base group-hover:text-fg-primary mt-1 font-semibold">
+              <h3 class="text-fg-base group-hover:text-fg-primary mt-2 mb-1 font-semibold">
                 {{ item.name }}
               </h3>
-              <p class="text-fg-subtle group-hover:text-fg-primary text-xs">
+              <p class="text-fg-subtle group-hover:text-fg-primary line-clamp-1 text-xs">
                 {{ item.description }}
               </p>
             </div>
@@ -150,7 +144,7 @@
           <div class="grid grid-cols-5 gap-4">
             <button
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-blue-400 to-blue-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
               @click="navigateTo('/dashboard/console')"
             >
               <SvgIcon icon="ant-design:dashboard-outlined" class="text-2xl" />
@@ -158,23 +152,23 @@
             </button>
             <button
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-green-500 to-green-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/basicList')"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-green-400 to-green-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/basic-list')"
             >
               <SvgIcon icon="ant-design:profile-outlined" class="text-2xl" />
               <h3 class="mt-2 mb-1 font-semibold">数据列表</h3>
             </button>
             <button
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-purple-500 to-purple-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/basicList')"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-purple-400 to-purple-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/form/basic-form')"
             >
               <SvgIcon icon="ant-design:file-protect-outlined" class="text-2xl" />
               <h3 class="mt-2 mb-1 font-semibold">表单页面</h3>
             </button>
             <button
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-orange-400 to-orange-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
               @click="navigateTo('/permissions')"
             >
               <SvgIcon icon="ant-design:apartment-outlined" class="text-2xl" />
@@ -182,8 +176,8 @@
             </button>
             <button
               type="button"
-              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 to-indigo-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              @click="navigateTo('/permissions')"
+              class="group flex size-26 transform cursor-pointer flex-col items-center justify-center rounded-4xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              @click="navigateTo('/setting/system')"
             >
               <SvgIcon icon="ant-design:setting-outlined" class="text-2xl" />
               <h3 class="mt-2 mb-1 font-semibold">系统设置</h3>
@@ -191,7 +185,7 @@
           </div>
         </n-card>
 
-        <n-card class="h-100 !rounded-2xl p-6">
+        <n-card class="h-100 !rounded-2xl">
           <div class="flex h-full items-center justify-center text-gray-400">
             <div class="text-center">
               <SvgIcon icon="ant-design:picture-outlined" class="mb-4 text-6xl" />
@@ -208,6 +202,7 @@ export default { name: "DashboardWorkplace" };
 </script>
 
 <script lang="ts" setup>
+import hearemLogo from "@/assets/icons/hearem-logo.png";
 import avatar from "@/assets/images/avatar.jpg";
 import SvgIcon from "@/components/atoms/SvgIcon.vue";
 import { useRouter } from "vue-router";
@@ -216,16 +211,22 @@ const router = useRouter();
 
 const projectList = [
   {
-    name: "GitHub",
-    icon: "ant-design:github-outlined",
-    description: "代码托管平台",
-    link: "https://github.com"
+    name: "Hearem",
+    logo: hearemLogo,
+    description: "AI智能可定制地将文字转为自然人声",
+    link: "https://hearem.cc/en"
   },
   {
     name: "Amoihub",
     localIcon: "amoihub-logo",
     description: "Amoihub 官网",
     link: "https://www.amoihub.com/"
+  },
+  {
+    name: "Blog",
+    localIcon: "blog-logo",
+    description: "Kayoe 博客",
+    link: "https://kayoe-blog.vercel.app/"
   }
 ];
 

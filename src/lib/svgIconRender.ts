@@ -17,25 +17,25 @@ export const svgIconRender = (config: IconConfig) => {
   const { color, fontSize, icon, localIcon } = config;
 
   const style: IconStyle = {};
-  let className = '';
+  let className = "";
 
   if (color) {
     style.color = color;
   }
-  
+
   if (fontSize) {
     // 将常见的fontSize值转换为Tailwind class
     const fontSizeMap: Record<number, string> = {
-      12: 'text-xs',
-      14: 'text-sm',
-      16: 'text-base',
-      18: 'text-lg',
-      20: 'text-xl',
-      24: 'text-2xl',
-      30: 'text-3xl',
-      32: 'text-3xl'
+      12: "text-xs",
+      14: "text-sm",
+      16: "text-base",
+      18: "text-lg",
+      20: "text-xl",
+      24: "text-2xl",
+      30: "text-3xl",
+      32: "text-3xl"
     };
-    
+
     if (fontSizeMap[fontSize]) {
       className = fontSizeMap[fontSize];
     } else {

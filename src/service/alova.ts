@@ -5,7 +5,7 @@ import {
   handleResponseError,
   handleServiceResult
 } from "./handle";
-import {mocks} from "./mocks";
+import { mocks } from "./mocks";
 import { getUserToken } from "@/lib/cookie";
 import { getAppEnvConfig } from "@/lib/env";
 import { createAlovaMockAdapter } from "@alova/mock";

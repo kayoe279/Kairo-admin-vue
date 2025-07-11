@@ -1,5 +1,6 @@
 import { renderEditCell } from "../components/editable";
 import type { BasicColumn, BasicTableProps, TableColumn } from "../types/props";
+import SvgIcon from "@/components/atoms/SvgIcon.vue";
 import type { ActionItem } from "@/components/molecules/Table";
 import { usePermission } from "@/hooks/web/usePermission";
 import { isArray, isBoolean, isFunction, isString } from "@/lib/utils/is";
@@ -7,7 +8,6 @@ import { cloneDeep, isEqual } from "lodash-es";
 import { NIcon, NTooltip } from "naive-ui";
 import type { ComputedRef, Ref } from "vue";
 import { computed, h, ref, toRaw, unref, watch } from "vue";
-import SvgIcon from "@/components/atoms/SvgIcon.vue";
 
 export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
@@ -63,13 +63,10 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
               return renderTooltip(
                 h("div", { class: "flex items-center" }, [
                   h("span", { style: { "margin-right": "5px" } }, title),
-                  h(
-                    SvgIcon,
-                    {
-                      icon: "ant-design:form-outlined",
-                      class: "text-sm"
-                    }
-                  )
+                  h(SvgIcon, {
+                    icon: "ant-design:form-outlined",
+                    class: "text-sm"
+                  })
                 ]),
                 "该列可编辑"
               );

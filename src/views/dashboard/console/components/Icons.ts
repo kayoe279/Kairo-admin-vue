@@ -1,5 +1,5 @@
-import { h } from "vue";
 import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import { h } from "vue";
 
 export default {
   CaretUpOutlined: () => h(SvgIcon, { icon: "ant-design:caret-up-outlined" }),
