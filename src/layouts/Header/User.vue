@@ -27,7 +27,7 @@ const onSelect = (key: number) => {
 
 // 退出登录
 const doLogout = () => {
-  dialog.info({
+  dialog.warning({
     title: "提示",
     content: "您确定要退出登录吗",
     positiveText: "确定",

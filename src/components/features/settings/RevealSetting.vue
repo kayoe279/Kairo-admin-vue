@@ -164,7 +164,8 @@ const formValue = ref({
   watermarkClarity: null,
   pricePrecise: 1,
   isMarketPrice: true,
-  pricePreciseNum: null
+  pricePreciseNum: null,
+  watermarkPlace: null
 });
 
 // function systemOpenChange(value) {
