@@ -5,14 +5,16 @@ const currentTab = ref<string>("basic");
 </script>
 
 <template>
-  <n-card>
-    <n-tabs v-model:value="currentTab" type="line" animated>
-      <n-tab-pane name="basic" tab="基本设置">
-        <BasicSetting />
-      </n-tab-pane>
-      <n-tab-pane name="safety" tab="安全设置">
-        <SafetySetting />
-      </n-tab-pane>
-    </n-tabs>
-  </n-card>
+  <div>
+    <n-card size="small">
+      <n-tabs v-model:value="currentTab" type="line" animated>
+        <n-tab-pane name="basic" tab="基本设置">
+          <BasicSetting />
+        </n-tab-pane>
+        <n-tab-pane name="safety" tab="安全设置">
+          <SafetySetting />
+        </n-tab-pane>
+      </n-tabs>
+    </n-card>
+  </div>
 </template>
