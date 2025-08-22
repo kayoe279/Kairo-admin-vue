@@ -5,7 +5,7 @@ import { TAB_DATA_ID } from "@/lib/constants";
 import { typedBoolean } from "@/lib/utils";
 import { useAppStore, useTabsStore } from "@/store";
 import type { TabNamedNodeMap } from "@/types/utils";
-import { useElementBounding } from "@vueuse/core";
+import { useElementBounding, useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { computed, nextTick, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -23,6 +23,14 @@ const bsWrapper = ref<HTMLElement>();
 const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
 const bsScroll = ref<InstanceType<typeof BetterScroll>>();
 const tabRef = ref<HTMLElement>();
+const { width: tabsContentWidth } = useElementSize(tabRef);
+
+// 滚动遮罩状态
+const scrollState = reactive({
+  canScrollLeft: false,
+  canScrollRight: false,
+  isScrollable: false
+});
 
 const dropdown = reactive({
   visible: false,
@@ -54,6 +62,22 @@ const menuDisabledKeys = computed(() => {
 
 const removeFocus = () => {
   (document.activeElement as HTMLElement)?.blur();
+};
+
+// 更新滚动状态
+const updateScrollState = () => {
+  if (!bsScroll.value?.instance) return;
+
+  const { x, maxScrollX } = bsScroll.value.instance;
+
+  // 判断是否可以滚动
+  scrollState.isScrollable = tabsContentWidth.value > bsWrapperWidth.value;
+
+  // 判断是否可以向左滚动
+  scrollState.canScrollLeft = x < 0;
+
+  // 判断是否可以向右滚动
+  scrollState.canScrollRight = x > maxScrollX;
 };
 
 const scrollByClientX = (clientX: number) => {
@@ -131,14 +155,38 @@ watch(
     scrollToActiveTab();
   }
 );
+
+// 监听容器和内容尺寸变化，更新滚动状态
+watch([bsWrapperWidth, tabsContentWidth], () => {
+  updateScrollState();
+});
+
+// 监听BetterScroll实例创建，绑定滚动事件
+watch(
+  () => bsScroll.value?.instance,
+  (instance) => {
+    if (instance) {
+      instance.on("scroll", updateScrollState);
+      instance.on("scrollEnd", updateScrollState);
+      // 初始化滚动状态
+      updateScrollState();
+    }
+  }
+);
 </script>
 
 <template>
   <div
-    class="flex w-full gap-x-4 px-4 py-1.5 transition-all duration-1000 ease-in-out"
+    class="flex w-full gap-x-4 px-4 py-2 transition-all duration-1000 ease-in-out"
     :style="{ height: multiTabsSetting.height + 'px' }"
   >
-    <div ref="bsWrapper" class="flex min-w-0 flex-1 items-center">
+    <div ref="bsWrapper" class="relative flex min-w-0 flex-1 items-center">
+      <!-- 左侧滚动遮罩 -->
+      <div
+        v-show="scrollState.isScrollable && scrollState.canScrollLeft"
+        class="pointer-events-none absolute top-0 left-0 z-10 h-full w-8 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-900"
+      />
+
       <BetterScroll
         ref="bsScroll"
         :options="{ scrollX: true, scrollY: false, click: isMobile }"
@@ -152,7 +200,7 @@ watch(
           <n-button
             v-for="tab in tabsList.filter(typedBoolean)"
             :key="tab.name"
-            class="tabs-card-scroll-item relative flex !h-8 cursor-pointer items-center justify-center rounded-md px-4 py-1.5"
+            class="tabs-card-scroll-item relative flex !h-8 max-h-12 min-h-8 cursor-pointer items-center justify-center !rounded-lg px-4 py-1.5"
             :[TAB_DATA_ID]="tab.name"
             secondary
             :type="activeTabId === tab.name ? 'primary' : 'default'"
@@ -167,6 +215,12 @@ watch(
           </n-button>
         </div>
       </BetterScroll>
+
+      <!-- 右侧滚动遮罩 -->
+      <div
+        v-show="scrollState.isScrollable && scrollState.canScrollRight"
+        class="pointer-events-none absolute top-0 right-0 z-10 h-full w-8 bg-gradient-to-l from-gray-50 to-transparent dark:from-gray-900"
+      />
     </div>
 
     <div class="flex items-center gap-x-4">

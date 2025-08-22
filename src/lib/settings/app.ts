@@ -18,7 +18,7 @@ export const appSetting = {
   showFooter: true,
   //多标签
   multiTabsSetting: {
-    height: 46,
+    height: 48,
     //是否显示
     show: true
   },

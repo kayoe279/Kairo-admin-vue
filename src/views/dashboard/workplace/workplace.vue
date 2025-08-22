@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <!-- 顶部信息区域 -->
-    <n-card class="!rounded-2xl p-6">
+    <n-card>
       <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20">
         <n-gi>
           <div class="flex items-center">
@@ -48,7 +48,7 @@
     <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20" :y-gap="20">
       <!-- 左侧区域 -->
       <n-gi class="space-y-4">
-        <n-card class="text-fg-base !rounded-2xl" title="友情链接 👍">
+        <n-card class="text-fg-base" title="友情链接 👍">
           <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div
               v-for="item in projectList"
@@ -71,7 +71,7 @@
             </div>
           </div>
         </n-card>
-        <n-card class="text-fg-base !rounded-2xl" title="最新动态">
+        <n-card class="text-fg-base" title="最新动态">
           <template #header-extra>
             <button class="text-fg-primary/80 hover:text-fg-primary text-sm font-medium">
               查看全部
@@ -136,7 +136,7 @@
 
       <!-- 右侧区域 -->
       <n-gi class="space-y-4">
-        <n-card class="!rounded-2xl" title="快捷入口">
+        <n-card title="快捷入口">
           <div
             class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-4 2xl:grid-cols-5"
           >
@@ -158,7 +158,7 @@
           </div>
         </n-card>
 
-        <n-card class="flex h-[510px] items-center justify-center !rounded-2xl text-gray-400">
+        <n-card class="flex h-[510px] items-center justify-center text-gray-400">
           <div class="flex h-full w-full items-center justify-center">
             <SvgIcon localIcon="logo" class="mb-4 text-6xl" />
           </div>
@@ -205,7 +205,7 @@ const projectList = ref([
 const entranceList = ref([
   {
     name: "主控台",
-    icon: "ant-design:dashboard-outlined",
+    icon: "solar:emoji-funny-square-broken",
     link: "/dashboard/console",
     color: "from-blue-400 to-blue-600"
   },

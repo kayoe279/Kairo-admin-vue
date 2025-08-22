@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "工作台",
-      icon: svgIconRender({ icon: "ant-design:dashboard-outlined" }),
+      icon: svgIconRender({ icon: "solar:emoji-funny-square-broken" }),
       sort: 0
     },
     children: [

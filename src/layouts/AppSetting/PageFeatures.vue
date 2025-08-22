@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { appSetting } from "@/lib/settings/app";
 import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 
@@ -22,7 +23,11 @@ const { headerSetting, multiTabsSetting, menuSetting, breadcrumbsSetting } = sto
       <n-switch v-model:value="multiTabsSetting.show" />
     </SettingItem>
     <SettingItem :title="$t('app.pageFeature.tabHeight')">
-      <n-input-number v-model:value="multiTabsSetting.height" class="w-30" />
+      <n-input-number
+        v-model:value="multiTabsSetting.height"
+        :min="appSetting.multiTabsSetting.height"
+        class="w-30"
+      />
     </SettingItem>
 
     <SettingItem :title="$t('app.pageFeature.showBreadcrumb')">

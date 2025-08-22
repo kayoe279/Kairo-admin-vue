@@ -32,23 +32,23 @@ const handleThrottleTest = (): void => {
 </script>
 
 <template>
-  <div class="h-screen bg-gray-50">
-    <n-card :bordered="false" title="复制指令" class="mb-4">
+  <div>
+    <n-card title="复制指令" class="mb-4">
       <n-space>
         <n-input placeholder="输入内容试试" v-model:value="copyText" class="w-80" />
         <n-button v-copy="copyText" type="primary" @click="handleCopyClick"> 复 制 </n-button>
       </n-space>
     </n-card>
 
-    <n-card :bordered="false" title="防抖指令" class="mb-4">
+    <n-card title="防抖指令" class="mb-4">
       <n-button type="primary" v-debounce="handleDebounceTest"> 防抖测试 </n-button>
     </n-card>
 
-    <n-card :bordered="false" title="节流指令" class="mb-4">
+    <n-card title="节流指令" class="mb-4">
       <n-button type="primary" v-throttle="handleThrottleTest"> 节流测试 </n-button>
     </n-card>
 
-    <n-card :bordered="false" title="拖拽指令" class="mb-4">
+    <n-card title="拖拽指令" class="mb-4">
       <p class="mb-4 text-gray-600">鼠标放到矩形上面拖拽试试</p>
     </n-card>
     <div

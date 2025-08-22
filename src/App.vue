@@ -19,10 +19,15 @@ const naiveLocale = computed(() => naiveI18nOptions[appStore.locale] ?? naiveI18
     :date-locale="naiveLocale.dateLocale"
     :theme="darkTheme"
     :theme-overrides="themeOverrides"
-    class="h-full"
   >
-    <AppProvider>
-      <RouterView />
-    </AppProvider>
+    <n-loading-bar-provider>
+      <n-dialog-provider>
+        <n-notification-provider>
+          <n-message-provider>
+            <RouterView />
+          </n-message-provider>
+        </n-notification-provider>
+      </n-dialog-provider>
+    </n-loading-bar-provider>
   </n-config-provider>
 </template>

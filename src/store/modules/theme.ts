@@ -40,6 +40,7 @@ export const useThemeStore = defineStore(
 
       return {
         common: {
+       
           primaryColor: themeColor,
           primaryColorHover: lightenStr,
           primaryColorPressed: lightenStr,
@@ -68,7 +69,19 @@ export const useThemeStore = defineStore(
         },
         LoadingBar: {
           colorLoading: themeColor
-        }
+        },
+        Menu: {
+          borderRadius: "12px"
+        },
+        Dropdown: {
+          borderRadius: "8px"
+        },
+        Card: {
+          borderRadius: "12px"
+        },
+        Dialog: {
+          borderRadius: "8px"
+        },
       };
     });
 

@@ -24,8 +24,8 @@ const showMenu = computed(() => {
   return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
 });
 const mainStyles = computed(() => {
-  const headerHeight = headerSetting.value.height || 0;
-  const multiTabsHeight = multiTabsSetting.value.height || 0;
+  const headerHeight = headerSetting.value.height;
+  const multiTabsHeight = multiTabsSetting.value.height;
   const showMultiTabs = multiTabsSetting.value.show;
   if (headerSetting.value.fixed) {
     return {
