@@ -16,7 +16,7 @@ const appStore = useAppStore();
 <template>
   <ButtonIcon
     :key="String(full)"
-    :tooltipContent="full ? '退出全屏' : '全屏'"
+    :tooltipContent="full ? $t('app.exitFullScreen') : $t('app.fullScreen')"
     :icon="props.full ? 'ant-design:fullscreen-exit-outlined' : 'ant-design:fullscreen-outlined'"
     @click="() => appStore.toggleFullScreen()"
   />

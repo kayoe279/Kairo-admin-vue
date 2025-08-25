@@ -2,6 +2,7 @@
 import { svgIconRender } from "@/lib/svgIconRender";
 import { useAppStore, useRouteStore, useTabsStore } from "@/store";
 import { type VNode, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
 defineOptions({
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const visible = defineModel<boolean>("visible");
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const appStore = useAppStore();
@@ -43,32 +45,32 @@ const { closeCurrentTab, closeOtherTabs, closeAllTabs, closeLeftTabs, closeRight
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
-      label: "刷新",
+      label: t("common.reload"),
       key: "reloadCurrent",
       icon: svgIconRender({ icon: "solar:refresh-outline", fontSize: 18 })
     },
     {
-      label: `关闭`,
+      label: t("common.close"),
       key: "closeCurrent",
       icon: svgIconRender({ icon: "ant-design:close-outlined", fontSize: 18 })
     },
     {
-      label: `关闭左边`,
+      label: t("tabs.contextMenu.closeLeft"),
       key: "closeLeft",
       icon: svgIconRender({ icon: "mdi:format-horizontal-align-left", fontSize: 18 })
     },
     {
-      label: `关闭右边`,
+      label: t("tabs.contextMenu.closeRight"),
       key: "closeRight",
       icon: svgIconRender({ icon: "mdi:format-horizontal-align-right", fontSize: 18 })
     },
     {
-      label: "关闭其他",
+      label: t("tabs.contextMenu.closeOther"),
       key: "closeOther",
       icon: svgIconRender({ icon: "ant-design:column-width-outlined", fontSize: 18 })
     },
     {
-      label: "关闭全部",
+      label: t("tabs.contextMenu.closeAll"),
       key: "closeAll",
       icon: svgIconRender({ icon: "ant-design:line-outlined", fontSize: 18 })
     }

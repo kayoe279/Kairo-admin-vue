@@ -16,7 +16,7 @@ const appStore = useAppStore();
 <template>
   <ButtonIcon
     icon="solar:refresh-outline"
-    tooltipContent="刷新页面"
+    :tooltipContent="$t('tabs.contextMenu.reloadCurrent')"
     :class="cn({ 'pointer-events-none animate-spin': !appStore.reloadFlag })"
     @click="appStore.reloadPage()"
   />
