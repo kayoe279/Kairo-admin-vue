@@ -14,11 +14,6 @@ body.gray-mode {
   filter: grayscale(100%);
 }
 
-html.dark {
-  color: white;
-  background-color: #101014;
-}
-
 #app {
   height: 100%;
 }

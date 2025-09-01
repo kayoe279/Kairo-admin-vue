@@ -59,7 +59,7 @@ const showSideDrawer = computed({
       :width="desktopMenuWidth"
       :native-scrollbar="false"
       :inverted="darkNav"
-      class="!z-[12] !shadow-xs !transition-all duration-200 ease-in-out"
+      class="!z-[12] !shadow-xs !transition-all !duration-300"
     >
       <Logo :collapsed="collapsed" />
       <Menu v-model:collapsed="collapsed" />
