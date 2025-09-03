@@ -54,18 +54,18 @@
               v-for="item in projectList"
               :key="item.name"
               :title="item.description"
-              class="group text-fg-subtle hover:text-fg-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="group text-fg-subtle hover:text-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
               @click="openInNewWindow(item.link)"
             >
               <SvgIcon
                 v-if="item.localIcon"
                 :localIcon="item.localIcon"
-                class="text-fg-base group-hover:text-fg-primary h-[60px] w-[60px] text-[60px]"
+                class="text-fg-base group-hover:text-primary h-[60px] w-[60px] text-[60px]"
               />
-              <h3 class="text-fg-base group-hover:text-fg-primary mt-2 mb-1 font-semibold">
+              <h3 class="text-fg-base group-hover:text-primary mt-2 mb-1 font-semibold">
                 {{ item.name }}
               </h3>
-              <p class="text-fg-subtle group-hover:text-fg-primary line-clamp-1 text-xs">
+              <p class="text-fg-subtle group-hover:text-primary line-clamp-1 text-xs">
                 {{ item.description }}
               </p>
             </div>
@@ -73,9 +73,7 @@
         </n-card>
         <n-card class="text-fg-base" title="最新动态">
           <template #header-extra>
-            <button class="text-fg-primary/80 hover:text-fg-primary text-sm font-medium">
-              查看全部
-            </button>
+            <button class="text-primary/80 hover:text-primary text-sm font-medium">查看全部</button>
           </template>
 
           <div class="text-fg-base space-y-4">

@@ -43,7 +43,7 @@ const resetSetting = () => {
         <n-divider title-placement="center">{{ $t("app.layout.title") }}</n-divider>
         <LayoutMode />
 
-        <n-divider title-placement="center">{{ $t("app.theme.themeColor") }}</n-divider>
+        <n-divider title-placement="center">{{ $t("app.theme.primaryColor") }}</n-divider>
         <ThemeColor />
 
         <n-divider title-placement="center">{{ $t("app.pageFeature.title") }}</n-divider>

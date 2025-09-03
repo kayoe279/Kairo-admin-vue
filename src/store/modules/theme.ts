@@ -27,12 +27,12 @@ export const useThemeStore = defineStore(
 
     // naive-ui 主题 overrides
     const themeOverrides = computed<GlobalThemeOverrides>(() => {
-      const themeColor = settings.value.themeColor;
+      const primaryColor = settings.value.primaryColor;
       const infoColor = settings.value.infoColor;
       const successColor = settings.value.successColor;
       const warningColor = settings.value.warningColor;
       const errorColor = settings.value.errorColor;
-      const lightenStr = lighten(themeColor, 6);
+      const lightenStr = lighten(primaryColor, 6);
       const infoStr = lighten(infoColor, 6);
       const successStr = lighten(successColor, 6);
       const warningStr = lighten(warningColor, 6);
@@ -40,11 +40,10 @@ export const useThemeStore = defineStore(
 
       return {
         common: {
-       
-          primaryColor: themeColor,
+          primaryColor: primaryColor,
           primaryColorHover: lightenStr,
           primaryColorPressed: lightenStr,
-          primaryColorSuppl: themeColor,
+          primaryColorSuppl: primaryColor,
 
           infoColor: infoColor,
           infoColorHover: infoStr,
@@ -68,7 +67,7 @@ export const useThemeStore = defineStore(
           borderRadius: "5px"
         },
         LoadingBar: {
-          colorLoading: themeColor
+          colorLoading: primaryColor
         },
         Menu: {
           borderRadius: "12px"
@@ -81,31 +80,21 @@ export const useThemeStore = defineStore(
         },
         Dialog: {
           borderRadius: "8px"
-        },
+        }
       };
     });
 
     // 设置 app 颜色主题变量
-    const setAppThemeVariable = (value?: string) => {
+    const setAppThemeVariable = (type: ThemeType, value?: string) => {
       document.documentElement.style.setProperty(
-        "--fg-primary",
-        value || settings.value.themeColor || ""
+        `--${type}`,
+        value || settings.value[`${type}Color`] || ""
       );
     };
 
     // 设置 app 颜色主题
     const setThemeColor = (type: ThemeType, value: string) => {
-      if (type === "primary") {
-        settings.value.themeColor = value;
-      } else if (type === "info") {
-        settings.value.infoColor = value;
-      } else if (type === "success") {
-        settings.value.successColor = value;
-      } else if (type === "warning") {
-        settings.value.warningColor = value;
-      } else if (type === "error") {
-        settings.value.errorColor = value;
-      }
+      settings.value[`${type}Color`] = value;
     };
 
     // 设置主题 暗黑模式
@@ -131,12 +120,17 @@ export const useThemeStore = defineStore(
     };
 
     watch(
-      () => settings.value.themeColor,
-      (newVal) => {
-        setAppThemeVariable(newVal);
+      () => settings.value,
+      (s) => {
+        setAppThemeVariable("primary", s.primaryColor);
+        setAppThemeVariable("info", s.infoColor);
+        setAppThemeVariable("success", s.successColor);
+        setAppThemeVariable("warning", s.warningColor);
+        setAppThemeVariable("error", s.errorColor);
       },
       {
-        immediate: true
+        immediate: true,
+        deep: true
       }
     );
 

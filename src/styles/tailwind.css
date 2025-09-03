@@ -7,8 +7,11 @@
   --background: #ffffff;
   --fg-base: #18181b;
   --fg-subtle: #52525b;
-  --fg-primary: #2d8cf0;
-  --size: 45px;
+  --primary: #30b092;
+  --primary: #30b092;
+  --success: #22c55e;
+  --warning: #faad14;
+  --error: #f5222d;
 }
 
 html.dark {
@@ -16,7 +19,11 @@ html.dark {
   --background: #242429;
   --fg-base: #ffffff;
   --fg-subtle: #a1a1aa;
-  --fg-primary: #2d8cf0;
+
+  --primary: #30b092;
+  --success: #22c55e;
+  --warning: #faad14;
+  --error: #f5222d;
 }
 
 @theme inline {
@@ -24,7 +31,11 @@ html.dark {
   --color-background: var(--background);
   --color-fg-base: var(--fg-base);
   --color-fg-subtle: var(--fg-subtle);
-  --color-fg-primary: var(--fg-primary);
+
+  --color-primary: var(--primary);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
 }
 
 @theme {

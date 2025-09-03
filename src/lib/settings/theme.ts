@@ -22,7 +22,7 @@ export const themeSetting = {
   // 灰度模式
   grayMode: false,
   //系统主题色
-  themeColor: appThemeList[0],
+  primaryColor: appThemeList[0],
   // 信息颜色
   infoColor: "#00b4d8",
   // 成功颜色

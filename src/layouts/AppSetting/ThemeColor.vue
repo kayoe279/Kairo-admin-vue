@@ -12,7 +12,7 @@ const updateThemeColor = (color: string, type: ThemeType) => {
   <div class="space-y-4 py-3">
     <SettingItem :title="$t('app.theme.primary')">
       <ColorPicker
-        :color="themeStore.themeColor"
+        :color="themeStore.primaryColor"
         :palettes="themeStore.appThemeList"
         @update:color="updateThemeColor($event, 'primary')"
       />

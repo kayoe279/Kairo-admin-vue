@@ -26,10 +26,10 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             "
             @click="togNavMode('vertical')"
           >
-            <div class="bg-fg-primary/70 h-full w-4.5 rounded-sm" />
+            <div class="bg-primary/70 h-full w-4.5 rounded-sm" />
             <div class="flex h-full min-w-0 flex-1 flex-col gap-y-1.5">
-              <div class="bg-fg-primary h-4 w-full rounded-sm" />
-              <div class="bg-fg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
+              <div class="bg-primary h-4 w-full rounded-sm" />
+              <div class="bg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
             </div>
           </button>
         </template>
@@ -50,8 +50,8 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             @click="togNavMode('horizontal')"
           >
             <div class="flex h-full min-w-0 flex-1 flex-col gap-y-1.5">
-              <div class="bg-fg-primary h-4 w-full rounded-sm" />
-              <div class="bg-fg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
+              <div class="bg-primary h-4 w-full rounded-sm" />
+              <div class="bg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
             </div>
           </button>
         </template>
@@ -71,10 +71,10 @@ const togNavMode = (mode: AppSettingProps["navMode"]) => {
             "
             @click="togNavMode('horizontal-mix')"
           >
-            <div class="bg-fg-primary h-4 w-full rounded-sm" />
+            <div class="bg-primary h-4 w-full rounded-sm" />
             <div class="flex min-h-0 w-full flex-1 gap-x-1.5">
-              <div class="bg-fg-primary/70 h-full w-4.5 rounded-sm" />
-              <div class="bg-fg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
+              <div class="bg-primary/70 h-full w-4.5 rounded-sm" />
+              <div class="bg-primary/50 min-h-0 w-full flex-1 rounded-sm" />
             </div>
           </button>
         </template>
