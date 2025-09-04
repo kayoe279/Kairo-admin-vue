@@ -26,6 +26,11 @@ export const useAppStore = defineStore(
       settings.value.navMode = value;
     };
 
+    const toggleMenuCollapsed = (value?: boolean) => {
+      settings.value.menuSetting.collapsed =
+        value !== undefined ? value : !settings.value.menuSetting.collapsed;
+    };
+
     const setLocale = (value: Locale) => {
       setI18nLocale(value);
       setCurrentLocale(value);
@@ -57,6 +62,7 @@ export const useAppStore = defineStore(
       reloadFlag,
       open,
       fullScreen,
+      toggleMenuCollapsed,
       toggleFullScreen,
       toggleDrawer,
       setNavTheme,

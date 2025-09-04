@@ -24,6 +24,7 @@ export const appSetting = {
   },
   //菜单
   menuSetting: {
+    collapsed: false,
     //最小宽度
     minMenuWidth: 64,
     //菜单宽度

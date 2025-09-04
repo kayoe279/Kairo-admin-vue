@@ -7,19 +7,21 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
-const collapsed = defineModel<boolean>("collapsed");
-
 const route = useRoute();
 const appStore = useAppStore();
-const { navMode, headerSetting } = storeToRefs(appStore);
+const { navMode, headerSetting, menuSetting } = storeToRefs(appStore);
 
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
-const hideCollapseIcon = computed(() => {
+const showCollapsed = computed(() => {
   return (
-    navMode.value === "horizontal" ||
-    (navMode.value === "horizontal-mix" && isRootRoute(route.matched[0]))
+    navMode.value === "vertical" ||
+    (navMode.value === "horizontal-mix" && !isRootRoute(route.matched[0]))
   );
+});
+
+const showMenu = computed(() => {
+  return navMode.value === "horizontal" || navMode.value === "horizontal-mix";
 });
 
 const onIconClick = (key: "github" | "lock") => {
@@ -35,22 +37,20 @@ const onIconClick = (key: "github" | "lock") => {
     :style="{ height: headerSetting.height + 'px' }"
   >
     <div class="flex h-full min-w-0 flex-1 items-center gap-x-5">
+      <!-- 折叠按钮 -->
       <ButtonIcon
-        v-if="!hideCollapseIcon"
-        :icon="collapsed ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'"
+        v-if="showCollapsed"
+        :icon="menuSetting.collapsed ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'"
         hideTooltip
-        @click="collapsed = !collapsed"
+        @click="appStore.toggleMenuCollapsed()"
       />
       <!--顶部菜单-->
-      <div
-        v-if="navMode === 'horizontal' || navMode === 'horizontal-mix'"
-        class="flex h-full min-w-0 flex-1 items-center gap-x-5"
-      >
+      <div v-if="showMenu" class="flex h-full min-w-0 flex-1 items-center gap-x-5">
         <Logo
           v-if="navMode === 'horizontal'"
           class="flex h-16 shrink-0 items-center justify-center overflow-hidden whitespace-nowrap max-md:hidden"
         />
-        <Menu location="header" mode="horizontal" />
+        <Menu location="header" />
       </div>
 
       <!-- 面包屑 -->

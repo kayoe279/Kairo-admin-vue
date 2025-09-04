@@ -1,29 +1,17 @@
 <script setup lang="ts">
-import { generatorMenu, generatorMenuMix } from "@/lib/utils/menu";
-import { useAppStore, useRouteStore, useThemeStore } from "@/store";
+import { generatorMenuMix } from "@/lib/utils/menu";
+import { useAppStore, useRouteStore } from "@/store";
 import type { MenuInst } from "naive-ui";
 import type { MenuMixedOption } from "naive-ui/es/menu/src/interface";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-interface Props {
-  mode?: "vertical" | "horizontal";
-  location?: "side" | "header";
-  collapsed?: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {
-  mode: "vertical",
-  location: "side"
-});
-
-const emit = defineEmits(["update:collapsed", "onMenuItemClick"]);
-
 const route = useRoute();
 const router = useRouter();
 const routeStore = useRouteStore();
 const appStore = useAppStore();
-const { navMode, menuSetting, locale } = storeToRefs(appStore);
+const { menuSetting, locale } = storeToRefs(appStore);
 
 const menuInstRef = ref<MenuInst | null>(null);
 const menus = ref<MenuMixedOption[]>([]);
@@ -39,23 +27,14 @@ const updateSelectedValues = () => {
   selectedValues.value = (route.meta?.activeMenu as string) || (route.name as string);
   if (menuSetting.value.accordion) {
     updateDefaultExpandedKeys();
-  } else {
-    if (navMode.value === "horizontal-mix") {
-      updateDefaultExpandedKeys();
-    }
   }
 };
 
 const updateMenus = () => {
-  if (navMode.value === "horizontal-mix") {
-    const matched = route.matched;
-    const firstRouteName =
-      (matched[0].meta?.activeMenu as string) || (matched[0].name as string) || "";
-    menus.value = generatorMenuMix(routeStore.rowRoutes, firstRouteName, props.location);
-  } else {
-    menus.value = generatorMenu(routeStore.rowRoutes);
-  }
-
+  const matched = route.matched;
+  const firstRouteName =
+    (matched[0].meta?.activeMenu as string) || (matched[0].name as string) || "";
+  menus.value = generatorMenuMix(routeStore.rowRoutes, firstRouteName, "side");
   updateSelectedValues();
 };
 
@@ -66,20 +45,11 @@ const onMenuItemClick = (key: string) => {
   } else {
     router.push({ name: key });
   }
-  emit("onMenuItemClick", key);
 };
 
 // 监听语言变化
 watch(locale, () => {
   updateMenus();
-});
-
-// 监听导航栏模式
-watch(navMode, () => {
-  updateMenus();
-  if (props.collapsed) {
-    emit("update:collapsed", !props.collapsed);
-  }
 });
 
 // 跟随页面路由变化，切换菜单选中状态
@@ -104,8 +74,8 @@ onMounted(() => {
     ref="menuInstRef"
     :accordion="menuSetting.accordion"
     :options="menus"
-    :mode="mode"
-    :collapsed="collapsed"
+    mode="vertical"
+    :collapsed="menuSetting.collapsed"
     :collapsed-width="64"
     :icon-size="20"
     :collapsed-icon-size="20"

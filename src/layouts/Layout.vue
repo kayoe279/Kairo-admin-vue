@@ -3,7 +3,7 @@ import { useMedia } from "@/hooks/useMedia";
 import { isRootRoute } from "@/lib/utils/menu";
 import { useAppStore, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
-import { computed, ref, unref } from "vue";
+import { computed, unref } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -14,7 +14,7 @@ const themeStore = useThemeStore();
 const { darkNav } = storeToRefs(themeStore);
 const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = storeToRefs(appStore);
 
-const collapsed = ref<boolean>(false);
+const collapsed = computed(() => menuSetting.value.collapsed);
 
 const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
 const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
@@ -43,7 +43,7 @@ const desktopMenuWidth = computed(() => {
 // 控制显示或隐藏移动端侧边栏
 const showSideDrawer = computed({
   get: () => isMobile.value && collapsed.value,
-  set: (val) => (collapsed.value = val)
+  set: (val) => appStore.toggleMenuCollapsed(val)
 });
 </script>
 
@@ -51,8 +51,8 @@ const showSideDrawer = computed({
   <n-layout :position="fixedMenu" has-sider>
     <n-layout-sider
       v-if="showMenu"
-      @collapse="collapsed = true"
-      @expand="collapsed = false"
+      @collapse="() => appStore.toggleMenuCollapsed(true)"
+      @expand="() => appStore.toggleMenuCollapsed(false)"
       :collapsed="collapsed"
       collapse-mode="width"
       :collapsed-width="menuSetting.minMenuWidth"
@@ -61,8 +61,8 @@ const showSideDrawer = computed({
       :inverted="darkNav"
       class="!z-[12] !shadow-xs !transition-all !duration-300"
     >
-      <Logo :collapsed="collapsed" />
-      <Menu v-model:collapsed="collapsed" />
+      <Logo />
+      <Menu />
     </n-layout-sider>
 
     <n-drawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
@@ -73,7 +73,7 @@ const showSideDrawer = computed({
         :native-scrollbar="false"
         :inverted="darkNav"
       >
-        <Logo :collapsed="collapsed" />
+        <Logo />
         <Menu />
       </n-layout-sider>
     </n-drawer>

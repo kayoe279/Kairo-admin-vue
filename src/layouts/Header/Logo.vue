@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { appConfig } from "@/lib/settings/app";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store";
+import { computed } from "vue";
 
-defineProps<{ collapsed?: boolean }>();
+const appStore = useAppStore();
+const collapsed = computed(() => appStore.menuSetting.collapsed);
 </script>
 
 <template>
