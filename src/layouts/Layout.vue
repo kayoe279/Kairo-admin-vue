@@ -42,8 +42,8 @@ const desktopMenuWidth = computed(() => {
 
 // 控制显示或隐藏移动端侧边栏
 const showSideDrawer = computed({
-  get: () => isMobile.value && collapsed.value,
-  set: (val) => appStore.toggleMenuCollapsed(val)
+  get: () => isMobile.value && !collapsed.value,
+  set: () => appStore.toggleMenuCollapsed()
 });
 </script>
 
@@ -85,8 +85,8 @@ const showSideDrawer = computed({
         class="!bg-background-root h-full"
       >
         <n-layout-header :position="fixedHeader" class="!z-10">
-          <Header v-if="!fullScreen" v-model:collapsed="collapsed" />
-          <TabsView v-if="multiTabsSetting.show" v-model:collapsed="collapsed" />
+          <Header v-if="!fullScreen" />
+          <TabsView v-if="multiTabsSetting.show" />
         </n-layout-header>
 
         <main class="p-4" :style="mainStyles">

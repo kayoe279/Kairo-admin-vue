@@ -11,6 +11,7 @@ declare module 'vue' {
     Animation: typeof import('./../layouts/AppSetting/Animation.vue')['default']
     AppLoading: typeof import('./../components/atoms/AppLoading.vue')['default']
     AppProvider: typeof import('./../layouts/AppProvider.vue')['default']
+    BaseMenu: typeof import('./../layouts/Menu/BaseMenu.vue')['default']
     BasicForm: typeof import('./../components/molecules/Form/src/BasicForm.vue')['default']
     BasicModal: typeof import('./../components/molecules/Modal/src/basicModal.vue')['default']
     BasicSetting: typeof import('./../components/features/settings/BasicSetting.vue')['default']

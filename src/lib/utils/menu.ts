@@ -23,7 +23,7 @@ const renderMenuIcon = (meta: RouteMeta | undefined) => {
   return meta?.icon;
 };
 
-//普通菜单
+// 普通菜单
 export function generatorMenu(routes: Array<RouteRecordRaw>) {
   return filterRoutes(routes)
     .map((item) => {
@@ -45,7 +45,7 @@ export function generatorMenu(routes: Array<RouteRecordRaw>) {
     .filter(typedBoolean);
 }
 
-//混合菜单
+//混合菜单 (用于顶部混合菜单)
 export function generatorMenuMix(
   routes: Array<RouteRecordRaw>,
   routerName: string,
