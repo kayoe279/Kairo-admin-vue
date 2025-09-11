@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
+import { cn } from "@/lib/utils";
 import { isRootRoute } from "@/lib/utils/menu";
 import { useAppStore, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
@@ -16,23 +17,10 @@ const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = st
 
 const collapsed = computed(() => menuSetting.value.collapsed);
 
-const fixedHeader = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
-const fixedMenu = computed(() => (headerSetting.value.fixed ? "absolute" : "static"));
 const showMenu = computed(() => {
   if (fullScreen.value) return false;
   const hideMixMenuSub = navMode.value === "horizontal-mix" && !isRootRoute(route.matched?.[0]);
   return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
-});
-const mainStyles = computed(() => {
-  const headerHeight = headerSetting.value.height;
-  const multiTabsHeight = multiTabsSetting.value.height;
-  const showMultiTabs = multiTabsSetting.value.show;
-  if (headerSetting.value.fixed) {
-    return {
-      "padding-top": `${(fullScreen.value ? 0 : headerHeight) + (showMultiTabs ? multiTabsHeight : 0) + 16}px`
-    };
-  }
-  return undefined;
 });
 
 const desktopMenuWidth = computed(() => {
@@ -48,8 +36,8 @@ const showSideDrawer = computed({
 </script>
 
 <template>
-  <n-layout :position="fixedMenu" has-sider>
-    <n-layout-sider
+  <NLayout has-sider>
+    <NLayoutSider
       v-if="showMenu"
       @collapse="() => appStore.toggleMenuCollapsed(true)"
       @expand="() => appStore.toggleMenuCollapsed(false)"
@@ -59,15 +47,14 @@ const showSideDrawer = computed({
       :width="desktopMenuWidth"
       :native-scrollbar="false"
       :inverted="darkNav"
-      class="!z-[12] !shadow-xs !transition-all !duration-300"
+      class="!transition-all"
     >
       <Logo />
       <Menu />
-    </n-layout-sider>
+    </NLayoutSider>
 
-    <n-drawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
-      <n-layout-sider
-        :position="fixedMenu"
+    <NDrawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
+      <NLayoutSider
         :collapsed="false"
         :width="menuSetting.menuWidth"
         :native-scrollbar="false"
@@ -75,26 +62,23 @@ const showSideDrawer = computed({
       >
         <Logo />
         <Menu />
-      </n-layout-sider>
-    </n-drawer>
+      </NLayoutSider>
+    </NDrawer>
 
-    <div class="relative h-screen min-w-0 flex-1 overflow-hidden">
-      <n-layout
-        :position="fixedHeader"
-        :native-scrollbar="false"
-        class="!bg-background-root h-full"
-      >
-        <n-layout-header :position="fixedHeader" class="!z-10">
-          <Header v-if="!fullScreen" />
-          <TabsView v-if="multiTabsSetting.show" />
-        </n-layout-header>
+    <div
+      :class="
+        cn(
+          'text-foreground bg-background-root relative flex h-screen min-w-0 flex-1 flex-col',
+          headerSetting.fixed ? 'overflow-hidden' : 'overflow-y-auto'
+        )
+      "
+    >
+      <Header v-if="!fullScreen" class="shrink-0" />
+      <TabsView v-if="multiTabsSetting.show" class="shrink-0" />
 
-        <main class="p-4" :style="mainStyles">
-          <Main />
-        </main>
+      <Main :class="cn('min-h-0 flex-1 p-4', headerSetting.fixed && 'overflow-y-auto')" />
 
-        <n-back-top :right="80" />
-      </n-layout>
+      <n-back-top :right="80" />
     </div>
-  </n-layout>
+  </NLayout>
 </template>

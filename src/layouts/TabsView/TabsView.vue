@@ -177,7 +177,7 @@ watch(
 
 <template>
   <div
-    class="flex w-full gap-x-4 px-4 py-2 transition-all duration-1000 ease-in-out"
+    class="bg-background flex w-full gap-x-4 px-4 py-2 transition-all duration-1000 ease-in-out"
     :style="{ height: multiTabsSetting.height + 'px' }"
   >
     <div ref="bsWrapper" class="relative flex min-w-0 flex-1 items-center">

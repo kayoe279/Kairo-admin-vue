@@ -5,8 +5,12 @@
 :root {
   --background-root: #f5f7f9;
   --background: #ffffff;
-  --fg-base: #18181b;
+  --fg-base: #18181c;
   --fg-subtle: #52525b;
+  --gray-200: #f3f3f5;
+
+  --default-100: #f4f4f5;
+
   --primary: #30b092;
   --primary: #30b092;
   --success: #22c55e;
@@ -16,9 +20,12 @@
 
 html.dark {
   --background-root: #101014;
-  --background: #242429;
+  --background: #18181c;
   --fg-base: #ffffff;
   --fg-subtle: #a1a1aa;
+  --gray-200: #2d2d30;
+
+  --default-100: #27272a;
 
   --primary: #30b092;
   --success: #22c55e;
@@ -31,6 +38,9 @@ html.dark {
   --color-background: var(--background);
   --color-fg-base: var(--fg-base);
   --color-fg-subtle: var(--fg-subtle);
+  --color-gray-200: var(--gray-200);
+
+  --color-default-100: var(--default-100);
 
   --color-primary: var(--primary);
   --color-success: var(--success);
@@ -39,8 +49,6 @@ html.dark {
 }
 
 @theme {
-  --color-gray-200: #f3f3f5;
-
   --font-maple: "Maple", sans-serif;
   --font-poppins: "Poppins", sans-serif;
 
