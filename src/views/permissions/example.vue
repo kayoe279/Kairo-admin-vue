@@ -24,7 +24,7 @@ const toggleUserRole = async (role: Entity.RoleType) => {
 </script>
 
 <template>
-  <n-card title="权限示例">
+  <n-card title="权限示例" class="p-4">
     <n-h1> 当前权限：{{ role }}</n-h1>
     <n-spin :show="loading">
       <div class="flex flex-wrap gap-x-4">

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { isRootMenu } from "@/lib/menu";
 import { appConfig } from "@/lib/settings/app";
-import { isRootRoute } from "@/lib/utils/menu";
 import { useAppStore } from "@/store";
 import { useFullscreen } from "@vueuse/core";
 import { storeToRefs } from "pinia";
@@ -16,7 +16,7 @@ const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 const showCollapsed = computed(() => {
   return (
     navMode.value === "vertical" ||
-    (navMode.value === "horizontal-mix" && !isRootRoute(route.matched[0]))
+    (navMode.value === "horizontal-mix" && !isRootMenu(route.matched[0]))
   );
 });
 

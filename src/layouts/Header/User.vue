@@ -3,7 +3,7 @@ import SvgIcon from "@/components/atoms/SvgIcon.vue";
 import { appConfig } from "@/lib/settings/app";
 import { useUserStore } from "@/store";
 import { useDialog, useMessage } from "naive-ui";
-import { computed, h, ref } from "vue";
+import { computed, h } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 

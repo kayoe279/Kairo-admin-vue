@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SideMenu from "./SideMenu.vue";
 import { useRouteStore } from "@/store";
 import { computed } from "vue";
 import { useRoute } from "vue-router";

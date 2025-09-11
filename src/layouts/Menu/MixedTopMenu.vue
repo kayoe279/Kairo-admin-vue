@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import BaseMenu from "./BaseMenu.vue";
-import { generatorMenuMix } from "@/lib/utils/menu";
+import { useMenu } from "@/hooks";
 import { useRouteStore } from "@/store";
-import type { RouteRecordRaw } from "vue-router";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
 const routeStore = useRouteStore();
 
-// 创建 MixedTopMenu 专用的菜单生成器
-const mixedTopMenuGenerator = (routes: RouteRecordRaw[]) => {
-  const matched = route.matched;
-  const firstRouteName =
-    (matched[0].meta?.activeMenu as string) || (matched[0].name as string) || "";
-  return generatorMenuMix(routes, firstRouteName, "header");
-};
+const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick } = useMenu({
+  routes: routeStore.rowRoutes,
+  onlyFirstLevel: true
+});
 </script>
 
 <template>
-  <BaseMenu
+  <NMenu
+    ref="menuInstRef"
+    :options="menus"
     mode="horizontal"
-    :routes="routeStore.rowRoutes"
-    :menu-generator="mixedTopMenuGenerator"
-    :show-accordion="false"
-    :show-collapsed="false"
+    :collapsed-width="64"
+    :icon-size="20"
+    :collapsed-icon-size="20"
+    :indent="24"
+    :value="selectedValues"
+    @update:value="onMenuItemClick"
+    :default-expanded-keys="defaultExpandedKeys"
+    :watch-props="['defaultExpandedKeys']"
+    responsive
   />
 </template>

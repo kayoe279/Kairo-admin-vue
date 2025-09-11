@@ -1,6 +1,6 @@
-import { useTimeoutFn } from "@/hooks/core/useTimeout";
 import { useBreakpoint } from "@/hooks/event/useBreakpoint";
 import { useEventListener } from "@/hooks/event/useEventListener";
+import { useTimeoutFn } from "@/hooks/useTimeout";
 import echarts from "@/lib/echarts";
 import { useThemeStore } from "@/store/modules/theme";
 import { tryOnUnmounted } from "@vueuse/core";

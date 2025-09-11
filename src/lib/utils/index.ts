@@ -8,7 +8,6 @@ import type { App, Component, Plugin } from "vue";
 export * from "./is";
 export * from "./date";
 export * from "./dom";
-export * from "./menu";
 export * from "./url";
 
 /**

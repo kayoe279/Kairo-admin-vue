@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
+import { isRootMenu } from "@/lib/menu";
 import { cn } from "@/lib/utils";
-import { isRootRoute } from "@/lib/utils/menu";
 import { useAppStore, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed, unref } from "vue";
@@ -19,7 +19,7 @@ const collapsed = computed(() => menuSetting.value.collapsed);
 
 const showMenu = computed(() => {
   if (fullScreen.value) return false;
-  const hideMixMenuSub = navMode.value === "horizontal-mix" && !isRootRoute(route.matched?.[0]);
+  const hideMixMenuSub = navMode.value === "horizontal-mix" && !isRootMenu(route.matched?.[0]);
   return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
 });
 
