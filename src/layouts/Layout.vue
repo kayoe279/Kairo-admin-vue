@@ -9,7 +9,6 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const { isMobile } = useMedia();
-
 const appStore = useAppStore();
 const themeStore = useThemeStore();
 const { darkNav } = storeToRefs(themeStore);
@@ -68,15 +67,15 @@ const showSideDrawer = computed({
     <div
       :class="
         cn(
-          'text-foreground bg-background-root relative flex h-screen min-w-0 flex-1 flex-col',
-          headerSetting.fixed ? 'overflow-hidden' : 'overflow-y-auto'
+          'text-foreground bg-background-root relative h-screen min-w-0 flex-1',
+          headerSetting.fixed ? 'flex flex-col overflow-hidden' : 'overflow-y-auto'
         )
       "
     >
       <Header v-if="!fullScreen" class="shrink-0" />
       <TabsView v-if="multiTabsSetting.show" class="shrink-0" />
 
-      <Main :class="cn('min-h-0 flex-1 p-4', headerSetting.fixed && 'overflow-y-auto')" />
+      <Main :class="cn('p-4', headerSetting.fixed && 'min-h-0 flex-1 overflow-y-auto')" />
 
       <n-back-top :right="80" />
     </div>

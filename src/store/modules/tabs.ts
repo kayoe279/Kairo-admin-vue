@@ -79,6 +79,12 @@ export const useTabsStore = defineStore(
       tabsList.value = tabsList.value.filter(
         (item, i) => i >= index || (item?.meta?.affix ?? false)
       );
+      const currentIndex = tabsList.value.findIndex((item) => item.name == tabId);
+      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
+      if (activeIndex < currentIndex) {
+        const shouldRoute = tabsList.value.filter((item) => !item.meta?.affix)?.[0];
+        shouldRoute && router.replace(shouldRoute.path);
+      }
     };
     // 关闭右侧
     const closeRightTabs = (tabId: string) => {
@@ -86,6 +92,12 @@ export const useTabsStore = defineStore(
       tabsList.value = tabsList.value.filter(
         (item, i) => i <= index || (item?.meta?.affix ?? false)
       );
+      const currentIndex = tabsList.value.findIndex((item) => item.name == tabId);
+      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
+      if (activeIndex > currentIndex) {
+        const shouldRoute = tabsList.value[Math.max(0, tabsList.value.length - 1)];
+        shouldRoute && router.replace(shouldRoute.path);
+      }
     };
     // 关闭其他
     const closeOtherTabs = (tabId: string) => {

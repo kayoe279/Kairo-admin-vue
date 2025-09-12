@@ -70,11 +70,10 @@ const handleSubmit = (e: MouseEvent) => {
       });
 
       const result = data.value;
-      console.log("%c [ result ]-73", "font-size:13px; background:pink; color:#bf2c9f;", result);
       message.destroyAll();
       if (result.code === 200) {
         message.success(t("login.loginSuccess"));
-        userStore.handleLoginInfo(result.data);
+        userStore.updateUserInfo(result.data);
       } else {
         message.error(t("login.loginError"));
       }

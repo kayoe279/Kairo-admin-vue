@@ -7,14 +7,14 @@ const routes: Array<RouteRecordRaw> = [
     name: "about",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
-      sort: 10,
+      sort: 8,
       isRoot: true,
       icon: svgIconRender({ icon: "solar:info-circle-broken" })
     },
     children: [
       {
         path: "/about/index",
-        name: `about-index`,
+        name: "aboutIndex",
         meta: {
           title: "关于项目"
         },

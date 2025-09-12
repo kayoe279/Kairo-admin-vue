@@ -10,12 +10,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "异常页面",
       icon: svgIconRender({ icon: "solar:confounded-circle-broken" }),
-      sort: 2
+      sort: 3
     },
     children: [
       {
         path: "/exception/403",
-        name: "exception-403",
+        name: "exception403",
         meta: {
           title: "403"
         },
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/exception/404",
-        name: "exception-404",
+        name: "exception404",
         meta: {
           title: "404"
         },
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/exception/500",
-        name: "exception-500",
+        name: "exception500",
         meta: {
           title: "500"
         },

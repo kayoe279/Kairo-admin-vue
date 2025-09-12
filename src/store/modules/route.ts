@@ -5,8 +5,8 @@ import { StoreEnum } from "@/lib/enums/storeEnum";
 import { $t } from "@/lib/i18n";
 import { getUserInfo } from "@/lib/storage";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";
-import { asyncRoutes } from "@/router/index";
-import { getUserRoutes } from "@/service/api/auth/login";
+import { staticRoutes } from "@/router/index";
+import { getUserRoutes } from "@/service/api";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -29,12 +29,18 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
   });
 
   const filterRoutes = (routes: RouteRecordRaw[]) => {
-    return routes.filter((route) => {
-      if (route.children?.length) {
-        route.children = filterRoutes(route.children);
-      }
-      return hasPermission(route.meta?.roles || []);
-    });
+    const filterFunc = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+      return routes
+        .filter((route) => hasPermission(route.meta?.roles || []))
+        .map((route) => {
+          const newRoute = { ...route };
+          if (newRoute.children && newRoute.children.length) {
+            newRoute.children = filterFunc(newRoute.children);
+          }
+          return newRoute;
+        });
+    };
+    return filterFunc(routes).sort((a, b) => (a.meta?.sort || 0) - (b.meta?.sort || 0));
   };
 
   const initAuthRoute = async () => {
@@ -52,11 +58,10 @@ export const useRouteStore = defineStore(StoreEnum.asyncRoute, () => {
       const { data: dynamicRoutes } = await getUserRoutes({
         id: userInfo.id
       });
-      if (dynamicRoutes?.length) {
-        resultRouter = generateDynamicRoutes(dynamicRoutes);
-      }
+
+      resultRouter = generateDynamicRoutes(dynamicRoutes);
     } else {
-      resultRouter = cloneDeep(asyncRoutes);
+      resultRouter = cloneDeep(staticRoutes);
     }
 
     if (!resultRouter.length) {

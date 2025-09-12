@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "/frame/naive-admin",
-        name: "frame-naive-admin",
+        name: "frameNaiveAdmin",
         meta: {
           title: "NaiveAdmin",
           href: "https://www.naiveadmin.com"
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/frame/naive",
-        name: "frame-naive",
+        name: "frameNaive",
         meta: {
           title: "NaiveUi(内嵌)",
           href: "https://www.naiveui.com"

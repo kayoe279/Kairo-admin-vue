@@ -1,12 +1,10 @@
 import { svgIconRender } from "@/lib/svgIconRender";
 import type { RouteRecordRaw } from "vue-router";
 
-const routeName = "dashboard";
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard",
-    name: routeName,
+    name: "dashboard",
     redirect: "/dashboard/workplace",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
@@ -17,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "/dashboard/workplace",
-        name: `${routeName}-workplace`,
+        name: "dashboardWorkplace",
         meta: {
           title: "首页",
           keepAlive: true,
@@ -27,12 +25,12 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/dashboard/console",
-        name: `${routeName}-console`,
+        name: "dashboardMonitor",
         meta: {
-          title: "主控台",
+          title: "监控",
           keepAlive: true
         },
-        component: () => import("@/views/dashboard/console/console.vue")
+        component: () => import("@/views/dashboard/monitor/monitor.vue")
       }
     ]
   }

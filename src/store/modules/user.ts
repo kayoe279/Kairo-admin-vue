@@ -20,7 +20,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   const userInfo = ref<Api.Login.Info | null>(getUserInfo());
   const token = ref(getUserToken());
 
-  const handleLoginInfo = async (result: Api.Login.Info) => {
+  const updateUserInfo = async (result: Api.Login.Info) => {
     const { accessToken, refreshToken } = result;
     setUserToken(accessToken);
     setRefreshToken(refreshToken);
@@ -61,7 +61,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   return {
     token,
     userInfo,
-    handleLoginInfo,
+    updateUserInfo,
     logout
   };
 });

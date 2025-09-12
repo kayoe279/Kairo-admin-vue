@@ -128,10 +128,10 @@ const dropdownAction: Record<Tabs.DropdownKey, () => void> = {
   }
 };
 
-function handleDropdown(optionKey: Tabs.DropdownKey) {
+const handleDropdown = (optionKey: Tabs.DropdownKey) => {
   dropdownAction[optionKey]?.();
   hideDropdown();
-}
+};
 </script>
 
 <template>

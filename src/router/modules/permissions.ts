@@ -4,18 +4,18 @@ import type { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/permissions",
-    name: "Permissions",
+    name: "permissions",
     redirect: "/permissions/example",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "权限",
       icon: svgIconRender({ icon: "solar:shield-user-broken" }),
-      sort: 5
+      sort: 4
     },
     children: [
       {
         path: "/permissions/example",
-        name: "permissions-example",
+        name: "permissionsExample",
         meta: {
           title: "权限展示"
         },
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/permissions/super",
-        name: "permissions-super",
+        name: "permissionsSuper",
         meta: {
           title: "超级管理员",
           roles: ["super"]

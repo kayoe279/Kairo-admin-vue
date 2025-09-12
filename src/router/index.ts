@@ -7,18 +7,17 @@ import { createRouter, createWebHashHistory, createWebHistory } from "vue-router
 const modules = import.meta.glob<AppRoute.IModuleType>("./modules/**/*.ts", { eager: true });
 
 //需要验证权限
-export const asyncRoutes: RouteRecordRaw[] = Object.keys(modules)
-  .reduce((list, key) => {
-    const mod = modules[key].default ?? {};
-    const modList = Array.isArray(mod) ? [...mod] : [mod];
-    return [...list, ...modList];
-  }, [])
-  .sort((a, b) => {
-    return ((a.meta?.sort as number) ?? 0) - ((b.meta?.sort as number) ?? 0);
-  });
+export const staticRoutes: RouteRecordRaw[] = Object.keys(modules).reduce((list, key) => {
+  const mod = modules[key].default ?? {};
+  const modList = Array.isArray(mod) ? [...mod] : [mod];
+  return [...list, ...modList];
+}, []);
+// .sort((a, b) => {
+//   return ((a.meta?.sort as number) ?? 0) - ((b.meta?.sort as number) ?? 0);
+// });
 
-//普通路由 无需验证权限
-export const constantRouter: RouteRecordRaw[] = [...baseRoutes, ...innerRoutes];
+//普通路由 - 无需验证权限
+export const rootRoutes: RouteRecordRaw[] = [...baseRoutes, ...innerRoutes];
 
 const { VITE_BASE_URL, VITE_ROUTE_MODE } = import.meta.env;
 
@@ -27,7 +26,7 @@ const router = createRouter({
     VITE_ROUTE_MODE === "hash"
       ? createWebHashHistory(VITE_BASE_URL)
       : createWebHistory(VITE_BASE_URL),
-  routes: constantRouter,
+  routes: rootRoutes,
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 })
 });

@@ -18,7 +18,7 @@ const roleList: Entity.RoleType[] = ["super", "admin", "user"];
 const toggleUserRole = async (role: Entity.RoleType) => {
   const result = await send({ ...defaultLoginParams, username: role });
   if (result.isSuccess) {
-    userStore.handleLoginInfo(result.data);
+    userStore.updateUserInfo(result.data);
   }
 };
 </script>
