@@ -1,10 +1,11 @@
+import { DynamicRoute } from "@/types";
 import type { RouteRecordRaw } from "vue-router";
 
 const Layout = () => import("@/layouts/Layout.vue");
 
 // 生成动态路由
 let viewsModules: Record<string, () => Promise<Record<string, any>>>;
-export const generateDynamicRoutes = (routes: AppRoute.DynamicRouteRecordRaw[], level = 1) => {
+export const generateDynamicRoutes = (routes: DynamicRoute[], level = 1) => {
   if (!routes.length) return [];
 
   viewsModules = viewsModules || import.meta.glob("@/views/**/*.vue");

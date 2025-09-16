@@ -9,8 +9,6 @@ import progress from "vite-plugin-progress";
 import VueDevtools from "vite-plugin-vue-devtools";
 
 export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean) {
-  // const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
-
   const vitePlugins: PluginOption[] = [
     vue(),
     vueJsx(),
@@ -29,13 +27,6 @@ export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean) {
     // vite-plugin-html
     configHtmlPlugin(viteEnv, isBuild)
   ];
-
-  if (isBuild) {
-    // rollup-plugin-gzip
-    // vitePlugins.push(
-    //   configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
-    // );
-  }
 
   return vitePlugins;
 }

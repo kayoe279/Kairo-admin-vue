@@ -1,17 +1,7 @@
-import { warn } from "@/lib/log";
+import { warn } from "@/lib";
 import pkg from "~/package.json";
 
-export function getCommonStoragePrefix() {
-  const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();
-  return `${VITE_GLOB_APP_SHORT_NAME}__${getEnv()}`.toUpperCase();
-}
-
-// Generate cache key according to version
-export function getStorageShortName() {
-  return `${getCommonStoragePrefix()}${`__${pkg.version}`}__`.toUpperCase();
-}
-
-export function getAppEnvConfig() {
+export const getAppEnvConfig = () => {
   const ENV = import.meta.env;
 
   if (!ENV) {
@@ -45,17 +35,7 @@ export function getAppEnvConfig() {
     VITE_USE_MOCK,
     VITE_LOGGER_MOCK
   };
-}
-
-/**
- * @description: Development model
- */
-export const devMode = "development";
-
-/**
- * @description: Production mode
- */
-export const prodMode = "production";
+};
 
 /**
  * @description: Get environment variables
@@ -83,3 +63,13 @@ export function isDevMode(): boolean {
 export function isProdMode(): boolean {
   return import.meta.env.PROD;
 }
+
+export const getCommonStoragePrefix = () => {
+  const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();
+  return `${VITE_GLOB_APP_SHORT_NAME}__${getEnv()}`.toUpperCase();
+};
+
+// Generate cache key according to version
+export const getStorageShortName = () => {
+  return `${getCommonStoragePrefix()}${`__${pkg.version}`}__`.toUpperCase();
+};

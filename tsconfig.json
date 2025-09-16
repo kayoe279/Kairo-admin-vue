@@ -26,7 +26,7 @@
   "include": [
     "src/**/*",
     "build/**/*",
-    "mock/**/*",
+    "src/service/mock/**/*",
     "components.d.ts",
     "vite.config.ts",
     "vitest.config.ts"

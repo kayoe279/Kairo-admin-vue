@@ -15,7 +15,7 @@ export const baseRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/login/index.vue"),
     meta: {
       title: "登录",
-      withoutTab: true,
+      hidden: true,
       ignoreAuth: true
     }
   }
@@ -28,7 +28,7 @@ export const innerRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/exception/403.vue"),
     meta: {
       title: "用户无权限",
-      withoutTab: true,
+      hidden: true,
       ignoreAuth: true
     }
   },
@@ -39,7 +39,7 @@ export const innerRoutes: RouteRecordRaw[] = [
     meta: {
       title: "找不到页面",
       icon: "icon-park-outline:ghost",
-      withoutTab: true,
+      hidden: true,
       ignoreAuth: true
     }
   },
@@ -50,7 +50,7 @@ export const innerRoutes: RouteRecordRaw[] = [
     meta: {
       title: "服务器错误",
       icon: "icon-park-outline:close-wifi",
-      withoutTab: true,
+      hidden: true,
       ignoreAuth: true
     }
   },
@@ -61,7 +61,7 @@ export const innerRoutes: RouteRecordRaw[] = [
     meta: {
       title: "找不到页面",
       icon: "icon-park-outline:ghost",
-      withoutTab: true,
+      hidden: true,
       ignoreAuth: true
     }
   }

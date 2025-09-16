@@ -1,10 +1,15 @@
 import { setupRouterGuard } from "./guards";
 import { baseRoutes, innerRoutes } from "@/router/base";
+import { IRouteModuleType } from "@/types";
 import type { App } from "vue";
-import type { RouteRecordRaw } from "vue-router";
-import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
+import {
+  type RouteRecordRaw,
+  createRouter,
+  createWebHashHistory,
+  createWebHistory
+} from "vue-router";
 
-const modules = import.meta.glob<AppRoute.IModuleType>("./modules/**/*.ts", { eager: true });
+const modules = import.meta.glob<IRouteModuleType>("./modules/**/*.ts", { eager: true });
 
 //需要验证权限
 export const staticRoutes: RouteRecordRaw[] = Object.keys(modules).reduce((list, key) => {
@@ -12,9 +17,6 @@ export const staticRoutes: RouteRecordRaw[] = Object.keys(modules).reduce((list,
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   return [...list, ...modList];
 }, []);
-// .sort((a, b) => {
-//   return ((a.meta?.sort as number) ?? 0) - ((b.meta?.sort as number) ?? 0);
-// });
 
 //普通路由 - 无需验证权限
 export const rootRoutes: RouteRecordRaw[] = [...baseRoutes, ...innerRoutes];
@@ -33,7 +35,6 @@ const router = createRouter({
 
 export async function setupRouter(app: App) {
   app.use(router);
-  // 创建路由守卫
   setupRouterGuard(router);
 
   // 路由准备就绪后挂载 APP 实例

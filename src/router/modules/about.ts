@@ -1,4 +1,4 @@
-import { svgIconRender } from "@/lib/svgIconRender";
+import { svgIconRender } from "@/lib";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +7,8 @@ const routes: Array<RouteRecordRaw> = [
     name: "about",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
-      sort: 8,
+      title: "关于",
+      sort: 9,
       isRoot: true,
       icon: svgIconRender({ icon: "solar:info-circle-broken" })
     },

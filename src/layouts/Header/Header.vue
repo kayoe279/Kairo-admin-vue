@@ -33,7 +33,7 @@ const onIconClick = (key: "github" | "lock") => {
 
 <template>
   <div
-    class="bg-background flex w-full items-center justify-between gap-x-5 px-4 transition-all duration-200 ease-in-out md:px-5"
+    class="bg-background flex w-full shrink-0 items-center justify-between gap-x-5 px-4 transition-all duration-200 ease-in-out md:px-5"
     :style="{ height: headerSetting.height + 'px' }"
   >
     <div class="flex h-full min-w-0 flex-1 items-center gap-x-5">

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { appConfig, defaultLoginParams } from "@/lib/settings/app";
-import { login } from "@/service/api/auth/login";
+import { login } from "@/service/api";
 import { useUserStore } from "@/store";
 import { useRequest } from "alova/client";
 import { motion } from "motion-v";
@@ -20,8 +20,8 @@ const formValue = reactive({
 });
 
 const rules = computed(() => ({
-  username: { required: true, message: t("login.usernamePlaceholder"), trigger: "blur" },
-  password: { required: true, message: t("login.passwordPlaceholder"), trigger: "blur" }
+  username: { required: true, message: t("auth.usernamePlaceholder"), trigger: "blur" },
+  password: { required: true, message: t("auth.passwordPlaceholder"), trigger: "blur" }
 }));
 
 const { loading, data, send } = useRequest(login, { immediate: false });
@@ -63,7 +63,7 @@ const handleSubmit = (e: MouseEvent) => {
   e.preventDefault();
   formRef.value.validate(async (errors) => {
     if (!errors) {
-      message.loading(t("login.loginLoading"));
+      message.loading(t("auth.loginLoading"));
       await send({
         username: formValue.username,
         password: formValue.password
@@ -72,13 +72,13 @@ const handleSubmit = (e: MouseEvent) => {
       const result = data.value;
       message.destroyAll();
       if (result.code === 200) {
-        message.success(t("login.loginSuccess"));
+        message.success(t("auth.loginSuccess"));
         userStore.updateUserInfo(result.data);
       } else {
-        message.error(t("login.loginError"));
+        message.error(t("auth.loginError"));
       }
     } else {
-      message.error(t("login.loginErrorTip"));
+      message.error(t("auth.loginErrorTip"));
     }
   });
 };
@@ -235,7 +235,7 @@ const handleSubmit = (e: MouseEvent) => {
             >
               <n-form-item>
                 <n-checkbox v-model:checked="rememberMe" class="text-gray-600 dark:text-gray-300">
-                  {{ $t("login.rememberMe") }}
+                  {{ $t("auth.rememberMe") }}
                 </n-checkbox>
               </n-form-item>
             </motion.div>
@@ -260,7 +260,7 @@ const handleSubmit = (e: MouseEvent) => {
                     block
                     class="h-12 rounded-xl border-0 font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
                   >
-                    {{ $t("login.loginButton") }}
+                    {{ $t("auth.loginButton") }}
                   </n-button>
                 </motion.div>
               </n-form-item>

@@ -1,7 +1,6 @@
 import { useUserStore } from "./user";
 import { usePermission } from "@/hooks/usePermission";
-import { PAGE } from "@/lib/constants";
-import { StoreEnum } from "@/lib/enums/storeEnum";
+import { PAGE, StoreEnum } from "@/lib";
 import { $t } from "@/lib/i18n";
 import { getUserInfo } from "@/lib/storage";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";

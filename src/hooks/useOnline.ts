@@ -3,7 +3,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 /**
  * @description 用户网络是否可用
  * */
-export function useOnline() {
+export const useOnline = () => {
   const online = ref(true);
 
   const showStatus = (val) => {
@@ -27,4 +27,4 @@ export function useOnline() {
   });
 
   return { online };
-}
+};

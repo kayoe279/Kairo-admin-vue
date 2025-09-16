@@ -1,4 +1,3 @@
-import { OUTPUT_DIR } from "./build/constant";
 import { wrapperEnv } from "./build/utils";
 import { setupVitePlugins } from "./build/vite/plugin";
 import { createProxy } from "./build/vite/proxy";
@@ -41,13 +40,10 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       port: VITE_PORT,
       proxy: createProxy(VITE_PROXY)
     },
-    // optimizeDeps: {
-    //   include: []
-    // },
     build: {
       target: "es2015",
       cssTarget: "chrome80",
-      outDir: OUTPUT_DIR,
+      outDir: "dist",
       reportCompressedSize: false,
       chunkSizeWarningLimit: 2000
     },

@@ -1,9 +1,7 @@
 // #!/usr/bin/env node
-
 // import { runBuildConfig } from './buildConf';
-import chalk from 'chalk';
-
-import pkg from '../../package.json';
+import pkg from "../../package.json";
+import chalk from "chalk";
 
 export const runBuild = async () => {
   try {
@@ -14,9 +12,9 @@ export const runBuild = async () => {
     //   await runBuildConfig();
     // }
 
-    console.log(`✨ ${chalk.cyan(`[${pkg.name}]`)}` + ' - build successfully!');
+    console.log(`✨ ${chalk.cyan(`[${pkg.name}]`)}` + " - build successfully!");
   } catch (error) {
-    console.log(chalk.red('vite build error:\n' + error));
+    console.log(chalk.red("vite build error:\n" + error));
     process.exit(1);
   }
 };

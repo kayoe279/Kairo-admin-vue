@@ -1,7 +1,7 @@
 import App from "./App.vue";
 import { setupRouter } from "./router";
 import "./styles/index.css";
-import AppLoading from "@/components/atoms/AppLoading.vue";
+import AppLoading from "@/components/ui/AppLoading.vue";
 import { setupDirectives } from "@/directives";
 import { setupI18n, setupNaive, setupNaiveDiscreteApi } from "@/plugins";
 import { setupStore } from "@/store";

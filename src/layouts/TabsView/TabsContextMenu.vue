@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { svgIconRender } from "@/lib/svgIconRender";
 import { useAppStore, useRouteStore, useTabsStore } from "@/store";
+import { TabsDropdownKey } from "@/types";
 import { type VNode, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -10,7 +11,7 @@ defineOptions({
 });
 
 type DropdownOption = {
-  key: Tabs.DropdownKey;
+  key: TabsDropdownKey;
   label: string;
   icon?: () => VNode;
   disabled?: boolean;
@@ -20,8 +21,8 @@ interface Props {
   tabId: string;
   x?: number;
   y?: number;
-  excludeKeys?: Tabs.DropdownKey[];
-  disabledKeys?: Tabs.DropdownKey[];
+  excludeKeys?: TabsDropdownKey[];
+  disabledKeys?: TabsDropdownKey[];
   type?: "button" | "dropdown";
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -104,7 +105,7 @@ const delKeepAliveCompName = () => {
   }
 };
 
-const dropdownAction: Record<Tabs.DropdownKey, () => void> = {
+const dropdownAction: Record<TabsDropdownKey, () => void> = {
   async reloadCurrent() {
     delKeepAliveCompName();
     await appStore.reloadPage();
@@ -128,7 +129,7 @@ const dropdownAction: Record<Tabs.DropdownKey, () => void> = {
   }
 };
 
-const handleDropdown = (optionKey: Tabs.DropdownKey) => {
+const handleDropdown = (optionKey: TabsDropdownKey) => {
   dropdownAction[optionKey]?.();
   hideDropdown();
 };

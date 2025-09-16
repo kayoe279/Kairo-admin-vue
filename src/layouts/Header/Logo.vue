@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { cn } from "@/lib";
 import { appConfig } from "@/lib/settings/app";
-import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { computed } from "vue";
 
