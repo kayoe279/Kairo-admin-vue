@@ -79,11 +79,6 @@ export function useTable<T = any>(
   watch(
     () => options.value.searchParams,
     (value) => {
-      console.log(
-        "%c [ searchParams?.value ]-85",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        value
-      );
       if (value) {
         filters.value = { ...value };
       }
