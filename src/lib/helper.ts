@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import omitBy from "lodash-es/omitBy";
 import { twMerge } from "tailwind-merge";
 
 /**
@@ -37,3 +38,26 @@ export type FalseType = "" | 0 | false | null | undefined;
 export const typedBoolean = <Value>(value: Value): value is Exclude<Value, FalseType> => {
   return Boolean(value);
 };
+
+/**
+ * 清理对象的无效值
+ * @param obj 需要清理的对象
+ * @param options 配置
+ *   - removeNull: 是否移除 null (默认 true)
+ *   - removeUndefined: 是否移除 undefined (默认 true)
+ */
+export function cleanObject<T extends Record<string, any>>(
+  obj?: T,
+  options: { removeNull?: boolean; removeUndefined?: boolean } = {}
+): Partial<T> | undefined {
+  const { removeNull = true, removeUndefined = true } = options;
+  if (!obj) return undefined;
+
+  const result = omitBy<Partial<T>>(obj, (value) => {
+    if (removeNull && value === null) return true;
+    if (removeUndefined && value === undefined) return true;
+    return false;
+  });
+
+  return result;
+}

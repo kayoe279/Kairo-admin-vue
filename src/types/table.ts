@@ -1,5 +1,5 @@
 import type { PaginationProps } from "naive-ui";
-import type { Ref } from "vue";
+import type { ComputedRef, MaybeRef, Ref } from "vue";
 
 // 分页参数接口
 export interface PaginationParams {
@@ -17,12 +17,12 @@ export interface TableResponse<T = any> {
 }
 
 // useTable hook 选项
-export interface UseTableOptions<T = any> {
+export type UseTableOptions = ComputedRef<{
   defaultPageSize?: number;
   pageSizes?: number[];
   immediate?: boolean;
   searchParams?: Record<string, any>;
-}
+}>;
 
 // useTable hook 返回值
 export interface UseTableReturn<T = any> {

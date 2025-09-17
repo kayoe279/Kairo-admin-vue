@@ -24,10 +24,10 @@ export interface UserRegisterForm {
 }
 
 // 搜索表单数据
-export interface SearchFormData {
+export interface UserSearchFormData {
   keyword?: string;
-  category?: string;
-  status?: string | number;
+  category?: string | null;
+  status?: string | number | null;
   dateRange?: [number, number] | null;
   priceRange?: [number, number];
   tags?: string[];
@@ -109,18 +109,6 @@ export interface FormComponentProps {
   readonly?: boolean;
   size?: "small" | "medium" | "large";
   clearable?: boolean;
-}
-
-// 搜索表单 Props
-export interface SearchFormProps {
-  modelValue: SearchFormData;
-  loading?: boolean;
-  showReset?: boolean;
-  showSearch?: boolean;
-  inline?: boolean;
-  collapsible?: boolean;
-  collapsed?: boolean;
-  labelWidth?: string | number;
 }
 
 // 表单验证规则类型

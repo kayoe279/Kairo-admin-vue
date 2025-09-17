@@ -1,89 +1,74 @@
 <script setup lang="ts">
 import SvgIcon from "@/components/ui/SvgIcon.vue";
-import type { SearchFormData, SearchFormProps } from "@/types/form";
-import { SelectOption } from "naive-ui";
-import { reactive, ref, watch } from "vue";
+import { cleanObject, cn } from "@/lib";
+import { ref } from "vue";
 
 // Props 定义
-const props = withDefaults(defineProps<SearchFormProps>(), {
+interface Props {
+  /** 是否加载中 */
+  loading?: boolean;
+  /** 是否显示重置按钮 */
+  showReset?: boolean;
+  /** 是否显示搜索按钮 */
+  showSearch?: boolean;
+  /** 是否内联显示 */
+  inline?: boolean;
+  /** 是否可折叠 */
+  collapsible?: boolean;
+  /** 初始折叠状态 */
+  collapsed?: boolean;
+  /** 标签宽度 */
+  labelWidth?: string;
+  /** 搜索按钮文本 */
+  searchText?: string;
+  /** 重置按钮文本 */
+  resetText?: string;
+  /** 展开按钮文本 */
+  expandText?: string;
+  /** 收起按钮文本 */
+  collapseText?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: () => ({}),
   loading: false,
   showReset: true,
   showSearch: true,
   inline: false,
   collapsible: true,
   collapsed: false,
-  labelWidth: "80px"
+  labelWidth: "80px",
+  searchText: "搜索",
+  resetText: "重置",
+  expandText: "展开",
+  collapseText: "收起"
 });
+
+const searchFormData = defineModel<Record<string, any>>({ required: true });
 
 // Emits 定义
 const emit = defineEmits<{
-  "update:modelValue": [value: SearchFormData];
   "update:collapsed": [value: boolean];
-  search: [data: SearchFormData];
+  search: [value: Record<string, any> | undefined];
   reset: [];
 }>();
 
 // 表单引用
 const formRef = ref();
 
-// 表单数据
-const formData = reactive<SearchFormData>({ ...props.modelValue });
-
 // 折叠状态
 const collapsed = ref(props.collapsed);
 
-// 默认选项数据（可通过 props 传入自定义选项）
-const defaultCategoryOptions: SelectOption[] = [
-  { label: "技术", value: "tech" },
-  { label: "产品", value: "product" },
-  { label: "设计", value: "design" },
-  { label: "运营", value: "operation" }
-];
-
-const defaultStatusOptions: SelectOption[] = [
-  { label: "启用", value: 1 },
-  { label: "禁用", value: 0 },
-  { label: "待审核", value: 2 }
-];
-
-const defaultTagOptions: SelectOption[] = [
-  { label: "Vue", value: "vue" },
-  { label: "React", value: "react" },
-  { label: "TypeScript", value: "typescript" },
-  { label: "JavaScript", value: "javascript" },
-  { label: "Node.js", value: "nodejs" }
-];
-
-// 监听表单数据变化
-watch(
-  formData,
-  (newValue) => {
-    emit("update:modelValue", newValue);
-  },
-  { deep: true }
-);
-
-// 监听外部数据变化
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    Object.assign(formData, newValue);
-  },
-  { deep: true }
-);
-
 // 搜索处理
 const handleSearch = () => {
-  emit("search", formData);
+  emit("search", cleanObject(searchFormData.value));
 };
 
 // 重置处理
 const handleReset = () => {
-  Object.keys(formData).forEach((key) => {
-    formData[key as keyof SearchFormData] = undefined;
-  });
+  // 清除表单验证状态
+  formRef.value?.restoreValidation();
   emit("reset");
-  emit("search", formData);
 };
 
 // 切换折叠状态
@@ -91,89 +76,51 @@ const toggleCollapse = () => {
   collapsed.value = !collapsed.value;
   emit("update:collapsed", collapsed.value);
 };
+
+// 暴露方法给父组件
+defineExpose({
+  formRef
+});
 </script>
 
 <template>
-  <NForm
-    ref="formRef"
-    :model="formData"
-    :inline="inline"
-    :label-width="labelWidth"
-    class="search-form"
-  >
+  <NForm ref="formRef" :model="searchFormData" :inline="inline" :label-width="labelWidth">
     <NGrid :cols="inline ? 'auto' : 24" :x-gap="16" :y-gap="10">
-      <NGridItem :span="inline ? 'auto' : 6">
-        <NFormItem label="关键词" path="keyword">
-          <NInput
-            v-model:value="formData.keyword"
-            placeholder="请输入关键词"
-            clearable
-            @keydown.enter="handleSearch"
-          />
-        </NFormItem>
-      </NGridItem>
+      <!-- 默认显示的表单项 -->
+      <slot name="fields" :collapsed="collapsed" />
 
-      <NGridItem :span="inline ? 'auto' : 6">
-        <NFormItem label="分类" path="category">
-          <NSelect
-            v-model:value="formData.category"
-            placeholder="请选择分类"
-            clearable
-            :options="defaultCategoryOptions"
-          />
-        </NFormItem>
-      </NGridItem>
+      <!-- 可折叠的表单项 -->
+      <template v-if="collapsible && !collapsed">
+        <slot name="expandedFields" />
+      </template>
 
-      <NGridItem :span="inline ? 'auto' : 6">
-        <NFormItem label="状态" path="status">
-          <NSelect
-            v-model:value="formData.status"
-            placeholder="请选择状态"
-            clearable
-            :options="defaultStatusOptions"
-          />
-        </NFormItem>
-      </NGridItem>
-
-      <NGridItem :span="inline ? 'auto' : 6" v-if="!collapsed">
-        <NFormItem label="日期范围" path="dateRange">
-          <NDatePicker
-            v-model:value="formData.dateRange"
-            type="daterange"
-            clearable
-            placeholder="选择日期范围"
-          />
-        </NFormItem>
-      </NGridItem>
-
-      <NGridItem :span="inline ? 'auto' : 12" v-if="!collapsed">
-        <NFormItem label="标签" path="tags">
-          <NSelect
-            v-model:value="formData.tags"
-            multiple
-            placeholder="请选择标签"
-            clearable
-            :options="defaultTagOptions"
-          />
-        </NFormItem>
-      </NGridItem>
-
-      <NGridItem :span="inline ? 'auto' : 24">
+      <!-- 操作按钮区域 -->
+      <NGridItem :span="24">
         <NSpace justify="end">
-          <NButton type="primary" :loading="loading" @click="handleSearch">
-            <template #icon>
-              <SvgIcon icon="mi:search" />
-            </template>
-            搜索
-          </NButton>
-          <NButton v-if="showReset" @click="handleReset">
-            <template #icon> <SvgIcon icon="solar:refresh-bold" /> </template>重置
-          </NButton>
+          <!-- 自定义按钮插槽 -->
+          <slot name="actions" :search="handleSearch" :reset="handleReset">
+            <!-- 默认按钮 -->
+            <NButton v-if="showSearch" type="primary" :loading="loading" @click="handleSearch">
+              <template #icon>
+                <SvgIcon icon="weui:search-outlined" />
+              </template>
+              {{ searchText }}
+            </NButton>
+            <NButton v-if="showReset" @click="handleReset">
+              <template #icon>
+                <SvgIcon icon="radix-icons:reset" />
+              </template>
+              {{ resetText }}
+            </NButton>
+          </slot>
+
+          <!-- 折叠按钮 -->
           <NButton v-if="collapsible" text type="primary" @click="toggleCollapse">
-            {{ collapsed ? "展开" : "收起" }}
+            {{ collapsed ? expandText : collapseText }}
             <template #icon>
               <SvgIcon
-                :icon="collapsed ? 'solar:alt-arrow-down-bold' : 'solar:alt-arrow-up-bold'"
+                icon="solar:alt-arrow-up-bold"
+                :class="cn('transition-all duration-300', { 'rotate-180': collapsed })"
               />
             </template>
           </NButton>

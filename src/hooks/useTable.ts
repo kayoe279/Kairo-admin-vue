@@ -1,21 +1,20 @@
-import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from "@/lib";
+import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS, cleanObject } from "@/lib";
 import type { UseTableOptions } from "@/types/table";
 import { useWatcher } from "alova/client";
 import type { PaginationInfo, PaginationProps } from "naive-ui";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 
 export function useTable<T = any>(
   apiFunction: (params: Record<string, any>) => any,
-  options: UseTableOptions<T> = {}
+  options: UseTableOptions
 ) {
   const {
     defaultPageSize = DEFAULT_PAGE_SIZE,
     pageSizes = PAGE_SIZE_OPTIONS,
-    immediate = true,
-    searchParams: initialSearchParams = {}
-  } = options;
+    immediate = true
+  } = options.value;
 
-  const searchParams = ref<Record<string, any>>({ ...initialSearchParams });
+  const filters = ref<Record<string, any>>({});
 
   // 分页配置
   const pagination = reactive<PaginationProps>({
@@ -33,7 +32,7 @@ export function useTable<T = any>(
   const requestParams = computed(() => ({
     page: pagination.page,
     pageSize: pagination.pageSize,
-    ...searchParams.value
+    ...cleanObject(filters.value)
   }));
 
   // 使用 alova useWatcher 监听参数变化并自动发送请求
@@ -62,22 +61,12 @@ export function useTable<T = any>(
     }
   });
 
-  // 更新搜索参数
-  const updateSearchParams = (params: Record<string, any>) => {
-    searchParams.value = { ...params };
-    pagination.page = 1; // 重置到第一页
-  };
-
   // 手动刷新数据
   const refresh = (params?: Record<string, any>) => {
-    if (params) {
-      updateSearchParams(params);
-    } else {
-      send();
-    }
+    pagination.page = 1;
+    filters.value = { ...filters.value, ...params };
   };
 
-  // 处理分页变化
   const handlePageChange = (page: number) => {
     pagination.page = page;
   };
@@ -87,12 +76,29 @@ export function useTable<T = any>(
     pagination.page = 1; // 重置到第一页
   };
 
+  watch(
+    () => options.value.searchParams,
+    (value) => {
+      console.log(
+        "%c [ searchParams?.value ]-85",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        value
+      );
+      if (value) {
+        filters.value = { ...value };
+      }
+    },
+    {
+      deep: true,
+      immediate: true
+    }
+  );
+
   return {
     tableData,
     loading,
     pagination,
     refresh,
-    updateSearchParams,
     handlePageChange,
     handlePageSizeChange
   };
