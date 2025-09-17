@@ -71,16 +71,13 @@
 </template>
 
 <script setup lang="ts">
-import { BarChart, LineChart, PieChart } from "@/components/ui/Chart";
-import type { BarChartData, LineChartData, PieChartData } from "@/components/ui/Chart";
-
 /**
  * 数据分析页面
  * 展示系统各项指标的图表数据
  */
 
 // 柱状图数据 - 月度销售数据
-const barChartData: BarChartData[] = [
+const barChartData = [
   { name: "1月", value: 2400 },
   { name: "2月", value: 1398 },
   { name: "3月", value: 9800 },
@@ -90,7 +87,7 @@ const barChartData: BarChartData[] = [
 ];
 
 // 折线图数据 - 用户活跃度趋势
-const lineChartData: LineChartData[] = [
+const lineChartData = [
   {
     name: "活跃用户",
     data: [820, 932, 901, 934, 1290, 1330, 1320, 1200, 1100, 950, 1000, 1150]
@@ -117,7 +114,7 @@ const lineChartXAxis = [
 ];
 
 // 饼状图数据 - 系统资源使用情况
-const pieChartData: PieChartData[] = [
+const pieChartData = [
   { name: "CPU使用率", value: 35 },
   { name: "内存使用率", value: 25 },
   { name: "磁盘使用率", value: 18 },
@@ -126,7 +123,7 @@ const pieChartData: PieChartData[] = [
 ];
 
 // 部门绩效数据
-const departmentData: BarChartData[] = [
+const departmentData = [
   { name: "技术部", value: 95 },
   { name: "销售部", value: 88 },
   { name: "市场部", value: 82 },
@@ -135,7 +132,7 @@ const departmentData: BarChartData[] = [
 ];
 
 // 产品销售占比数据
-const productSalesData: PieChartData[] = [
+const productSalesData = [
   { name: "手机", value: 40 },
   { name: "电脑", value: 30 },
   { name: "平板", value: 20 },

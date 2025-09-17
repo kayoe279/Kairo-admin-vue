@@ -5,7 +5,7 @@ export function resultSuccess(data: any, { message = "ok" } = {}) {
     code: 200,
     data,
     message,
-    type: "success",
+    type: "success"
   });
 }
 
@@ -22,9 +22,9 @@ export function resultPageSuccess<T = any>(
       page,
       pageSize,
       pageCount: list.length,
-      list: pageData,
+      list: pageData
     }),
-    message,
+    message
   };
 }
 
@@ -33,7 +33,7 @@ export function resultError(message = "Request failed", { code = -1, result = nu
     code,
     result,
     message,
-    type: "error",
+    type: "error"
   };
 }
 

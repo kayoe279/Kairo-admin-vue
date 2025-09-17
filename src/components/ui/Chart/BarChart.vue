@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseChart from "./BaseChart.vue";
 import {
   CHART_COLORS,
   DEFAULT_AXIS,

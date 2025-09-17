@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseChart from "./BaseChart.vue";
 import { CHART_COLORS, DEFAULT_LEGEND, DEFAULT_TITLE, PIE_TOOLTIP } from "./chartConfig";
 import type { EChartsOption } from "echarts";
 import { computed } from "vue";

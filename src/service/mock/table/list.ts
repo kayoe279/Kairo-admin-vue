@@ -1,7 +1,7 @@
+import { doCustomTimes, resultSuccess } from "../helper";
 import { defineMock } from "@alova/mock";
 import { faker } from "@faker-js/faker";
 import { format } from "date-fns";
-import { doCustomTimes, resultSuccess } from "../helper";
 
 function tableList(pageSize: number) {
   const result: any[] = [];
@@ -15,7 +15,7 @@ function tableList(pageSize: number) {
       city: faker.location.city(),
       status: faker.helpers.arrayElement(["close", "refuse", "pass"]),
       type: faker.helpers.arrayElement(["person", "company"]),
-      createDate: format(faker.date.recent(), "yyyy-MM-dd HH:mm"),
+      createDate: format(faker.date.recent(), "yyyy-MM-dd HH:mm")
     });
   });
   return result;
@@ -32,7 +32,7 @@ export default defineMock({
       pageSize: Number(pageSize),
       total: 600,
       list,
-      params: query,
+      params: query
     });
-  },
+  }
 });
