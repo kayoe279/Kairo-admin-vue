@@ -27,6 +27,6 @@ export const STORAGE_LOCALE = "locale";
 
 export const DEFAULT_PAGE_SIZE = 20;
 export const DEFAULT_PAGE = 1;
-export const PAGE_SIZE_OPTIONS = [10, 20, 30, 40, 50, 100];
+export const PAGE_SIZE_OPTIONS = [10, 20, 30, 50, 100];
 export const PAGE_NAME = "page";
 export const PAGE_SIZE_NAME = "pageSize";

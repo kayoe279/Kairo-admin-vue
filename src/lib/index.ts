@@ -10,3 +10,4 @@ export * from "./helper";
 export * from "./log";
 export * from "./svgIconRender";
 export * from "./storage";
+export * from "./formValidation";
