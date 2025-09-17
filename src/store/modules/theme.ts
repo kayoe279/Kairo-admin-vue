@@ -63,7 +63,7 @@ export const useThemeStore = defineStore(
           errorColorHover: errorStr,
           errorColorPressed: errorStr,
           errorColorSuppl: errorColor,
-          borderRadius: "6px"
+          borderRadius: "8px"
         },
         LoadingBar: {
           colorLoading: primaryColor
@@ -72,9 +72,6 @@ export const useThemeStore = defineStore(
           borderRadius: "12px"
         },
         Dropdown: {
-          borderRadius: "8px"
-        },
-        Select: {
           borderRadius: "8px"
         },
         Card: {

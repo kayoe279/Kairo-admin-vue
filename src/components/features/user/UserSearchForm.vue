@@ -4,10 +4,11 @@ import { computed, ref } from "vue";
 
 type UserSearchFormProps = {
   modelValue?: Record<string, any>;
-  collapsed?: boolean;
+  loading?: boolean;
 };
 
-const props = withDefaults(defineProps<UserSearchFormProps>(), {
+withDefaults(defineProps<UserSearchFormProps>(), {
+  loading: false,
   modelValue: () => ({})
 });
 
@@ -39,7 +40,12 @@ const handleReset = () => {
 
 <template>
   <NCard title="高级表格示例">
-    <SearchForm v-model="searchFormData" @search="handleSearch" @reset="handleReset">
+    <SearchForm
+      v-model="searchFormData"
+      :loading="loading"
+      @search="handleSearch"
+      @reset="handleReset"
+    >
       <template #fields>
         <NGridItem :span="6">
           <NFormItem label="关键词" path="keyword">

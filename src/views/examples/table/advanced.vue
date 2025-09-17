@@ -11,6 +11,7 @@ const defaultSearchParams = {
   tags: undefined
 };
 
+const loading = ref(false);
 const searchParams = ref<UserSearchFormData>({ ...defaultSearchParams });
 const searchFormData = ref<UserSearchFormData>({ ...defaultSearchParams });
 
@@ -32,12 +33,21 @@ const handleReset = () => {
     tags: undefined
   };
 };
+
+const handleLoading = (newVal: boolean) => {
+  loading.value = newVal;
+};
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
     <NCard title="高级表格示例">
-      <SearchForm v-model="searchFormData" @search="handleSearch" @reset="handleReset">
+      <SearchForm
+        v-model="searchFormData"
+        :loading="loading"
+        @search="handleSearch"
+        @reset="handleReset"
+      >
         <template #fields>
           <NGridItem :span="6">
             <NFormItem label="关键词" path="keyword">
@@ -109,6 +119,6 @@ const handleReset = () => {
         </template>
       </SearchForm>
     </NCard>
-    <UserTable :search-params="searchParams" />
+    <UserTable :search-params="searchParams" :loading="loading" @update:loading="handleLoading" />
   </div>
 </template>

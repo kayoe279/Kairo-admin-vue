@@ -12,15 +12,19 @@ import {
   useDialog,
   useMessage
 } from "naive-ui";
-import { h, ref } from "vue";
+import { h, ref, watch } from "vue";
 
 type UserTableProps = {
+  loading?: boolean;
   searchParams?: Record<string, any>;
 };
 
 withDefaults(defineProps<UserTableProps>(), {
+  loading: false,
   searchParams: () => ({})
 });
+
+const emit = defineEmits(["update:loading"]);
 
 // 表格列配置
 const columns: DataTableColumns<User> = [
@@ -195,6 +199,13 @@ const handleExport = () => {
 const handleRefresh = () => {
   advancedTableRef.value?.refresh();
 };
+
+watch(
+  () => advancedTableRef.value?.loading,
+  (newVal) => {
+    emit("update:loading", newVal);
+  }
+);
 </script>
 
 <template>
