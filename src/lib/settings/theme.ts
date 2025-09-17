@@ -1,5 +1,6 @@
 // app theme preset color
 export const appThemeList: string[] = [
+  "#00b4d8",
   "#a78bfa", // 柔紫
   "#2563eb", // 科技蓝
   "#6366f1", // 紫蓝
@@ -9,7 +10,6 @@ export const appThemeList: string[] = [
   "#15803d", // 深绿
   "#22c55e", // 主绿
   "#4f46e5", // 深紫
-  "#00b4d8", // 电紫
   "#38bdf8", // 天蓝
   "#8B5CF6", // 电紫
   "#EC4899", // 粉红
@@ -30,7 +30,7 @@ export const themeSetting = {
   //系统主题色
   primaryColor: appThemeList[0],
   // 信息颜色
-  infoColor: "#00b4d8",
+  infoColor: "#0ea5e9",
   // 成功颜色
   successColor: "#22C55E",
   // 警告颜色

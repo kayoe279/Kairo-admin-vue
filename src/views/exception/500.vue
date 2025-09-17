@@ -11,7 +11,7 @@ const goHome = () => {
 <template>
   <div class="flex h-screen w-full flex-col justify-center rounded px-0 py-12">
     <div class="text-center">
-      <img src="~@/assets/images/exception/500.svg" alt="500 错误" class="mx-auto w-[350px]" />
+      <img src="~@/assets/icons/exception/500.svg" alt="500 错误" class="mx-auto w-[350px]" />
     </div>
     <div class="text-center">
       <h1 class="py-5 text-base text-gray-500">抱歉，服务器出错了</h1>

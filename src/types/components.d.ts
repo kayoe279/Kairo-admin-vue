@@ -36,6 +36,7 @@ declare module 'vue' {
     LayoutMode: typeof import('./../layouts/AppSetting/LayoutMode.vue')['default']
     LineChart: typeof import('./../components/ui/Chart/LineChart.vue')['default']
     LockScreen: typeof import('./../components/molecules/LockScreen/LockScreen.vue')['default']
+    LoginBanner: typeof import('./../components/ui/LoginBanner.vue')['default']
     Logo: typeof import('./../layouts/Header/Logo.vue')['default']
     Main: typeof import('./../layouts/Main.vue')['default']
     Menu: typeof import('./../layouts/Menu/Menu.vue')['default']
