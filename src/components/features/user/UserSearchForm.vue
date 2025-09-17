@@ -8,12 +8,10 @@ type UserSearchFormProps = {
 };
 
 const props = withDefaults(defineProps<UserSearchFormProps>(), {
-  modelValue: () => ({}),
-  collapsed: false
+  modelValue: () => ({})
 });
 
 const emit = defineEmits<{
-  "update:collapsed": [value: boolean];
   search: [value: UserSearchFormData];
   reset: [];
 }>();
@@ -26,15 +24,6 @@ const searchFormData = ref<UserSearchFormData>({
   dateRange: null,
   priceRange: [0, 0],
   tags: []
-});
-
-const collapsed = computed({
-  get() {
-    return props.collapsed;
-  },
-  set(value) {
-    emit("update:collapsed", value);
-  }
 });
 
 // 处理搜索
@@ -50,12 +39,7 @@ const handleReset = () => {
 
 <template>
   <NCard title="高级表格示例">
-    <SearchForm
-      v-model="searchFormData"
-      v-model:collapsed="collapsed"
-      @search="handleSearch"
-      @reset="handleReset"
-    >
+    <SearchForm v-model="searchFormData" @search="handleSearch" @reset="handleReset">
       <template #fields>
         <NGridItem :span="6">
           <NFormItem label="关键词" path="keyword">

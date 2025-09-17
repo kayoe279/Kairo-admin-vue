@@ -15,12 +15,10 @@ import {
 import { h, ref } from "vue";
 
 type UserTableProps = {
-  collapsed?: boolean;
   searchParams?: Record<string, any>;
 };
 
 withDefaults(defineProps<UserTableProps>(), {
-  collapsed: false,
   searchParams: () => ({})
 });
 
@@ -157,8 +155,6 @@ const columns: DataTableColumns<User> = [
 const message = useMessage();
 const dialog = useDialog();
 
-const reCalcHeight = defineModel<boolean>("collapsed");
-
 // 表格引用
 const advancedTableRef = ref();
 
@@ -208,7 +204,6 @@ const handleRefresh = () => {
       :columns="columns"
       :api-function="getTableList"
       :search-params="searchParams"
-      :re-calc-height="reCalcHeight"
     >
       <template #headerLeft>
         <NSpace>

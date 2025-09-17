@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useTable } from "@/hooks";
+import { useTable, useTableHeight } from "@/hooks";
 import { DEFAULT_PAGE_SIZE } from "@/lib";
-import { useDebounceFn, useElementBounding, useEventListener, useWindowSize } from "@vueuse/core";
 import type { DataTableColumns, DataTableProps } from "naive-ui";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 // Props 定义
 type TableProps = {
@@ -35,12 +34,10 @@ const emit = defineEmits(["row-click", "row-dblclick"]);
 
 const tableRef = ref();
 
-const deviceHeight = ref(150);
-const HEADER_HEIGHT = 64;
-const MARGIN_HEIGHT = 30;
-const DEFAULT_PAGINATION_HEIGHT = 30;
-
-const { height: windowHeight } = useWindowSize();
+const { deviceHeight, computeTableHeight } = useTableHeight(tableRef, {
+  resizeHeightOffset: props.resizeHeightOffset,
+  maxHeight: props.maxHeight
+});
 
 const { tableData, loading, pagination, refresh, handlePageChange, handlePageSizeChange } =
   useTable(
@@ -64,41 +61,6 @@ const handleRowDblclick = (row: any, index: number) => {
 
 const tableMaxHeight = computed(() => {
   return tableData.value.length ? `${deviceHeight.value}px` : "auto";
-});
-
-const computeTableHeight = async () => {
-  const table = tableRef.value;
-  if (!table) return;
-
-  const tableEl = table?.$el;
-  const headEl = tableEl.querySelector(".n-data-table-thead") as HTMLElement;
-  const paginationEl = tableEl.querySelector(".n-data-table__pagination") as HTMLElement;
-
-  const { top } = useElementBounding(headEl);
-  const bottomIncludeBody = windowHeight.value - top.value;
-
-  // 计算分页高度
-  const paginationHeight = paginationEl ? paginationEl.offsetHeight + 2 : DEFAULT_PAGINATION_HEIGHT;
-
-  // 计算总高度
-  const totalFixedHeight =
-    HEADER_HEIGHT + paginationHeight + MARGIN_HEIGHT + (props.resizeHeightOffset || 0);
-  let height = bottomIncludeBody - totalFixedHeight;
-
-  // 如果设置了最大高度，取较小值
-  if (props.maxHeight && props.maxHeight < height) {
-    height = props.maxHeight;
-  }
-
-  deviceHeight.value = height;
-};
-
-useEventListener(window, "resize", useDebounceFn(computeTableHeight, 280));
-
-onMounted(() => {
-  nextTick(() => {
-    computeTableHeight();
-  });
 });
 
 watch(
