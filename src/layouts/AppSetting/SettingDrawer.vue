@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DRAWER_WIDTH } from "@/lib/constants";
+import { DRAWER_WIDTH } from "@/lib";
 import { useAppStore, useThemeStore } from "@/store";
 import { useDialog, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";

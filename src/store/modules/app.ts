@@ -1,4 +1,4 @@
-import { StoreEnum } from "@/lib/enums/storeEnum";
+import { StoreEnum } from "@/lib";
 import { setI18nLocale } from "@/lib/i18n";
 import { type AppSettingProps, appSetting } from "@/lib/settings/app";
 import { getCurrentLocale, setCurrentLocale } from "@/lib/storage";
@@ -11,7 +11,6 @@ export const useAppStore = defineStore(
   StoreEnum.setting,
   () => {
     const settings = ref(cloneDeep(appSetting));
-
     const locale = ref(getCurrentLocale() || import.meta.env.VITE_DEFAULT_LOCALE);
 
     const [open, toggleDrawer] = useToggle(false);

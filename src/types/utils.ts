@@ -1,10 +1,32 @@
-import { TAB_DATA_ID } from "@/lib/constants";
-import type { ComputedRef, Ref } from "vue";
-
-export type DynamicProps<T> = {
-  [P in keyof T]: Ref<T[P]> | T[P] | ComputedRef<T[P]>;
-};
+import { TAB_DATA_ID } from "@/lib";
 
 export type TabNamedNodeMap = NamedNodeMap & {
   [TAB_DATA_ID]: Attr;
 };
+
+// 路径字符串类型定义
+export type NestedKeyOf<ObjectType extends object> = {
+  [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+    ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key] & object>}`
+    : `${Key}`;
+}[keyof ObjectType & (string | number)];
+
+export type PathValue<T extends object, P extends string> = P extends `${infer Key}.${infer Rest}`
+  ? Key extends keyof T
+    ? T[Key] extends object
+      ? Rest extends NestedKeyOf<T[Key] & object>
+        ? PathValue<T[Key] & object, Rest>
+        : never
+      : never
+    : never
+  : P extends keyof T
+    ? T[P]
+    : never;
+
+export type TabsDropdownKey =
+  | "closeCurrent"
+  | "closeOther"
+  | "closeLeft"
+  | "closeRight"
+  | "closeAll"
+  | "reloadCurrent";

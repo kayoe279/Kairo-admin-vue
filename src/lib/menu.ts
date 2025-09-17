@@ -1,6 +1,5 @@
-import { typedBoolean } from "./utils";
+import { svgIconRender, typedBoolean } from "@/lib";
 import { $t } from "@/lib/i18n";
-import { svgIconRender } from "@/lib/svgIconRender";
 import type { MenuOption } from "naive-ui";
 import type { RouteMeta, RouteRecordRaw } from "vue-router";
 

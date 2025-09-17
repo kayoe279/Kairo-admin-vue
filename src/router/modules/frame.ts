@@ -1,4 +1,4 @@
-import { svgIconRender } from "@/lib/svgIconRender";
+import { svgIconRender } from "@/lib";
 import type { RouteRecordRaw } from "vue-router";
 
 const IFrame = () => import("@/views/iframe/index.vue");
@@ -11,8 +11,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "外部页面",
-      sort: 7,
-      icon: svgIconRender({ icon: "solar:euro-broken" })
+      icon: svgIconRender({ icon: "solar:euro-broken" }),
+      sort: 8
     },
     children: [
       {

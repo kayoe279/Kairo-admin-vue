@@ -1,4 +1,4 @@
-import { svgIconRender } from "@/lib/svgIconRender";
+import { svgIconRender } from "@/lib";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "异常页面",
       icon: svgIconRender({ icon: "solar:confounded-circle-broken" }),
-      sort: 3
+      sort: 4
     },
     children: [
       {

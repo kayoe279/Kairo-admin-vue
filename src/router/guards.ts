@@ -1,5 +1,4 @@
-import { PAGE } from "@/lib/constants";
-import { getUserToken } from "@/lib/cookie";
+import { PAGE, getUserToken } from "@/lib";
 import { useRouteStore } from "@/store";
 import type { Router } from "vue-router";
 

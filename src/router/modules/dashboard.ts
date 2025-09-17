@@ -1,4 +1,4 @@
-import { svgIconRender } from "@/lib/svgIconRender";
+import { svgIconRender } from "@/lib";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -8,8 +8,8 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/dashboard/workplace",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
-      title: "工作台",
-      icon: svgIconRender({ icon: "solar:emoji-funny-square-broken" }),
+      title: "仪表盘",
+      icon: svgIconRender({ icon: "solar:chart-square-broken" }),
       sort: 0
     },
     children: [
@@ -17,20 +17,28 @@ const routes: Array<RouteRecordRaw> = [
         path: "/dashboard/workplace",
         name: "dashboardWorkplace",
         meta: {
-          title: "首页",
+          title: "工作台",
           keepAlive: true,
           affix: true
         },
-        component: () => import("@/views/dashboard/workplace/workplace.vue")
+        component: () => import("@/views/dashboard/workplace.vue")
       },
       {
-        path: "/dashboard/console",
-        name: "dashboardMonitor",
+        path: "/dashboard/analysis",
+        name: "dashboardAnalysis",
         meta: {
-          title: "监控",
+          title: "数据分析",
           keepAlive: true
         },
-        component: () => import("@/views/dashboard/monitor/monitor.vue")
+        component: () => import("@/views/dashboard/analysis.vue")
+      },
+      {
+        path: "/dashboard/monitor",
+        name: "dashboardMonitor",
+        meta: {
+          title: "实时监控"
+        },
+        component: () => import("@/views/dashboard/monitor.vue")
       }
     ]
   }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { cn } from "@/lib";
 import { appConfig } from "@/lib/settings/app";
-import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { computed } from "vue";
 
@@ -10,7 +10,7 @@ const collapsed = computed(() => appStore.menuSetting.collapsed);
 
 <template>
   <div class="flex h-16 items-center justify-center overflow-hidden whitespace-nowrap">
-    <SvgIcon localIcon="logo" :class="cn('inline h-8 w-auto', { 'mr-2': !collapsed })" />
+    <SvgIcon localIcon="logo" :class="cn('inline h-10 w-auto', { 'mr-2': !collapsed })" />
     <h2
       :class="
         cn(

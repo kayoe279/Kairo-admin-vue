@@ -1,3 +1,4 @@
+import { StoreEnum } from "@/lib";
 import {
   getUserToken,
   removeRefreshToken,
@@ -5,9 +6,9 @@ import {
   setRefreshToken,
   setUserToken
 } from "@/lib/cookie";
-import { StoreEnum } from "@/lib/enums/storeEnum";
 import { getUserInfo, removeUserInfo, setUserInfo } from "@/lib/storage";
 import { useRouteStore, useTabsStore } from "@/store";
+import { UserInfo } from "@/types";
 import { defineStore } from "pinia";
 import { ref, unref } from "vue";
 import { useRouter } from "vue-router";
@@ -17,10 +18,10 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   const routeStore = useRouteStore();
   const router = useRouter();
 
-  const userInfo = ref<Api.Login.Info | null>(getUserInfo());
+  const userInfo = ref<UserInfo | null>(getUserInfo());
   const token = ref(getUserToken());
 
-  const updateUserInfo = async (result: Api.Login.Info) => {
+  const updateUserInfo = async (result: UserInfo) => {
     const { accessToken, refreshToken } = result;
     setUserToken(accessToken);
     setRefreshToken(refreshToken);

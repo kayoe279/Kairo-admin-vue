@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import BetterScroll from "@/components/atoms/BetterScroll.vue";
+import BetterScroll from "@/components/ui/BetterScroll.vue";
 import { useMedia } from "@/hooks/useMedia";
-import { TAB_DATA_ID } from "@/lib/constants";
-import { typedBoolean } from "@/lib/utils";
+import { TAB_DATA_ID, typedBoolean } from "@/lib";
 import { useAppStore, useTabsStore } from "@/store";
-import type { TabNamedNodeMap } from "@/types/utils";
+import type { TabNamedNodeMap, TabsDropdownKey } from "@/types";
 import { useElementBounding, useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { computed, nextTick, reactive, ref, watch } from "vue";
@@ -42,7 +41,7 @@ const dropdown = reactive({
 // 获取标签页右键菜单禁用项
 const menuDisabledKeys = computed(() => {
   const tabId = dropdown.tabId || route.name;
-  const disabledKeys: Tabs.DropdownKey[] = [];
+  const disabledKeys: TabsDropdownKey[] = [];
   const tabItemIndex = tabsList.value.findIndex((item) => item.name === tabId);
   if (tabItemIndex === tabsList.value.length - 1) {
     disabledKeys.push("closeRight");
@@ -53,7 +52,7 @@ const menuDisabledKeys = computed(() => {
 
   const isFixed = tabsList.value.find((item) => item.name == tabId)?.meta?.affix ?? false;
   if (isFixed) {
-    const homeDisable: Tabs.DropdownKey[] = ["closeCurrent", "closeLeft"];
+    const homeDisable: TabsDropdownKey[] = ["closeCurrent", "closeLeft"];
     disabledKeys.push(...homeDisable);
   }
 

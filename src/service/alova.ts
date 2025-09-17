@@ -7,14 +7,13 @@ import {
 } from "./handle";
 import { mocks } from "./mocks";
 import { getUserToken } from "@/lib/cookie";
-import { getAppEnvConfig } from "@/lib/env";
 import { createAlovaMockAdapter } from "@alova/mock";
 import { createAlova } from "alova";
 import { createServerTokenAuthentication } from "alova/client";
 import adapterFetch from "alova/fetch";
 import VueHook, { type VueHookType } from "alova/vue";
 
-const { VITE_USE_MOCK, VITE_LOGGER_MOCK } = getAppEnvConfig();
+const { VITE_USE_MOCK, VITE_LOGGER_MOCK } = import.meta.env;
 
 const mockAdapter = createAlovaMockAdapter(mocks, {
   // 全局控制是否启用mock接口，默认为true

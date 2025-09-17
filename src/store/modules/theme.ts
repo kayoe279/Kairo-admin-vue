@@ -1,6 +1,5 @@
-import { StoreEnum } from "@/lib/enums/storeEnum";
+import { StoreEnum, lighten } from "@/lib";
 import { themeSetting } from "@/lib/settings/theme";
-import { lighten } from "@/lib/utils";
 import { useColorMode } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import type { GlobalThemeOverrides } from "naive-ui";
@@ -64,7 +63,7 @@ export const useThemeStore = defineStore(
           errorColorHover: errorStr,
           errorColorPressed: errorStr,
           errorColorSuppl: errorColor,
-          borderRadius: "5px"
+          borderRadius: "8px"
         },
         LoadingBar: {
           colorLoading: primaryColor
@@ -80,6 +79,18 @@ export const useThemeStore = defineStore(
         },
         Dialog: {
           borderRadius: "8px"
+        },
+        Button: {
+          borderRadiusLarge: "10px",
+          borderRadiusMedium: "8px",
+          borderRadiusSmall: "6px",
+          borderRadiusTiny: "4px"
+        },
+        Message: {
+          borderRadius: "8px"
+        },
+        Tag: {
+          borderRadius: "6px"
         }
       };
     });

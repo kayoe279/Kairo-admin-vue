@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import SvgIcon from "@/components/ui/SvgIcon.vue";
 import { appConfig } from "@/lib/settings/app";
 import { useUserStore } from "@/store";
 import { useDialog, useMessage } from "naive-ui";
@@ -17,12 +17,12 @@ const nickname = computed(() => userStore.userInfo?.nickname);
 
 const avatarOptions = computed(() => [
   {
-    label: t("login.userSetting"),
+    label: t("auth.userSetting"),
     key: "setting-account",
     icon: () => h(SvgIcon, { icon: "solar:settings-outline" })
   },
   {
-    label: t("login.logout"),
+    label: t("auth.logout"),
     key: "logout",
     icon: () => h(SvgIcon, { icon: "solar:logout-2-broken" })
   }
@@ -44,13 +44,13 @@ const onSelect = (key: string) => {
 const doLogout = () => {
   dialog.warning({
     title: t("common.tip"),
-    content: t("login.logoutConfirm.content"),
+    content: t("auth.logoutConfirm.content"),
     positiveText: t("common.ok"),
     negativeText: t("common.cancel"),
     transformOrigin: "center",
     onPositiveClick: async () => {
       await userStore.logout();
-      message.success(t("login.logoutConfirm.successMessage"));
+      message.success(t("auth.logoutConfirm.successMessage"));
     }
   });
 };

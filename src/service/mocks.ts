@@ -1,10 +1,5 @@
 // 这里按需导入 mock 文件，只有在这里导入并导出，才会执行 mock 拦截
 // 跟根据实际开发情况配置
-import ConsoleMock from "~/mock/dashboard/console";
-import SystemMenuMock from "~/mock/system/menu";
-import SystemRoleMock from "~/mock/system/role";
-import TableMock from "~/mock/table/list";
-import UserMock from "~/mock/user";
-import MenusMock from "~/mock/user/menus";
+import TableMock from "./mock/table/list";
 
-export const mocks = [UserMock, MenusMock, TableMock, ConsoleMock, SystemMenuMock, SystemRoleMock];
+export const mocks = [TableMock];

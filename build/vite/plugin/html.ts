@@ -3,9 +3,10 @@
  * https://github.com/anncwb/vite-plugin-html
  */
 import pkg from "../../../package.json";
-import { GLOB_CONFIG_FILE_NAME } from "../../constant";
 import type { PluginOption } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+
+const GLOB_CONFIG_FILE_NAME = "app.config.js";
 
 export function configHtmlPlugin(env: ImportMetaEnv, isBuild: boolean) {
   const { VITE_GLOB_APP_TITLE, VITE_PUBLIC_PATH } = env;

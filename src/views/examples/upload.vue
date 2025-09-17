@@ -23,7 +23,7 @@
 
             <n-form-item label="病例图片" path="images">
               <BasicUpload
-                :action="`${uploadUrl}/v1.0/files`"
+                :action="`${VITE_GLOB_UPLOAD_URL}/v1.0/files`"
                 :headers="uploadHeaders"
                 :data="{ type: 0 }"
                 name="files"
@@ -48,12 +48,12 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicUpload } from "@/components/molecules/Upload";
-import { useGlobSetting } from "@/hooks/useGlobSetting";
+import { BasicUpload } from "@/components/ui/Upload";
+import { getAppEnvConfig } from "@/lib";
 import { useMessage } from "naive-ui";
 import { reactive, ref, unref } from "vue";
 
-const globSetting = useGlobSetting();
+const globSetting = getAppEnvConfig();
 
 const rules = {
   name: {
@@ -76,7 +76,7 @@ const rules = {
 
 const formRef: any = ref(null);
 const message = useMessage();
-const { uploadUrl } = globSetting;
+const { VITE_GLOB_UPLOAD_URL } = globSetting;
 
 const formValue = reactive({
   name: "",

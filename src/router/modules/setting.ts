@@ -1,4 +1,4 @@
-import { svgIconRender } from "@/lib/svgIconRender";
+import { svgIconRender } from "@/lib";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -8,26 +8,34 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/setting/account",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
-      title: "设置页面",
+      title: "系统设置",
       icon: svgIconRender({ icon: "solar:settings-outline" }),
-      sort: 6
+      sort: 7
     },
     children: [
       {
         path: "/setting/account",
         name: "settingAccount",
         meta: {
-          title: "个人设置"
+          title: "账户设置"
         },
         component: () => import("@/views/setting/account.vue")
       },
       {
-        path: "/setting/system",
-        name: "settingSystem",
+        path: "/setting/theme",
+        name: "settingTheme",
         meta: {
-          title: "系统设置"
+          title: "主题设置"
         },
-        component: () => import("@/views/setting/system.vue")
+        component: () => import("@/views/setting/theme.vue")
+      },
+      {
+        path: "/setting/security",
+        name: "settingSecurity",
+        meta: {
+          title: "安全设置"
+        },
+        component: () => import("@/views/setting/security.vue")
       }
     ]
   }

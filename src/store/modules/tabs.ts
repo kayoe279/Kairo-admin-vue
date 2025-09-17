@@ -1,6 +1,5 @@
 import { useRouteStore } from "./route";
-import { PAGE } from "@/lib/constants";
-import { StoreEnum } from "@/lib/enums/storeEnum";
+import { PAGE, StoreEnum } from "@/lib";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { type RouteLocationNormalizedLoadedGeneric, useRoute, useRouter } from "vue-router";
@@ -66,7 +65,7 @@ export const useTabsStore = defineStore(
     // 添加标签页
     const addTab = (route: Route) => {
       const name = route.name as string;
-      if (route.meta?.withoutTab || route.meta?.hidden) return;
+      if (route.meta?.hidden) return;
       const isExists = tabsList.value.some((item) => item.name == name);
       if (!isExists) {
         tabsList.value.push(getTabByRoute(route));
@@ -76,12 +75,11 @@ export const useTabsStore = defineStore(
     // 关闭左侧
     const closeLeftTabs = (tabId: string) => {
       const index = tabsList.value.findIndex((item) => item.name == tabId);
+      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
       tabsList.value = tabsList.value.filter(
         (item, i) => i >= index || (item?.meta?.affix ?? false)
       );
-      const currentIndex = tabsList.value.findIndex((item) => item.name == tabId);
-      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
-      if (activeIndex < currentIndex) {
+      if (activeIndex < index) {
         const shouldRoute = tabsList.value.filter((item) => !item.meta?.affix)?.[0];
         shouldRoute && router.replace(shouldRoute.path);
       }
@@ -89,12 +87,11 @@ export const useTabsStore = defineStore(
     // 关闭右侧
     const closeRightTabs = (tabId: string) => {
       const index = tabsList.value.findIndex((item) => item.name == tabId);
+      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
       tabsList.value = tabsList.value.filter(
         (item, i) => i <= index || (item?.meta?.affix ?? false)
       );
-      const currentIndex = tabsList.value.findIndex((item) => item.name == tabId);
-      const activeIndex = tabsList.value.findIndex((item) => item.name == activeTabId.value);
-      if (activeIndex > currentIndex) {
+      if (activeIndex > index) {
         const shouldRoute = tabsList.value[Math.max(0, tabsList.value.length - 1)];
         shouldRoute && router.replace(shouldRoute.path);
       }

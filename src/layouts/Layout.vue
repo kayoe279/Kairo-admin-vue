@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useMedia } from "@/hooks/useMedia";
+import { cn } from "@/lib";
 import { isRootMenu } from "@/lib/menu";
-import { cn } from "@/lib/utils";
 import { useAppStore, useThemeStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed, unref } from "vue";
@@ -35,7 +35,7 @@ const showSideDrawer = computed({
 </script>
 
 <template>
-  <NLayout has-sider>
+  <NLayout position="absolute" has-sider>
     <NLayoutSider
       v-if="showMenu"
       @collapse="() => appStore.toggleMenuCollapsed(true)"
@@ -46,7 +46,7 @@ const showSideDrawer = computed({
       :width="desktopMenuWidth"
       :native-scrollbar="false"
       :inverted="darkNav"
-      class="!transition-all"
+      class="pb-4 !transition-all"
     >
       <Logo />
       <Menu />
@@ -72,7 +72,7 @@ const showSideDrawer = computed({
         )
       "
     >
-      <Header v-if="!fullScreen" class="shrink-0" />
+      <Header v-if="!fullScreen" />
       <TabsView v-if="multiTabsSetting.show" class="shrink-0" />
 
       <Main :class="cn('p-4', headerSetting.fixed && 'min-h-0 flex-1 overflow-y-auto')" />

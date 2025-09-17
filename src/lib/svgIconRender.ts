@@ -1,4 +1,4 @@
-import SvgIcon from "@/components/atoms/SvgIcon.vue";
+import SvgIcon from "@/components/ui/SvgIcon.vue";
 import { h } from "vue";
 
 interface IconConfig {
