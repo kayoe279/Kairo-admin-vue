@@ -9,7 +9,7 @@ import { defineConfig, loadEnv } from "vite";
 
 const { dependencies, devDependencies, name, version, author } = pkg;
 
-const __APP_INFO__ = {
+const appInfo = {
   pkg: { dependencies, devDependencies, name, version, author },
   lastBuildTime: format(new Date(), "yyyy-MM-dd HH:mm:ss")
 };
@@ -32,7 +32,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     plugins: setupVitePlugins(viteEnv, isBuild),
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
-      __APP_INFO__: JSON.stringify(__APP_INFO__),
+      appInfo: JSON.stringify(appInfo),
       __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
     },
     server: {

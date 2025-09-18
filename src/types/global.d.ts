@@ -58,7 +58,7 @@ declare global {
   }
 
   // 全局变量声明
-  declare const __APP_INFO__: AppInfo;
+  declare const appInfo: AppInfo;
   declare const __APP_ENV__: string;
 }
 

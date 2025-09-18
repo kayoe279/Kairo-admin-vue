@@ -7,7 +7,7 @@ export interface schemaItem {
   label: string;
 }
 
-const { pkg, lastBuildTime } = __APP_INFO__;
+const { pkg, lastBuildTime } = appInfo;
 const { dependencies, devDependencies, version, author } = pkg;
 
 const schema: schemaItem[] = [];
