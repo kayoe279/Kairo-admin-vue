@@ -8,7 +8,7 @@ export interface schemaItem {
 }
 
 const { pkg, lastBuildTime } = appInfo;
-const { dependencies, devDependencies, version, author } = pkg;
+const { dependencies, devDependencies, version, name, author } = pkg;
 
 const schema: schemaItem[] = [];
 const devSchema: schemaItem[] = [];
@@ -31,7 +31,7 @@ Object.keys(devDependencies).forEach((key) => {
     <NCard title="项目信息" class="proCard mt-4" size="small" :segmented="{ content: true }">
       <NDescriptions bordered label-placement="left" class="py-2">
         <NDescriptionsItem label="项目名称">
-          {{ appConfig.title }}
+          {{ name }}
         </NDescriptionsItem>
         <NDescriptionsItem label="作者">
           {{ author.name }}
