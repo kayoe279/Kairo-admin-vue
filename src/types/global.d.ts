@@ -49,6 +49,10 @@ declare global {
       devDependencies: Record<string, string>;
       name: string;
       version: string;
+      author: {
+        name: string;
+        email: string;
+      };
     };
     lastBuildTime: string;
   }

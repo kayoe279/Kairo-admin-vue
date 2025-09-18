@@ -57,8 +57,10 @@ export const defaultLoginParams = {
 };
 
 export const appConfig = {
-  title: "Kairo Admin",
+  title: "Kairo Admin Vue",
+  description:
+    "是一个基于 Vue3 + Vite + Naive UI + TypeScript 的现代化中后台管理系统模板,，它可以帮助你快速搭建企业级中后台项目，持续更新中。",
   avatar: avatarImage,
-  loginDesc: "kairo Admin中后台前端/设计解决方案",
-  github: "https://github.com/kayoe279"
+  github: "https://github.com/kayoe279/Kairo-admin",
+  preview: "https://kairo-admin-vue.vercel.app"
 };

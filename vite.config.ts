@@ -7,10 +7,10 @@ import path from "node:path";
 import type { ConfigEnv } from "vite";
 import { defineConfig, loadEnv } from "vite";
 
-const { dependencies, devDependencies, name, version } = pkg;
+const { dependencies, devDependencies, name, version, author } = pkg;
 
 const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
+  pkg: { dependencies, devDependencies, name, version, author },
   lastBuildTime: format(new Date(), "yyyy-MM-dd HH:mm:ss")
 };
 

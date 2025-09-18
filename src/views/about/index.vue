@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+import { appConfig } from "@/lib/settings/app";
+import { NDescriptionsItem } from "naive-ui";
+
 export interface schemaItem {
   field: string;
   label: string;
 }
 
 const { pkg, lastBuildTime } = __APP_INFO__;
-const { dependencies, devDependencies, name, version } = pkg;
+const { dependencies, devDependencies, version, author } = pkg;
 
 const schema: schemaItem[] = [];
 const devSchema: schemaItem[] = [];
@@ -21,69 +24,54 @@ Object.keys(devDependencies).forEach((key) => {
 
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="关于">
-        {{ name }} 是一个基于 vue3，vite，TypeScript
-        的中后台解决方案，它可以帮助你快速搭建企业级中后台项目，持续更新中。
-      </n-card>
-    </div>
-    <n-card
-      :bordered="false"
-      title="项目信息"
-      class="proCard mt-4"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item label="版本">
-          <n-tag type="info"> {{ version }} </n-tag>
-        </n-descriptions-item>
-        <n-descriptions-item label="最后编译时间">
-          <n-tag type="info"> {{ lastBuildTime }} </n-tag>
-        </n-descriptions-item>
-        <n-descriptions-item label="预览地址">
-          <div class="flex items-center">
-            <a href="https://vue3-naive-admin-template.vercel.app" class="py-2" target="_blank">
-              查看预览地址
-            </a>
-          </div>
-        </n-descriptions-item>
-        <n-descriptions-item label="Github">
-          <div class="flex items-center">
-            <a href="https://github.com/kayoe279/Kairo-admin#" class="py-2" target="_blank">
-              查看Github地址
-            </a>
-          </div>
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
+    <NCard title="关于">
+      {{ appConfig.description }}
+    </NCard>
 
-    <n-card
-      :bordered="false"
-      title="开发环境依赖"
-      class="proCard mt-4"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item v-for="item in devSchema" :key="item.field" :label="item.field">
-          {{ item.label }}
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
+    <NCard title="项目信息" class="proCard mt-4" size="small" :segmented="{ content: true }">
+      <NDescriptions bordered label-placement="left" class="py-2">
+        <NDescriptionsItem label="项目名称">
+          {{ appConfig.title }}
+        </NDescriptionsItem>
+        <NDescriptionsItem label="作者">
+          {{ author.name }}
+        </NDescriptionsItem>
+        <NDescriptionsItem label="邮箱">
+          {{ author.email }}
+        </NDescriptionsItem>
+        <NDescriptionsItem label="版本">
+          <NTag type="info" size="small"> {{ version }} </NTag>
+        </NDescriptionsItem>
+        <NDescriptionsItem label="最后编译时间">
+          <NTag type="success" size="small"> {{ lastBuildTime }} </NTag>
+        </NDescriptionsItem>
+        <NDescriptionsItem label="预览地址">
+          <div class="flex items-center">
+            <a :href="appConfig.preview" class="text-primary" target="_blank"> 查看预览地址 </a>
+          </div>
+        </NDescriptionsItem>
+        <NDescriptionsItem label="Github">
+          <div class="flex h-full items-center">
+            <a :href="appConfig.github" class="text-primary" target="_blank"> 查看Github地址 </a>
+          </div>
+        </NDescriptionsItem>
+      </NDescriptions>
+    </NCard>
 
-    <n-card
-      :bordered="false"
-      title="生产环境依赖"
-      class="proCard mt-4"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item v-for="item in schema" :key="item.field" :label="item.field">
+    <NCard title="开发环境依赖" size="small" :segmented="{ content: true }">
+      <NDescriptions bordered label-placement="left" class="py-2">
+        <NDescriptionsItem v-for="item in devSchema" :key="item.field" :label="item.field">
           {{ item.label }}
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
+        </NDescriptionsItem>
+      </NDescriptions>
+    </NCard>
+
+    <NCard title="生产环境依赖" size="small" :segmented="{ content: true }">
+      <NDescriptions bordered label-placement="left" class="py-2">
+        <NDescriptionsItem v-for="item in schema" :key="item.field" :label="item.field">
+          {{ item.label }}
+        </NDescriptionsItem>
+      </NDescriptions>
+    </NCard>
   </div>
 </template>
