@@ -30,7 +30,7 @@ const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick
     :accordion="menuSetting.accordion"
     :options="menus"
     :collapsed="menuSetting.collapsed"
-    :collapsed-width="64"
+    :collapsed-width="menuSetting.minMenuWidth"
     :icon-size="20"
     :collapsed-icon-size="20"
     :indent="24"

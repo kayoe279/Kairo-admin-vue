@@ -98,7 +98,7 @@ function getHtmlVal() {
 }
 </script>
 
-<style lang="less">
+<style scoped>
 .ql-toolbar.ql-snow {
   border-top: none;
   border-left: none;

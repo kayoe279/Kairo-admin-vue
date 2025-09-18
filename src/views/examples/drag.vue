@@ -146,17 +146,16 @@ const completeList = reactive([{ name: "商品图片需要提供放大镜", id: 
 const approvedList = reactive([{ name: "商品图片需要提供放大镜", id: 5 }]);
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .draggable-ul {
   width: 100%;
   overflow: hidden;
   margin-top: -16px;
-
-  .draggable-li {
-    width: 100%;
-    padding: 16px 10px;
-    color: #333;
-    border-bottom: 1px solid #efeff5;
-  }
+}
+.draggable-ul .draggable-li {
+  width: 100%;
+  padding: 16px 10px;
+  color: #333;
+  border-bottom: 1px solid #efeff5;
 }
 </style>

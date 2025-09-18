@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/setting/account",
         name: "settingAccount",
         meta: {
-          title: "账户设置"
+          title: "用户设置"
         },
         component: () => import("@/views/setting/account.vue")
       },

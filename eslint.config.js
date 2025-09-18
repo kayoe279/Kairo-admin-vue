@@ -5,7 +5,6 @@ import {
   defineConfigWithVueTs,
   vueTsConfigs
 } from "@vue/eslint-config-typescript";
-import pluginPlaywright from "eslint-plugin-playwright";
 // import pluginTailwindcss from "eslint-plugin-tailwindcss";
 import pluginVue from "eslint-plugin-vue";
 
@@ -88,7 +87,6 @@ export default defineConfigWithVueTs(
   },
 
   {
-    ...pluginPlaywright.configs["flat/recommended"],
     files: ["e2e/**/*.{test,spec}.{js,ts,jsx,tsx}"]
   },
 

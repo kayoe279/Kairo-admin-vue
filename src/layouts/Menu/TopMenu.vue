@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useMenu } from "@/hooks";
-import { useRouteStore } from "@/store";
+import { useAppStore, useRouteStore } from "@/store";
+import { storeToRefs } from "pinia";
 
 const routeStore = useRouteStore();
+const appStore = useAppStore();
+const { menuSetting } = storeToRefs(appStore);
 
 const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick } = useMenu({
   routes: routeStore.rowRoutes
@@ -14,7 +17,7 @@ const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick
     ref="menuInstRef"
     :options="menus"
     mode="horizontal"
-    :collapsed-width="64"
+    :collapsed-width="menuSetting.minMenuWidth"
     :icon-size="20"
     :collapsed-icon-size="20"
     :indent="24"
