@@ -61,6 +61,6 @@ export const appConfig = {
   description:
     "是一个基于 Vue3 + Vite + Naive UI + TypeScript 的现代化中后台管理系统模板,，它可以帮助你快速搭建企业级中后台项目，持续更新中。",
   avatar: avatarImage,
-  github: "https://github.com/kayoe279/Kairo-admin",
+  github: "https://github.com/kayoe279/Kairo-admin-vue",
   preview: "https://kairo-admin-vue.vercel.app"
 };
