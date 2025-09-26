@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResultEnum, getAppEnvConfig, isString } from "@/lib";
+import { getAppEnvConfig } from "@/lib";
 import { componentSetting } from "@/lib/settings/component";
 import type { UploadFileInfo } from "naive-ui";
 import { useDialog, useMessage } from "naive-ui";
@@ -86,7 +86,7 @@ const isValidFileType = (fileType: string) => {
 const validateBeforeUpload = ({ file }: { file: UploadFileInfo }) => {
   const fileInfo = file.file!;
   const { maxSize, accept } = props;
-  const acceptedTypes = (isString(accept) && accept.split(",")) || [];
+  const acceptedTypes = (typeof accept === "string" && accept.split(",")) || [];
 
   if (maxSize && fileInfo.size / 1024 / 1024 >= maxSize) {
     message.error(`上传文件最大值不能超过${maxSize}M`);
@@ -117,7 +117,7 @@ const handleUploadComplete = ({
     const errorMessage = res.msg || res.message || "上传失败";
     const result = res[infoField];
 
-    if (code === ResultEnum.SUCCESS) {
+    if (code === 200) {
       const imageUrl: string = buildImageUrl(result.photo);
       displayImageList.value.push(imageUrl);
       originalImageList.value.push(result.photo);

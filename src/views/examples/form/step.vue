@@ -1,9 +1,34 @@
 <script setup lang="ts">
 import { requiredRule } from "@/lib/formValidation";
-import type { StepFormData } from "@/types/form";
 import { useMessage } from "naive-ui";
 import type { FormInst, FormRules } from "naive-ui";
 import { computed, onMounted, reactive, ref } from "vue";
+
+export interface StepFormData {
+  // 第一步：基本信息
+  basic: {
+    projectName: string;
+    projectType: string;
+    description: string;
+    timeline: [number, number] | null;
+    budget: number | null;
+  };
+  // 第二步：配置信息
+  config: {
+    template: string;
+    features: string[];
+    database: string;
+    deployment: string;
+    teamSize: number;
+    priority: number;
+  };
+  // 第三步：确认信息
+  confirm: {
+    terms: boolean;
+    newsletter: boolean;
+    remarks: string;
+  };
+}
 
 const message = useMessage();
 
