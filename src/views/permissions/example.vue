@@ -1,34 +1,55 @@
 <script setup lang="ts">
 import { usePermission } from "@/hooks/usePermission";
-import { defaultLoginParams } from "@/lib/settings/app";
-import { login } from "@/service/api";
+import { tryParseJson } from "@/lib";
+import { useSignIn } from "@/service";
+import { RoleType } from "@/service/types";
 import { useUserStore } from "@/store";
-import { RoleType } from "@/types";
-import { useRequest } from "alova/client";
+import { useMessage } from "naive-ui";
+import { ref } from "vue";
 
 const userStore = useUserStore();
+const message = useMessage();
 const { hasPermission } = usePermission();
-const role = userStore.userInfo?.roles?.[0] || "";
+const role = userStore.userInfo?.user_metadata?.roles?.[0] || "";
 
-const { loading, send } = useRequest(login, {
-  immediate: false
-});
+const { isPending, mutateAsync } = useSignIn();
 
 const roleList: RoleType[] = ["super", "admin", "user"];
+const accounts = tryParseJson(import.meta.env.VITE_EXAMPLE_ACCOUNT, []);
+const password = import.meta.env.VITE_EXAMPLE_PASSWORD;
 
-const toggleUserRole = async (role: RoleType) => {
-  const result = await send({ ...defaultLoginParams, username: role });
-  if (result.isSuccess) {
-    userStore.updateUserInfo(result.data);
+const isDisabled = ref(accounts.length === 0 || !password);
+
+const roleMap = {
+  super: accounts[0],
+  admin: accounts[1],
+  user: accounts[2]
+};
+
+const toggleUserRole = async (targetRole: RoleType) => {
+  if (targetRole === role) {
+    message.warning("当前角色与目标角色相同");
+    return;
+  }
+  const result = await mutateAsync({
+    email: roleMap[targetRole],
+    password: password
+  });
+  if (result.user) {
+    userStore.updateUserInfo(result.user);
+    message.success(`已切换到 ${targetRole} 角色`);
   }
 };
 </script>
 
 <template>
   <div>
-    <n-card title="权限示例">
+    <n-card v-if="isDisabled" title="权限示例">
+      <n-alert title="请配置 VITE_EXAMPLE_ACCOUNT 和 VITE_EXAMPLE_PASSWORD" type="warning" />
+    </n-card>
+    <n-card v-else title="权限示例">
       <n-h1> 当前权限：{{ role }}</n-h1>
-      <n-spin :show="loading">
+      <n-spin :show="isPending">
         <div class="flex flex-wrap gap-x-4">
           <n-button
             v-for="item in roleList"

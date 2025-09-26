@@ -1,30 +1,44 @@
-import { request } from "@/service";
-import type { DynamicRoute, UserInfo } from "@/types";
+import { SupabaseAuthAPI } from "@/service";
+import { useMutation } from "@tanstack/vue-query";
 
-interface LoginParams {
-  username: string;
-  password: string;
-}
-
-export const login = (data: LoginParams) => {
-  const methodInstance = request.Post<Service.ResponseResult<UserInfo>>("/login", data);
-  methodInstance.meta = {
-    authRole: null
-  };
-  return methodInstance;
-};
-
-export const refreshToken = (data: any) => {
-  const method = request.Post<Service.ResponseResult<UserInfo>>("/updateToken", data);
-  method.meta = {
-    authRole: "refreshToken"
-  };
-  return method;
-};
-
-export const getUserRoutes = async (params: { id: number }) => {
-  const res = await request.Get<Service.ResponseResult<DynamicRoute[]>>("/getUserRoutes-react", {
-    params
+export const useSignIn = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.signIn
   });
-  return res;
+};
+
+export const useSignUp = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.signUp
+  });
+};
+
+export const useSignOut = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.signOut
+  });
+};
+
+export const useVerifyOtp = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.verifyOtp
+  });
+};
+
+export const useResendConfirmation = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.resendConfirmation
+  });
+};
+
+export const useSignInWithGitHub = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.signInWithGitHub
+  });
+};
+
+export const useSignInWithGoogle = () => {
+  return useMutation({
+    mutationFn: SupabaseAuthAPI.signInWithGoogle
+  });
 };

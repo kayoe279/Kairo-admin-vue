@@ -1,8 +1,8 @@
 import { getCurrentLocale } from "@/lib";
+import enUS from "@/lib/i18n/locales/en-US.json";
+import zhCN from "@/lib/i18n/locales/zh-CN.json";
 import type { App } from "vue";
 import { createI18n } from "vue-i18n";
-import enUS from "~/locales/en-US.json";
-import zhCN from "~/locales/zh-CN.json";
 
 // Type-define 'zhCN' as the master schema for the resource
 export type MessageSchema = typeof zhCN;

@@ -10,9 +10,9 @@ export const baseRoutes: RouteRecordRaw[] = [
     }
   },
   {
-    path: "/login",
+    path: "/auth/login",
     name: "login",
-    component: () => import("@/views/login/index.vue"),
+    component: () => import("@/views/auth/login.vue"),
     meta: {
       title: "登录",
       hidden: true,

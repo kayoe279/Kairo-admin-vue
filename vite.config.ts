@@ -37,7 +37,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     },
     server: {
       host: true,
-      port: VITE_PORT,
+      port: 8000,
       proxy: createProxy(VITE_PROXY)
     },
     build: {

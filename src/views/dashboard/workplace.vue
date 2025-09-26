@@ -86,7 +86,7 @@ const openInNewWindow = (url: string) => {
                 class="absolute -right-1 -bottom-1 h-6 w-6 rounded-full border-4 border-white bg-green-500"
               />
             </div>
-            <div class="text-fg-base ml-6">
+            <div class="text-foreground ml-6">
               <h1 class="mb-2 text-2xl font-bold">早安，{{ nickname }} 👋</h1>
               <p class="flex items-center">
                 <span class="mr-2">🌤️</span>
@@ -100,19 +100,19 @@ const openInNewWindow = (url: string) => {
             <div class="grid grid-cols-3 gap-8 text-center">
               <div class="min-w-[80px] rounded-full bg-gradient-to-br from-blue-50 to-blue-100 p-4">
                 <div class="text-2xl font-bold text-blue-500">12</div>
-                <div class="text-fg-subtle text-sm">项目数</div>
+                <div class="text-foreground-subtle text-sm">项目数</div>
               </div>
               <div
                 class="min-w-[80px] rounded-full bg-gradient-to-br from-orange-50 to-orange-100 p-4"
               >
                 <div class="text-2xl font-bold text-orange-500">6/21</div>
-                <div class="text-fg-subtle text-sm">待办</div>
+                <div class="text-foreground-subtle text-sm">待办</div>
               </div>
               <div
                 class="min-w-[80px] rounded-full bg-gradient-to-br from-green-50 to-green-100 p-4"
               >
                 <div class="text-2xl font-bold text-green-500">18</div>
-                <div class="text-fg-subtle text-sm">消息</div>
+                <div class="text-foreground-subtle text-sm">消息</div>
               </div>
             </div>
           </div>
@@ -123,35 +123,35 @@ const openInNewWindow = (url: string) => {
     <n-grid cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="20" :y-gap="20">
       <!-- 左侧区域 -->
       <n-gi class="space-y-4">
-        <n-card class="text-fg-base" title="友情链接 👍">
+        <n-card class="text-foreground" title="友情链接 👍">
           <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div
               v-for="item in projectList"
               :key="item.name"
               :title="item.description"
-              class="group text-fg-subtle hover:text-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="group text-foreground-subtle hover:text-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
               @click="openInNewWindow(item.link)"
             >
               <SvgIcon
                 v-if="item.localIcon"
                 :localIcon="item.localIcon"
-                class="text-fg-base group-hover:text-primary h-[60px] w-[60px] text-[60px]"
+                class="text-foreground group-hover:text-primary h-[60px] w-[60px] text-[60px]"
               />
-              <h3 class="text-fg-base group-hover:text-primary mt-2 mb-1 font-semibold">
+              <h3 class="text-foreground group-hover:text-primary mt-2 mb-1 font-semibold">
                 {{ item.name }}
               </h3>
-              <p class="text-fg-subtle group-hover:text-primary line-clamp-1 text-xs">
+              <p class="text-foreground-subtle group-hover:text-primary line-clamp-1 text-xs">
                 {{ item.description }}
               </p>
             </div>
           </div>
         </n-card>
-        <n-card class="text-fg-base" title="最新动态">
+        <n-card class="text-foreground" title="最新动态">
           <template #header-extra>
             <button class="text-primary/80 hover:text-primary text-sm font-medium">查看全部</button>
           </template>
 
-          <div class="text-fg-base space-y-4">
+          <div class="text-foreground space-y-4">
             <div
               class="bg-background-root flex items-start space-x-4 rounded-2xl p-4 transition-colors"
             >
@@ -159,9 +159,11 @@ const openInNewWindow = (url: string) => {
               <div class="flex-1">
                 <div class="mb-1 flex items-center space-x-2">
                   <span class="font-semibold">Kayoe</span>
-                  <span class="text-fg-subtle text-xs">刚刚</span>
+                  <span class="text-foreground-subtle text-xs">刚刚</span>
                 </div>
-                <p class="text-fg-subtle text-sm">完成了工作台页面的重构，新的设计更加现代化 🎉</p>
+                <p class="text-foreground-subtle text-sm">
+                  完成了工作台页面的重构，新的设计更加现代化 🎉
+                </p>
               </div>
             </div>
 
@@ -172,9 +174,11 @@ const openInNewWindow = (url: string) => {
               <div class="flex-1">
                 <div class="mb-1 flex items-center space-x-2">
                   <span class="font-semibold">Kayoe</span>
-                  <span class="text-fg-subtle text-xs">2小时前</span>
+                  <span class="text-foreground-subtle text-xs">2小时前</span>
                 </div>
-                <p class="text-fg-subtle text-sm">优化了项目卡片的交互效果，添加了hover动画 ✨</p>
+                <p class="text-foreground-subtle text-sm">
+                  优化了项目卡片的交互效果，添加了hover动画 ✨
+                </p>
               </div>
             </div>
 
@@ -185,9 +189,9 @@ const openInNewWindow = (url: string) => {
               <div class="flex-1">
                 <div class="mb-1 flex items-center space-x-2">
                   <span class="font-semibold">系统通知</span>
-                  <span class="text-fg-subtle text-xs">今天</span>
+                  <span class="text-foreground-subtle text-xs">今天</span>
                 </div>
-                <p class="text-fg-subtle text-sm">有3个新的任务待处理，请及时查看 📋</p>
+                <p class="text-foreground-subtle text-sm">有3个新的任务待处理，请及时查看 📋</p>
               </div>
             </div>
 
@@ -198,9 +202,9 @@ const openInNewWindow = (url: string) => {
               <div class="flex-1">
                 <div class="mb-1 flex items-center space-x-2">
                   <span class="font-semibold">团队协作</span>
-                  <span class="text-fg-subtle text-xs">昨天</span>
+                  <span class="text-foreground-subtle text-xs">昨天</span>
                 </div>
-                <p class="text-fg-subtle text-sm">代码审查已完成，可以进行下一步部署 🚀</p>
+                <p class="text-foreground-subtle text-sm">代码审查已完成，可以进行下一步部署 🚀</p>
               </div>
             </div>
           </div>

@@ -17,7 +17,7 @@ const getTransitionName = computed(() => {
     <template #default="{ Component, route }">
       <Transition :name="getTransitionName" mode="out-in" appear>
         <KeepAlive :include="routeStore.cacheRoutes">
-          <component v-if="reloadFlag" :is="Component" :key="route.fullPath" />
+          <component v-if="reloadFlag" :is="Component" :key="route.name" />
         </KeepAlive>
       </Transition>
     </template>

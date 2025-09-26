@@ -172,7 +172,7 @@ const handleFillDemo = () => {
 
         <NFormItem label="接收通知" path="notifications">
           <NSwitch v-model:value="formData.notifications" />
-          <span class="text-fg-subtle ml-2">是否接收邮件通知</span>
+          <span class="text-foreground-subtle ml-2">是否接收邮件通知</span>
         </NFormItem>
 
         <NFormItem label="&nbsp;">

@@ -3,7 +3,7 @@ import { setupRouter } from "./router";
 import "./styles/index.css";
 import AppLoading from "@/components/ui/AppLoading.vue";
 import { setupDirectives } from "@/directives";
-import { setupI18n, setupNaive, setupNaiveDiscreteApi } from "@/plugins";
+import { setupI18n, setupNaive, setupNaiveDiscreteApi, setupTanstackQuery } from "@/plugins";
 import { setupStore } from "@/store";
 import "virtual:svg-icons-register";
 import { createApp } from "vue";
@@ -17,6 +17,9 @@ async function setupApp() {
 
   // 注册国际化
   setupI18n(app);
+
+  // 注册 tanstack query
+  setupTanstackQuery(app);
 
   // 挂载状态管理
   setupStore(app);

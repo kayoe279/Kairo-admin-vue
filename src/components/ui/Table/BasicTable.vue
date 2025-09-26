@@ -1,107 +1,50 @@
 <script setup lang="ts">
-import { useTable, useTableHeight } from "@/hooks";
-import { DEFAULT_PAGE_SIZE } from "@/lib";
-import type { DataTableColumns, DataTableProps } from "naive-ui";
-import { computed, ref, watch } from "vue";
+import { TableRef, useTable, useTableHeight } from "@/hooks/table";
+import { DataTableColumns, NDataTable } from "naive-ui";
+import { Ref, ref, toRefs } from "vue";
 
-// Props 定义
-type TableProps = {
+type Props = {
   columns: DataTableColumns<any>;
-  apiFunction: (params: Record<string, any>) => any;
   searchParams?: Record<string, any>;
-  immediate?: boolean;
-  pageSize?: number;
-  bordered?: boolean;
-  striped?: boolean;
-  scrollX?: number;
-  rowKey?: DataTableProps["rowKey"];
-  resizeHeightOffset?: number;
-  maxHeight?: number;
-  reCalcHeight?: boolean;
+  data?: any[];
+  total?: number;
+  isLoading?: boolean;
+  withCard?: boolean;
 };
 
-const props = withDefaults(defineProps<TableProps>(), {
+const props = withDefaults(defineProps<Props>(), {
+  columns: () => [],
   searchParams: () => ({}),
-  immediate: true,
-  pageSize: DEFAULT_PAGE_SIZE,
-  bordered: true,
-  striped: true,
-  rowKey: (row: any) => row.id
+  data: () => [],
+  total: 0,
+  isLoading: false,
+  withCard: true
 });
 
-// Emits 定义
-const emit = defineEmits(["row-click", "row-dblclick"]);
+const emit = defineEmits(["update:tableParams"]);
 
-const tableRef = ref();
+const tableRef: TableRef = ref(null);
+const { total, data, isLoading } = toRefs(props);
 
-const { deviceHeight, computeTableHeight } = useTableHeight(tableRef, {
-  resizeHeightOffset: props.resizeHeightOffset,
-  maxHeight: props.maxHeight
+const { tableProps } = useTable({
+  data,
+  total,
+  isLoading
 });
 
-const { tableData, loading, pagination, refresh, handlePageChange, handlePageSizeChange } =
-  useTable(
-    props.apiFunction,
-    computed(() => ({
-      defaultPageSize: props.pageSize,
-      immediate: props.immediate,
-      searchParams: props.searchParams
-    }))
-  );
-
-// 处理行点击
-const handleRowClick = (row: any, index: number) => {
-  emit("row-click", row, index);
-};
-
-// 处理行双击
-const handleRowDblclick = (row: any, index: number) => {
-  emit("row-dblclick", row, index);
-};
-
-const tableMaxHeight = computed(() => {
-  return tableData.value.length ? `${deviceHeight.value}px` : "auto";
-});
-
-watch(
-  () => props.reCalcHeight,
-  () => {
-    computeTableHeight();
-  }
-);
-
-// 暴露方法给父组件
-defineExpose({
-  loading,
-  refresh
-});
+const { tableHeight } = useTableHeight(tableRef as Ref<HTMLElement>);
 </script>
 
 <template>
-  <div class="space-y-4">
-    <!-- 操作按钮区域 -->
-    <div v-if="$slots.headerLeft || $slots.headerRight">
-      <NSpace justify="space-between">
-        <slot name="headerLeft" />
-        <slot name="headerRight" />
-      </NSpace>
+  <TableContainer :withCard="withCard">
+    <div class="space-y-4">
+      <div v-if="$slots.headerLeft || $slots.headerRight" class="table-operation">
+        <NSpace justify="space-between">
+          <slot name="headerLeft" />
+          <slot name="headerRight" />
+        </NSpace>
+      </div>
+      <NDataTable ref="tableRef" :columns="columns" v-bind="tableProps" :maxHeight="tableHeight" />
     </div>
-    <NDataTable
-      remote
-      ref="tableRef"
-      :columns="columns"
-      :data="tableData"
-      :loading="loading"
-      :pagination="pagination"
-      :bordered="bordered"
-      :striped="striped"
-      :scroll-x="scrollX"
-      :max-height="tableMaxHeight"
-      :row-key="rowKey"
-      @row-click="handleRowClick"
-      @row-dblclick="handleRowDblclick"
-      @update:page="handlePageChange"
-      @update:page-size="handlePageSizeChange"
-    />
-  </div>
+  </TableContainer>
 </template>

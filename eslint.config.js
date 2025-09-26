@@ -1,3 +1,4 @@
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import pluginVitest from "@vitest/eslint-plugin";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
 import {
@@ -75,6 +76,8 @@ export default defineConfigWithVueTs(
       ".env"
     ]
   },
+
+  ...pluginQuery.configs["flat/recommended"],
 
   pluginVue.configs["flat/essential"],
   vueTsConfigs.recommended,

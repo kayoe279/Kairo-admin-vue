@@ -1,16 +1,9 @@
 import { StoreEnum } from "@/lib";
-import {
-  getUserToken,
-  removeRefreshToken,
-  removeUserToken,
-  setRefreshToken,
-  setUserToken
-} from "@/lib/cookie";
-import { getUserInfo, removeUserInfo, setUserInfo } from "@/lib/storage";
+import { getAccessToken, getUserInfo, removeUserInfo } from "@/lib/cookie";
 import { useRouteStore, useTabsStore } from "@/store";
-import { UserInfo } from "@/types";
+import { User } from "@supabase/supabase-js";
 import { defineStore } from "pinia";
-import { ref, unref } from "vue";
+import { computed, ref, unref } from "vue";
 import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore(StoreEnum.user, () => {
@@ -18,15 +11,16 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   const routeStore = useRouteStore();
   const router = useRouter();
 
-  const userInfo = ref<UserInfo | null>(getUserInfo());
-  const token = ref(getUserToken());
+  const userInfo = ref<User | null>(getUserInfo());
+  const token = ref(getAccessToken());
 
-  const updateUserInfo = async (result: UserInfo) => {
-    const { accessToken, refreshToken } = result;
-    setUserToken(accessToken);
-    setRefreshToken(refreshToken);
-    setUserInfo(result);
-    token.value = accessToken;
+  const isAuthenticated = computed(() => {
+    const userInfo = getUserInfo();
+    const accessToken = getAccessToken();
+    return !!userInfo && !!accessToken;
+  });
+
+  const updateUserInfo = async (result: User) => {
     userInfo.value = result;
 
     // 初始化路由
@@ -40,8 +34,6 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   // 退出登录
   const logout = async () => {
     const route = unref(router.currentRoute);
-    removeUserToken();
-    removeRefreshToken();
     removeUserInfo();
 
     routeStore.resetRoutes();
@@ -62,6 +54,7 @@ export const useUserStore = defineStore(StoreEnum.user, () => {
   return {
     token,
     userInfo,
+    isAuthenticated,
     updateUserInfo,
     logout
   };

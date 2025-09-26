@@ -1,5 +1,5 @@
 import { usePermission } from "@/hooks/usePermission";
-import { RoleType } from "@/types";
+import { RoleType } from "@/service/types";
 import type { Directive } from "vue";
 
 const permissionDirective: Directive<HTMLElement, RoleType | RoleType[]> = (el, binding) => {

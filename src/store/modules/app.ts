@@ -1,7 +1,6 @@
-import { StoreEnum } from "@/lib";
+import { StoreEnum, getCurrentLocale, setCurrentLocale } from "@/lib";
 import { setI18nLocale } from "@/lib/i18n";
 import { type AppSettingProps, appSetting } from "@/lib/settings/app";
-import { getCurrentLocale, setCurrentLocale } from "@/lib/storage";
 import { useToggle } from "@vueuse/core";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";

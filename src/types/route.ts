@@ -1,4 +1,4 @@
-import { RoleType } from "./api";
+import { RoleType } from "@/service/types";
 import { defineComponent } from "vue";
 import { RouteRecordRaw } from "vue-router";
 

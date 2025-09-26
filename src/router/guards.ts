@@ -1,4 +1,4 @@
-import { PAGE, getUserToken } from "@/lib";
+import { PAGE, getUserInfo } from "@/lib";
 import { useRouteStore } from "@/store";
 import type { Router } from "vue-router";
 
@@ -19,7 +19,7 @@ export const setupRouterGuard = (router: Router) => {
     window.$loadingBar?.start();
 
     // 判断有无TOKEN,登录鉴权
-    const isLogin = Boolean(getUserToken());
+    const isLogin = Boolean(getUserInfo());
     if (!isLogin) {
       if (to.name !== LOGIN_NAME) {
         const redirect = to.name === "404" ? undefined : to.fullPath;

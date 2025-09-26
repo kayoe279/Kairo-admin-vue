@@ -5,8 +5,8 @@
 :root {
   --background-root: #f5f7f9;
   --background: #ffffff;
-  --fg-base: #18181c;
-  --fg-subtle: #52525b;
+  --foreground-base: #18181c;
+  --foreground-subtle: #52525b;
   --gray-200: #f3f3f5;
 
   --default-100: #f4f4f5;
@@ -21,8 +21,8 @@
 html.dark {
   --background-root: #101014;
   --background: #18181c;
-  --fg-base: #ffffff;
-  --fg-subtle: #a1a1aa;
+  --foreground-base: #ffffff;
+  --foreground-subtle: #a1a1aa;
   --gray-200: #2d2d30;
 
   --default-100: #27272a;
@@ -36,8 +36,8 @@ html.dark {
 @theme inline {
   --color-background-root: var(--background-root);
   --color-background: var(--background);
-  --color-fg-base: var(--fg-base);
-  --color-fg-subtle: var(--fg-subtle);
+  --color-foreground: var(--foreground-base);
+  --color-foreground-subtle: var(--foreground-subtle);
   --color-gray-200: var(--gray-200);
 
   --color-default-100: var(--default-100);

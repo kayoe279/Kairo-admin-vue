@@ -316,28 +316,28 @@ const handleReset = () => {
             <NGridItem>
               <NFormItem label="是否公开" path="settings.isPublic">
                 <NSwitch v-model:value="formData.settings.isPublic" />
-                <span class="text-fg-subtle ml-2">公开项目可被其他用户查看</span>
+                <span class="text-foreground-subtle ml-2">公开项目可被其他用户查看</span>
               </NFormItem>
             </NGridItem>
 
             <NGridItem>
               <NFormItem label="允许评论" path="settings.allowComments">
                 <NSwitch v-model:value="formData.settings.allowComments" />
-                <span class="text-fg-subtle ml-2">允许团队成员添加评论</span>
+                <span class="text-foreground-subtle ml-2">允许团队成员添加评论</span>
               </NFormItem>
             </NGridItem>
 
             <NGridItem>
               <NFormItem label="邮件通知" path="settings.notifyEmail">
                 <NSwitch v-model:value="formData.settings.notifyEmail" />
-                <span class="text-fg-subtle ml-2">项目更新时发送邮件</span>
+                <span class="text-foreground-subtle ml-2">项目更新时发送邮件</span>
               </NFormItem>
             </NGridItem>
 
             <NGridItem>
               <NFormItem label="自动归档" path="settings.autoArchive">
                 <NSwitch v-model:value="formData.settings.autoArchive" />
-                <span class="text-fg-subtle ml-2">项目完成后自动归档</span>
+                <span class="text-foreground-subtle ml-2">项目完成后自动归档</span>
               </NFormItem>
             </NGridItem>
           </NGrid>

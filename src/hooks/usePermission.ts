@@ -1,5 +1,5 @@
+import { RoleType } from "@/service/types";
 import { useUserStore } from "@/store";
-import { RoleType } from "@/types";
 
 /** 权限判断 */
 export const usePermission = () => {
@@ -9,7 +9,7 @@ export const usePermission = () => {
   const hasPermission = (accesses: RoleType[]) => {
     if (!accesses || !accesses.length) return true;
 
-    const roles = userStore.userInfo?.roles || [];
+    const roles = userStore.userInfo?.user_metadata?.roles || [];
     return accesses.some((r) => roles.includes(r));
   };
 
@@ -17,7 +17,7 @@ export const usePermission = () => {
   const hasEveryPermission = (accesses: RoleType[]) => {
     if (!accesses || !accesses.length) return true;
 
-    const roles = userStore.userInfo?.roles || [];
+    const roles = userStore.userInfo?.user_metadata?.roles || [];
     return accesses.every((r) => roles?.includes(r));
   };
 

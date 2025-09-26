@@ -1,6 +1,18 @@
 import { type ClassValue, clsx } from "clsx";
+import { format } from "date-fns";
 import omitBy from "lodash-es/omitBy";
 import { twMerge } from "tailwind-merge";
+
+const DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm";
+const DATE_FORMAT = "YYYY-MM-DD ";
+
+export const formatToDateTime = (date: Date | number, formatStr = DATE_TIME_FORMAT): string => {
+  return format(date, formatStr);
+};
+
+export const formatToDate = (date: Date | number, formatStr = DATE_FORMAT): string => {
+  return format(date, formatStr);
+};
 
 /**
  * Sums the passed percentage to the R, G or B of a HEX color
@@ -37,6 +49,18 @@ export function cn(...inputs: ClassValue[]) {
 export type FalseType = "" | 0 | false | null | undefined;
 export const typedBoolean = <Value>(value: Value): value is Exclude<Value, FalseType> => {
   return Boolean(value);
+};
+
+export const validValue = (value: undefined | null | string | boolean) => {
+  return value !== undefined && value !== null && value !== "" && value !== false;
+};
+
+export const tryParseJson = (value: string, defaultValue?: unknown) => {
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return defaultValue || null;
+  }
 };
 
 /**

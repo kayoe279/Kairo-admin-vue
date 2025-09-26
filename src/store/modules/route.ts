@@ -1,11 +1,11 @@
 import { useUserStore } from "./user";
 import { usePermission } from "@/hooks/usePermission";
 import { PAGE, StoreEnum } from "@/lib";
+import { getUserInfo } from "@/lib/cookie";
 import { $t } from "@/lib/i18n";
-import { getUserInfo } from "@/lib/storage";
 import { generateCacheRoutes, generateDynamicRoutes } from "@/router/generator";
 import { staticRoutes } from "@/router/index";
-import { getUserRoutes } from "@/service/api";
+import { getUserRoutes } from "@/service";
 import cloneDeep from "lodash-es/cloneDeep";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";

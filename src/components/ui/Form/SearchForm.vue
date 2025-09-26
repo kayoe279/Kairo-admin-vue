@@ -27,6 +27,8 @@ interface Props {
   expandText?: string;
   /** 收起按钮文本 */
   collapseText?: string;
+  /** 默认值，重置时恢复到此值 */
+  defaultValues?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,13 +37,14 @@ const props = withDefaults(defineProps<Props>(), {
   showReset: true,
   showSearch: true,
   inline: false,
-  collapsible: true,
+  collapsible: false,
   collapsed: false,
   labelWidth: "80px",
   searchText: "搜索",
   resetText: "重置",
   expandText: "展开",
-  collapseText: "收起"
+  collapseText: "收起",
+  defaultValues: () => ({})
 });
 
 const searchFormData = defineModel<Record<string, any>>({ required: true });
