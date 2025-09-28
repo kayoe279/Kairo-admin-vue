@@ -98,6 +98,7 @@ export const useTable = <T extends Record<string, any>>(
       bordered: true,
       striped: true,
       singleLine: false,
+      scrollX: 2000,
       onUpdateSorter: handleSorterChange,
       rowKey: (record: T) => record.id,
       onUpdatePage: handlePageChange,
