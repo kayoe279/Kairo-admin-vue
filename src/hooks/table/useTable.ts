@@ -1,6 +1,7 @@
 import { useSearchQuery } from "../useSearchQuery";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from "@/lib";
 import type { DataTableProps, PaginationInfo, PaginationProps } from "naive-ui";
+import { SortState } from "naive-ui/es/data-table/src/interface";
 import { MaybeRef, type Ref, computed, reactive, ref, unref, watch } from "vue";
 
 export type TableRef = Ref<HTMLElement | null>;
@@ -36,8 +37,8 @@ export const useTable = <T extends Record<string, any>>(
   const tableData = ref<T[]>(unref(data) || []);
 
   const pagination = reactive<PaginationProps>({
-    page: searchQuery.value.page || DEFAULT_PAGE,
-    pageSize: searchQuery.value.pageSize || DEFAULT_PAGE_SIZE,
+    page: Number(searchQuery.value.page) || DEFAULT_PAGE,
+    pageSize: Number(searchQuery.value.pageSize) || DEFAULT_PAGE_SIZE,
     pageSizes: PAGE_SIZE_OPTIONS,
     pageCount: 1,
     itemCount: 0,
@@ -63,12 +64,12 @@ export const useTable = <T extends Record<string, any>>(
     });
   };
 
-  const handleSorterChange = (sorter: any) => {
-    pagination.page = 1;
+  const handleSorterChange = (sorter: SortState | SortState[] | null) => {
+    const isSorterArray = Array.isArray(sorter);
+    const sort = isSorterArray ? sorter[0] : sorter;
     setSearchQuery({
-      page: pagination.page,
-      sortField: sorter?.columnKey,
-      sortOrder: sorter?.order
+      sortField: sort?.columnKey,
+      sortOrder: sort?.order
     });
   };
 
@@ -80,8 +81,8 @@ export const useTable = <T extends Record<string, any>>(
         tableData.value = (newData as T[]) || [];
         const itemCount = (newTotal as number) || 0;
         pagination.itemCount = itemCount;
-        pagination.page = searchQuery.value.page || pagination.page;
-        pagination.pageSize = searchQuery.value.pageSize || pagination.pageSize;
+        pagination.page = Number(searchQuery.value.page) || pagination.page;
+        pagination.pageSize = Number(searchQuery.value.pageSize) || pagination.pageSize;
       }
     },
     { deep: true, immediate: true }
@@ -96,6 +97,7 @@ export const useTable = <T extends Record<string, any>>(
       size: "medium" as const,
       bordered: true,
       striped: true,
+      singleLine: false,
       onUpdateSorter: handleSorterChange,
       rowKey: (record: T) => record.id,
       onUpdatePage: handlePageChange,

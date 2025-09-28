@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SvgIcon from "@/components/ui/SvgIcon.vue";
 import { cleanObject, cn } from "@/lib";
+import cloneDeep from "lodash-es/cloneDeep";
 import { ref } from "vue";
 
 // Props 定义
@@ -62,6 +63,13 @@ const formRef = ref();
 // 折叠状态
 const collapsed = ref(props.collapsed);
 
+const resetFormData = () => {
+  for (const key in searchFormData.value) {
+    searchFormData.value[key] = null;
+  }
+  searchFormData.value = cloneDeep(searchFormData.value);
+};
+
 // 搜索处理
 const handleSearch = () => {
   emit("search", cleanObject(searchFormData.value));
@@ -71,6 +79,7 @@ const handleSearch = () => {
 const handleReset = () => {
   // 清除表单验证状态
   formRef.value?.restoreValidation();
+  resetFormData();
   emit("reset");
 };
 
@@ -82,7 +91,8 @@ const toggleCollapse = () => {
 
 // 暴露方法给父组件
 defineExpose({
-  formRef
+  formRef,
+  resetFormData
 });
 </script>
 

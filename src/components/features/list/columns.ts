@@ -34,9 +34,8 @@ export const createNavListColumns = (): DataTableColumns<NavListItem> => [
     title: "名称",
     key: "name",
     width: 200,
-    ellipsis: {
-      tooltip: true
-    },
+    ellipsis: true,
+    sorter: true,
     render: (row) =>
       h(
         NEllipsis,

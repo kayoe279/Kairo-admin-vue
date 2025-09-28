@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { createNavListTableColumns } from "./columns";
+import { FormItemConfig } from "@/components/ui/Form/type";
 import { useSearchQuery } from "@/hooks";
 import { cn } from "@/lib";
 import { type NavListItem, useTableList } from "@/service";
@@ -18,6 +19,25 @@ const selectedUser = ref<NavListItem | null>(null);
 
 const { searchQuery } = useSearchQuery({ extendKeys: ["keyword", "disabled"] });
 const { data, isFetching, isLoading, refetch } = useTableList(searchQuery);
+
+const filters = ref<FormItemConfig[]>([
+  {
+    label: "关键词",
+    path: "keyword",
+    type: "input",
+    placeholder: "请输入关键词"
+  },
+  {
+    label: "状态",
+    path: "disabled",
+    type: "select",
+    placeholder: "请选择状态",
+    options: [
+      { label: "启用", value: "false" },
+      { label: "禁用", value: "true" }
+    ]
+  }
+]);
 
 const handleDisable = (record: NavListItem) => {
   dialog.warning({
@@ -70,7 +90,14 @@ watch(isLoading, (newVal) => {
 </script>
 
 <template>
-  <BasicTable :data="data?.list" :total="data?.total" :isLoading="isLoading" :columns="columns">
+  <BasicTable
+    :data="data?.list"
+    :total="data?.total"
+    :isLoading="isLoading"
+    :columns="columns"
+    :searchQuery="searchQuery"
+    :filters="filters"
+  >
     <template #headerLeft>
       <NButton type="primary">
         <template #icon>
