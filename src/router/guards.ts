@@ -1,41 +1,33 @@
-import { PAGE, getUserInfo } from "@/lib";
-import { useRouteStore } from "@/store";
+import { usePermission, useRequireAuth } from "@/hooks";
+import { PAGE } from "@/lib";
+import { useRouteStore, useUserStore } from "@/store";
+import { storeToRefs } from "pinia";
 import type { Router } from "vue-router";
 
 const title = import.meta.env.VITE_GLOB_APP_TITLE;
 
 export const setupRouterGuard = (router: Router) => {
   const routeStore = useRouteStore();
+  const userStore = useUserStore();
 
-  const { LOGIN_PATH, LOGIN_NAME, ERROR_PAGE_NAME } = PAGE;
+  const { isAuthenticated } = storeToRefs(userStore);
+
+  const { LOGIN_PATH, LOGIN_NAME, ERROR_PAGE_NAME, FORBIDDEN_PAGE_NAME } = PAGE;
 
   router.beforeEach(async (to, _, next) => {
-    // 判断是否是外链，如果是直接打开网页并拦截跳转
+    const requireAuth = useRequireAuth(to.meta);
+    // 1. 判断是否是外链，如果是直接打开网页并拦截跳转
     if (to.meta?.externalLink) {
       window.open(to.meta.externalLink);
       return false;
     }
-    // 开始 loadingBar
+
     window.$loadingBar?.start();
 
-    // 判断有无TOKEN,登录鉴权
-    const isLogin = Boolean(getUserInfo());
-    if (!isLogin) {
-      if (to.name !== LOGIN_NAME) {
-        const redirect = to.name === "404" ? undefined : to.fullPath;
-        next({ path: LOGIN_PATH, query: { redirect } });
-      } else {
-        next();
-      }
-      return false;
-    }
-
-    // 判断路由有无进行初始化
+    // 1. 判断路由有无进行初始化
     if (!routeStore.isInitAuthRoute) {
       await routeStore.initAuthRoute();
-      // 动态路由加载完回到根路由
       if (to.name === ERROR_PAGE_NAME) {
-        // 等待权限路由加载好了，回到之前的路由,否则404
         next({
           path: to.fullPath,
           query: to.query,
@@ -46,8 +38,27 @@ export const setupRouterGuard = (router: Router) => {
       }
     }
 
-    // 判断当前页是否在login,则定位去首页
-    if (to.name === LOGIN_NAME) {
+    // 2. 判断有无token,登录鉴权
+    if (!isAuthenticated.value) {
+      if (to.name !== LOGIN_NAME) {
+        next({ path: LOGIN_PATH, query: { redirect: to.fullPath } });
+      } else {
+        next();
+      }
+      return false;
+    }
+
+    // 3. 判断权限
+    const { hasPermission } = usePermission();
+    if (requireAuth && to?.meta?.roles && to?.meta?.roles?.length > 0) {
+      if (!hasPermission(to?.meta?.roles)) {
+        next({ name: FORBIDDEN_PAGE_NAME });
+        return false;
+      }
+    }
+
+    // 4. 判断当前页是否在login,则定位去首页
+    if (to.name === LOGIN_NAME && isAuthenticated.value) {
       next({ path: "/" });
       return false;
     }
@@ -56,9 +67,7 @@ export const setupRouterGuard = (router: Router) => {
   });
 
   router.afterEach((to) => {
-    // 修改网页标题
     document.title = `${to.meta.title} - ${title}`;
-    // 结束 loadingBar
     window.$loadingBar?.finish();
   });
 

@@ -17,11 +17,12 @@ export interface RouteMeta {
   icon?: Component | string;
   // 是否忽略权限
   ignoreAuth?: boolean;
+  /** 是否需要登录验证 */
+  requireAuth?: boolean;
   /* 可以访问的角色 */
   roles?: RoleType[];
   /* 是否开启页面缓存 */
   keepAlive?: boolean;
-
   /* 菜单排序。 */
   sort?: number;
   /* 嵌套外链  */

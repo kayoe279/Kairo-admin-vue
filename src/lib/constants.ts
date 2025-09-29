@@ -6,6 +6,7 @@ export const PAGE = {
   REDIRECT_NAME: "redirect",
   REDIRECT_PATH: "/redirect",
   ERROR_PAGE_NAME: "404",
+  FORBIDDEN_PAGE_NAME: "403",
   HOME_NAME: "dashboard",
   HOME_NAME_REDIRECT: "dashboardWorkplace",
   HOME_NAME_REDIRECT_PATH: "/dashboard/workplace"

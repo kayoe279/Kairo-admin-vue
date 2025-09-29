@@ -17,7 +17,8 @@ const routes: Array<RouteRecordRaw> = [
         path: "/about/index",
         name: "aboutIndex",
         meta: {
-          title: "关于项目"
+          title: "关于项目",
+          roles: ["super"]
         },
         component: () => import("@/views/about/index.vue")
       }
