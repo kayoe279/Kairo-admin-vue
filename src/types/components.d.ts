@@ -29,7 +29,6 @@ declare module 'vue' {
     Layout: typeof import('./../layouts/Layout.vue')['default']
     LayoutMode: typeof import('./../layouts/AppSetting/LayoutMode.vue')['default']
     LineChart: typeof import('./../components/ui/Chart/LineChart.vue')['default']
-    ListSearchForm: typeof import('./../components/features/list/ListSearchForm.vue')['default']
     ListTable: typeof import('./../components/features/list/ListTable.vue')['default']
     LoginBanner: typeof import('./../components/ui/LoginBanner.vue')['default']
     LoginForm: typeof import('./../components/features/auth/LoginForm.vue')['default']
@@ -49,7 +48,6 @@ declare module 'vue' {
     NCheckboxGroup: typeof import('naive-ui')['NCheckboxGroup']
     NCode: typeof import('naive-ui')['NCode']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
-    NDataTable: typeof import('naive-ui')['NDataTable']
     NDatePicker: typeof import('naive-ui')['NDatePicker']
     NDescriptions: typeof import('naive-ui')['NDescriptions']
     NDescriptionsItem: typeof import('naive-ui')['NDescriptionsItem']
@@ -120,7 +118,5 @@ declare module 'vue' {
     ThemeSwitch: typeof import('./../layouts/AppSetting/ThemeMode/ThemeSwitch.vue')['default']
     TopMenu: typeof import('./../layouts/Menu/TopMenu.vue')['default']
     User: typeof import('./../layouts/Header/User.vue')['default']
-    UserSearchForm: typeof import('./../components/features/user/UserSearchForm.vue')['default']
-    UserTable: typeof import('./../components/features/user/UserTable.vue')['default']
   }
 }

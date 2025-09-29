@@ -10,9 +10,9 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <div class="table-container flex min-h-0 flex-1 flex-col gap-4 space-y-4">
-    <NCard v-if="withCard" class="min-h-0 flex-1">
+    <n-card v-if="withCard" class="min-h-0 flex-1">
       <slot />
-    </NCard>
+    </n-card>
     <div v-else class="min-h-0 flex-1">
       <slot />
     </div>

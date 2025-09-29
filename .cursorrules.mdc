@@ -1,0 +1,154 @@
+# Cursor Rules for Kairo Admin Vue
+
+## 项目概览
+
+这是一个基于 Vue 3 + TypeScript + Vite + TailwindCSS 的现代化管理后台项目。
+
+## 核心技术栈
+
+- Vue 3 (Composition API)
+- TypeScript
+- Vite
+- TailwindCSS
+- Pinia (状态管理)
+- Vue Router
+- Element Plus / Naive UI
+
+## 代码规范
+
+### Vue 开发规范
+
+1. **函数定义**
+
+   - 优先使用箭头函数：`const handleClick = () => {}`
+   - 避免使用 `function` 声明
+
+2. **组件Props类型定义**
+
+   - 使用 `type` 定义 props 类型
+   - 使用 `withDefaults` 提供默认值
+
+   ```typescript
+   type Props = {
+     title?: string;
+     count: number;
+   };
+
+   const props = withDefaults(defineProps<Props>(), {
+     title: "默认标题"
+   });
+   ```
+
+3. **文件结构顺序**
+
+   ```vue
+   <script setup lang="ts">
+   // TypeScript 逻辑
+   </script>
+
+   <template>
+     <!-- HTML 模板 -->
+   </template>
+
+   <style scoped>
+   /* 样式 */
+   </style>
+   ```
+
+4. **命名规范**
+   - 文件命名：驼峰命名法 (camelCase)
+   - 组件命名：大驼峰命名法 (PascalCase)
+   - Props 传值使用 kebab-case 的形式, 遵循 vue 的写法
+   - 只有naive的组件使用kebab-case的形式, 例如 n-card 这种写法, 遵循组件库推荐的写法
+
+### 样式规范
+
+1. **TailwindCSS 优先**
+
+   - 所有样式优先使用 TailwindCSS
+   - 必须考虑暗色模式：使用 `dark:` 前缀
+   - 可以使用 Tailwind 配置变量
+
+2. **暗色模式支持**
+   ```html
+   <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">内容</div>
+   ```
+
+### 图标使用规范
+
+1. **优先使用 SvgIcon 组件**
+   - 图标来源：https://icon-sets.iconify.design/
+   - 优先选择 Solar 图标集
+   ```vue
+   <SvgIcon icon="solar:home-bold" class="h-5 w-5" />
+   ```
+
+### 注释规范
+
+1. **精简注释**
+   - 避免编写过多的 markdown 和 demo 展示
+   - 只为重要和复杂的部分添加注释
+   - 注释使用中文
+
+### TypeScript 规范
+
+1. **类型定义**
+
+   - 优先使用 `type` 而非 `interface`
+   - 为复杂的数据结构定义明确的类型
+
+2. **导入规范**
+   - 从 Vue 明确导入所需的 API
+   ```typescript
+   import { computed, onMounted, ref } from "vue";
+   ```
+
+## 项目结构
+
+```
+src/
+├── components/          # 组件
+│   ├── features/       # 功能组件
+│   └── ui/             # UI 组件
+├── views/              # 页面组件
+├── layouts/            # 布局组件
+├── router/             # 路由配置
+├── store/              # 状态管理
+├── hooks/              # 组合式函数
+├── types/              # 类型定义
+├── service/            # API 服务
+├── lib/                # 工具库
+└── styles/             # 样式文件
+```
+
+## 最佳实践
+
+1. **组件复用**
+
+   - 将通用功能抽取为可复用组件
+   - 使用组合式函数 (Composables) 封装业务逻辑
+
+2. **性能优化**
+
+   - 合理使用 `computed` 和 `watch`
+   - 大列表使用虚拟滚动
+   - 图片使用懒加载
+
+3. **代码质量**
+   - 遵循 ESLint 规则
+   - 使用 TypeScript 严格模式
+   - 编写单元测试
+
+## 禁止事项
+
+- ❌ 不要编写过多的 markdown 文档
+- ❌ 不要使用 React.xxx API 格式
+- ❌ 不要使用 FC 类型定义
+- ❌ 不要忽略暗色模式适配
+- ❌ 不要使用 default export（组件除外）
+
+## 响应优化
+
+- 所有回复使用中文
+- 代码示例简洁明了
+- 重点突出核心逻辑

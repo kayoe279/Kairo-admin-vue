@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
   <button v-if="hideTooltip" :class="cn('text-xl', props.class)" v-bind="$attrs">
     <SvgIcon :icon="icon" />
   </button>
-  <NTooltip v-else :placement="tooltipPlacement" :z-index="zIndex" :disabled="!tooltipContent">
+  <n-tooltip v-else :placement="tooltipPlacement" :z-index="zIndex" :disabled="!tooltipContent">
     <template #trigger>
       <button :class="cn('text-xl', props.class)" v-bind="$attrs">
         <SvgIcon :icon="icon" v-if="icon" />
@@ -42,5 +42,5 @@ const props = withDefaults(defineProps<Props>(), {
       </button>
     </template>
     {{ tooltipContent }}
-  </NTooltip>
+  </n-tooltip>
 </template>

@@ -24,7 +24,7 @@ const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick
 </script>
 
 <template>
-  <NMenu
+  <n-menu
     ref="menuInstRef"
     mode="vertical"
     :accordion="menuSetting.accordion"

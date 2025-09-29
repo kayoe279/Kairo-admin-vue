@@ -99,12 +99,12 @@ watch(isLoading, (newVal) => {
     :filters="filters"
   >
     <template #headerLeft>
-      <NButton type="primary">
+      <n-button type="primary">
         <template #icon>
           <SvgIcon icon="carbon:add" />
         </template>
         新建
-      </NButton>
+      </n-button>
     </template>
     <template #headerRight>
       <ButtonIcon

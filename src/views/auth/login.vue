@@ -272,17 +272,17 @@ const cardHeight = computed(() => {
             <span class="text-foreground-subtle text-sm">
               {{ t("auth.noAccountText") }}
             </span>
-            <NButton text type="primary" @click="switchToRegister" class="!p-0">
+            <n-button text type="primary" @click="switchToRegister" class="!p-0">
               {{ t("auth.register") }}
-            </NButton>
+            </n-button>
           </div>
           <div v-else key="switch-to-login">
             <span class="text-foreground-subtle text-sm">
               {{ t("auth.haveAccountText") }}
             </span>
-            <NButton text type="primary" @click="switchToLogin" class="!p-0">
+            <n-button text type="primary" @click="switchToLogin" class="!p-0">
               {{ t("auth.loginButton") }}
-            </NButton>
+            </n-button>
           </div>
         </Transition>
       </motion.div>

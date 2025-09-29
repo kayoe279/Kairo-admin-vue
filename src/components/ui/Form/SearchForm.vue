@@ -97,8 +97,8 @@ defineExpose({
 </script>
 
 <template>
-  <NForm ref="formRef" :model="searchFormData" :inline="inline" :label-width="labelWidth">
-    <NGrid :cols="inline ? 'auto' : 24" :x-gap="16" :y-gap="10">
+  <n-form ref="formRef" :model="searchFormData" :inline="inline" :label-width="labelWidth">
+    <n-grid :cols="inline ? 'auto' : 24" :x-gap="16" :y-gap="10">
       <!-- 默认显示的表单项 -->
       <slot name="fields" :collapsed="collapsed" />
 
@@ -108,27 +108,27 @@ defineExpose({
       </template>
 
       <!-- 操作按钮区域 -->
-      <NGridItem :span="24">
-        <NSpace justify="end">
+      <n-grid-item :span="24">
+        <n-space justify="end">
           <!-- 自定义按钮插槽 -->
           <slot name="actions" :search="handleSearch" :reset="handleReset">
             <!-- 默认按钮 -->
-            <NButton v-if="showSearch" type="primary" :loading="loading" @click="handleSearch">
+            <n-button v-if="showSearch" type="primary" :loading="loading" @click="handleSearch">
               <template #icon>
                 <SvgIcon icon="weui:search-outlined" />
               </template>
               {{ searchText }}
-            </NButton>
-            <NButton v-if="showReset" @click="handleReset">
+            </n-button>
+            <n-button v-if="showReset" @click="handleReset">
               <template #icon>
                 <SvgIcon icon="radix-icons:reset" />
               </template>
               {{ resetText }}
-            </NButton>
+            </n-button>
           </slot>
 
           <!-- 折叠按钮 -->
-          <NButton v-if="collapsible" text type="primary" @click="toggleCollapse">
+          <n-button v-if="collapsible" text type="primary" @click="toggleCollapse">
             {{ collapsed ? expandText : collapseText }}
             <template #icon>
               <SvgIcon
@@ -136,9 +136,9 @@ defineExpose({
                 :class="cn('transition-all duration-300', { 'rotate-180': collapsed })"
               />
             </template>
-          </NButton>
-        </NSpace>
-      </NGridItem>
-    </NGrid>
-  </NForm>
+          </n-button>
+        </n-space>
+      </n-grid-item>
+    </n-grid>
+  </n-form>
 </template>

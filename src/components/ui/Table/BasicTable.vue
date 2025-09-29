@@ -55,7 +55,7 @@ const handleReset = () => {
 <template>
   <div class="flex min-h-0 flex-1 flex-col gap-4">
     <template v-if="filters.length > 0">
-      <NCard :title="cardTitle">
+      <n-card :title="cardTitle">
         <DynamicForm
           :formValues="searchQuery"
           :fields="filters"
@@ -63,21 +63,21 @@ const handleReset = () => {
           @submit="handleSubmit"
           @reset="handleReset"
         />
-      </NCard>
+      </n-card>
     </template>
     <TableContainer :withCard="withCard">
       <div class="space-y-4">
         <div v-if="$slots.headerLeft || $slots.headerRight" class="table-operation">
-          <NSpace justify="space-between">
+          <n-space justify="space-between">
             <slot name="headerLeft" />
             <slot name="headerRight" />
-          </NSpace>
+          </n-space>
         </div>
-        <NDataTable
+        <n-data-table
           ref="tableRef"
           :columns="columns"
           v-bind="tableProps"
-          :maxHeight="tableHeight"
+          :max-height="tableHeight"
         />
       </div>
     </TableContainer>

@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col gap-4">
     <!-- 页面标题 -->
-    <NCard title="数据分析"> 业务数据分析和统计页面 </NCard>
+    <n-card title="数据分析"> 业务数据分析和统计页面 </n-card>
 
     <!-- 图表展示区域 -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <!-- 柱状图 - 月度销售数据 -->
-      <NCard title="月度销售数据" class="h-fit">
+      <n-card title="月度销售数据" class="h-fit">
         <BarChart
           title="月度销售统计"
           :data="barChartData"
@@ -14,10 +14,10 @@
           :use-gradient="true"
           :style="{ height: '350px' }"
         />
-      </NCard>
+      </n-card>
 
       <!-- 饼状图 - 系统资源使用 -->
-      <NCard title="系统资源使用" class="h-fit">
+      <n-card title="系统资源使用" class="h-fit">
         <PieChart
           title="资源使用情况"
           :data="pieChartData"
@@ -25,11 +25,11 @@
           :show-label-line="true"
           :style="{ height: '350px' }"
         />
-      </NCard>
+      </n-card>
     </div>
 
     <!-- 折线图 - 用户活跃度趋势 -->
-    <NCard title="用户活跃度趋势">
+    <n-card title="用户活跃度趋势">
       <LineChart
         title="用户活跃度变化趋势"
         :data="lineChartData"
@@ -39,11 +39,11 @@
         :show-symbol="true"
         :style="{ height: '400px' }"
       />
-    </NCard>
+    </n-card>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <!-- 水平柱状图 - 部门绩效 -->
-      <NCard title="部门绩效排名" class="h-fit">
+      <n-card title="部门绩效排名" class="h-fit">
         <BarChart
           title="各部门绩效对比"
           :data="departmentData"
@@ -52,10 +52,10 @@
           :show-label="true"
           :style="{ height: '350px' }"
         />
-      </NCard>
+      </n-card>
 
       <!-- 环形图 - 产品销售占比 -->
-      <NCard title="产品销售占比" class="h-fit">
+      <n-card title="产品销售占比" class="h-fit">
         <PieChart
           title="产品类别销售分布"
           :data="productSalesData"
@@ -65,7 +65,7 @@
           :show-label-line="false"
           :style="{ height: '350px' }"
         />
-      </NCard>
+      </n-card>
     </div>
   </div>
 </template>

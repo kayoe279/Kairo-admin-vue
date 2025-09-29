@@ -23,8 +23,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
         <rect
           x="1287"
           y="614"
-          width="174"
-          height="323"
+          :width="174"
+          :height="323"
           transform="rotate(180 1287 614)"
           fill="url(#paint0_linear_3283_101175)"
         ></rect>
@@ -33,8 +33,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
         <rect
           x="1146"
           y="614"
-          width="174"
-          height="404"
+          :width="174"
+          :height="404"
           transform="rotate(180 1146 614)"
           fill="url(#paint1_linear_3283_101175)"
         ></rect>
@@ -43,40 +43,40 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
         <rect
           x="1005"
           y="614"
-          width="174"
-          height="478"
+          :width="174"
+          :height="478"
           transform="rotate(180 1005 614)"
           fill="url(#paint2_linear_3283_101175)"
         ></rect>
       </g>
       <g filter="url(#filter3_f_3283_101175)">
         <rect
-          width="174"
-          height="323"
+          :width="174"
+          :height="323"
           transform="matrix(1 0 -5.78527e-07 -1 -16 614)"
           fill="url(#paint3_linear_3283_101175)"
         ></rect>
       </g>
       <g filter="url(#filter4_f_3283_101175)">
         <rect
-          width="174"
-          height="404"
+          :width="174"
+          :height="404"
           transform="matrix(1 0 -6.17385e-07 -1 125 614)"
           fill="url(#paint4_linear_3283_101175)"
         ></rect>
       </g>
       <g filter="url(#filter5_f_3283_101175)">
         <rect
-          width="174"
-          height="478"
+          :width="174"
+          :height="478"
           transform="matrix(1 0 -6.17385e-07 -1 266 614)"
           fill="url(#paint5_linear_3283_101175)"
         ></rect>
       </g>
       <g filter="url(#filter6_f_3283_101175)">
         <rect
-          width="175"
-          height="530"
+          :width="175"
+          :height="530"
           transform="matrix(1 0 -6.17385e-07 -1 407 614)"
           fill="url(#paint6_linear_3283_101175)"
         ></rect>
@@ -85,16 +85,16 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
         <rect
           x="864"
           y="614"
-          width="175"
-          height="530"
+          :width="175"
+          :height="530"
           transform="rotate(180 864 614)"
           fill="url(#paint7_linear_3283_101175)"
         ></rect>
       </g>
       <g filter="url(#filter8_f_3283_101175)">
         <rect
-          width="173"
-          height="584"
+          :width="173"
+          :height="584"
           transform="matrix(1 0 -6.17385e-07 -1 549 614)"
           fill="url(#paint8_linear_3283_101175)"
         ></rect>
@@ -104,8 +104,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter0_f_3283_101175"
           x="1083"
           y="261"
-          width="234"
-          height="383"
+          :width="234"
+          :height="383"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -125,8 +125,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter1_f_3283_101175"
           x="942"
           y="180"
-          width="234"
-          height="464"
+          :width="234"
+          :height="464"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -146,8 +146,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter2_f_3283_101175"
           x="801"
           y="106"
-          width="234"
-          height="538"
+          :width="234"
+          :height="538"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -167,8 +167,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter3_f_3283_101175"
           x="-46"
           y="261"
-          width="234"
-          height="383"
+          :width="234"
+          :height="383"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -188,8 +188,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter4_f_3283_101175"
           x="95"
           y="180"
-          width="234"
-          height="464"
+          :width="234"
+          :height="464"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -209,8 +209,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter5_f_3283_101175"
           x="236"
           y="106"
-          width="234"
-          height="538"
+          :width="234"
+          :height="538"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -230,8 +230,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter6_f_3283_101175"
           x="377"
           y="54"
-          width="235"
-          height="590"
+          :width="235"
+          :height="590"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -251,8 +251,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter7_f_3283_101175"
           x="659"
           y="54"
-          width="235"
-          height="590"
+          :width="235"
+          :height="590"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -272,8 +272,8 @@ const { primaryColor, successColor } = storeToRefs(themeStore);
           id="filter8_f_3283_101175"
           x="519"
           y="0"
-          width="233"
-          height="644"
+          :width="233"
+          :height="644"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >

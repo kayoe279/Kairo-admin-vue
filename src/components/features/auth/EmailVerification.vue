@@ -74,20 +74,20 @@ const handleBack = () => {
   <div class="space-y-4">
     <div class="text-center">
       <h2 class="mb-2 text-xl font-semibold">{{ $t("auth.verifyEmail") }}</h2>
-      <NText class="text-sm">
+      <n-text class="text-sm">
         {{ $t("auth.verificationSent") }} <strong>{{ email }}</strong>
-      </NText>
+      </n-text>
     </div>
 
-    <NForm
+    <n-form
       ref="formRef"
       label-placement="left"
       size="large"
       :model="{ code: verificationCode }"
       :rules="rules"
     >
-      <NFormItem path="code">
-        <NInput
+      <n-form-item path="code">
+        <n-input
           v-model:value="verificationCode"
           :placeholder="$t('auth.verificationCodePlaceholder')"
           maxlength="6"
@@ -96,29 +96,29 @@ const handleBack = () => {
           <template #prefix>
             <SvgIcon icon="solar:shield-check-broken" class="mr-3 text-lg" />
           </template>
-        </NInput>
-      </NFormItem>
+        </n-input>
+      </n-form-item>
 
-      <NFormItem>
-        <NButton type="primary" @click="handleVerify" size="large" block :loading="isPending">
+      <n-form-item>
+        <n-button type="primary" @click="handleVerify" size="large" block :loading="isPending">
           {{ $t("auth.verifyButton") }}
-        </NButton>
-      </NFormItem>
-    </NForm>
+        </n-button>
+      </n-form-item>
+    </n-form>
 
     <div class="space-y-3 text-center">
       <div class="flex items-center justify-center">
-        <NText class="text-sm">
+        <n-text class="text-sm">
           {{ $t("auth.notReceiveCode") }}
-        </NText>
-        <NButton text type="primary" @click="resendVerification" :loading="isResendPending">
+        </n-text>
+        <n-button text type="primary" @click="resendVerification" :loading="isResendPending">
           {{ $t("auth.resendCode") }}
-        </NButton>
+        </n-button>
       </div>
 
-      <NButton text @click="handleBack" class="!p-0">
+      <n-button text @click="handleBack" class="!p-0">
         {{ $t("auth.backToRegister") }}
-      </NButton>
+      </n-button>
     </div>
   </div>
 </template>

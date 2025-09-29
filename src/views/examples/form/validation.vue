@@ -151,16 +151,16 @@ const handleValidateField = () => {
 
 <template>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <NCard title="表单验证示例" class="sm:col-span-8">
+    <n-card title="表单验证示例" class="sm:col-span-8">
       <template #header-extra>
-        <NTag type="warning">Form Validation</NTag>
+        <n-tag type="warning">Form Validation</n-tag>
       </template>
 
-      <NAlert type="info" class="mb-4">
+      <n-alert type="info" class="mb-4">
         本页面展示了各种表单验证规则的使用，包括必填、格式验证、自定义验证等
-      </NAlert>
+      </n-alert>
 
-      <NForm
+      <n-form
         ref="formRef"
         :model="formData"
         :rules="formRules"
@@ -169,62 +169,62 @@ const handleValidateField = () => {
         size="medium"
       >
         <!-- 基础验证 -->
-        <NDivider title-placement="left">基础验证</NDivider>
+        <n-divider title-placement="left">基础验证</n-divider>
 
-        <NFormItem label="用户名" path="username">
-          <NInput
+        <n-form-item label="用户名" path="username">
+          <n-input
             v-model:value="formData.username"
             placeholder="请输入用户名（2-20个字符）"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="邮箱" path="email">
-          <NInput v-model:value="formData.email" placeholder="请输入邮箱地址" clearable />
-        </NFormItem>
+        <n-form-item label="邮箱" path="email">
+          <n-input v-model:value="formData.email" placeholder="请输入邮箱地址" clearable />
+        </n-form-item>
 
-        <NFormItem label="手机号" path="phone">
-          <NInput v-model:value="formData.phone" placeholder="请输入手机号码" clearable />
-        </NFormItem>
+        <n-form-item label="手机号" path="phone">
+          <n-input v-model:value="formData.phone" placeholder="请输入手机号码" clearable />
+        </n-form-item>
 
         <!-- 密码验证 -->
-        <NDivider title-placement="left">密码验证</NDivider>
+        <n-divider title-placement="left">密码验证</n-divider>
 
-        <NFormItem label="密码" path="password">
-          <NInput
+        <n-form-item label="密码" path="password">
+          <n-input
             v-model:value="formData.password"
             type="password"
             placeholder="至少8位，包含大小写字母和数字"
             show-password-on="click"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="确认密码" path="confirmPassword">
-          <NInput
+        <n-form-item label="确认密码" path="confirmPassword">
+          <n-input
             v-model:value="formData.confirmPassword"
             type="password"
             placeholder="请再次输入密码"
             show-password-on="click"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
         <!-- 数字验证 -->
-        <NDivider title-placement="left">数字验证</NDivider>
+        <n-divider title-placement="left">数字验证</n-divider>
 
-        <NFormItem label="年龄" path="age">
-          <NInputNumber
+        <n-form-item label="年龄" path="age">
+          <n-inputNumber
             v-model:value="formData.age"
             placeholder="请输入年龄（18-65岁）"
             :min="18"
             :max="65"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="薪资期望" path="salary">
-          <NInputNumber
+        <n-form-item label="薪资期望" path="salary">
+          <n-inputNumber
             v-model:value="formData.salary"
             placeholder="请输入薪资期望（3000-50000）"
             :min="3000"
@@ -233,65 +233,65 @@ const handleValidateField = () => {
             clearable
           >
             <template #suffix>元/月</template>
-          </NInputNumber>
-        </NFormItem>
+          </n-inputNumber>
+        </n-form-item>
 
         <!-- 选择验证 -->
-        <NDivider title-placement="left">选择验证</NDivider>
+        <n-divider title-placement="left">选择验证</n-divider>
 
-        <NFormItem label="职位" path="position">
-          <NSelect
+        <n-form-item label="职位" path="position">
+          <n-select
             v-model:value="formData.position"
             placeholder="请选择职位"
             clearable
             :options="positionOptions"
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="技能" path="skills">
-          <NSelect
+        <n-form-item label="技能" path="skills">
+          <n-select
             v-model:value="formData.skills"
             multiple
             placeholder="请选择技能（至少选择2项）"
             clearable
             :options="skillOptions"
           />
-        </NFormItem>
+        </n-form-item>
 
         <!-- 日期验证 -->
-        <NDivider title-placement="left">日期验证</NDivider>
+        <n-divider title-placement="left">日期验证</n-divider>
 
-        <NFormItem label="出生日期" path="birthDate">
-          <NDatePicker
+        <n-form-item label="出生日期" path="birthDate">
+          <n-date-picker
             v-model:value="formData.birthDate"
             type="date"
             placeholder="请选择出生日期"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="工作时间范围" path="workDateRange">
-          <NDatePicker
+        <n-form-item label="工作时间范围" path="workDateRange">
+          <n-date-picker
             v-model:value="formData.workDateRange"
             type="daterange"
             placeholder="请选择工作时间范围"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
         <!-- 自定义验证 -->
-        <NDivider title-placement="left">自定义验证</NDivider>
+        <n-divider title-placement="left">自定义验证</n-divider>
 
-        <NFormItem label="个人网站" path="website">
-          <NInput v-model:value="formData.website" placeholder="请输入个人网站 URL" clearable />
-        </NFormItem>
+        <n-form-item label="个人网站" path="website">
+          <n-input v-model:value="formData.website" placeholder="请输入个人网站 URL" clearable />
+        </n-form-item>
 
-        <NFormItem label="身份证号" path="idCard">
-          <NInput v-model:value="formData.idCard" placeholder="请输入身份证号码" clearable />
-        </NFormItem>
+        <n-form-item label="身份证号" path="idCard">
+          <n-input v-model:value="formData.idCard" placeholder="请输入身份证号码" clearable />
+        </n-form-item>
 
-        <NFormItem label="个人简介" path="introduction">
-          <NInput
+        <n-form-item label="个人简介" path="introduction">
+          <n-input
             v-model:value="formData.introduction"
             type="textarea"
             placeholder="请输入个人简介（10-500字）"
@@ -300,34 +300,34 @@ const handleValidateField = () => {
             show-count
             maxlength="500"
           />
-        </NFormItem>
+        </n-form-item>
 
         <!-- 协议验证 -->
-        <NFormItem path="agreement">
-          <NCheckbox v-model:checked="formData.agreement">
-            我已阅读并同意<NButton text type="primary">《用户协议》</NButton>和<NButton
+        <n-form-item path="agreement">
+          <n-checkbox v-model:checked="formData.agreement">
+            我已阅读并同意<n-button text type="primary">《用户协议》</n-button>和<n-button
               text
               type="primary"
-              >《隐私政策》</NButton
+              >《隐私政策》</n-button
             >
-          </NCheckbox>
-        </NFormItem>
+          </n-checkbox>
+        </n-form-item>
 
-        <NFormItem>
-          <NSpace>
-            <NButton type="primary" :loading="submitLoading" @click="handleSubmit">
+        <n-form-item>
+          <n-space>
+            <n-button type="primary" :loading="submitLoading" @click="handleSubmit">
               提交表单
-            </NButton>
-            <NButton @click="handleReset"> 重置表单 </NButton>
-            <NButton @click="handleValidateField"> 验证用户名字段 </NButton>
-          </NSpace>
-        </NFormItem>
-      </NForm>
-    </NCard>
+            </n-button>
+            <n-button @click="handleReset"> 重置表单 </n-button>
+            <n-button @click="handleValidateField"> 验证用户名字段 </n-button>
+          </n-space>
+        </n-form-item>
+      </n-form>
+    </n-card>
 
     <!-- 表单数据预览 -->
-    <NCard title="表单数据" class="sm:col-span-4">
-      <NCode :code="JSON.stringify(formData, null, 2)" language="json" />
-    </NCard>
+    <n-card title="表单数据" class="sm:col-span-4">
+      <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
+    </n-card>
   </div>
 </template>

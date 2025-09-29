@@ -14,7 +14,7 @@ const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick
 </script>
 
 <template>
-  <NMenu
+  <n-menu
     ref="menuInstRef"
     :options="menus"
     mode="horizontal"

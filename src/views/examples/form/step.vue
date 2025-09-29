@@ -248,24 +248,24 @@ onMounted(() => {
 
 <template>
   <div>
-    <NCard title="分步表单示例" class="mb-6">
+    <n-card title="分步表单示例" class="mb-6">
       <template #header-extra>
-        <NTag type="primary">Step Form</NTag>
+        <n-tag type="primary">Step Form</n-tag>
       </template>
 
-      <NAlert type="info" class="mb-4"> 分步表单将复杂的表单分解为多个步骤，提升用户体验 </NAlert>
+      <n-alert type="info" class="mb-4"> 分步表单将复杂的表单分解为多个步骤，提升用户体验 </n-alert>
 
       <!-- 步骤指示器 -->
-      <NSteps :current="currentStep" class="mb-6">
-        <NStep title="基本信息" description="填写项目基本信息" />
-        <NStep title="配置选项" description="设置项目配置" />
-        <NStep title="确认提交" description="确认信息并提交" />
-      </NSteps>
+      <n-steps :current="currentStep" class="mb-6">
+        <n-step title="基本信息" description="填写项目基本信息" />
+        <n-step title="配置选项" description="设置项目配置" />
+        <n-step title="确认提交" description="确认信息并提交" />
+      </n-steps>
 
       <!-- 第一步：基本信息 -->
       <div v-show="currentStep === 1">
-        <NCard title="项目基本信息" size="small">
-          <NForm
+        <n-card title="项目基本信息" size="small">
+          <n-form
             ref="basicFormRef"
             :model="formData.basic"
             :rules="basicFormRules"
@@ -273,25 +273,25 @@ onMounted(() => {
             label-width="120px"
             size="medium"
           >
-            <NFormItem label="项目名称" path="projectName">
-              <NInput
+            <n-form-item label="项目名称" path="projectName">
+              <n-input
                 v-model:value="formData.basic.projectName"
                 placeholder="请输入项目名称"
                 clearable
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="项目类型" path="projectType">
-              <NSelect
+            <n-form-item label="项目类型" path="projectType">
+              <n-select
                 v-model:value="formData.basic.projectType"
                 placeholder="请选择项目类型"
                 clearable
                 :options="projectTypeOptions"
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="项目描述" path="description">
-              <NInput
+            <n-form-item label="项目描述" path="description">
+              <n-input
                 v-model:value="formData.basic.description"
                 type="textarea"
                 placeholder="请描述项目的主要功能和目标"
@@ -300,19 +300,19 @@ onMounted(() => {
                 show-count
                 maxlength="300"
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="预期工期">
-              <NDatePicker
+            <n-form-item label="预期工期">
+              <n-date-picker
                 v-model:value="formData.basic.timeline"
                 type="daterange"
                 placeholder="选择项目开始和结束时间"
                 clearable
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="预算范围">
-              <NInputNumber
+            <n-form-item label="预算范围">
+              <n-inputNumber
                 v-model:value="formData.basic.budget"
                 placeholder="请输入预算金额"
                 :min="0"
@@ -320,16 +320,16 @@ onMounted(() => {
                 clearable
               >
                 <template #suffix>元</template>
-              </NInputNumber>
-            </NFormItem>
-          </NForm>
-        </NCard>
+              </n-inputNumber>
+            </n-form-item>
+          </n-form>
+        </n-card>
       </div>
 
       <!-- 第二步：配置选项 -->
       <div v-show="currentStep === 2">
-        <NCard title="项目配置" size="small">
-          <NForm
+        <n-card title="项目配置" size="small">
+          <n-form
             ref="configFormRef"
             :model="formData.config"
             :rules="configFormRules"
@@ -337,69 +337,69 @@ onMounted(() => {
             label-width="120px"
             size="medium"
           >
-            <NFormItem label="技术模板" path="template">
-              <NSelect
+            <n-form-item label="技术模板" path="template">
+              <n-select
                 v-model:value="formData.config.template"
                 placeholder="选择项目技术模板"
                 clearable
                 :options="templateOptions"
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="功能特性" path="features">
-              <NCheckboxGroup v-model:value="formData.config.features">
-                <NSpace vertical>
-                  <NCheckbox value="auth">用户认证</NCheckbox>
-                  <NCheckbox value="admin">管理后台</NCheckbox>
-                  <NCheckbox value="api">API 接口</NCheckbox>
-                  <NCheckbox value="payment">支付系统</NCheckbox>
-                  <NCheckbox value="notification">消息通知</NCheckbox>
-                  <NCheckbox value="analytics">数据分析</NCheckbox>
-                </NSpace>
-              </NCheckboxGroup>
-            </NFormItem>
+            <n-form-item label="功能特性" path="features">
+              <n-checkbox-group v-model:value="formData.config.features">
+                <n-space vertical>
+                  <n-checkbox value="auth">用户认证</n-checkbox>
+                  <n-checkbox value="admin">管理后台</n-checkbox>
+                  <n-checkbox value="api">API 接口</n-checkbox>
+                  <n-checkbox value="payment">支付系统</n-checkbox>
+                  <n-checkbox value="notification">消息通知</n-checkbox>
+                  <n-checkbox value="analytics">数据分析</n-checkbox>
+                </n-space>
+              </n-checkbox-group>
+            </n-form-item>
 
-            <NFormItem label="数据库类型" path="database">
-              <NRadioGroup v-model:value="formData.config.database">
-                <NSpace>
-                  <NRadio value="mysql">MySQL</NRadio>
-                  <NRadio value="postgresql">PostgreSQL</NRadio>
-                  <NRadio value="mongodb">MongoDB</NRadio>
-                  <NRadio value="redis">Redis</NRadio>
-                </NSpace>
-              </NRadioGroup>
-            </NFormItem>
+            <n-form-item label="数据库类型" path="database">
+              <n-radio-group v-model:value="formData.config.database">
+                <n-space>
+                  <n-radio value="mysql">MySQL</n-radio>
+                  <n-radio value="postgresql">PostgreSQL</n-radio>
+                  <n-radio value="mongodb">MongoDB</n-radio>
+                  <n-radio value="redis">Redis</n-radio>
+                </n-space>
+              </n-radio-group>
+            </n-form-item>
 
-            <NFormItem label="部署方式" path="deployment">
-              <NSelect
+            <n-form-item label="部署方式" path="deployment">
+              <n-select
                 v-model:value="formData.config.deployment"
                 placeholder="选择部署方式"
                 clearable
                 :options="deploymentOptions"
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="团队规模">
-              <NSlider
+            <n-form-item label="团队规模">
+              <n-slider
                 v-model:value="formData.config.teamSize"
                 :min="1"
                 :max="20"
                 :step="1"
                 :marks="{ 1: '1人', 5: '5人', 10: '10人', 20: '20人' }"
               />
-            </NFormItem>
+            </n-form-item>
 
-            <NFormItem label="项目优先级">
-              <NRate v-model:value="formData.config.priority" />
-            </NFormItem>
-          </NForm>
-        </NCard>
+            <n-form-item label="项目优先级">
+              <n-rate v-model:value="formData.config.priority" />
+            </n-form-item>
+          </n-form>
+        </n-card>
       </div>
 
       <!-- 第三步：确认信息 -->
       <div v-show="currentStep === 3">
-        <NCard title="确认项目信息" size="small">
-          <NForm
+        <n-card title="确认项目信息" size="small">
+          <n-form
             ref="confirmFormRef"
             :model="formData.confirm"
             :rules="confirmFormRules"
@@ -408,80 +408,80 @@ onMounted(() => {
             size="medium"
           >
             <!-- 项目信息预览 -->
-            <NDescriptions label-placement="left" :column="2" class="mb-6">
-              <NDescriptionsItem label="项目名称">{{
+            <n-descriptions label-placement="left" :column="2" class="mb-6">
+              <n-descriptionsItem label="项目名称">{{
                 formData.basic.projectName
-              }}</NDescriptionsItem>
-              <NDescriptionsItem label="项目类型">{{
+              }}</n-descriptionsItem>
+              <n-descriptionsItem label="项目类型">{{
                 getProjectTypeLabel(formData.basic.projectType)
-              }}</NDescriptionsItem>
-              <NDescriptionsItem label="技术模板">{{
+              }}</n-descriptionsItem>
+              <n-descriptionsItem label="技术模板">{{
                 getTemplateLabel(formData.config.template)
-              }}</NDescriptionsItem>
-              <NDescriptionsItem label="数据库">{{ formData.config.database }}</NDescriptionsItem>
-              <NDescriptionsItem label="部署方式">{{
+              }}</n-descriptionsItem>
+              <n-descriptionsItem label="数据库">{{ formData.config.database }}</n-descriptionsItem>
+              <n-descriptionsItem label="部署方式">{{
                 getDeploymentLabel(formData.config.deployment)
-              }}</NDescriptionsItem>
-              <NDescriptionsItem label="团队规模"
-                >{{ formData.config.teamSize }} 人</NDescriptionsItem
+              }}</n-descriptionsItem>
+              <n-descriptionsItem label="团队规模"
+                >{{ formData.config.teamSize }} 人</n-descriptionsItem
               >
-              <NDescriptionsItem label="项目描述" :span="2">{{
+              <n-descriptionsItem label="项目描述" :span="2">{{
                 formData.basic.description
-              }}</NDescriptionsItem>
-              <NDescriptionsItem label="功能特性" :span="2">
-                <NSpace>
-                  <NTag
+              }}</n-descriptionsItem>
+              <n-descriptionsItem label="功能特性" :span="2">
+                <n-space>
+                  <n-tag
                     v-for="feature in formData.config.features"
                     :key="feature"
                     type="info"
                     size="small"
                   >
                     {{ getFeatureLabel(feature) }}
-                  </NTag>
-                </NSpace>
-              </NDescriptionsItem>
-            </NDescriptions>
+                  </n-tag>
+                </n-space>
+              </n-descriptionsItem>
+            </n-descriptions>
 
-            <NDivider />
+            <n-divider />
 
-            <NFormItem path="terms">
-              <NCheckbox v-model:checked="formData.confirm.terms">
-                我已阅读并同意<NButton text type="primary">《项目开发协议》</NButton>
-              </NCheckbox>
-            </NFormItem>
+            <n-form-item path="terms">
+              <n-checkbox v-model:checked="formData.confirm.terms">
+                我已阅读并同意<n-button text type="primary">《项目开发协议》</n-button>
+              </n-checkbox>
+            </n-form-item>
 
-            <NFormItem path="newsletter">
-              <NCheckbox v-model:checked="formData.confirm.newsletter">
+            <n-form-item path="newsletter">
+              <n-checkbox v-model:checked="formData.confirm.newsletter">
                 订阅项目进度通知和技术资讯
-              </NCheckbox>
-            </NFormItem>
+              </n-checkbox>
+            </n-form-item>
 
-            <NFormItem label="备注说明">
-              <NInput
+            <n-form-item label="备注说明">
+              <n-input
                 v-model:value="formData.confirm.remarks"
                 type="textarea"
                 placeholder="有什么特殊要求或说明请在此填写"
                 :rows="3"
                 clearable
               />
-            </NFormItem>
-          </NForm>
-        </NCard>
+            </n-form-item>
+          </n-form>
+        </n-card>
       </div>
 
       <!-- 操作按钮 -->
       <div class="mt-6 flex justify-between">
-        <NButton v-if="currentStep > 1" @click="handlePrevStep" size="large"> 上一步 </NButton>
+        <n-button v-if="currentStep > 1" @click="handlePrevStep" size="large"> 上一步 </n-button>
         <div v-else></div>
 
-        <NSpace>
-          <NButton @click="handleSaveDraft" size="large"> 保存草稿 </NButton>
+        <n-space>
+          <n-button @click="handleSaveDraft" size="large"> 保存草稿 </n-button>
 
-          <NButton v-if="currentStep < 3" type="primary" @click="handleNextStep" size="large">
+          <n-button v-if="currentStep < 3" type="primary" @click="handleNextStep" size="large">
             下一步
-          </NButton>
+          </n-button>
 
-          <NButton
+          <n-button
             v-else
             type="primary"
             :loading="submitLoading"
@@ -489,21 +489,21 @@ onMounted(() => {
             size="large"
           >
             提交项目
-          </NButton>
-        </NSpace>
+          </n-button>
+        </n-space>
       </div>
-    </NCard>
+    </n-card>
 
     <!-- 进度提示 -->
-    <NCard title="填写进度" class="mt-6">
-      <NProgress
+    <n-card title="填写进度" class="mt-6">
+      <n-progress
         type="line"
         :percentage="progressPercentage"
         :status="currentStep === 3 ? 'success' : 'info'"
         show-indicator
       >
         步骤 {{ currentStep }} / 3
-      </NProgress>
-    </NCard>
+      </n-progress>
+    </n-card>
   </div>
 </template>

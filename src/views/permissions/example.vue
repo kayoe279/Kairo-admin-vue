@@ -65,12 +65,10 @@ const toggleUserRole = async (targetRole: RoleType) => {
       </n-spin>
       <n-h2>v-permission 指令用法</n-h2>
       <div class="flex flex-wrap gap-x-4">
-        <n-button v-permission="['super']" type="success" size="large"> 仅super可见 </n-button>
-        <n-button v-permission="['admin']" type="info" size="medium"> admin可见 </n-button>
-        <n-button v-permission="['admin', 'user']" type="warning" size="small">
-          admin和user可见
-        </n-button>
-        <n-button v-permission="['user']" type="error" size="tiny"> user可见 </n-button>
+        <n-button v-permission="['super']" type="success"> 仅super可见 </n-button>
+        <n-button v-permission="['admin']" type="info"> admin可见 </n-button>
+        <n-button v-permission="['admin', 'user']" type="warning"> admin和user可见 </n-button>
+        <n-button v-permission="['user']" type="error"> user可见 </n-button>
       </div>
 
       <n-h2>usePermission 函数用法</n-h2>

@@ -8,7 +8,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const userStore = useUserStore();
 
-const nickname = computed(() => userStore.userInfo?.nickname);
+const nickname = computed(() => userStore.userInfo?.user_metadata?.full_name);
 
 const projectList = ref([
   {

@@ -109,7 +109,7 @@ defineExpose({
 </script>
 
 <template>
-  <NForm
+  <n-form
     ref="formRef"
     :model="formData"
     :rules="formRules"
@@ -117,10 +117,10 @@ defineExpose({
     :label-width="labelWidth"
     :size="size"
   >
-    <NGrid :cols="colSize" :x-gap="16">
+    <n-grid :cols="colSize" :x-gap="16">
       <template v-for="item in fields" :key="item.path">
-        <NGridItem v-if="!item.isExpandField || (item.isExpandField && collapsed)">
-          <NFormItem
+        <n-grid-item v-if="!item.isExpandField || (item.isExpandField && collapsed)">
+          <n-form-item
             :path="item.path"
             :label="item.label"
             :rule="item.rule"
@@ -129,7 +129,7 @@ defineExpose({
             :label-placement="item.labelPlacement"
           >
             <!-- 输入框 -->
-            <NInput
+            <n-input
               v-if="item.type === 'input'"
               v-model:value="formData[item.path]"
               :placeholder="item.placeholder"
@@ -140,7 +140,7 @@ defineExpose({
             />
 
             <!-- 数字输入框 -->
-            <NInputNumber
+            <n-inputNumber
               v-else-if="item.type === 'number'"
               v-model:value="formData[item.path]"
               :placeholder="item.placeholder"
@@ -154,7 +154,7 @@ defineExpose({
             />
 
             <!-- 选择器 -->
-            <NSelect
+            <n-select
               v-else-if="item.type === 'select'"
               v-model:value="formData[item.path]"
               :placeholder="item.placeholder"
@@ -166,7 +166,7 @@ defineExpose({
             />
 
             <!-- 日期选择器 -->
-            <NDatePicker
+            <n-date-picker
               v-else-if="item.type === 'date'"
               v-model:value="formData[item.path]"
               :placeholder="item.placeholder"
@@ -177,7 +177,7 @@ defineExpose({
             />
 
             <!-- 开关 -->
-            <NSwitch
+            <n-switch
               v-else-if="item.type === 'switch'"
               v-model:value="formData[item.path]"
               :disabled="item.disabled"
@@ -185,41 +185,41 @@ defineExpose({
             />
 
             <!-- 单选组 -->
-            <NRadioGroup
+            <n-radio-group
               v-else-if="item.type === 'radio'"
               v-model:value="formData[item.path]"
               :disabled="item.disabled"
               @update:value="setFieldValue(item.path, $event)"
             >
-              <NRadio
+              <n-radio
                 v-for="option in item.options"
                 :key="option.value"
                 :value="option.value"
                 :disabled="option.disabled"
               >
                 {{ option.label }}
-              </NRadio>
-            </NRadioGroup>
+              </n-radio>
+            </n-radio-group>
 
             <!-- 多选组 -->
-            <NCheckboxGroup
+            <n-checkbox-group
               v-else-if="item.type === 'checkbox'"
               v-model:value="formData[item.path]"
               :disabled="item.disabled"
               @update:value="setFieldValue(item.path, $event)"
             >
-              <NCheckbox
+              <n-checkbox
                 v-for="option in item.options"
                 :key="option.value"
                 :value="option.value"
                 :disabled="option.disabled"
               >
                 {{ option.label }}
-              </NCheckbox>
-            </NCheckboxGroup>
+              </n-checkbox>
+            </n-checkbox-group>
 
             <!-- 文本域 -->
-            <NInput
+            <n-input
               v-else-if="item.type === 'textarea'"
               v-model:value="formData[item.path]"
               type="textarea"
@@ -230,36 +230,36 @@ defineExpose({
               :autosize="item.autosize"
               @update:value="setFieldValue(item.path, $event)"
             />
-          </NFormItem>
-        </NGridItem>
+          </n-form-item>
+        </n-grid-item>
       </template>
-    </NGrid>
+    </n-grid>
 
-    <NGrid v-if="showActions">
-      <NGridItem :span="24" class="flex justify-end">
-        <NFormItem :showFeedback="false">
-          <NSpace>
-            <NButton type="primary" :loading="loading" @click="handleSubmit">
+    <n-grid v-if="showActions">
+      <n-grid-item :span="24" class="flex justify-end">
+        <n-form-item :showFeedback="false">
+          <n-space>
+            <n-button type="primary" :loading="loading" @click="handleSubmit">
               <template #icon>
                 <SvgIcon icon="weui:search-outlined" />
               </template>
               {{ submitText }}
-            </NButton>
-            <NButton v-if="showReset" @click="handleReset">
+            </n-button>
+            <n-button v-if="showReset" @click="handleReset">
               <template #icon>
                 <SvgIcon icon="radix-icons:reset" />
               </template>
               {{ resetText }}
-            </NButton>
-            <NButton v-if="showExpandFields" quaternary @click="toggleCollapsed">
+            </n-button>
+            <n-button v-if="showExpandFields" quaternary @click="toggleCollapsed">
               {{ collapsed ? "收起" : "展开" }}
               <SvgIcon
                 :icon="collapsed ? 'solar:alt-arrow-up-bold' : 'solar:alt-arrow-down-bold'"
               />
-            </NButton>
-          </NSpace>
-        </NFormItem>
-      </NGridItem>
-    </NGrid>
-  </NForm>
+            </n-button>
+          </n-space>
+        </n-form-item>
+      </n-grid-item>
+    </n-grid>
+  </n-form>
 </template>

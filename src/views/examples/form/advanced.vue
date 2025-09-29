@@ -163,16 +163,16 @@ const handleReset = () => {
 
 <template>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <NCard title="高级表单示例" class="sm:col-span-8">
+    <n-card title="高级表单示例" class="sm:col-span-8">
       <template #header-extra>
-        <NTag type="success">Advanced Form</NTag>
+        <n-tag type="success">Advanced Form</n-tag>
       </template>
 
-      <NAlert type="info" class="mb-4">
+      <n-alert type="info" class="mb-4">
         高级表单包含复杂的表单控件组合、动态表单项、条件显示等功能
-      </NAlert>
+      </n-alert>
 
-      <NForm
+      <n-form
         ref="formRef"
         :model="formData"
         :rules="formRules"
@@ -181,28 +181,28 @@ const handleReset = () => {
         size="medium"
       >
         <!-- 项目基本信息 -->
-        <NCard title="项目基本信息" size="small" class="mb-4">
-          <NGrid :cols="2" :x-gap="16">
-            <NGridItem>
-              <NFormItem label="项目名称" path="title">
-                <NInput v-model:value="formData.title" placeholder="请输入项目名称" clearable />
-              </NFormItem>
-            </NGridItem>
+        <n-card title="项目基本信息" size="small" class="mb-4">
+          <n-grid :cols="2" :x-gap="16">
+            <n-grid-item>
+              <n-form-item label="项目名称" path="title">
+                <n-input v-model:value="formData.title" placeholder="请输入项目名称" clearable />
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="项目类型" path="category">
-                <NSelect
+            <n-grid-item>
+              <n-form-item label="项目类型" path="category">
+                <n-select
                   v-model:value="formData.category"
                   placeholder="请选择项目类型"
                   clearable
                   :options="categoryOptions"
                 />
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem :span="2">
-              <NFormItem label="项目描述" path="description">
-                <NInput
+            <n-grid-item :span="2">
+              <n-form-item label="项目描述" path="description">
+                <n-input
                   v-model:value="formData.description"
                   type="textarea"
                   placeholder="请输入项目描述"
@@ -211,54 +211,54 @@ const handleReset = () => {
                   show-count
                   maxlength="200"
                 />
-              </NFormItem>
-            </NGridItem>
-          </NGrid>
-        </NCard>
+              </n-form-item>
+            </n-grid-item>
+          </n-grid>
+        </n-card>
 
         <!-- 时间和优先级设置 -->
-        <NCard title="时间和优先级" size="small" class="mb-4">
-          <NGrid :cols="3" :x-gap="16">
-            <NGridItem>
-              <NFormItem label="开始日期" path="startDate">
-                <NDatePicker
+        <n-card title="时间和优先级" size="small" class="mb-4">
+          <n-grid :cols="3" :x-gap="16">
+            <n-grid-item>
+              <n-form-item label="开始日期" path="startDate">
+                <n-date-picker
                   v-model:value="formData.startDate"
                   type="date"
                   placeholder="选择开始日期"
                   clearable
                 />
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="结束日期" path="endDate">
-                <NDatePicker
+            <n-grid-item>
+              <n-form-item label="结束日期" path="endDate">
+                <n-date-picker
                   v-model:value="formData.endDate"
                   type="date"
                   placeholder="选择结束日期"
                   clearable
                   :is-date-disabled="(ts: number) => ts < (formData.startDate || 0)"
                 />
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="优先级" path="priority">
-                <NSelect
+            <n-grid-item>
+              <n-form-item label="优先级" path="priority">
+                <n-select
                   v-model:value="formData.priority"
                   placeholder="请选择优先级"
                   :options="priorityOptions"
                   clearable
                 />
-              </NFormItem>
-            </NGridItem>
-          </NGrid>
-        </NCard>
+              </n-form-item>
+            </n-grid-item>
+          </n-grid>
+        </n-card>
 
         <!-- 项目标签 -->
-        <NCard title="项目标签" size="small" class="mb-4">
-          <NFormItem label="技术栈" path="tags">
-            <NSelect
+        <n-card title="项目标签" size="small" class="mb-4">
+          <n-form-item label="技术栈" path="tags">
+            <n-select
               v-model:value="formData.tags"
               multiple
               placeholder="选择项目使用的技术栈"
@@ -266,17 +266,17 @@ const handleReset = () => {
               :options="tagOptions"
               max-tag-count="responsive"
             />
-          </NFormItem>
+          </n-form-item>
 
-          <NFormItem label="自定义标签">
-            <NDynamicTags v-model:value="customTags" />
-          </NFormItem>
-        </NCard>
+          <n-form-item label="自定义标签">
+            <n-dynamic-tags v-model:value="customTags" />
+          </n-form-item>
+        </n-card>
 
         <!-- 团队成员 -->
-        <NCard title="团队成员" size="small" class="mb-4">
-          <NFormItem label="项目负责人" path="assignee">
-            <NSelect
+        <n-card title="团队成员" size="small" class="mb-4">
+          <n-form-item label="项目负责人" path="assignee">
+            <n-select
               v-model:value="formData.assignee"
               multiple
               placeholder="选择项目负责人"
@@ -284,133 +284,137 @@ const handleReset = () => {
               :options="memberOptions"
               :max="3"
             />
-          </NFormItem>
+          </n-form-item>
 
           <!-- 动态成员列表 -->
-          <NFormItem label="团队成员">
-            <NDynamicInput
+          <n-form-item label="团队成员">
+            <n-dynamic-input
               v-model:value="teamMembers"
               placeholder="输入成员名称"
               :on-create="() => ({ name: '', role: '', email: '' })"
             >
               <template #default="{ value }">
-                <NGrid :cols="3" :x-gap="8">
-                  <NGridItem>
-                    <NInput v-model:value="value.name" placeholder="姓名" />
-                  </NGridItem>
-                  <NGridItem>
-                    <NSelect v-model:value="value.role" placeholder="角色" :options="roleOptions" />
-                  </NGridItem>
-                  <NGridItem>
-                    <NInput v-model:value="value.email" placeholder="邮箱" />
-                  </NGridItem>
-                </NGrid>
+                <n-grid :cols="3" :x-gap="8">
+                  <n-grid-item>
+                    <n-input v-model:value="value.name" placeholder="姓名" />
+                  </n-grid-item>
+                  <n-grid-item>
+                    <n-select
+                      v-model:value="value.role"
+                      placeholder="角色"
+                      :options="roleOptions"
+                    />
+                  </n-grid-item>
+                  <n-grid-item>
+                    <n-input v-model:value="value.email" placeholder="邮箱" />
+                  </n-grid-item>
+                </n-grid>
               </template>
-            </NDynamicInput>
-          </NFormItem>
-        </NCard>
+            </n-dynamic-input>
+          </n-form-item>
+        </n-card>
 
         <!-- 项目配置 -->
-        <NCard title="项目配置" size="small" class="mb-4">
-          <NGrid :cols="2" :x-gap="16">
-            <NGridItem>
-              <NFormItem label="是否公开" path="settings.isPublic">
-                <NSwitch v-model:value="formData.settings.isPublic" />
+        <n-card title="项目配置" size="small" class="mb-4">
+          <n-grid :cols="2" :x-gap="16">
+            <n-grid-item>
+              <n-form-item label="是否公开" path="settings.isPublic">
+                <n-switch v-model:value="formData.settings.isPublic" />
                 <span class="text-foreground-subtle ml-2">公开项目可被其他用户查看</span>
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="允许评论" path="settings.allowComments">
-                <NSwitch v-model:value="formData.settings.allowComments" />
+            <n-grid-item>
+              <n-form-item label="允许评论" path="settings.allowComments">
+                <n-switch v-model:value="formData.settings.allowComments" />
                 <span class="text-foreground-subtle ml-2">允许团队成员添加评论</span>
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="邮件通知" path="settings.notifyEmail">
-                <NSwitch v-model:value="formData.settings.notifyEmail" />
+            <n-grid-item>
+              <n-form-item label="邮件通知" path="settings.notifyEmail">
+                <n-switch v-model:value="formData.settings.notifyEmail" />
                 <span class="text-foreground-subtle ml-2">项目更新时发送邮件</span>
-              </NFormItem>
-            </NGridItem>
+              </n-form-item>
+            </n-grid-item>
 
-            <NGridItem>
-              <NFormItem label="自动归档" path="settings.autoArchive">
-                <NSwitch v-model:value="formData.settings.autoArchive" />
+            <n-grid-item>
+              <n-form-item label="自动归档" path="settings.autoArchive">
+                <n-switch v-model:value="formData.settings.autoArchive" />
                 <span class="text-foreground-subtle ml-2">项目完成后自动归档</span>
-              </NFormItem>
-            </NGridItem>
-          </NGrid>
-        </NCard>
+              </n-form-item>
+            </n-grid-item>
+          </n-grid>
+        </n-card>
 
         <!-- 文件上传 -->
-        <NCard title="项目文件" size="small" class="mb-4">
-          <NFormItem label="项目文档" path="files">
-            <NUpload
+        <n-card title="项目文件" size="small" class="mb-4">
+          <n-form-item label="项目文档" path="files">
+            <n-upload
               v-model:file-list="fileList"
               multiple
               directory-dnd
               :max="5"
               :on-change="handleFileChange"
             >
-              <NUploadDragger>
+              <n-uploadDragger>
                 <div class="text-center">
-                  <NIcon size="48" :depth="3">
+                  <n-icon size="48" :depth="3">
                     <svg viewBox="0 0 24 24">
                       <path
                         fill="currentColor"
                         d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
                       />
                     </svg>
-                  </NIcon>
-                  <NText style="font-size: 16px"> 点击或者拖动文件到该区域来上传 </NText>
-                  <NP depth="3" style="margin: 8px 0 0 0">
+                  </n-icon>
+                  <n-text style="font-size: 16px"> 点击或者拖动文件到该区域来上传 </n-text>
+                  <n-p depth="3" style="margin: 8px 0 0 0">
                     支持单个或批量上传，严禁上传公司敏感信息
-                  </NP>
+                  </n-p>
                 </div>
-              </NUploadDragger>
-            </NUpload>
-          </NFormItem>
-        </NCard>
+              </n-uploadDragger>
+            </n-upload>
+          </n-form-item>
+        </n-card>
 
         <!-- 条件显示的高级配置 -->
-        <NCard v-if="formData.settings.isPublic" title="公开设置" size="small" class="mb-4">
-          <NFormItem label="访问密码">
-            <NInput
+        <n-card v-if="formData.settings.isPublic" title="公开设置" size="small" class="mb-4">
+          <n-form-item label="访问密码">
+            <n-input
               v-model:value="accessPassword"
               type="password"
               placeholder="设置访问密码（可选）"
               clearable
             />
-          </NFormItem>
+          </n-form-item>
 
-          <NFormItem label="访问权限">
-            <NRadioGroup v-model:value="accessLevel">
-              <NSpace>
-                <NRadio value="public">完全公开</NRadio>
-                <NRadio value="limited">限制访问</NRadio>
-                <NRadio value="private">仅团队可见</NRadio>
-              </NSpace>
-            </NRadioGroup>
-          </NFormItem>
-        </NCard>
+          <n-form-item label="访问权限">
+            <n-radio-group v-model:value="accessLevel">
+              <n-space>
+                <n-radio value="public">完全公开</n-radio>
+                <n-radio value="limited">限制访问</n-radio>
+                <n-radio value="private">仅团队可见</n-radio>
+              </n-space>
+            </n-radio-group>
+          </n-form-item>
+        </n-card>
 
         <!-- 操作按钮 -->
-        <NFormItem>
-          <NSpace>
-            <NButton type="primary" :loading="submitLoading" @click="handleSubmit">
+        <n-form-item>
+          <n-space>
+            <n-button type="primary" :loading="submitLoading" @click="handleSubmit">
               创建项目
-            </NButton>
-            <NButton @click="handleSaveDraft"> 保存草稿 </NButton>
-            <NButton @click="handleReset"> 重置表单 </NButton>
-          </NSpace>
-        </NFormItem>
-      </NForm>
-    </NCard>
+            </n-button>
+            <n-button @click="handleSaveDraft"> 保存草稿 </n-button>
+            <n-button @click="handleReset"> 重置表单 </n-button>
+          </n-space>
+        </n-form-item>
+      </n-form>
+    </n-card>
 
     <!-- 表单数据预览 -->
-    <NCard title="表单数据预览" class="sm:col-span-4">
-      <NCode :code="JSON.stringify(formData, null, 2)" language="json" />
-    </NCard>
+    <n-card title="表单数据预览" class="sm:col-span-4">
+      <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
+    </n-card>
   </div>
 </template>

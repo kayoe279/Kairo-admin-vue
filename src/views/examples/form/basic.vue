@@ -97,12 +97,12 @@ const handleFillDemo = () => {
 
 <template>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <NCard title="基础表单" class="sm:col-span-8">
+    <n-card title="基础表单" class="sm:col-span-8">
       <template #header-extra>
-        <NTag type="info">Basic Form</NTag>
+        <n-tag type="info">Basic Form</n-tag>
       </template>
 
-      <NForm
+      <n-form
         ref="formRef"
         :model="formData"
         :rules="formRules"
@@ -111,83 +111,85 @@ const handleFillDemo = () => {
         size="medium"
         class="max-w-600px"
       >
-        <NFormItem label="姓名" path="name">
-          <NInput v-model:value="formData.name" placeholder="请输入姓名" clearable />
-        </NFormItem>
+        <n-form-item label="姓名" path="name">
+          <n-input v-model:value="formData.name" placeholder="请输入姓名" clearable />
+        </n-form-item>
 
-        <NFormItem label="邮箱" path="email">
-          <NInput v-model:value="formData.email" placeholder="请输入邮箱地址" clearable />
-        </NFormItem>
+        <n-form-item label="邮箱" path="email">
+          <n-input v-model:value="formData.email" placeholder="请输入邮箱地址" clearable />
+        </n-form-item>
 
-        <NFormItem label="手机号" path="phone">
-          <NInput v-model:value="formData.phone" placeholder="请输入手机号码" clearable />
-        </NFormItem>
+        <n-form-item label="手机号" path="phone">
+          <n-input v-model:value="formData.phone" placeholder="请输入手机号码" clearable />
+        </n-form-item>
 
-        <NFormItem label="性别" path="gender">
-          <NRadioGroup v-model:value="formData.gender">
-            <NRadio value="male">男</NRadio>
-            <NRadio value="female">女</NRadio>
-          </NRadioGroup>
-        </NFormItem>
+        <n-form-item label="性别" path="gender">
+          <n-radio-group v-model:value="formData.gender">
+            <n-radio value="male">男</n-radio>
+            <n-radio value="female">女</n-radio>
+          </n-radio-group>
+        </n-form-item>
 
-        <NFormItem label="年龄" path="age">
-          <NInputNumber
+        <n-form-item label="年龄" path="age">
+          <n-input-number
             v-model:value="formData.age"
             placeholder="请输入年龄"
             :min="1"
             :max="120"
             clearable
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="城市" path="city">
-          <NSelect
+        <n-form-item label="城市" path="city">
+          <n-select
             v-model:value="formData.city"
             placeholder="请选择城市"
             clearable
             :options="cityOptions"
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="爱好" path="hobbies">
-          <NCheckboxGroup v-model:value="formData.hobbies">
-            <NSpace>
-              <NCheckbox value="reading">阅读</NCheckbox>
-              <NCheckbox value="music">音乐</NCheckbox>
-              <NCheckbox value="sports">运动</NCheckbox>
-              <NCheckbox value="travel">旅行</NCheckbox>
-              <NCheckbox value="coding">编程</NCheckbox>
-            </NSpace>
-          </NCheckboxGroup>
-        </NFormItem>
+        <n-form-item label="爱好" path="hobbies">
+          <n-checkbox-group v-model:value="formData.hobbies">
+            <n-space>
+              <n-checkbox value="reading">阅读</n-checkbox>
+              <n-checkbox value="music">音乐</n-checkbox>
+              <n-checkbox value="sports">运动</n-checkbox>
+              <n-checkbox value="travel">旅行</n-checkbox>
+              <n-checkbox value="coding">编程</n-checkbox>
+            </n-space>
+          </n-checkbox-group>
+        </n-form-item>
 
-        <NFormItem label="地址" path="address">
-          <NInput
+        <n-form-item label="地址" path="address">
+          <n-input
             v-model:value="formData.address"
             type="textarea"
             placeholder="请输入详细地址"
             :rows="3"
           />
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="接收通知" path="notifications">
-          <NSwitch v-model:value="formData.notifications" />
+        <n-form-item label="接收通知" path="notifications">
+          <n-switch v-model:value="formData.notifications" />
           <span class="text-foreground-subtle ml-2">是否接收邮件通知</span>
-        </NFormItem>
+        </n-form-item>
 
-        <NFormItem label="&nbsp;">
-          <NSpace>
-            <NButton type="primary" :loading="submitLoading" @click="handleSubmit"> 提交 </NButton>
-            <NButton @click="handleReset"> 重置 </NButton>
-            <NButton @click="handleFillDemo"> 填充示例数据 </NButton>
-          </NSpace>
-        </NFormItem>
-      </NForm>
-    </NCard>
+        <n-form-item label="&nbsp;">
+          <n-space>
+            <n-button type="primary" :loading="submitLoading" @click="handleSubmit">
+              提交
+            </n-button>
+            <n-button @click="handleReset"> 重置 </n-button>
+            <n-button @click="handleFillDemo"> 填充示例数据 </n-button>
+          </n-space>
+        </n-form-item>
+      </n-form>
+    </n-card>
 
     <!-- 表单数据预览 -->
-    <NCard title="表单数据预览" class="sm:col-span-4">
-      <NCode :code="JSON.stringify(formData, null, 2)" language="json" />
-    </NCard>
+    <n-card title="表单数据预览" class="sm:col-span-4">
+      <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
+    </n-card>
   </div>
 </template>

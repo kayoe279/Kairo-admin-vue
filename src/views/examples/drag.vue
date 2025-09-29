@@ -16,7 +16,7 @@
       :y-gap="8"
     >
       <n-grid-item>
-        <NCard
+        <n-card
           title="需求池"
           :segmented="{ content: true, footer: true }"
           size="small"
@@ -39,11 +39,11 @@
               </div>
             </template>
           </Draggable>
-        </NCard>
+        </n-card>
       </n-grid-item>
 
       <n-grid-item>
-        <NCard
+        <n-card
           title="开发中"
           :segmented="{ content: true, footer: true }"
           size="small"
@@ -66,11 +66,11 @@
               </div>
             </template>
           </Draggable>
-        </NCard>
+        </n-card>
       </n-grid-item>
 
       <n-grid-item>
-        <NCard
+        <n-card
           title="已完成"
           :segmented="{ content: true, footer: true }"
           size="small"
@@ -92,11 +92,11 @@
               </div>
             </template>
           </Draggable>
-        </NCard>
+        </n-card>
       </n-grid-item>
 
       <n-grid-item>
-        <NCard
+        <n-card
           title="已验收"
           :segmented="{ content: true, footer: true }"
           size="small"
@@ -118,7 +118,7 @@
               </div>
             </template>
           </Draggable>
-        </NCard>
+        </n-card>
       </n-grid-item>
     </n-grid>
   </div>

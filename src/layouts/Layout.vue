@@ -35,8 +35,8 @@ const showSideDrawer = computed({
 </script>
 
 <template>
-  <NLayout position="absolute" has-sider>
-    <NLayoutSider
+  <n-layout position="absolute" has-sider>
+    <n-layout-sider
       v-if="showMenu"
       @collapse="() => appStore.toggleMenuCollapsed(true)"
       @expand="() => appStore.toggleMenuCollapsed(false)"
@@ -50,10 +50,10 @@ const showSideDrawer = computed({
     >
       <Logo />
       <Menu />
-    </NLayoutSider>
+    </n-layout-sider>
 
-    <NDrawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
-      <NLayoutSider
+    <n-drawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
+      <n-layout-sider
         :collapsed="false"
         :width="menuSetting.menuWidth"
         :native-scrollbar="false"
@@ -61,8 +61,8 @@ const showSideDrawer = computed({
       >
         <Logo />
         <Menu />
-      </NLayoutSider>
-    </NDrawer>
+      </n-layout-sider>
+    </n-drawer>
 
     <div
       :class="
@@ -79,5 +79,5 @@ const showSideDrawer = computed({
 
       <n-back-top :right="80" />
     </div>
-  </NLayout>
+  </n-layout>
 </template>

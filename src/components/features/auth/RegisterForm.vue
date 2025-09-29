@@ -78,25 +78,25 @@ const handleSubmit = (e: MouseEvent) => {
 </script>
 
 <template>
-  <NForm ref="formRef" label-placement="left" size="large" :model="formValue" :rules="rules">
-    <NFormItem path="fullName">
-      <NInput v-model:value="formValue.fullName" :placeholder="$t('auth.fullNamePlaceholder')">
+  <n-form ref="formRef" label-placement="left" size="large" :model="formValue" :rules="rules">
+    <n-form-item path="fullName">
+      <n-input v-model:value="formValue.fullName" :placeholder="$t('auth.fullNamePlaceholder')">
         <template #prefix>
           <SvgIcon icon="solar:user-id-broken" class="mr-3 text-lg" />
         </template>
-      </NInput>
-    </NFormItem>
+      </n-input>
+    </n-form-item>
 
-    <NFormItem path="email">
-      <NInput v-model:value="formValue.email" :placeholder="$t('auth.emailPlaceholder')">
+    <n-form-item path="email">
+      <n-input v-model:value="formValue.email" :placeholder="$t('auth.emailPlaceholder')">
         <template #prefix>
           <SvgIcon icon="solar:letter-broken" class="mr-3 text-lg" />
         </template>
-      </NInput>
-    </NFormItem>
+      </n-input>
+    </n-form-item>
 
-    <NFormItem path="password">
-      <NInput
+    <n-form-item path="password">
+      <n-input
         v-model:value="formValue.password"
         type="password"
         show-password-on="click"
@@ -105,11 +105,11 @@ const handleSubmit = (e: MouseEvent) => {
         <template #prefix>
           <SvgIcon icon="solar:lock-password-unlocked-broken" class="mr-3 text-lg" />
         </template>
-      </NInput>
-    </NFormItem>
+      </n-input>
+    </n-form-item>
 
-    <NFormItem path="confirmPassword">
-      <NInput
+    <n-form-item path="confirmPassword">
+      <n-input
         v-model:value="formValue.confirmPassword"
         type="password"
         show-password-on="click"
@@ -118,11 +118,11 @@ const handleSubmit = (e: MouseEvent) => {
         <template #prefix>
           <SvgIcon icon="solar:lock-password-broken" class="mr-3 text-lg" />
         </template>
-      </NInput>
-    </NFormItem>
+      </n-input>
+    </n-form-item>
 
-    <NFormItem>
-      <NButton
+    <n-form-item>
+      <n-button
         type="primary"
         @click="handleSubmit"
         size="large"
@@ -131,7 +131,7 @@ const handleSubmit = (e: MouseEvent) => {
         class="!mt-4"
       >
         {{ $t("auth.registerButton") }}
-      </NButton>
-    </NFormItem>
-  </NForm>
+      </n-button>
+    </n-form-item>
+  </n-form>
 </template>
