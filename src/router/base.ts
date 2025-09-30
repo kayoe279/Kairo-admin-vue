@@ -23,7 +23,7 @@ export const baseRoutes: RouteRecordRaw[] = [
 
 export const innerRoutes: RouteRecordRaw[] = [
   {
-    path: "/:path(.*)*",
+    path: "/",
     component: () => import("@/layouts/Layout.vue"),
     children: [
       {
