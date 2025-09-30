@@ -53,7 +53,7 @@ const rules = computed(() => ({
     { min: 6, message: t("auth.passwordMinLength"), trigger: "blur" }
   ],
   confirmPassword: [
-    { required: true, message: t("auth.confirmPasswordPlaceholder"), trigger: "blur" },
+    { required: true, message: t("auth.checkPasswordPlaceholder"), trigger: "blur" },
     {
       validator: (rule: any, value: string) => {
         if (value !== formValue.value.password) {
@@ -113,7 +113,7 @@ const handleSubmit = (e: MouseEvent) => {
         v-model:value="formValue.confirmPassword"
         type="password"
         show-password-on="click"
-        :placeholder="$t('auth.confirmPasswordPlaceholder')"
+        :placeholder="$t('auth.checkPasswordPlaceholder')"
       >
         <template #prefix>
           <SvgIcon icon="solar:lock-password-broken" class="mr-3 text-lg" />
