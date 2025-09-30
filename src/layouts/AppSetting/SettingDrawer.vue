@@ -55,7 +55,7 @@ const resetSetting = () => {
 
       <template #footer>
         <div class="flex w-full items-center justify-center">
-          <n-button strong secondary type="error" class="!w-full" @click="resetSetting">
+          <n-button secondary type="error" class="!w-full" @click="resetSetting">
             {{ $t("app.resetConfig") }}
           </n-button>
         </div>
