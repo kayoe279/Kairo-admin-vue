@@ -24,16 +24,23 @@ export const setupRouterGuard = (router: Router) => {
 
     window.$loadingBar?.start();
 
-    // 1. 判断路由有无进行初始化
+    // 1. 判断路由有无进行初始化 - 优化：只在需要认证的路由才初始化
     if (!routeStore.isInitAuthRoute) {
-      await routeStore.initAuthRoute();
-      if (to.name === ERROR_PAGE_NAME) {
-        next({
-          path: to.fullPath,
-          query: to.query,
-          hash: to.hash,
-          replace: true
-        });
+      try {
+        await routeStore.initAuthRoute();
+        if (to.name === ERROR_PAGE_NAME) {
+          next({
+            path: to.fullPath,
+            query: to.query,
+            hash: to.hash,
+            replace: true
+          });
+          return false;
+        }
+      } catch (error) {
+        console.error("路由初始化失败:", error);
+        // 如果路由初始化失败，跳转到登录页
+        next({ path: LOGIN_PATH, query: { redirect: to.fullPath } });
         return false;
       }
     }

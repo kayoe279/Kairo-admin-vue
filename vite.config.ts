@@ -45,7 +45,34 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       cssTarget: "chrome80",
       outDir: "dist",
       reportCompressedSize: false,
-      chunkSizeWarningLimit: 2000
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          // 优化代码分割
+          manualChunks: {
+            // 将 Vue 相关库打包到一个 chunk
+            vue: ["vue", "vue-router", "pinia"],
+            // 将 UI 库单独打包
+            "naive-ui": ["naive-ui"],
+            // 将工具库单独打包
+            utils: ["lodash-es", "date-fns", "clsx"],
+            // 将图表库单独打包
+            charts: ["echarts", "vue-echarts"],
+            // 将认证相关库单独打包
+            auth: ["@supabase/supabase-js", "@tanstack/vue-query"]
+          },
+          // 优化 chunk 文件名
+          chunkFileNames: (chunkInfo) => {
+            const facadeModuleId = chunkInfo.facadeModuleId
+              ? (chunkInfo.facadeModuleId
+                  .split("/")
+                  .pop()
+                  ?.replace(/\.\w+$/, "") ?? "chunk")
+              : "chunk";
+            return `assets/${facadeModuleId}-[hash].js`;
+          }
+        }
+      }
     },
 
     // https://github.com/vitest-dev/vitest
