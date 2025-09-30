@@ -48,7 +48,7 @@ const onIconClick = (key: "github" | "lock") => {
       <div v-if="showMenu" class="flex h-full min-w-0 flex-1 items-center gap-x-5">
         <Logo
           v-if="navMode === 'horizontal'"
-          class="flex h-16 shrink-0 items-center justify-center overflow-hidden whitespace-nowrap max-md:hidden"
+          class="flex h-16 shrink-0 items-center justify-center overflow-hidden whitespace-nowrap max-sm:hidden"
         />
         <Menu location="header" />
       </div>

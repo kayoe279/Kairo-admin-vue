@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/frame",
     name: "frame",
-    redirect: "/frame/docs",
+    redirect: "/frame/naive-admin",
     component: () => import("@/layouts/Layout.vue"),
     meta: {
       title: "外部页面",

@@ -14,55 +14,58 @@ const themeStore = useThemeStore();
 const { darkNav } = storeToRefs(themeStore);
 const { navMode, headerSetting, menuSetting, multiTabsSetting, fullScreen } = storeToRefs(appStore);
 
-const collapsed = computed(() => menuSetting.value.collapsed);
-
-const showMenu = computed(() => {
+const showSideMenu = computed(() => {
   if (fullScreen.value) return false;
   const hideMixMenuSub = navMode.value === "horizontal-mix" && !isRootMenu(route.matched?.[0]);
-  return !isMobile.value && (navMode.value === "vertical" || hideMixMenuSub);
+  return navMode.value === "vertical" || hideMixMenuSub;
 });
 
 const desktopMenuWidth = computed(() => {
   const { minMenuWidth, menuWidth } = unref(menuSetting);
-  return collapsed.value ? minMenuWidth : menuWidth;
+  return menuSetting.value.collapsed ? minMenuWidth : menuWidth;
 });
 
-// 控制显示或隐藏移动端侧边栏
 const showSideDrawer = computed({
-  get: () => isMobile.value && !collapsed.value,
+  get: () => isMobile.value && menuSetting.value.collapsed,
   set: () => appStore.toggleMenuCollapsed()
 });
 </script>
 
 <template>
   <n-layout position="absolute" has-sider>
-    <n-layout-sider
-      v-if="showMenu"
-      @collapse="() => appStore.toggleMenuCollapsed(true)"
-      @expand="() => appStore.toggleMenuCollapsed(false)"
-      :collapsed="collapsed"
-      collapse-mode="width"
-      :collapsed-width="menuSetting.minMenuWidth"
-      :width="desktopMenuWidth"
-      :native-scrollbar="false"
-      :inverted="darkNav"
-      class="pb-4 !transition-all"
-    >
-      <Logo />
-      <Menu />
-    </n-layout-sider>
-
-    <n-drawer v-model:show="showSideDrawer" :width="menuSetting.menuWidth" :placement="'left'">
-      <n-layout-sider
-        :collapsed="false"
+    <template v-if="showSideMenu">
+      <n-drawer
+        v-if="isMobile"
+        v-model:show="showSideDrawer"
         :width="menuSetting.menuWidth"
+        :placement="'left'"
+      >
+        <n-layout-sider
+          :collapsed="false"
+          :width="menuSetting.menuWidth"
+          :native-scrollbar="false"
+          :inverted="darkNav"
+        >
+          <Logo />
+          <Menu />
+        </n-layout-sider>
+      </n-drawer>
+      <n-layout-sider
+        v-else
+        @collapse="() => appStore.toggleMenuCollapsed(true)"
+        @expand="() => appStore.toggleMenuCollapsed(false)"
+        :collapsed="menuSetting.collapsed"
+        collapse-mode="width"
+        :collapsed-width="menuSetting.minMenuWidth"
+        :width="desktopMenuWidth"
         :native-scrollbar="false"
         :inverted="darkNav"
+        class="pb-4 !transition-all"
       >
         <Logo />
         <Menu />
       </n-layout-sider>
-    </n-drawer>
+    </template>
 
     <div
       :class="

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
+import { useMedia } from "@/hooks";
 import { cn } from "@/lib";
 import { appConfig } from "@/lib/settings/app";
 import { useAppStore } from "@/store";
 import { computed } from "vue";
 
 const appStore = useAppStore();
-const collapsed = computed(() => appStore.menuSetting.collapsed);
+const { isMobile } = useMedia();
+const collapsed = computed(() => appStore.menuSetting.collapsed && !isMobile.value);
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMenu } from "@/hooks";
+import { useMedia, useMenu } from "@/hooks";
 import { useAppStore, useRouteStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
@@ -15,6 +15,10 @@ const routeStore = useRouteStore();
 const appStore = useAppStore();
 const { menuSetting } = storeToRefs(appStore);
 
+const { isMobile } = useMedia();
+
+const collapsed = computed(() => appStore.menuSetting.collapsed && !isMobile.value);
+
 // 使用传入的路由或默认路由
 const menuRoutes = computed(() => props.routes || routeStore.rowRoutes);
 
@@ -29,7 +33,7 @@ const { menuInstRef, menus, defaultExpandedKeys, selectedValues, onMenuItemClick
     mode="vertical"
     :accordion="menuSetting.accordion"
     :options="menus"
-    :collapsed="menuSetting.collapsed"
+    :collapsed="collapsed"
     :collapsed-width="menuSetting.minMenuWidth"
     :icon-size="20"
     :collapsed-icon-size="20"
