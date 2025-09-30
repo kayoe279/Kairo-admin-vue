@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<EmailVerificationProps>(), {
 
 const emit = defineEmits<{
   verifySuccess: [];
-  back: [];
   resendCode: [];
 }>();
 
@@ -64,18 +63,14 @@ const resendVerification = async () => {
     message.error(`${t("auth.resendCodeFailed")}: ${error}`);
   }
 };
-
-const handleBack = () => {
-  emit("back");
-};
 </script>
 
 <template>
   <div class="space-y-4">
     <div class="text-center">
-      <h2 class="mb-2 text-xl font-semibold">{{ $t("auth.verifyEmail") }}</h2>
-      <n-text class="text-sm">
-        {{ $t("auth.verificationSent") }} <strong>{{ email }}</strong>
+      <h2 class="mb-2 text-lg font-medium">{{ $t("auth.verifyEmailTitle") }}</h2>
+      <n-text class="text-foreground-subtle !mx-auto block !w-[90%] text-sm">
+        {{ $t("auth.verifyEmailDesc", { email }) }}
       </n-text>
     </div>
 
@@ -109,16 +104,12 @@ const handleBack = () => {
     <div class="space-y-3 text-center">
       <div class="flex items-center justify-center">
         <n-text class="text-sm">
-          {{ $t("auth.notReceiveCode") }}
+          {{ $t("auth.noCodeReceived") }}
         </n-text>
         <n-button text type="primary" @click="resendVerification" :loading="isResendPending">
           {{ $t("auth.resendCode") }}
         </n-button>
       </div>
-
-      <n-button text @click="handleBack" class="!p-0">
-        {{ $t("auth.backToRegister") }}
-      </n-button>
     </div>
   </div>
 </template>

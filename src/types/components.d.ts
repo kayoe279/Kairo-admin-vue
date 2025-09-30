@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AdminLogo: typeof import('./../components/ui/AdminLogo.vue')['default']
     Animation: typeof import('./../layouts/AppSetting/Animation.vue')['default']
     AppLoading: typeof import('./../components/ui/AppLoading.vue')['default']
     BarChart: typeof import('./../components/ui/Chart/BarChart.vue')['default']
@@ -61,6 +62,7 @@ declare module 'vue' {
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NGi: typeof import('naive-ui')['NGi']
+    NGradientText: typeof import('naive-ui')['NGradientText']
     NGrid: typeof import('naive-ui')['NGrid']
     NGridItem: typeof import('naive-ui')['NGridItem']
     NH1: typeof import('naive-ui')['NH1']

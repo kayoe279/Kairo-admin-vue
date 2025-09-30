@@ -5,13 +5,16 @@ import type { LoginCredentials } from "@/components/features/auth/LoginForm.vue"
 import RegisterForm from "@/components/features/auth/RegisterForm.vue";
 import type { RegisterCredentials } from "@/components/features/auth/RegisterForm.vue";
 import { cn } from "@/lib";
+import { appConfig } from "@/lib/settings/app";
 import { useSignIn, useSignUp } from "@/service/api/auth";
 import { useUserStore } from "@/store";
 import { motion } from "motion-v";
-import { NButton, useMessage } from "naive-ui";
+import { useMessage } from "naive-ui";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+
+type ViewType = "login" | "register" | "verify";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -20,38 +23,9 @@ const message = useMessage();
 const userStore = useUserStore();
 
 // 状态管理
-const currentView = ref<"login" | "register" | "verify">("login");
+const currentView = ref<ViewType>("login");
 const isCardHovered = ref(false);
 const registeredEmail = ref("");
-
-// 从路由参数初始化视图状态
-const initializeViewFromRoute = () => {
-  const type = route.query.type as string;
-  const email = route.query.email as string;
-
-  if (type === "verify" && email) {
-    currentView.value = "verify";
-    registeredEmail.value = email;
-  } else if (type === "register") {
-    currentView.value = "register";
-  } else {
-    currentView.value = "login";
-  }
-};
-
-// 组件挂载时初始化
-onMounted(() => {
-  initializeViewFromRoute();
-});
-
-// 监听路由变化
-watch(
-  () => route.query,
-  () => {
-    initializeViewFromRoute();
-  },
-  { immediate: true }
-);
 
 // 认证相关的mutation hooks
 const { isPending: isSignInPending, mutateAsync: signIn } = useSignIn();
@@ -63,7 +37,7 @@ const onCardHover = (hovered: boolean) => {
 };
 
 // 更新路由参数
-const updateRouteQuery = (type: "login" | "register" | "verify", email?: string) => {
+const updateRouteQuery = (type: ViewType, email?: string) => {
   const query: Record<string, string> = { type };
   if (type === "verify" && email) {
     query.email = email;
@@ -78,33 +52,15 @@ const updateRouteQuery = (type: "login" | "register" | "verify", email?: string)
   });
 };
 
-// 视图切换
-const switchToRegister = () => {
-  currentView.value = "register";
-  updateRouteQuery("register");
-};
-
-const switchToLogin = () => {
-  currentView.value = "login";
-  updateRouteQuery("login");
-};
-
-const switchToVerify = (email: string) => {
-  registeredEmail.value = email;
-  currentView.value = "verify";
-  updateRouteQuery("verify", email);
-};
-
-const switchBackToRegister = () => {
-  currentView.value = "register";
-  updateRouteQuery("register");
+const handleSwitchView = (type: ViewType, email?: string) => {
+  currentView.value = type;
+  updateRouteQuery(type, email);
 };
 
 // 验证成功处理
 const onVerifySuccess = () => {
   message.success(t("auth.verifySuccess"));
-  currentView.value = "login";
-  updateRouteQuery("login");
+  handleSwitchView("login");
 };
 
 // 登录处理
@@ -154,30 +110,47 @@ const onRegisterFinish = async (values: RegisterCredentials) => {
     }
 
     message.success(t("auth.registerSuccess"));
-    switchToVerify(values.email);
+    handleSwitchView("verify", values.email);
   } catch (error) {
     message.error(`${t("auth.registerFailed")}: ${error}`);
   }
-};
-
-// 重新发送验证码
-const onResendCode = () => {
-  message.success(t("auth.resendCodeSuccess"));
 };
 
 // 动态高度计算
 const cardHeight = computed(() => {
   switch (currentView.value) {
     case "login":
-      return 500;
+      return 520;
     case "register":
-      return 620;
+      return 650;
     case "verify":
-      return 580;
+      return 610;
     default:
-      return 500;
+      return 520;
   }
 });
+
+// 从路由参数初始化视图状态
+const initializeViewFromRoute = () => {
+  const type = route.query.type as ViewType;
+  const email = route.query.email as string;
+  currentView.value = type || "login";
+  registeredEmail.value = email || "";
+};
+
+// 组件挂载时初始化
+onMounted(() => {
+  initializeViewFromRoute();
+});
+
+// 监听路由变化
+watch(
+  () => route.query,
+  () => {
+    initializeViewFromRoute();
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -215,9 +188,10 @@ const cardHeight = computed(() => {
           :initial="{ scale: 0.9, opacity: 0 }"
           :animate="{ scale: 1, opacity: 1 }"
           :transition="{ duration: 0.6 }"
-          class="inline-block"
+          className="flex flex-col items-center"
         >
           <SvgIcon localIcon="logo" class="size-30" />
+          <span className="font-poppins text-3xl font-medium">{{ appConfig.title }}</span>
         </motion.div>
       </motion.div>
 
@@ -238,22 +212,20 @@ const cardHeight = computed(() => {
               @finish="onLoginFinish"
             />
             <RegisterForm
-              v-else-if="currentView === 'register'"
+              v-if="currentView === 'register'"
               :loading="isSignUpPending"
               @finish="onRegisterFinish"
             />
             <EmailVerification
-              v-else
+              v-if="currentView === 'verify'"
               :email="registeredEmail"
               @verifySuccess="onVerifySuccess"
-              @back="switchBackToRegister"
             />
           </div>
         </Transition>
       </div>
 
       <motion.div
-        v-if="currentView !== 'verify'"
         class="text-center"
         :initial="{ opacity: 0 }"
         :animate="{ opacity: 1 }"
@@ -272,16 +244,21 @@ const cardHeight = computed(() => {
             <span class="text-foreground-subtle text-sm">
               {{ t("auth.noAccountText") }}
             </span>
-            <n-button text type="primary" @click="switchToRegister" class="!p-0">
+            <n-button text type="primary" @click="handleSwitchView('register')" class="!pl-1">
               {{ t("auth.register") }}
             </n-button>
           </div>
-          <div v-else key="switch-to-login">
+          <div v-else-if="currentView === 'register'" key="switch-to-login">
             <span class="text-foreground-subtle text-sm">
               {{ t("auth.haveAccountText") }}
             </span>
-            <n-button text type="primary" @click="switchToLogin" class="!p-0">
+            <n-button text type="primary" @click="handleSwitchView('login')" class="!pl-1">
               {{ t("auth.loginButton") }}
+            </n-button>
+          </div>
+          <div v-else key="switch-to-verify">
+            <n-button text type="primary" @click="handleSwitchView('register')" class="!mt-4 !pl-1">
+              {{ $t("auth.backToRegister") }}
             </n-button>
           </div>
         </Transition>
