@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SvgIcon from "@/components/ui/SvgIcon.vue";
 import { appConfig } from "@/lib/settings/app";
+import { useSignOut } from "@/service";
 import { useUserStore } from "@/store";
 import { useDialog, useMessage } from "naive-ui";
 import { computed, h } from "vue";
@@ -40,17 +41,22 @@ const onSelect = (key: string) => {
   }
 };
 
+const { mutateAsync: logout } = useSignOut();
+
 // 退出登录
 const doLogout = () => {
-  dialog.warning({
+  const dialogRef = dialog.warning({
     title: t("common.tip"),
     content: t("auth.logoutConfirm.content"),
     positiveText: t("common.ok"),
     negativeText: t("common.cancel"),
     transformOrigin: "center",
     onPositiveClick: async () => {
+      dialogRef.loading = true;
+      await logout();
       await userStore.logout();
       message.success(t("auth.logoutConfirm.successMessage"));
+      dialogRef.loading = false;
     }
   });
 };
