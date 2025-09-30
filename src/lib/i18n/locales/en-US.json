@@ -219,7 +219,7 @@
     "examplesSupabase": "Supabase Demo",
     "examplesAuth": "Auth Demo",
     "examplesUserManagement": "User Management",
-    "frame": "Frame",
+    "frame": "External Page",
     "frameNaiveAdmin": "NaiveAdmin",
     "frameNaive": "NaiveUi",
     "permissions": "Permission Management",

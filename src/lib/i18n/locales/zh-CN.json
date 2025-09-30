@@ -219,7 +219,7 @@
     "examplesSupabase": "Supabase 演示",
     "examplesAuth": "用户认证演示",
     "examplesUserManagement": "用户管理",
-    "frame": "框架",
+    "frame": "外部页面",
     "frameNaiveAdmin": "NaiveAdmin",
     "frameNaive": "NaiveUi",
     "permissions": "权限管理",
