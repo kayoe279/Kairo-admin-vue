@@ -150,8 +150,8 @@ const handleValidateField = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <n-card title="表单验证示例" class="sm:col-span-8">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+    <n-card title="表单验证示例" class="md:col-span-8">
       <template #header-extra>
         <n-tag type="warning">Form Validation</n-tag>
       </template>
@@ -326,7 +326,7 @@ const handleValidateField = () => {
     </n-card>
 
     <!-- 表单数据预览 -->
-    <n-card title="表单数据" class="sm:col-span-4">
+    <n-card title="表单数据" class="md:col-span-4">
       <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
     </n-card>
   </div>

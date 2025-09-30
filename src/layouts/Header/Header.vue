@@ -56,7 +56,7 @@ const onIconClick = (key: "github" | "lock") => {
       <!-- 面包屑 -->
       <Breadcrumb v-else class="hidden items-center md:flex" />
     </div>
-    <div class="flex h-full items-center gap-x-6">
+    <div class="flex h-full items-center gap-x-4 sm:gap-x-6">
       <ButtonIcon icon="proicons:github" tooltipContent="GitHub" @click="onIconClick('github')" />
 
       <!--切换全屏-->

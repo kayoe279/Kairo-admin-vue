@@ -162,8 +162,8 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <n-card title="高级表单示例" class="sm:col-span-8">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+    <n-card title="高级表单示例" class="md:col-span-8">
       <template #header-extra>
         <n-tag type="success">Advanced Form</n-tag>
       </template>
@@ -218,7 +218,7 @@ const handleReset = () => {
 
         <!-- 时间和优先级设置 -->
         <n-card title="时间和优先级" size="small" class="mb-4">
-          <n-grid :cols="3" :x-gap="16">
+          <n-grid responsive="screen" cols="1 s:1 m:1 l:3 xl:3 2xl:3" :x-gap="16">
             <n-grid-item>
               <n-form-item label="开始日期" path="startDate">
                 <n-date-picker
@@ -316,7 +316,7 @@ const handleReset = () => {
 
         <!-- 项目配置 -->
         <n-card title="项目配置" size="small" class="mb-4">
-          <n-grid :cols="2" :x-gap="16">
+          <n-grid responsive="screen" cols="1 s:1 m:1 l:2 xl:2 2xl:2" :x-gap="16">
             <n-grid-item>
               <n-form-item label="是否公开" path="settings.isPublic">
                 <n-switch v-model:value="formData.settings.isPublic" />
@@ -413,7 +413,7 @@ const handleReset = () => {
     </n-card>
 
     <!-- 表单数据预览 -->
-    <n-card title="表单数据预览" class="sm:col-span-4">
+    <n-card title="表单数据预览" class="md:col-span-4">
       <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
     </n-card>
   </div>

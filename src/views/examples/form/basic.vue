@@ -96,8 +96,8 @@ const handleFillDemo = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-12">
-    <n-card title="基础表单" class="sm:col-span-8">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+    <n-card title="基础表单" class="md:col-span-8">
       <template #header-extra>
         <n-tag type="info">Basic Form</n-tag>
       </template>
@@ -188,7 +188,7 @@ const handleFillDemo = () => {
     </n-card>
 
     <!-- 表单数据预览 -->
-    <n-card title="表单数据预览" class="sm:col-span-4">
+    <n-card title="表单数据预览" class="md:col-span-4">
       <n-code :code="JSON.stringify(formData, null, 2)" language="json" />
     </n-card>
   </div>

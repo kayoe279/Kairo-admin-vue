@@ -13,7 +13,7 @@ const dialog = useDialog();
 const router = useRouter();
 const { t } = useI18n();
 
-const nickname = computed(() => userStore.userInfo?.nickname);
+const nickname = computed(() => userStore.userInfo?.user_metadata.full_name);
 
 const avatarOptions = computed(() => [
   {
@@ -60,8 +60,8 @@ const doLogout = () => {
   <div class="flex items-center justify-center">
     <n-dropdown trigger="hover" @select="onSelect" :options="avatarOptions">
       <div class="flex cursor-pointer items-center justify-center gap-x-2">
-        <n-avatar :src="appConfig.avatar" round class="shadow-lg ring-2 ring-blue-100" />
-        <span v-if="nickname">{{ nickname }}</span>
+        <n-avatar :src="appConfig.avatar" round class="ring-primary/30 shadow-lg ring-2" />
+        <span v-if="nickname" class="hidden sm:block">{{ nickname }}</span>
       </div>
     </n-dropdown>
   </div>
