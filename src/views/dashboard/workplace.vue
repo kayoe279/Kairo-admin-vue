@@ -13,7 +13,7 @@ const nickname = computed(() => userStore.userInfo?.user_metadata?.full_name);
 const projectList = ref([
   {
     name: "Hearem",
-    localIcon: "hearem-logo",
+    localIcon: "hearit-logo",
     description: "AI智能可定制地将文字转为自然人声",
     link: "https://hearem.cc/en"
   },
@@ -24,10 +24,10 @@ const projectList = ref([
     link: "https://www.amoihub.com/"
   },
   {
-    name: "Blog",
+    name: "Kairo Website",
     localIcon: "blog-logo",
-    description: "Kayoe 博客",
-    link: "https://kayoe-blog.vercel.app/"
+    description: "Kairo Website",
+    link: "https://kairo-website-livid.vercel.app/"
   }
 ]);
 
@@ -36,31 +36,36 @@ const entranceList = ref([
     name: "主控台",
     icon: "solar:emoji-funny-square-broken",
     link: "/dashboard/console",
-    color: "from-blue-400 to-blue-600"
+    color:
+      "from-blue-50/50 to-blue-50/80 hover:from-blue-50 hover:to-blue-100 text-blue-600 dark:from-blue-900/20 dark:to-blue-800/20 dark:text-blue-400"
   },
   {
     name: "基础列表",
     icon: "solar:checklist-minimalistic-outline",
     link: "/basic-list",
-    color: "from-green-400 to-green-600"
+    color:
+      "from-green-50/50 to-green-50/80 hover:from-green-50 hover:to-green-100 text-green-600 dark:from-green-900/20 dark:to-green-800/20 dark:text-green-400"
   },
   {
     name: "表单页面",
     icon: "solar:document-add-broken",
     link: "/form/basic-form",
-    color: "from-purple-400 to-purple-600"
+    color:
+      "from-purple-50/50 to-purple-50/80 hover:from-purple-50 hover:to-purple-100 text-purple-600 dark:from-purple-900/20 dark:to-purple-800/20 dark:text-purple-400"
   },
   {
     name: "权限管理",
     icon: "solar:shield-user-broken",
     link: "/permissions",
-    color: "from-orange-400 to-orange-600"
+    color:
+      "from-orange-50/50 to-orange-50/80 hover:from-orange-50 hover:to-orange-100 text-orange-600 dark:from-orange-900/20 dark:to-orange-800/20 dark:text-orange-400"
   },
   {
     name: "系统设置",
     icon: "solar:settings-outline",
     link: "/setting/system",
-    color: "from-indigo-400 to-indigo-600"
+    color:
+      "from-indigo-50/50 to-indigo-50/80 hover:from-indigo-50 hover:to-indigo-100 text-indigo-600 dark:from-indigo-900/20 dark:to-indigo-800/20 dark:text-indigo-400"
   }
 ]);
 
@@ -81,9 +86,14 @@ const openInNewWindow = (url: string) => {
         <n-gi>
           <div class="flex items-center">
             <div class="relative">
-              <n-avatar circle :size="80" :src="avatar" class="shadow-lg ring-4 ring-blue-100" />
+              <n-avatar
+                circle
+                :size="80"
+                :src="avatar"
+                class="shadow-lg ring-4 ring-blue-100 dark:ring-blue-900"
+              />
               <span
-                class="absolute -right-1 -bottom-1 h-6 w-6 rounded-full border-4 border-white bg-green-500"
+                class="absolute -right-1 -bottom-1 h-6 w-6 rounded-full border-4 border-white bg-green-500 dark:border-gray-800"
               />
             </div>
             <div class="text-foreground ml-6">
@@ -96,21 +106,17 @@ const openInNewWindow = (url: string) => {
           </div>
         </n-gi>
         <n-gi>
-          <div class="flex h-full items-center justify-end">
-            <div class="grid grid-cols-3 gap-8 text-center">
-              <div class="min-w-[80px] rounded-full bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+          <div class="flex h-full items-center lg:justify-end">
+            <div class="grid grid-cols-3 gap-4 text-center sm:gap-8">
+              <div class="min-w-[80px] rounded-full p-4">
                 <div class="text-2xl font-bold text-blue-500">12</div>
                 <div class="text-foreground-subtle text-sm">项目数</div>
               </div>
-              <div
-                class="min-w-[80px] rounded-full bg-gradient-to-br from-orange-50 to-orange-100 p-4"
-              >
+              <div class="min-w-[80px] rounded-full p-4">
                 <div class="text-2xl font-bold text-orange-500">6/21</div>
                 <div class="text-foreground-subtle text-sm">待办</div>
               </div>
-              <div
-                class="min-w-[80px] rounded-full bg-gradient-to-br from-green-50 to-green-100 p-4"
-              >
+              <div class="min-w-[80px] rounded-full p-4">
                 <div class="text-2xl font-bold text-green-500">18</div>
                 <div class="text-foreground-subtle text-sm">消息</div>
               </div>
@@ -129,18 +135,22 @@ const openInNewWindow = (url: string) => {
               v-for="item in projectList"
               :key="item.name"
               :title="item.description"
-              class="group text-foreground-subtle hover:text-primary dark:from-background dark:to-background flex transform cursor-pointer flex-col items-center rounded-xl bg-gradient-to-b from-blue-100/50 to-white p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="group flex transform cursor-pointer flex-col items-center rounded-2xl bg-gradient-to-b from-gray-50/50 to-gray-50/80 p-6 text-center transition-all duration-300 hover:scale-[1.02] hover:from-blue-50/60 hover:to-blue-50/90 hover:shadow-md dark:from-gray-800/40 dark:to-gray-800/60 dark:hover:from-gray-700/50 dark:hover:to-gray-700/70"
               @click="openInNewWindow(item.link)"
             >
               <SvgIcon
                 v-if="item.localIcon"
                 :localIcon="item.localIcon"
-                class="text-foreground group-hover:text-primary h-[60px] w-[60px] text-[60px]"
+                class="text-foreground group-hover:text-primary h-[60px] w-[60px] text-[60px] transition-all duration-300 group-hover:scale-110"
               />
-              <h3 class="text-foreground group-hover:text-primary mt-2 mb-1 font-semibold">
+              <h3
+                class="text-foreground group-hover:text-primary mt-3 mb-1 font-semibold transition-colors duration-300"
+              >
                 {{ item.name }}
               </h3>
-              <p class="text-foreground-subtle group-hover:text-primary line-clamp-1 text-xs">
+              <p
+                class="text-foreground-subtle group-hover:text-primary/80 line-clamp-2 text-xs transition-colors duration-300"
+              >
                 {{ item.description }}
               </p>
             </div>
@@ -215,7 +225,7 @@ const openInNewWindow = (url: string) => {
       <n-gi class="space-y-4">
         <n-card title="快捷入口">
           <div
-            class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-4 2xl:grid-cols-5"
+            class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
           >
             <button
               v-for="item in entranceList"
@@ -223,21 +233,24 @@ const openInNewWindow = (url: string) => {
               type="button"
               :class="
                 cn(
-                  'group flex w-32 transform cursor-pointer items-center justify-center gap-x-2 rounded-3xl bg-gradient-to-br py-2 text-white transition-all duration-300 hover:scale-105 hover:shadow-xl',
+                  'group flex aspect-square transform cursor-pointer flex-col items-center justify-center gap-3 rounded-3xl bg-gradient-to-br p-4 transition-all duration-300',
                   item.color
                 )
               "
               @click="navigateTo(item.link)"
             >
-              <SvgIcon :icon="item.icon" class="text-2xl" />
-              <h3 class="mt-2 mb-1 font-semibold">{{ item.name }}</h3>
+              <SvgIcon
+                :icon="item.icon"
+                class="text-4xl transition-all duration-300 group-hover:scale-110"
+              />
+              <h3 class="text-sm font-semibold">{{ item.name }}</h3>
             </button>
           </div>
         </n-card>
 
         <n-card class="flex h-[510px] items-center justify-center text-gray-400">
           <div class="flex h-full w-full items-center justify-center">
-            <SvgIcon localIcon="logo" class="mb-4 text-6xl" />
+            <SvgIcon localIcon="logo" class="size-30" />
           </div>
         </n-card>
       </n-gi>
