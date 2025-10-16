@@ -12,7 +12,8 @@
 - 🌍 **国际化支持** - 内置中英文语言切换功能，支持动态语言包
 - 🎯 **TypeScript** - 全面的类型支持，提供更好的开发体验和代码质量
 - 🎪 **组件丰富** - 二次封装的常用组件，包含表格、表单、上传、图表等
-- 🎭 **Mock 数据** - 内置 Mock 数据支持，支持真实的 API 模拟
+- 🗄️ **数据库集成** - 基于 Supabase 的现代化 BaaS 解决方案
+- 🔄 **数据请求** - Vue Query 强大的异步状态管理
 - 📊 **数据图表** - 集成 ECharts，支持各种数据可视化需求
 - 🏗️ **工程化完善** - 集成 ESLint、Prettier、Commitlint 等开发工具
 - 📦 **模块化设计** - 清晰的代码结构，模块化的功能组织
@@ -25,11 +26,12 @@
 - **状态管理**: Pinia 2.3.1 + 持久化插件 4.2.0
 - **路由**: Vue Router 4.5.0
 - **样式**: Tailwind CSS 4.0.4
-- **HTTP 客户端**: Alova 3.2.10 + Mock 2.0.14
+- **数据库**: Supabase 2.57 (PostgreSQL + Auth + Storage)
+- **数据请求**: Vue Query 5.90 (TanStack Query)
 - **国际化**: Vue I18n 11.1.1
 - **图表**: ECharts 5.6.0 + Vue-ECharts 7.0.3
 - **工具库**: Lodash-ES 4.17.21 + VueUse 12.5.0
-- **开发工具**: ESLint 9.19 + Prettier 3.4.2 + TypeScript
+- **开发工具**: ESLint 9.19 + Prettier 3.4.2 + Commitlint
 
 ## 📦 功能模块
 
