@@ -40,7 +40,7 @@ const onIconClick = (key: "github" | "lock") => {
       <!-- 折叠按钮 -->
       <ButtonIcon
         v-if="showCollapsed"
-        :icon="menuSetting.collapsed ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'"
+        :icon="menuSetting.collapsed ? 'hugeicons:sidebar-right-01' : 'hugeicons:sidebar-left-01'"
         hideTooltip
         @click="appStore.toggleMenuCollapsed()"
       />
